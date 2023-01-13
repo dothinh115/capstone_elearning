@@ -10,6 +10,7 @@ body {
   background-size: cover;
   background-color: black;
   position: relative;
+  font-family: "Montserrat", sans-serif;
 }
 
 a,
@@ -21,7 +22,24 @@ a:hover {
   padding-top: 70px !important;
   width: 75%;
   margin: auto;
-  background-color: white;
+  background-color: rgba(white, 0.35);
   min-height: 100vh;
   box-shadow: 0 0 0 50px rgba(white, 0.15);
+}
+
+.main-block {
+  background-color: white;
+  padding: 15px;
+  width: 98%;
+  margin: auto;
+  border-radius: 15px;
+  margin-top: 15px;
+  &-header {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 10px;
+    h1 {
+      color: dimgrey;
+      font-weight: 200;
+    }
+  }
 }

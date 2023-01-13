@@ -1,11 +1,21 @@
-import React from 'react'
+import React from "react";
+import Mainblock from "../../components/Mainblock";
 
-type Props = {}
+type Props = {};
 
 const Login = (props: Props) => {
   return (
-    <div>Login</div>
-  )
-}
+    <>
+      <Mainblock
+        value="Nếu chưa có Tài khoản, hãy đăng ký!"
+        icon="fa-arrow-right"
+      />
 
-export default Login
+      <Mainblock value="Đăng nhập thất bại" icon="fa-xmark" iconColor="red" />
+
+      <Mainblock headerContent="Đăng nhập" value="Form đăng nhập ở đây" />
+    </>
+  );
+};
+
+export default Login;
