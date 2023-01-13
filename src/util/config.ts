@@ -3,6 +3,8 @@ import axios, { AxiosInstance } from "axios";
 export const CYBERSOFT_TOKEN =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNUUiLCJIZXRIYW5TdHJpbmciOiIwNy8wNi8yMDIzIiwiSGV0SGFuVGltZSI6IjE2ODYwOTYwMDAwMDAiLCJuYmYiOjE2NTczODYwMDAsImV4cCI6MTY4NjI0MzYwMH0.XsCcIZvawxcwye8KVYB2vJK4d3Gbr1XROtNyAL8nypA";
 
+export const numberRandomCourses: number = 8;
+
 //axios config
 export const API: AxiosInstance = axios.create({
   baseURL: "https://elearningnew.cybersoft.edu.vn/api",
@@ -23,7 +25,7 @@ API.interceptors.response.use(
 
 /********** Interface / type **********/
 
-export interface courseType {
+export interface CourseType {
   maKhoaHoc: string;
   biDanh: string;
   tenKhoaHoc: string;
@@ -37,6 +39,7 @@ export interface courseType {
   danhMucKhoaHoc: any;
 }
 
-export interface courseStateType {
-  courses: courseType[] | null;
+export interface CourseStateType {
+  coursesArr: CourseType[] | null;
+  randomCoursesArr: CourseType[] | null;
 }

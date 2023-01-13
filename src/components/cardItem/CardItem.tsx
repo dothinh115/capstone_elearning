@@ -1,8 +1,8 @@
 import React from "react";
-import { courseType } from "../../util/config";
+import { CourseType } from "../../util/config";
 
 type Props = {
-  item: courseType;
+  item: CourseType;
 };
 
 const CardItem = ({ item }: Props): JSX.Element => {
@@ -12,7 +12,14 @@ const CardItem = ({ item }: Props): JSX.Element => {
         <div className="card-inner">
           <div className="card-inner-title">{item.tenKhoaHoc}</div>
           <div className="card-inner-img">
-            <img src={item.hinhAnh} alt="" />
+            <img
+              onError={({ currentTarget }) => {
+                currentTarget.src =
+                  "https://canhme.com/wp-content/uploads/2018/09/Nodejs.png";
+              }}
+              src={item.hinhAnh}
+              alt=""
+            />
           </div>
           <div className="card-inner-body">
             <p>

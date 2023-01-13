@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { API, courseStateType, courseType } from "../../util/config";
+import {
+  API,
+  CourseStateType,
+  CourseType,
+  numberRandomCourses,
+} from "../../util/config";
 import { DispatchType } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { suffleArray } from "../../util/function";
 
-const initialState = {
-  courses: [],
+const initialState: CourseStateType = {
+  coursesArr: [],
+  randomCoursesArr: [],
 };
 
 const courseReducer = createSlice({
@@ -12,15 +19,22 @@ const courseReducer = createSlice({
   initialState,
   reducers: {
     getAllCoursesAction: (
-      state: courseStateType,
-      action: PayloadAction<courseType[]>
+      state: CourseStateType,
+      action: PayloadAction<CourseType[]>
     ) => {
-      state.courses = action.payload;
+      state.coursesArr = action.payload;
+    },
+    getRandomCoursesAction: (
+      state: CourseStateType,
+      action: PayloadAction<CourseType[]>
+    ) => {
+      state.randomCoursesArr = action.payload;
     },
   },
 });
 
-export const { getAllCoursesAction } = courseReducer.actions;
+export const { getAllCoursesAction, getRandomCoursesAction } =
+  courseReducer.actions;
 
 export default courseReducer.reducer;
 
@@ -28,10 +42,13 @@ export default courseReducer.reducer;
 export const getAllCoursesApi = async (dispatch: DispatchType) => {
   try {
     const result = await API.get("/QuanLyKhoaHoc/LayDanhSachKhoaHoc");
-    const action: PayloadAction<courseType[]> = getAllCoursesAction(
+    const getAllCourses: PayloadAction<CourseType[]> = getAllCoursesAction(
       result.data
     );
-    dispatch(action);
+    dispatch(getAllCourses);
+    const getRandomCourses: PayloadAction<CourseType[]> =
+      getRandomCoursesAction(suffleArray(result.data, numberRandomCourses));
+    dispatch(getRandomCourses);
   } catch (error) {
     console.log(error);
   }
