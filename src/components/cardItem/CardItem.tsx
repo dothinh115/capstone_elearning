@@ -5,7 +5,7 @@ type Props = {
   item: CourseType;
 };
 
-const CardItem = ({ item }: Props): JSX.Element => {
+const CardItem = ({ item }: Props) => {
   return (
     <>
       <div className="card">

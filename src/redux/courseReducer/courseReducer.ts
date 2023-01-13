@@ -12,6 +12,7 @@ import { suffleArray } from "../../util/function";
 const initialState: CourseStateType = {
   coursesArr: [],
   randomCoursesArr: [],
+  loading: false,
 };
 
 const courseReducer = createSlice({
@@ -30,16 +31,24 @@ const courseReducer = createSlice({
     ) => {
       state.randomCoursesArr = action.payload;
     },
+    setLoadingAction: (
+      state: CourseStateType,
+      action: PayloadAction<boolean>
+    ) => {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { getAllCoursesAction, getRandomCoursesAction } =
+export const { getAllCoursesAction, getRandomCoursesAction, setLoadingAction } =
   courseReducer.actions;
 
 export default courseReducer.reducer;
 
 /********** Async Action ********/
 export const getAllCoursesApi = async (dispatch: DispatchType) => {
+  const setLoading: PayloadAction<boolean> = setLoadingAction(true);
+  dispatch(setLoading);
   try {
     const result = await API.get("/QuanLyKhoaHoc/LayDanhSachKhoaHoc");
     const getAllCourses: PayloadAction<CourseType[]> = getAllCoursesAction(
@@ -47,9 +56,14 @@ export const getAllCoursesApi = async (dispatch: DispatchType) => {
     );
     dispatch(getAllCourses);
     const getRandomCourses: PayloadAction<CourseType[]> =
-      getRandomCoursesAction(suffleArray(result.data, numberRandomCourses));
+      getRandomCoursesAction(
+        suffleArray<CourseType>(result.data, numberRandomCourses)
+      );
     dispatch(getRandomCourses);
   } catch (error) {
     console.log(error);
+  } finally {
+    const setLoading: PayloadAction<boolean> = setLoadingAction(false);
+    dispatch(setLoading);
   }
 };
