@@ -1,0 +1,24 @@
+.card {
+  width: calc(100% / 3);
+  padding: 5px;
+  .card-inner {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    &-title {
+      background-color: cadetblue;
+      padding: 10px;
+    }
+    &-img {
+      img {
+        width: 100%;
+      }
+    }
+    &-body {
+      p {
+        border-bottom: 1px solid #eee;
+        padding: 10px;
+      }
+    }
+  }
+}

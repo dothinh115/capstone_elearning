@@ -1,28 +1,22 @@
 import React from "react";
-import Mainblock from "../../components/Mainblock";
+import { useSelector } from "react-redux";
+import CardItem from "../../components/cardItem/CardItem";
+import Mainblock from "../../components/mainblock/Mainblock";
+import { ReduxRootType } from "../../redux/store";
+import { courseType } from "../../util/config";
 
 type Props = {};
 
 const Home = (props: Props) => {
+  const { courses } = useSelector(
+    (store: ReduxRootType) => store.courseReducer
+  );
   return (
-    <>
-      <Mainblock
-        value={
-          <>
-            <i className="fa-solid fa-arrow-right"></i>
-            Thông báo gì đó ở đây!
-          </>
-        }
-      />
-      <Mainblock
-        headerContent="Demo main block header"
-        value={
-          <>
-            <div>JSX in here</div>
-          </>
-        }
-      />
-    </>
+    <div style={{ display: "flex", flexWrap: "wrap" }}>
+      {courses.map((item: courseType, index: number) => {
+        return <CardItem key={index} item={item} />;
+      })}
+    </div>
   );
 };
 

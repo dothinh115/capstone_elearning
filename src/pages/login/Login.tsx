@@ -1,5 +1,5 @@
 import React from "react";
-import Mainblock from "../../components/Mainblock";
+import Mainblock from "../../components/mainblock/Mainblock";
 
 type Props = {};
 

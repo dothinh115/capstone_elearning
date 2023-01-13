@@ -4,14 +4,17 @@ import { DispatchType } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  courses: null,
+  courses: [],
 };
 
 const courseReducer = createSlice({
   name: "courseReducer",
   initialState,
   reducers: {
-    getAllCoursesAction: (state: courseStateType, action) => {
+    getAllCoursesAction: (
+      state: courseStateType,
+      action: PayloadAction<courseType[]>
+    ) => {
       state.courses = action.payload;
     },
   },
@@ -25,7 +28,9 @@ export default courseReducer.reducer;
 export const getAllCoursesApi = async (dispatch: DispatchType) => {
   try {
     const result = await API.get("/QuanLyKhoaHoc/LayDanhSachKhoaHoc");
-    const action: PayloadAction<courseType> = getAllCoursesAction(result.data);
+    const action: PayloadAction<courseType[]> = getAllCoursesAction(
+      result.data
+    );
     dispatch(action);
   } catch (error) {
     console.log(error);

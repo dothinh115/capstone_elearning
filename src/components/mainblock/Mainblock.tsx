@@ -19,7 +19,7 @@ const Mainblock = ({ headerContent, value, icon, iconColor }: Props) => {
       <div className="main-block-content">
         {icon && (
           <i
-            style={{ marginRight: "5px", color: iconColor }}
+            style={{ marginRight: "5px", color: iconColor, fontSize: "20px" }}
             className={`fa-solid ${icon}`}
           ></i>
         )}

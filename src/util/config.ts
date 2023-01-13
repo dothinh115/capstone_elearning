@@ -31,10 +31,10 @@ export interface courseType {
   luotXem: number;
   hinhAnh: string;
   maNhom: string;
-  ngayTAO: string;
+  ngayTao: string;
   soLuongHocVien: number;
-  nguoiTAO: string;
-  danhMucKhoaHoc: string;
+  nguoiTAO: any;
+  danhMucKhoaHoc: any;
 }
 
 export interface courseStateType {
