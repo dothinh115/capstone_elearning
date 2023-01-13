@@ -1,0 +1,43 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  nav {
+    display: flex;
+    min-height: 50px;
+    padding: 5px 70px 5px 70px;
+    background-color: rgba(black, 0.65);
+    align-items: center;
+    justify-content: space-between;
+    .header-logo {
+      width: 50%;
+      img {
+        height: 50px;
+      }
+    }
+    .header-menu {
+      width: 50%;
+      text-align: right;
+      ul {
+        li {
+          list-style-type: none;
+          display: inline-block;
+          margin-left: 10px;
+          a {
+            color: white;
+            padding: 5px;
+            i {
+              margin-right: 5px;
+            }
+            &.active {
+              background-color: rgba(white, 0.55);
+              border-radius: 5px;
+              color: indigo;
+            }
+          }
+        }
+      }
+    }
+  }
+}

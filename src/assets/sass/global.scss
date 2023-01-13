@@ -1,0 +1,27 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  background-image: url("../img/main-background.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: black;
+  position: relative;
+}
+
+a,
+a:hover {
+  text-decoration: none;
+}
+
+.container {
+  padding-top: 70px !important;
+  width: 75%;
+  margin: auto;
+  background-color: white;
+  min-height: 100vh;
+  box-shadow: 0 0 0 50px rgba(white, 0.15);
+}

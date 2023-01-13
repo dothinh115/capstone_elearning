@@ -9,9 +9,11 @@ const HomeTemplate = (props: Props) => {
   return (
     <>
         <Header />
+        <div className="container">
         <Outlet />
+        </div>
         <Footer />
-    </> 
+    </>
   )
 }
 

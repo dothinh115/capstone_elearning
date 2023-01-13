@@ -9,6 +9,7 @@ import Register from './pages/register/Register';
 import { getAllCoursesApi } from './redux/courseReducer/courseReducer';
 import { DispatchType } from './redux/store';
 import HomeTemplate from './templates/HomeTemplate';
+import "../src/assets/sass/style.scss";
 
 function App() {
   const dispatch:DispatchType = useDispatch();
