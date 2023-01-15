@@ -18,13 +18,13 @@ const CardItem = ({ item }: Props) => {
                   "https://canhme.com/wp-content/uploads/2018/09/Nodejs.png";
               }}
               src={item.hinhAnh}
-              alt=""
+              alt="..." width={321} height={214}
             />
           </div>
           <div className="card-inner-body">
             <p>
               <i className="fa-solid fa-arrow-right"></i>
-              {item.moTa}
+              {item.moTa.length > 27 ? item.moTa.substring(0,27)+ '...':item.moTa}
             </p>
             <p>
               <i className="fa-solid fa-list"></i> Danh mục:{" "}
