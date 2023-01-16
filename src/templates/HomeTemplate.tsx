@@ -1,20 +1,18 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Footer from '../components/footer/Footer'
-import Header from '../components/header/Header'
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Footer from "../components/footer/Footer";
+import Header from "../components/header/Header";
 
-type Props = {}
+type Props = {};
 
 const HomeTemplate = (props: Props) => {
   return (
     <>
-        <Header />
-        <div className="container">
-        <Outlet />
-        </div>
-        <Footer />
+      <Header />
+      <Outlet />
+      <Footer />
     </>
-  )
-}
+  );
+};
 
-export default HomeTemplate
+export default HomeTemplate;
