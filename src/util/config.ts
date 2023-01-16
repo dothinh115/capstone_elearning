@@ -25,6 +25,19 @@ API.interceptors.response.use(
 
 /********** Interface / type **********/
 
+/* Course Reducer */
+interface NguoiTao {
+  taiKhoan: string;
+  hoTen: string;
+  maLoaiNguoiDung: string;
+  tenLoaiNguoiDung: string;
+}
+
+interface DanhMucKhoaHoc {
+  maDanhMucKhoahoc: string;
+  tenDanhMucKhoaHoc: string;
+}
+
 export interface CourseType {
   maKhoaHoc: string;
   biDanh: string;
@@ -35,8 +48,8 @@ export interface CourseType {
   maNhom: string;
   ngayTao: string;
   soLuongHocVien: number;
-  nguoiTAO: any;
-  danhMucKhoaHoc: any;
+  nguoiTAO: NguoiTao;
+  danhMucKhoaHoc: DanhMucKhoaHoc;
 }
 
 export interface CourseStateType {
@@ -44,3 +57,5 @@ export interface CourseStateType {
   randomCoursesArr: CourseType[] | null;
   loading: boolean;
 }
+
+/* Course Reducer */
