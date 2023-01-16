@@ -10,8 +10,8 @@ const CardItem = ({ item }: Props) => {
   return (
     <div className="card_item">
       <div className="card_item_inner">
-        <Link to={`/course/${item.maKhoaHoc}`}>
-          <div className="img">
+        <div className="img">
+          <Link to={`/course/${item.maKhoaHoc}`}>
             <img
               src={item.hinhAnh}
               alt=""
@@ -19,30 +19,33 @@ const CardItem = ({ item }: Props) => {
                 currentTarget.src = "../../img/Nodejs.png";
               }}
             />
-          </div>
-          <div className="body">
+          </Link>
+        </div>
+        <div className="body">
+          <Link to={`/course/${item.maKhoaHoc}`}>
             <h3>
               <i className="fa-solid fa-arrow-right"></i>
               {item.tenKhoaHoc}
             </h3>
-            <p>
-              <i className="fa-solid fa-file-lines"></i>
-              {item.moTa?.length > 100
-                ? item.moTa.substring(0, 200) + "..."
-                : item.moTa}
-            </p>
-          </div>
-          <div className="footer">
-            <p>
-              <i className="fa-solid fa-user"></i>
-              <>{item.nguoiTao?.hoTen}</>
-            </p>
-            <p>
-              <i className="fa-solid fa-list"></i>
-              {item.danhMucKhoaHoc.tenDanhMucKhoaHoc}
-            </p>
-          </div>
-        </Link>
+          </Link>
+
+          <p>
+            <i className="fa-solid fa-file-lines"></i>
+            {item.moTa?.length > 100
+              ? item.moTa.substring(0, 200) + "..."
+              : item.moTa}
+          </p>
+        </div>
+        <div className="footer">
+          <p>
+            <i className="fa-solid fa-user"></i>
+            <>{item.nguoiTao?.hoTen}</>
+          </p>
+          <p>
+            <i className="fa-solid fa-list"></i>
+            {item.danhMucKhoaHoc.tenDanhMucKhoaHoc}
+          </p>
+        </div>
       </div>
     </div>
   );

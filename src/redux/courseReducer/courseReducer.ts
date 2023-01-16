@@ -7,7 +7,7 @@ import {
 } from "../../util/config";
 import { DispatchType } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { suffleArray } from "../../util/function";
+import { randomArray } from "../../util/function";
 
 const initialState: CourseStateType = {
   coursesArr: [],
@@ -57,7 +57,7 @@ export const getAllCoursesApi = async (dispatch: DispatchType) => {
     dispatch(getAllCourses);
     const getRandomCourses: PayloadAction<CourseType[]> =
       getRandomCoursesAction(
-        suffleArray<CourseType>(result.data, numberRandomCourses)
+        randomArray<CourseType>(result.data, numberRandomCourses)
       );
     dispatch(getRandomCourses);
   } catch (error) {
