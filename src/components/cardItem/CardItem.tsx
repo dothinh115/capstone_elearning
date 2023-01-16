@@ -16,8 +16,7 @@ const CardItem = ({ item }: Props) => {
               src={item.hinhAnh}
               alt=""
               onError={({ currentTarget }) => {
-                currentTarget.src =
-                  "https://canhme.com/wp-content/uploads/2018/09/Nodejs.png";
+                currentTarget.src = "../../img/Nodejs.png";
               }}
             />
           </div>
