@@ -3,7 +3,7 @@ import axios, { AxiosInstance } from "axios";
 export const CYBERSOFT_TOKEN: string =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNUUiLCJIZXRIYW5TdHJpbmciOiIwNy8wNi8yMDIzIiwiSGV0SGFuVGltZSI6IjE2ODYwOTYwMDAwMDAiLCJuYmYiOjE2NTczODYwMDAsImV4cCI6MTY4NjI0MzYwMH0.XsCcIZvawxcwye8KVYB2vJK4d3Gbr1XROtNyAL8nypA";
 
-export const numberRandomCourses: number = 8;
+export const numberRandomCourses: number = 6;
 
 //axios config
 export const API: AxiosInstance = axios.create({
@@ -25,7 +25,11 @@ API.interceptors.response.use(
 
 /********** Interface / type **********/
 
+<<<<<<< HEAD
 /* COURSES REDUCER INTERFACE */
+=======
+/* Course Reducer */
+>>>>>>> 67c38234331fdbc406459d7341b2f381b6f48e5d
 interface NguoiTao {
   taiKhoan: string;
   hoTen: string;
@@ -48,7 +52,11 @@ export interface CourseType {
   maNhom: string;
   ngayTao: string;
   soLuongHocVien: number;
+<<<<<<< HEAD
   nguoiTAO: NguoiTao;
+=======
+  nguoiTao: NguoiTao;
+>>>>>>> 67c38234331fdbc406459d7341b2f381b6f48e5d
   danhMucKhoaHoc: DanhMucKhoaHoc;
 }
 
@@ -57,4 +65,9 @@ export interface CourseStateType {
   randomCoursesArr: CourseType[] | null;
   loading: boolean;
 }
+<<<<<<< HEAD
 /* COURSES REDUCER INTERFACE */
+=======
+
+/* Course Reducer */
+>>>>>>> 67c38234331fdbc406459d7341b2f381b6f48e5d
