@@ -24,7 +24,10 @@ const Course = (props: Props) => {
   useEffect(() => {
     if (courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc) {
       dispatch(
-        getRelatedCoursesApi(courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc)
+        getRelatedCoursesApi(
+          courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc,
+          courseDetail?.maKhoaHoc
+        )
       );
     }
   }, [courseDetail]);
@@ -74,7 +77,6 @@ const Course = (props: Props) => {
               <ul>
                 {relatedCourses?.map((item: CourseType, index: number) => {
                   const badge: string = randomColor();
-                  if (item.maKhoaHoc === courseDetail?.maKhoaHoc) return false;
                   return (
                     <li key={index}>
                       <Link to={`/course/${item.maKhoaHoc}`}>

@@ -1,7 +1,6 @@
 .course_detail {
   margin: unset;
   padding: 20px;
-  min-height: 100vh;
   position: relative;
   background-image: url("../../img/19366.jpg");
   background-repeat: no-repeat;
@@ -15,7 +14,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(white, 0.8);
+    background-color: rgba(white, 0.9);
   }
   .container {
     width: 90%;
@@ -100,13 +99,15 @@
             }
             a {
               color: #333;
-              font-size: 15px;
               padding: 5px 0;
               display: inline-block;
               width: 100%;
               i {
                 margin-right: 4px;
               }
+            }
+            .badge {
+              border-radius: 50%;
             }
           }
         }
@@ -118,9 +119,9 @@
       width: 30%;
       border: 1px solid #eee;
       border-radius: 5px;
-      min-height: 100vh;
       background-color: white;
       overflow: hidden;
+      padding-bottom: 20px;
       &_img {
         text-align: center;
         background-image: url("../../img/course_background.jpg");
@@ -162,7 +163,6 @@
           i {
             color: #333;
             margin-right: 4px;
-            font-size: 15px;
             border-radius: 50%;
             border: 1px solid #333;
             width: 25px;
@@ -207,7 +207,6 @@
               i {
                 color: #333;
                 margin-right: 4px;
-                font-size: 15px;
                 border-radius: 50%;
                 border: 1px solid #333;
                 width: 25px;

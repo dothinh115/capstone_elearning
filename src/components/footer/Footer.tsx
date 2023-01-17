@@ -34,8 +34,10 @@ const Footer = (props: Props) => {
             Receive weekly newsletter with educational materials, popular books
             and much more!
           </p>
-          <input type="text" />
-          <button className="btn btn-primary">Gửi</button>
+          <form>
+            <input type="text" placeholder="Your Email" />
+            <button className="btn btn-primary">Send</button>
+          </form>
           <div className="footer_inner_right_icon">
             <i className="fa-brands fa-facebook"></i>
             <i className="fa-brands fa-instagram"></i>

@@ -134,7 +134,7 @@ export const getAllCategoriesApi = async (dispatch: DispatchType) => {
   }
 };
 
-export const getRelatedCoursesApi = (maDanhMuc: string) => {
+export const getRelatedCoursesApi = (maDanhMuc: string, maKhoaHoc: string) => {
   return async (dispatch: DispatchType) => {
     const setLoading: PayloadAction<boolean> = setLoadingAction(true);
     dispatch(setLoading);
@@ -145,8 +145,12 @@ export const getRelatedCoursesApi = (maDanhMuc: string) => {
       const getRelatedCourses: PayloadAction<CourseType[]> =
         getRelatedCoursesAction(
           result.data.length > numberRelatedCourses
-            ? result.data.slice(0, numberRelatedCourses)
-            : result.data
+            ? result.data
+                .slice(0, numberRelatedCourses)
+                .filter((item: CourseType) => item.maKhoaHoc !== maKhoaHoc)
+            : result.data.filter(
+                (item: CourseType) => item.maKhoaHoc !== maKhoaHoc
+              )
         );
       dispatch(getRelatedCourses);
     } catch (error) {
