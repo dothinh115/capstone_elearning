@@ -53,7 +53,7 @@ const Categories = (props: Props) => {
                       {categories?.map(
                         (item: CategoriesType, index: number) => {
                           if (item.maDanhMuc === categoryID)
-                            return item.maDanhMuc;
+                            return item.tenDanhMuc;
                         }
                       )}
                     </h1>
