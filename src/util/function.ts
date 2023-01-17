@@ -1,6 +1,4 @@
-import { colorArr } from "./config";
-
-export const { randomArray, randomColor, randomDiscount } = {
+export const { randomArray, randomDiscount } = {
   randomArray<T>(arr: T[], limit: number): T[] {
     arr = [...arr];
     let result: T[] = [];
@@ -11,10 +9,6 @@ export const { randomArray, randomColor, randomDiscount } = {
       limit--;
     }
     return result;
-  },
-  randomColor(): string {
-    let random: number = Math.floor(Math.random() * colorArr.length);
-    return colorArr[random];
   },
   randomDiscount(): number {
     let random: number = Math.floor(Math.random() * 60);
