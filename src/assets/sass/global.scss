@@ -66,7 +66,7 @@ h1 {
         #fe5b34 50%,
         #ff016d 100%
       );
-      -webkit-mask-image: url("../SVG/headline-curve.svg");
+      mask-image: url("../SVG/headline-curve.svg");
     }
   }
 }
@@ -174,5 +174,43 @@ h1 {
         padding: 10px 0;
       }
     }
+  }
+}
+
+input {
+  transition: all ease 0.5s;
+}
+input:not(input[type="checkbox"]) {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+}
+input:disabled {
+  cursor: not-allowed;
+}
+input:focus {
+  border-color: rgba(128, 189, 255, 0.65) !important;
+  box-shadow: 0 0 0 0.15rem rgba(128, 189, 255, 0.45);
+}
+input.isInvalid {
+  border-color: rgba(255, 0, 0, 0.65) !important;
+  box-shadow: 0 0 0 0.15rem rgba(255, 0, 0, 0.25);
+}
+
+.btn {
+  padding: 7px 15px;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  transition: all ease 0.3s;
+  text-align: center;
+  &-primary {
+    background-color: #007bff;
+    color: white;
   }
 }
