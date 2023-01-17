@@ -1,10 +1,12 @@
 .header {
   margin: unset;
+  background-color: #309255;
+
   nav {
     display: flex;
     min-height: 50px;
-    padding: 5px 10px;
-    background-color: #309255;
+    width: 80%;
+    margin: auto;
     align-items: center;
     justify-content: space-between;
     .header-logo {

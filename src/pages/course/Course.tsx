@@ -45,15 +45,10 @@ const Course = (props: Props) => {
               </span>
               <h1>{courseDetail?.tenKhoaHoc}</h1>
               <div className="main_container_title_author">
-                <img
-                  src="../../img/12693195.jpg"
-                  onError={({ currentTarget }) => {
-                    currentTarget.src = "../../img/Nodejs.png";
-                  }}
-                  alt=""
-                />
-                <span className="author">{courseDetail?.nguoiTao.hoTen}</span> |{" "}
-                <span className="date"> {courseDetail?.ngayTao}</span>
+                <img src="../../img/12693195.jpg" alt="" />
+                <span className="author">
+                  {courseDetail?.nguoiTao.hoTen}
+                </span> | <span className="date"> {courseDetail?.ngayTao}</span>
               </div>
               <div className="main_container_title_info">
                 <i className="fa-solid fa-star"></i>
@@ -90,10 +85,16 @@ const Course = (props: Props) => {
                 })}
                 <li style={{ textAlign: "right" }}>
                   <Link
+                    key="abc"
                     to={`/categories/${courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc}`}
                   >
-                    <i className="fa-solid fa-arrow-right"></i>
-                    Xem tất cả
+                    <span
+                      className="badge badge-primary"
+                      style={{ borderRadius: "5px" }}
+                    >
+                      <i className="fa-solid fa-arrow-right"></i>
+                      Xem tất cả
+                    </span>
                   </Link>
                 </li>
               </ul>
@@ -101,7 +102,13 @@ const Course = (props: Props) => {
           </div>
           <div className="sidebar">
             <div className="sidebar_img">
-              <img src={courseDetail?.hinhAnh} alt="" />
+              <img
+                src={courseDetail?.hinhAnh}
+                onError={({ currentTarget }) => {
+                  currentTarget.src = "../../img/Nodejs.png";
+                }}
+                alt=""
+              />
             </div>
             <div className="sidebar_info">
               <p>
@@ -154,14 +161,12 @@ const Course = (props: Props) => {
               <ul>
                 {categories?.map((item: Categories, index: number) => {
                   return (
-                    <>
-                      <li key={index}>
-                        <Link to={`/categories/${item.maDanhMuc}`}>
-                          <i className="fa-solid fa-arrow-right"></i>
-                          {item.tenDanhMuc}
-                        </Link>
-                      </li>
-                    </>
+                    <li key={index}>
+                      <Link to={`/categories/${item.maDanhMuc}`}>
+                        <i className="fa-solid fa-arrow-right"></i>
+                        {item.tenDanhMuc}
+                      </Link>
+                    </li>
                   );
                 })}
               </ul>
