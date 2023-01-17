@@ -6,15 +6,6 @@ export const CYBERSOFT_TOKEN: string =
 export const numberRandomCourses: number = 6;
 export const numberRelatedCourses: number = 8;
 
-export const colorArr: string[] = [
-  "danger",
-  "info",
-  "primary",
-  "success",
-  "warning",
-  "dark",
-];
-
 //axios config
 export const API: AxiosInstance = axios.create({
   baseURL: "https://elearningnew.cybersoft.edu.vn/api",
@@ -62,7 +53,7 @@ export interface CourseType {
   danhMucKhoaHoc: DanhMucKhoaHoc;
 }
 
-export interface Categories {
+export interface CategoriesType {
   maDanhMuc: string;
   tenDanhMuc: string;
 }
@@ -72,7 +63,7 @@ export interface CourseStateType {
   randomCoursesArr: CourseType[] | null;
   loading: boolean;
   courseDetail: CourseType | null;
-  categories: Categories[] | null;
-  relatedCourses: CourseType[] | null;
+  categories: CategoriesType[] | null;
+  coursesByCategory: CourseType[] | null;
 }
 /* COURSES REDUCER INTERFACE */

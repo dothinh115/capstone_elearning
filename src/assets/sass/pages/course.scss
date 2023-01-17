@@ -91,10 +91,42 @@
         }
         ul {
           margin: 30px 0;
+          counter-reset: li;
+
           li {
             list-style-type: none;
             &:not(:last-of-type) {
               border-bottom: 1px solid #eee;
+              a {
+                position: relative;
+                &::before {
+                  content: counter(li);
+                  counter-increment: li;
+                  margin-right: 7px;
+                  display: inline-block;
+                  width: 30px;
+                  height: 30px;
+                  text-align: center;
+                  line-height: 30px;
+                  background-color: #f9dd94;
+                  font-weight: 600;
+                }
+                &::after {
+                  display: inline-block;
+                  position: absolute;
+                  content: "";
+                  border: 7px solid transparent;
+                  left: 30px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  width: 1px;
+                  height: 1px;
+                  transition: all 0.2s;
+                }
+                &:hover::after {
+                  border-left-color: #f9dd94;
+                }
+              }
             }
             a {
               color: #333;
@@ -104,9 +136,6 @@
               i {
                 margin-right: 4px;
               }
-            }
-            .badge {
-              border-radius: 50%;
             }
           }
         }
@@ -196,13 +225,47 @@
           }
         }
         ul {
+          counter-reset: li;
           li {
             list-style-type: none;
-            margin-top: 10px;
+            padding: 5px 0;
+            &:not(:last-of-type) {
+              border-bottom: 1px solid #eee;
+            }
             a {
               font-size: 14px;
               color: #333;
               line-height: 18px;
+              display: inline-block;
+              width: 100%;
+              position: relative;
+              &::before {
+                content: counter(li);
+                counter-increment: li;
+                margin-right: 7px;
+                display: inline-block;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+                line-height: 30px;
+                background-color: #f9dd94;
+                font-weight: 600;
+              }
+              &::after {
+                display: inline-block;
+                position: absolute;
+                content: "";
+                border: 7px solid transparent;
+                left: 30px;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 1px;
+                height: 1px;
+                transition: all 0.2s;
+              }
+              &:hover::after {
+                border-left-color: #f9dd94;
+              }
               i {
                 color: #333;
                 margin-right: 4px;

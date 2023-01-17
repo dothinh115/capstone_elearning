@@ -3,17 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import {
   getCourseDetailApi,
-  getRelatedCoursesApi,
+  getCoursesByCategoryApi,
 } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { Categories, CourseType } from "../../util/config";
-import { randomColor, randomDiscount } from "../../util/function";
+import { CategoriesType, CourseType } from "../../util/config";
+import { randomDiscount } from "../../util/function";
 
 type Props = {};
 
 const Course = (props: Props) => {
   const { courseID } = useParams<{ courseID: string }>();
-  const { courseDetail, categories, relatedCourses } = useSelector(
+  const { courseDetail, categories, coursesByCategory } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
   const dispatch: DispatchType = useDispatch();
@@ -24,12 +24,16 @@ const Course = (props: Props) => {
   useEffect(() => {
     if (courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc) {
       dispatch(
-        getRelatedCoursesApi(
+        getCoursesByCategoryApi(
           courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc,
           courseDetail?.maKhoaHoc
         )
       );
     }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [courseDetail]);
   return (
     <>
@@ -70,14 +74,11 @@ const Course = (props: Props) => {
                 KHÓA <mark>HỌC</mark> LIÊN QUAN
               </h1>
               <ul>
-                {relatedCourses?.map((item: CourseType, index: number) => {
-                  const badge: string = randomColor();
+                {coursesByCategory?.map((item: CourseType, index: number) => {
+                  if (item.maKhoaHoc === courseID) return false;
                   return (
                     <li key={index}>
                       <Link to={`/course/${item.maKhoaHoc}`}>
-                        <span className={`badge badge-${badge}`}>
-                          {index + 1}
-                        </span>
                         {item.tenKhoaHoc}
                       </Link>
                     </li>
@@ -87,6 +88,7 @@ const Course = (props: Props) => {
                   <Link
                     key="abc"
                     to={`/categories/${courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc}`}
+                    style={{ width: "unset" }}
                   >
                     <span
                       className="badge badge-primary"
@@ -159,11 +161,10 @@ const Course = (props: Props) => {
               </p>
               <h1>Danh mục khóa học</h1>
               <ul>
-                {categories?.map((item: Categories, index: number) => {
+                {categories?.map((item: CategoriesType, index: number) => {
                   return (
                     <li key={index}>
                       <Link to={`/categories/${item.maDanhMuc}`}>
-                        <i className="fa-solid fa-arrow-right"></i>
                         {item.tenDanhMuc}
                       </Link>
                     </li>

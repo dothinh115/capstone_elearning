@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   API,
-  Categories,
+  CategoriesType,
   CourseStateType,
   CourseType,
   numberRandomCourses,
@@ -17,7 +17,7 @@ const initialState: CourseStateType = {
   loading: false,
   courseDetail: null,
   categories: [],
-  relatedCourses: [],
+  coursesByCategory: [],
 };
 
 const courseReducer = createSlice({
@@ -50,7 +50,7 @@ const courseReducer = createSlice({
     },
     getCategoriesAction: (
       state: CourseStateType,
-      action: PayloadAction<Categories[]>
+      action: PayloadAction<CategoriesType[]>
     ) => {
       state.categories = action.payload;
     },
@@ -58,7 +58,7 @@ const courseReducer = createSlice({
       state: CourseStateType,
       action: PayloadAction<CourseType[]>
     ) => {
-      state.relatedCourses = action.payload;
+      state.coursesByCategory = action.payload;
     },
   },
 });
@@ -122,7 +122,7 @@ export const getAllCategoriesApi = async (dispatch: DispatchType) => {
   dispatch(setLoading);
   try {
     const result = await API.get("/QuanLyKhoaHoc/LayDanhMucKhoaHoc");
-    const getCateAction: PayloadAction<Categories[]> = getCategoriesAction(
+    const getCateAction: PayloadAction<CategoriesType[]> = getCategoriesAction(
       result.data
     );
     dispatch(getCateAction);
@@ -134,7 +134,10 @@ export const getAllCategoriesApi = async (dispatch: DispatchType) => {
   }
 };
 
-export const getRelatedCoursesApi = (maDanhMuc: string, maKhoaHoc: string) => {
+export const getCoursesByCategoryApi = (
+  maDanhMuc: string,
+  maKhoaHoc?: string
+) => {
   return async (dispatch: DispatchType) => {
     const setLoading: PayloadAction<boolean> = setLoadingAction(true);
     dispatch(setLoading);
@@ -145,12 +148,8 @@ export const getRelatedCoursesApi = (maDanhMuc: string, maKhoaHoc: string) => {
       const getRelatedCourses: PayloadAction<CourseType[]> =
         getRelatedCoursesAction(
           result.data.length > numberRelatedCourses
-            ? result.data
-                .slice(0, numberRelatedCourses)
-                .filter((item: CourseType) => item.maKhoaHoc !== maKhoaHoc)
-            : result.data.filter(
-                (item: CourseType) => item.maKhoaHoc !== maKhoaHoc
-              )
+            ? result.data.slice(0, numberRelatedCourses)
+            : result.data
         );
       dispatch(getRelatedCourses);
     } catch (error) {
