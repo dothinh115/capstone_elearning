@@ -5,6 +5,7 @@ import {
   CourseStateType,
   CourseType,
   numberRandomCourses,
+  numberRelatedCourses,
 } from "../../util/config";
 import { DispatchType } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
@@ -142,7 +143,11 @@ export const getRelatedCoursesApi = (maDanhMuc: string) => {
         `/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${maDanhMuc}`
       );
       const getRelatedCourses: PayloadAction<CourseType[]> =
-        getRelatedCoursesAction(result.data);
+        getRelatedCoursesAction(
+          result.data.length > numberRelatedCourses
+            ? result.data.slice(0, numberRelatedCourses)
+            : result.data
+        );
       dispatch(getRelatedCourses);
     } catch (error) {
       console.log(error);

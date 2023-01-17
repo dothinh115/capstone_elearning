@@ -44,48 +44,71 @@ section {
     font-size: 48px;
     text-align: center;
     font-weight: 400;
-    mark {
-      background-color: unset;
-      position: relative;
-      &::after {
-        content: "";
-        position: absolute;
-        width: 91px;
-        height: 12px;
-        display: block;
-        bottom: -2px;
-        left: 50%;
-        transform: translateX(-50%) rotate(5deg);
-        background-image: linear-gradient(
-          90deg,
-          #ff016d 0%,
-          #fe5b34 50%,
-          #ff016d 100%
-        );
-        -webkit-mask-image: url("../SVG/headline-curve.svg");
-      }
+  }
+}
+
+h1 {
+  mark {
+    background-color: unset;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 91px;
+      height: 12px;
+      display: block;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(5deg);
+      background-image: linear-gradient(
+        90deg,
+        #ff016d 0%,
+        #fe5b34 50%,
+        #ff016d 100%
+      );
+      -webkit-mask-image: url("../SVG/headline-curve.svg");
     }
   }
 }
 
 .badge {
+  display: inline-block;
   padding: 5px 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
   background-color: #eee;
   font-size: 14px;
   font-weight: 500;
-  &-red {
+  margin-right: 4px;
+  min-width: 30px;
+  min-height: 30px;
+  text-align: center;
+  font-weight: 600;
+  i {
+    margin-right: 5px;
+  }
+  &-danger {
     background-color: red;
-    font-weight: 600;
     color: white;
-    i {
-      margin-right: 5px;
-    }
   }
   &-info {
     background-color: #17a2b8;
-    font-weight: 600;
+    color: white;
+  }
+  &-primary {
+    background-color: #007bff;
+    color: white;
+  }
+  &-success {
+    background-color: #28a745;
+    color: white;
+  }
+  &-warning {
+    color: #212529;
+    background-color: #ffc107;
+  }
+  &-dark {
+    background-color: #343a40;
     color: white;
   }
 }
@@ -98,12 +121,16 @@ section {
     overflow: hidden;
     background-color: #f8f8f8;
     box-shadow: 0 14px 40px rgba(#333333, 0.2);
+    height: 440px;
+    flex-direction: column;
+    display: flex;
+    justify-content: stretch;
     i {
       margin-right: 5px;
       font-size: 20px;
     }
     .img {
-      height: 160px;
+      height: 35%;
       img {
         width: 100%;
         height: 100%;
@@ -113,7 +140,7 @@ section {
     }
     .body {
       padding: 0 10px;
-
+      height: 45%;
       h3 {
         color: #252525;
         font-size: 18px;
@@ -125,7 +152,7 @@ section {
         padding: 10px 0;
         border-top: 1px solid;
         border-color: #ccc;
-        min-height: 135px;
+        overflow: hidden;
         i {
           color: orange;
           font-weight: 700;
@@ -133,6 +160,7 @@ section {
       }
     }
     .footer {
+      height: 20%;
       margin: 10px 0;
       padding: 0 10px;
       color: #252525;

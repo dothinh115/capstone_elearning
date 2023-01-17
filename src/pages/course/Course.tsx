@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import CardItem from "../../components/cardItem/CardItem";
 import {
   getCourseDetailApi,
   getRelatedCoursesApi,
 } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { Categories, CourseType } from "../../util/config";
+import { randomColor } from "../../util/function";
 
 type Props = {};
 
@@ -34,7 +34,7 @@ const Course = (props: Props) => {
         <div className="container">
           <div className="main_container">
             <div className="main_container_title">
-              <span className="badge badge-red">
+              <span className="badge badge-danger">
                 <i className="fa-brands fa-hotjar"></i>-39%
               </span>
               <span className="badge badge-info">
@@ -68,18 +68,32 @@ const Course = (props: Props) => {
               <p>{courseDetail?.moTa}</p>
             </div>
             <div className="main_container_related">
-              <h1>KHÓA HỌC LIÊN QUAN</h1>
+              <h1>
+                KHÓA <mark>HỌC</mark> LIÊN QUAN
+              </h1>
               <ul>
                 {relatedCourses?.map((item: CourseType, index: number) => {
+                  const badge: string = randomColor();
+                  if (item.maKhoaHoc === courseDetail?.maKhoaHoc) return false;
                   return (
                     <li key={index}>
                       <Link to={`/course/${item.maKhoaHoc}`}>
-                        <i className="fa-solid fa-arrow-right"></i>
+                        <span className={`badge badge-${badge}`}>
+                          {index + 1}
+                        </span>
                         {item.tenKhoaHoc}
                       </Link>
                     </li>
                   );
                 })}
+                <li style={{ textAlign: "right" }}>
+                  <Link
+                    to={`/categories/${courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc}`}
+                  >
+                    <i className="fa-solid fa-arrow-right"></i>
+                    Xem tất cả
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>
