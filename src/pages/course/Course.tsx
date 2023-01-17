@@ -7,7 +7,7 @@ import {
 } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { Categories, CourseType } from "../../util/config";
-import { randomColor } from "../../util/function";
+import { randomColor, randomDiscount } from "../../util/function";
 
 type Props = {};
 
@@ -38,7 +38,7 @@ const Course = (props: Props) => {
           <div className="main_container">
             <div className="main_container_title">
               <span className="badge badge-danger">
-                <i className="fa-brands fa-hotjar"></i>-39%
+                <i className="fa-brands fa-hotjar"></i>-{randomDiscount()}%
               </span>
               <span className="badge badge-info">
                 {courseDetail?.danhMucKhoaHoc.tenDanhMucKhoaHoc}
