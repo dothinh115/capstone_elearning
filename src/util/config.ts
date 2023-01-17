@@ -52,10 +52,17 @@ export interface CourseType {
   danhMucKhoaHoc: DanhMucKhoaHoc;
 }
 
+export interface Categories {
+  maDanhMuc: string;
+  tenDanhMuc: string;
+}
+
 export interface CourseStateType {
   coursesArr: CourseType[] | null;
   randomCoursesArr: CourseType[] | null;
   loading: boolean;
   courseDetail: CourseType | null;
+  categories: Categories[] | null;
+  relatedCourses: CourseType[] | null;
 }
 /* COURSES REDUCER INTERFACE */

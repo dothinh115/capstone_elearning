@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Categories from "./pages/categories/Categories";
@@ -12,16 +11,14 @@ import HomeTemplate from "./templates/HomeTemplate";
 import "../src/assets/sass/style.scss";
 
 function App() {
-  const dispatch: DispatchType = useDispatch();
-  useEffect(() => {
-    dispatch(getAllCoursesApi);
-  }, []);
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomeTemplate />}>
           <Route index element={<Home />} />
-          <Route path="categories" element={<Categories />} />
+          <Route path="categories" element={<Categories />}>
+            <Route path=":categoryID" element={<Categories />} />
+          </Route>
           <Route path="course/:courseID" element={<Course />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

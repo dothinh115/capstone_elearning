@@ -1,20 +1,33 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { getCourseDetailApi } from "../../redux/courseReducer/courseReducer";
+import { Link, useParams } from "react-router-dom";
+import CardItem from "../../components/cardItem/CardItem";
+import {
+  getCourseDetailApi,
+  getRelatedCoursesApi,
+} from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
+import { Categories, CourseType } from "../../util/config";
 
 type Props = {};
 
 const Course = (props: Props) => {
   const { courseID } = useParams<{ courseID: string }>();
-  const { courseDetail } = useSelector(
+  const { courseDetail, categories, relatedCourses } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
   const dispatch: DispatchType = useDispatch();
   useEffect(() => {
     dispatch(getCourseDetailApi(courseID));
   }, [courseID]);
+
+  useEffect(() => {
+    if (courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc) {
+      dispatch(
+        getRelatedCoursesApi(courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc)
+      );
+    }
+  }, [courseDetail]);
   return (
     <>
       <section className="course_detail">
@@ -53,6 +66,21 @@ const Course = (props: Props) => {
             </div>
             <div className="main_container_info">
               <p>{courseDetail?.moTa}</p>
+            </div>
+            <div className="main_container_related">
+              <h1>KHÓA HỌC LIÊN QUAN</h1>
+              <ul>
+                {relatedCourses?.map((item: CourseType, index: number) => {
+                  return (
+                    <li key={index}>
+                      <Link to={`/course/${item.maKhoaHoc}`}>
+                        <i className="fa-solid fa-arrow-right"></i>
+                        {item.tenKhoaHoc}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           </div>
           <div className="sidebar">
@@ -106,7 +134,21 @@ const Course = (props: Props) => {
                 <i className="fa-solid fa-check"></i>
                 Booklets
               </p>
-              <h1>Khóa học liên quan</h1>
+              <h1>Danh mục khóa học</h1>
+              <ul>
+                {categories?.map((item: Categories, index: number) => {
+                  return (
+                    <>
+                      <li key={index}>
+                        <Link to={`/categories/${item.maDanhMuc}`}>
+                          <i className="fa-solid fa-arrow-right"></i>
+                          {item.tenDanhMuc}
+                        </Link>
+                      </li>
+                    </>
+                  );
+                })}
+              </ul>
             </div>
           </div>
         </div>

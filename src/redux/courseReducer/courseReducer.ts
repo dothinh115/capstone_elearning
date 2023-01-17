@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   API,
+  Categories,
   CourseStateType,
   CourseType,
   numberRandomCourses,
@@ -14,6 +15,8 @@ const initialState: CourseStateType = {
   randomCoursesArr: [],
   loading: false,
   courseDetail: null,
+  categories: [],
+  relatedCourses: [],
 };
 
 const courseReducer = createSlice({
@@ -44,6 +47,18 @@ const courseReducer = createSlice({
     ) => {
       state.courseDetail = action.payload;
     },
+    getCategoriesAction: (
+      state: CourseStateType,
+      action: PayloadAction<Categories[]>
+    ) => {
+      state.categories = action.payload;
+    },
+    getRelatedCoursesAction: (
+      state: CourseStateType,
+      action: PayloadAction<CourseType[]>
+    ) => {
+      state.relatedCourses = action.payload;
+    },
   },
 });
 
@@ -52,6 +67,8 @@ export const {
   getRandomCoursesAction,
   setLoadingAction,
   getCourseDetailAction,
+  getCategoriesAction,
+  getRelatedCoursesAction,
 } = courseReducer.actions;
 
 export default courseReducer.reducer;
@@ -90,6 +107,43 @@ export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
       const updateCourseDetailAction: PayloadAction<CourseType> =
         getCourseDetailAction(result.data);
       dispatch(updateCourseDetailAction);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      const setLoading: PayloadAction<boolean> = setLoadingAction(false);
+      dispatch(setLoading);
+    }
+  };
+};
+
+export const getAllCategoriesApi = async (dispatch: DispatchType) => {
+  const setLoading: PayloadAction<boolean> = setLoadingAction(true);
+  dispatch(setLoading);
+  try {
+    const result = await API.get("/QuanLyKhoaHoc/LayDanhMucKhoaHoc");
+    const getCateAction: PayloadAction<Categories[]> = getCategoriesAction(
+      result.data
+    );
+    dispatch(getCateAction);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    const setLoading: PayloadAction<boolean> = setLoadingAction(false);
+    dispatch(setLoading);
+  }
+};
+
+export const getRelatedCoursesApi = (maDanhMuc: string) => {
+  return async (dispatch: DispatchType) => {
+    const setLoading: PayloadAction<boolean> = setLoadingAction(true);
+    dispatch(setLoading);
+    try {
+      const result = await API.get(
+        `/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${maDanhMuc}`
+      );
+      const getRelatedCourses: PayloadAction<CourseType[]> =
+        getRelatedCoursesAction(result.data);
+      dispatch(getRelatedCourses);
     } catch (error) {
       console.log(error);
     } finally {
