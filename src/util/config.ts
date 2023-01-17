@@ -56,5 +56,6 @@ export interface CourseStateType {
   coursesArr: CourseType[] | null;
   randomCoursesArr: CourseType[] | null;
   loading: boolean;
+  courseDetail: CourseType | null;
 }
 /* COURSES REDUCER INTERFACE */

@@ -40,7 +40,7 @@ a:hover {
 
 section {
   margin: 50px 0;
-  h1 {
+  &>h1 {
     font-size: 48px;
     text-align: center;
     font-weight: 400;
@@ -65,5 +65,27 @@ section {
         -webkit-mask-image: url("../SVG/headline-curve.svg");
       }
     }
+  }
+}
+
+.badge {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  font-size: 14px;
+  font-weight: 500;
+  &-red {
+    background-color: red;
+    font-weight: 600;
+    color: white;
+    i {
+      margin-right: 5px;
+    }
+  }
+  &-info {
+    background-color: #17a2b8;
+    font-weight: 600;
+    color: white;
   }
 }

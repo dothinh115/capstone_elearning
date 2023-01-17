@@ -87,7 +87,7 @@ const Home = (props: Props) => {
         </div>
       </section>
       <section className="courses">
-        <h1>Khóa học tiêu biểu</h1>
+        <h1>Khóa <mark>học</mark> tiêu biểu</h1>
         <div className="random_courses">
           {randomCoursesArr?.map((item: CourseType, index: number) => {
             return <CardItem item={item} key={index} />;

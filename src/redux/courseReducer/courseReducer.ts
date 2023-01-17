@@ -13,6 +13,7 @@ const initialState: CourseStateType = {
   coursesArr: [],
   randomCoursesArr: [],
   loading: false,
+  courseDetail: null,
 };
 
 const courseReducer = createSlice({
@@ -37,11 +38,21 @@ const courseReducer = createSlice({
     ) => {
       state.loading = action.payload;
     },
+    getCourseDetailAction: (
+      state: CourseStateType,
+      action: PayloadAction<CourseType>
+    ) => {
+      state.courseDetail = action.payload;
+    },
   },
 });
 
-export const { getAllCoursesAction, getRandomCoursesAction, setLoadingAction } =
-  courseReducer.actions;
+export const {
+  getAllCoursesAction,
+  getRandomCoursesAction,
+  setLoadingAction,
+  getCourseDetailAction,
+} = courseReducer.actions;
 
 export default courseReducer.reducer;
 
@@ -66,4 +77,24 @@ export const getAllCoursesApi = async (dispatch: DispatchType) => {
     const setLoading: PayloadAction<boolean> = setLoadingAction(false);
     dispatch(setLoading);
   }
+};
+
+export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
+  return async (dispatch: DispatchType) => {
+    const setLoading: PayloadAction<boolean> = setLoadingAction(true);
+    dispatch(setLoading);
+    try {
+      const result = await API.get(
+        `/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${maKhoaHoc}`
+      );
+      const updateCourseDetailAction: PayloadAction<CourseType> =
+        getCourseDetailAction(result.data);
+      dispatch(updateCourseDetailAction);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      const setLoading: PayloadAction<boolean> = setLoadingAction(false);
+      dispatch(setLoading);
+    }
+  };
 };
