@@ -68,6 +68,7 @@
           border: 1px solid #ccc;
           padding: 10px;
           line-height: 20px;
+          min-height: 55px;
           i {
             margin-right: 10px;
             font-size: 18px;
@@ -83,7 +84,15 @@
         .card_item {
           width: calc(100% / 2 - 15px);
         }
-
+        h1 {
+          &.notfound {
+            text-align: center;
+            width: 100%;
+            img {
+              width: 100px;
+            }
+          }
+        }
         &_btn {
           width: 100%;
           text-align: center;

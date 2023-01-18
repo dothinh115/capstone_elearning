@@ -1,10 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
 import {
-  setCheckCategories,
-  setLimitCourses,
+  setCheckCategoriesAction,
+  setLimitCoursesAction,
 } from "../../redux/categoriesReducer/categoriesReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import {
@@ -14,7 +14,6 @@ import {
   limitCategoriesCoursesViewMore,
   randomBadgeArr,
 } from "../../util/config";
-import { randomBadge } from "../../util/function";
 
 type Props = {};
 
@@ -42,26 +41,25 @@ const Categories = (props: Props) => {
       searchParams.delete("categories");
       setSearchParams(searchParams);
     }
-    dispatch(setCheckCategories(arr));
+    dispatch(setCheckCategoriesAction(arr));
   };
 
-  const coursesByCategories = (): any => {
+  const coursesByCategories = (): CourseType[] => {
     let arr: CourseType[] = [];
     if (checkedCategories !== null) {
       for (let value of checkedCategories!) {
-        coursesArr?.map((item: CourseType) => {
-          if (item.danhMucKhoaHoc.maDanhMucKhoahoc === value)
-            arr = [...arr, item];
-        });
+        coursesArr?.map((item: CourseType) =>
+          item.danhMucKhoaHoc.maDanhMucKhoahoc === value
+            ? (arr = [...arr, item])
+            : (arr = [...arr])
+        );
       }
     }
-
-    if (arr.length === 0) return coursesArr;
     return arr;
   };
 
   const checkCheked = (maDanhMuc: string): boolean => {
-    let params: any = searchParams.get("categories");
+    let params: string | null | string[] = searchParams.get("categories");
     if (params) {
       params = params.split("+");
       for (let value of params) {
@@ -72,7 +70,7 @@ const Categories = (props: Props) => {
   };
 
   useEffect(() => {
-    let params: any = checkedCategories?.join("+");
+    let params: string | undefined | string[] = checkedCategories?.join("+");
     if (params !== undefined) {
       setSearchParams({
         categories: params,
@@ -81,11 +79,11 @@ const Categories = (props: Props) => {
   }, [checkedCategories]);
 
   useEffect(() => {
-    let params: any = searchParams.get("categories");
+    let params: string | null | string[] = searchParams.get("categories");
     if (params) {
       params = params.split("+");
-      dispatch(setCheckCategories(params));
-      dispatch(setLimitCourses(limitCategoriesCourses));
+      dispatch(setCheckCategoriesAction(params));
+      dispatch(setLimitCoursesAction(limitCategoriesCourses));
     }
   }, []);
 
@@ -128,33 +126,34 @@ const Categories = (props: Props) => {
             </div>
           </div>
           <div className="categories_container_main">
-            <div className="categories_container_main_searchbar"></div>
             <div className="categories_container_main_body">
               <div className="selectedCategories">
                 <i className="fa-solid fa-arrow-right"></i>
                 Khóa học đã chọn:{" "}
-                {checkedCategories === null ? (
-                  <span className="badge badge-info">Tất cả khóa học</span>
-                ) : (
-                  <>
-                    {checkedCategories?.map((item: string, index: number) => {
-                      const find = categories?.find(
-                        (val: CategoriesType) => val.maDanhMuc === item
-                      );
-                      if (find !== undefined)
-                        return (
-                          <span
-                            className={`badge badge-${randomBadgeArr[index]}`}
-                            key={index}
-                          >
-                            {find.tenDanhMuc}
-                          </span>
-                        );
-                    })}
-                  </>
-                )}
+                {checkedCategories?.map((item: string, index: number) => {
+                  const find = categories?.find(
+                    (val: CategoriesType) => val.maDanhMuc === item
+                  );
+                  return (
+                    find !== undefined && (
+                      <span
+                        className={`badge badge-${randomBadgeArr[index]}`}
+                        key={index}
+                      >
+                        {find.tenDanhMuc}
+                      </span>
+                    )
+                  );
+                })}
               </div>
-              {coursesByCategories()?.length <= limitCouses ? (
+
+              {coursesByCategories()!?.length === 0 && (
+                <h1 className="notfound">
+                  <img src="../../img/notfound.png" alt="" />
+                  <div>Chưa có gì ở đây!</div>
+                </h1>
+              )}
+              {coursesByCategories()!?.length <= limitCouses ? (
                 <>
                   {coursesByCategories()?.map(
                     (item: CourseType, index: number) => {
@@ -172,14 +171,14 @@ const Categories = (props: Props) => {
                 </>
               )}
 
-              {coursesByCategories()?.slice(0, limitCouses).length >=
+              {coursesByCategories()!?.slice(0, limitCouses).length >=
                 limitCouses && (
                 <div className="categories_container_main_body_btn">
                   <button
                     className="btn"
                     onClick={() => {
                       dispatch(
-                        setLimitCourses(
+                        setLimitCoursesAction(
                           limitCouses + limitCategoriesCoursesViewMore
                         )
                       );

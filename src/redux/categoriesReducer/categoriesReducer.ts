@@ -23,13 +23,13 @@ const categoriesReducer = createSlice({
     ) => {
       state.categories = action.payload;
     },
-    setCheckCategories: (
+    setCheckCategoriesAction: (
       state: CategoriesStateType,
       action: PayloadAction<string[] | null>
     ) => {
       state.checkedCategories = action.payload;
     },
-    setLimitCourses: (
+    setLimitCoursesAction: (
       state: CategoriesStateType,
       action: PayloadAction<number>
     ) => {
@@ -38,8 +38,11 @@ const categoriesReducer = createSlice({
   },
 });
 
-export const { getCategoriesAction, setCheckCategories, setLimitCourses } =
-  categoriesReducer.actions;
+export const {
+  getCategoriesAction,
+  setCheckCategoriesAction,
+  setLimitCoursesAction,
+} = categoriesReducer.actions;
 
 export default categoriesReducer.reducer;
 
