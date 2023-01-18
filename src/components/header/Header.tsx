@@ -9,7 +9,7 @@ const Header = (props: Props) => {
       <nav>
         <div className="header-logo">
           <NavLink to="/">
-            <img src="./img/logo.png" alt="" />
+            <img src="../../img/logo.png" alt="" />
           </NavLink>
         </div>
         <div className="header-menu">

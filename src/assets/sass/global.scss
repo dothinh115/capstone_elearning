@@ -5,13 +5,9 @@
 }
 
 body {
-  background-image: url("../img/main-background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-color: black;
-  background-attachment: fixed;
   position: relative;
   font-family: "Montserrat", sans-serif;
+  font-size: 15px;
 }
 
 a,
@@ -19,13 +15,11 @@ a:hover {
   text-decoration: none;
 }
 
-.container {
-  padding: 70px 10px 0 10px;
-  width: 75%;
-  margin: auto;
-  background-color: rgba(white, 0.35);
-  min-height: 100vh;
-  box-shadow: 0 0 0 50px rgba(white, 0.15);
+.btn {
+  box-shadow: 0 10px 24px rgba(black, 0.42);
+  padding: 5px;
+  border-radius: 5px;
+  transition: all 0.5s ease;
 }
 
 .main-block {
@@ -42,5 +36,181 @@ a:hover {
       color: dimgrey;
       font-weight: 200;
     }
+  }
+}
+
+section {
+  & > h1 {
+    font-size: 48px;
+    text-align: center;
+    font-weight: 400;
+  }
+}
+
+h1 {
+  mark {
+    background-color: unset;
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      width: 91px;
+      height: 12px;
+      display: block;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%) rotate(5deg);
+      background-image: linear-gradient(
+        90deg,
+        #ff016d 0%,
+        #fe5b34 50%,
+        #ff016d 100%
+      );
+      mask-image: url("../SVG/headline-curve.svg");
+    }
+  }
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #eee;
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 4px;
+  min-width: 30px;
+  min-height: 30px;
+  text-align: center;
+  font-weight: 600;
+  i {
+    margin-right: 5px;
+  }
+  &-danger {
+    background-color: red;
+    color: white;
+  }
+  &-info {
+    background-color: #17a2b8;
+    color: white;
+  }
+  &-primary {
+    background-color: #007bff;
+    color: white;
+  }
+  &-success {
+    background-color: #28a745;
+    color: white;
+  }
+  &-warning {
+    color: #212529;
+    background-color: #ffc107;
+  }
+  &-dark {
+    background-color: #343a40;
+    color: white;
+  }
+}
+
+.card_item {
+  width: calc(100% / 3);
+  padding: 15px;
+  &_inner {
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f8f8f8;
+    box-shadow: 0 14px 40px rgba(#333333, 0.2);
+    height: 440px;
+    flex-direction: column;
+    display: flex;
+    justify-content: stretch;
+    i {
+      margin-right: 5px;
+      font-size: 20px;
+    }
+    .img {
+      height: 35%;
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      background-color: white;
+    }
+    .body {
+      padding: 0 10px;
+      height: 45%;
+      h3 {
+        color: #252525;
+        font-size: 18px;
+        font-weight: 500;
+        padding: 10px 0;
+      }
+      p {
+        color: #252525;
+        padding: 10px 0;
+        border-top: 1px solid;
+        border-color: #ccc;
+        overflow: hidden;
+        i {
+          color: orange;
+          font-weight: 700;
+        }
+      }
+    }
+    .footer {
+      height: 20%;
+      margin: 10px 0;
+      padding: 0 10px;
+      color: #252525;
+      i {
+        color: green;
+        font-weight: 700;
+      }
+      p {
+        border-top: 1px solid;
+        border-color: #ccc;
+        padding: 10px 0;
+      }
+    }
+  }
+}
+
+input {
+  transition: all ease 0.5s;
+}
+input:not(input[type="checkbox"]) {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+}
+input:disabled {
+  cursor: not-allowed;
+}
+input:focus {
+  border-color: rgba(128, 189, 255, 0.65) !important;
+  box-shadow: 0 0 0 0.15rem rgba(128, 189, 255, 0.45);
+}
+input.isInvalid {
+  border-color: rgba(255, 0, 0, 0.65) !important;
+  box-shadow: 0 0 0 0.15rem rgba(255, 0, 0, 0.25);
+}
+
+.btn {
+  padding: 7px 15px;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+  transition: all ease 0.3s;
+  text-align: center;
+  &-primary {
+    background-color: #007bff;
+    color: white;
   }
 }

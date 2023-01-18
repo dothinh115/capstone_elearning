@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { CourseType } from "../../util/config";
 
 type Props = {
@@ -7,37 +8,46 @@ type Props = {
 
 const CardItem = ({ item }: Props) => {
   return (
-    <>
-      <div className="card">
-        <div className="card-inner">
-          <div className="card-inner-title">{item.tenKhoaHoc}</div>
-          <div className="card-inner-img">
+    <div className="card_item">
+      <div className="card_item_inner">
+        <div className="img">
+          <Link to={`/course/${item.maKhoaHoc}`}>
             <img
-              onError={({ currentTarget }) => {
-                currentTarget.src =
-                  "https://canhme.com/wp-content/uploads/2018/09/Nodejs.png";
-              }}
               src={item.hinhAnh}
-              alt="..." width={321} height={214}
+              alt=""
+              onError={({ currentTarget }) => {
+                currentTarget.src = "../../img/Nodejs.png";
+              }}
             />
-          </div>
-          <div className="card-inner-body">
-            <p>
+          </Link>
+        </div>
+        <div className="body">
+          <Link to={`/course/${item.maKhoaHoc}`}>
+            <h3>
               <i className="fa-solid fa-arrow-right"></i>
-              {item.moTa.length > 27 ? item.moTa.substring(0,27)+ '...':item.moTa}
-            </p>
-            <p>
-              <i className="fa-solid fa-list"></i> Danh mục:{" "}
-              {item.danhMucKhoaHoc.tenDanhMucKhoaHoc}
-            </p>
-            <p>
-              <i className="fa-solid fa-calendar-days"></i> Ngày tạo:{" "}
-              {item.ngayTao}
-            </p>
-          </div>
+              {item.tenKhoaHoc}
+            </h3>
+          </Link>
+
+          <p>
+            <i className="fa-solid fa-file-lines"></i>
+            {item.moTa?.length > 170
+              ? item.moTa.substring(0, 169) + "..."
+              : item.moTa}
+          </p>
+        </div>
+        <div className="footer">
+          <p>
+            <i className="fa-solid fa-user"></i>
+            <>{item.nguoiTao?.hoTen}</>
+          </p>
+          <p>
+            <i className="fa-solid fa-list"></i>
+            {item.danhMucKhoaHoc.tenDanhMucKhoaHoc}
+          </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

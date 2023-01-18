@@ -1,13 +1,12 @@
 .header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  margin: unset;
+  background-color: #309255;
+
   nav {
     display: flex;
     min-height: 50px;
-    padding: 5px 70px 5px 70px;
-    background-color: rgba(black, 0.65);
+    width: 80%;
+    margin: auto;
     align-items: center;
     justify-content: space-between;
     .header-logo {
