@@ -8,6 +8,7 @@
     margin: auto;
     display: flex;
     gap: 80px;
+    max-width: 1400px;
     &_left {
       width: calc(100% / 3);
       p {

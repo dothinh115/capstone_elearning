@@ -14,7 +14,7 @@
         border-top: 1px solid #f8f8f8;
         padding-top: 10px;
         margin-top: 10px;
-        font-size: 65px;
+        font-size: 45px;
         line-height: 75px;
       }
       &_title {
@@ -65,6 +65,7 @@
       &_info {
         p {
           line-height: 30px;
+          font-size: 15px;
         }
         padding: 40px 0;
         border-bottom: 1px solid #f8f8f8;
@@ -164,7 +165,7 @@
         }
       }
       &_info {
-        padding: 30px;
+        padding: 5px;
         p {
           display: flex;
           justify-content: space-between;
@@ -196,7 +197,7 @@
         }
       }
       &_footer {
-        padding: 0 30px;
+        padding: 0 5px;
         h1 {
           margin: 20px 0;
         }
