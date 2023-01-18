@@ -16,9 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeTemplate />}>
           <Route index element={<Home />} />
-          <Route path="categories" element={<Categories />}>
-            <Route path=":categoryID" element={<Categories />} />
-          </Route>
+          <Route path="categories" element={<Categories />} />
           <Route path="course/:courseID" element={<Course />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />

@@ -1,52 +1,76 @@
 .categories {
+  margin: 30px 0;
   &_container {
     width: 80%;
     margin: auto;
-    h1 {
-      margin: 30px 0;
-      font-size: 35px;
-      text-align: center;
-    }
-    ul {
-      counter-reset: li;
-      li {
-        list-style-type: none;
-        padding: 10px 0;
-        &:not(:last-of-type) {
-          border-bottom: 1px solid #eee;
-        }
-        a {
-          color: #333;
-          display: inline-block;
-          width: 100%;
-          font-size: 20px;
+    display: flex;
+    gap: 20px;
+    &_sidebar {
+      width: 25%;
+      &_inner {
+        border: 1px solid #eee;
+        border-radius: 5px;
+        overflow: hidden;
+        background-color: white;
+        &_header {
+          background-image: url("../../img/1000_F_224901003_4KNpLNpMXCSLeVcUHScBaEu4MLEJ9wt3.jpg");
+          background-repeat: no-repeat;
           position: relative;
-          &::before {
-            display: inline-block;
-            content: counter(li);
-            counter-increment: li;
-            margin-right: 10px;
-            height: 35px;
-            width: 35px;
-            text-align: center;
-            line-height: 35px;
-            background-color: #f9dd94;
+          h1 {
+            padding: 20px 10px;
+            color: white;
+            position: relative;
+            z-index: 1;
+            i {
+              margin-right: 10px;
+            }
           }
           &::after {
-            display: inline-block;
             position: absolute;
+            display: block;
             content: "";
-            width: 1px;
-            height: 1px;
-            border: 7px solid transparent;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 35px;
-            transition: all 0.2s;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(black, 0.5);
+            z-index: 0;
           }
-          &:hover::after {
-            border-left-color: #f9dd94;
+        }
+        &_body {
+          padding: 30px;
+          h1 {
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
           }
+          ul {
+            padding: 10px 0;
+            li {
+              list-style-type: none;
+              margin-bottom: 10px;
+              input {
+                margin-right: 10px;
+              }
+            }
+          }
+        }
+      }
+    }
+    &_main {
+      width: 75%;
+      &_body {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        .selectedCategories {
+          width: 100%;
+          background-color: white;
+          border: 1px solid #ccc;
+          padding: 5px;
+        }
+        .card_item {
+          width: calc(100% / 3 - 7px);
+          padding: unset;
         }
       }
     }

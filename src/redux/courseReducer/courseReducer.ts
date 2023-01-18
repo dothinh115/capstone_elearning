@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   API,
-  CategoriesType,
   CourseStateType,
   CourseType,
   numberRandomCourses,
@@ -16,7 +15,6 @@ const initialState: CourseStateType = {
   randomCoursesArr: [],
   loading: false,
   courseDetail: null,
-  categories: [],
   coursesByCategory: [],
 };
 
@@ -48,12 +46,7 @@ const courseReducer = createSlice({
     ) => {
       state.courseDetail = action.payload;
     },
-    getCategoriesAction: (
-      state: CourseStateType,
-      action: PayloadAction<CategoriesType[]>
-    ) => {
-      state.categories = action.payload;
-    },
+
     getRelatedCoursesAction: (
       state: CourseStateType,
       action: PayloadAction<CourseType[]>
@@ -68,7 +61,6 @@ export const {
   getRandomCoursesAction,
   setLoadingAction,
   getCourseDetailAction,
-  getCategoriesAction,
   getRelatedCoursesAction,
 } = courseReducer.actions;
 
@@ -123,23 +115,6 @@ export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
       dispatch(setLoading);
     }
   };
-};
-
-export const getAllCategoriesApi = async (dispatch: DispatchType) => {
-  const setLoading: PayloadAction<boolean> = setLoadingAction(true);
-  dispatch(setLoading);
-  try {
-    const result = await API.get("/QuanLyKhoaHoc/LayDanhMucKhoaHoc");
-    const getCateAction: PayloadAction<CategoriesType[]> = getCategoriesAction(
-      result.data
-    );
-    dispatch(getCateAction);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    const setLoading: PayloadAction<boolean> = setLoadingAction(false);
-    dispatch(setLoading);
-  }
 };
 
 export const getCoursesByCategoryApi = (

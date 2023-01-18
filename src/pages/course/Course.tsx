@@ -13,8 +13,11 @@ type Props = {};
 
 const Course = (props: Props) => {
   const { courseID } = useParams<{ courseID: string }>();
-  const { courseDetail, categories, coursesArr } = useSelector(
+  const { courseDetail, coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
+  );
+  const { categories } = useSelector(
+    (store: ReduxRootType) => store.categoriesReducer
   );
   const dispatch: DispatchType = useDispatch();
   useEffect(() => {

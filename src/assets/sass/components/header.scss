@@ -1,8 +1,11 @@
 .header {
   background-color: #309255;
+  background-image: url("../../img/nav.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   nav {
     display: flex;
-    min-height: 50px;
+    min-height: 44px;
     width: 80%;
     margin: auto;
     align-items: center;

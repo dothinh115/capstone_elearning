@@ -1,4 +1,6 @@
-export const { randomArray, randomDiscount } = {
+import { randomBadgeArr } from "./config";
+
+export const { randomArray, randomDiscount, randomBadge } = {
   randomArray<T>(arr: T[], limit: number): T[] {
     arr = [...arr];
     let result: T[] = [];
@@ -16,5 +18,9 @@ export const { randomArray, randomDiscount } = {
       random = Math.floor(Math.random() * 60);
     }
     return random;
+  },
+  randomBadge(): string {
+    let random: number = Math.floor(Math.random() * randomBadgeArr.length);
+    return randomBadgeArr[random];
   },
 };

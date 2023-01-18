@@ -1,88 +1,118 @@
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
-import { getCoursesByCategoryApi } from "../../redux/courseReducer/courseReducer";
+import {
+  checkCategories,
+  unCheckCategories,
+} from "../../redux/categoriesReducer/categoriesReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { CategoriesType, CourseType } from "../../util/config";
+import { randomBadge } from "../../util/function";
 
 type Props = {};
 
 const Categories = (props: Props) => {
-  const { categories, randomCoursesArr, coursesByCategory } = useSelector(
+  const { categories, checkedCategories } = useSelector(
+    (store: ReduxRootType) => store.categoriesReducer
+  );
+  const { coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
-  const { categoryID } = useParams<{ categoryID: string }>();
   const dispatch: DispatchType = useDispatch();
-  useEffect(() => {
-    if (categoryID) {
-      dispatch(getCoursesByCategoryApi(categoryID));
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
+
+  const checkboxHandle = (e: { target: HTMLInputElement }) => {
+    if (e.target.checked) {
+      dispatch(checkCategories(e.target.value));
+    } else {
+      dispatch(unCheckCategories(e.target.value));
+    }
+  };
+
+  const coursesByCategories = (): CourseType[] => {
+    let arr: CourseType[] = [];
+    for (let value of checkedCategories!) {
+      coursesArr?.map((item: CourseType) => {
+        if (item.danhMucKhoaHoc.maDanhMucKhoahoc === value) {
+          arr = [...arr, item];
+        }
       });
     }
-  }, [categoryID]);
+    return arr;
+  };
+
   return (
     <>
       <section className="categories">
-        <div
-          className="categories_container"
-          style={{ width: !categoryID ? "80%" : "100%" }}
-        >
-          <>
-            {!categoryID && <h1>DANH MỤC KHÓA HỌC</h1>}
-
-            <ul>
-              {!categoryID ? (
-                <>
+        <div className="categories_container">
+          <div className="categories_container_sidebar">
+            <div className="categories_container_sidebar_inner">
+              <div className="categories_container_sidebar_inner_header">
+                <h1>
+                  <i className="fa-solid fa-list"></i>Bộ lọc
+                </h1>
+              </div>
+              <div className="categories_container_sidebar_inner_body">
+                <h1>Tất cả danh mục</h1>
+                <ul>
                   {categories?.map((item: CategoriesType, index: number) => {
                     return (
-                      <li key={index}>
-                        <Link to={`/categories/${item.maDanhMuc}`}>
-                          {item.tenDanhMuc}
-                        </Link>
+                      <li>
+                        <input
+                          type="checkbox"
+                          value={item.maDanhMuc}
+                          onChange={checkboxHandle}
+                        />
+                        {item.tenDanhMuc}
                       </li>
                     );
+                  })}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="categories_container_main">
+            <div className="categories_container_main_searchbar"></div>
+            <div className="categories_container_main_body">
+              <div className="selectedCategories">
+                Khóa học đã chọn:{" "}
+                {coursesByCategories()?.length === 0 ? (
+                  <>
+                    <span className="badge badge-info">Tất cả khóa học</span>
+                  </>
+                ) : (
+                  <>
+                    {checkedCategories?.map((item: string, index: number) => {
+                      const find = categories?.find(
+                        (val: CategoriesType) => val.maDanhMuc === item
+                      );
+                      if (find !== undefined)
+                        return (
+                          <span className={`badge badge-${randomBadge()}`}>
+                            {find.tenDanhMuc}
+                          </span>
+                        );
+                    })}
+                  </>
+                )}
+              </div>
+              {coursesByCategories()?.length === 0 ? (
+                <>
+                  {coursesArr?.map((item: CourseType, index: number) => {
+                    return <CardItem item={item} key={index} />;
                   })}
                 </>
               ) : (
                 <>
-                  <section className="courses" style={{ marginTop: "unset" }}>
-                    <h1>
-                      {categories?.map(
-                        (item: CategoriesType, index: number) => {
-                          if (item.maDanhMuc === categoryID)
-                            return item.tenDanhMuc;
-                        }
-                      )}
-                    </h1>
-                    <div className="random_courses">
-                      {coursesByCategory?.map(
-                        (item: CourseType, index: number) => {
-                          return <CardItem item={item} key={index} />;
-                        }
-                      )}
-                    </div>
-                  </section>
+                  {coursesByCategories()?.map(
+                    (item: CourseType, index: number) => {
+                      return <CardItem item={item} key={index} />;
+                    }
+                  )}
                 </>
               )}
-            </ul>
-          </>
+            </div>
+          </div>
         </div>
       </section>
-      {!categoryID && (
-        <section className="courses">
-          <h1>
-            Khóa <mark>học</mark> tiêu biểu
-          </h1>
-          <div className="random_courses">
-            {randomCoursesArr?.map((item: CourseType, index: number) => {
-              return <CardItem item={item} key={index} />;
-            })}
-          </div>
-        </section>
-      )}
     </>
   );
 };

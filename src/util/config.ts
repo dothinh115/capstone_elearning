@@ -5,6 +5,14 @@ export const CYBERSOFT_TOKEN: string =
 
 export const numberRandomCourses: number = 3;
 export const numberRelatedCourses: number = 8;
+export const randomBadgeArr: string[] = [
+  "danger",
+  "info",
+  "primary",
+  "success",
+  "warning",
+  "dark",
+];
 
 //axios config
 export const API: AxiosInstance = axios.create({
@@ -54,17 +62,22 @@ export interface CourseType {
   discount?: number;
 }
 
-export interface CategoriesType {
-  maDanhMuc: string;
-  tenDanhMuc: string;
-}
-
 export interface CourseStateType {
   coursesArr: CourseType[] | null;
   randomCoursesArr: CourseType[] | null;
   loading: boolean;
   courseDetail: CourseType | null;
-  categories: CategoriesType[] | null;
   coursesByCategory: CourseType[] | null;
 }
 /* COURSES REDUCER INTERFACE */
+
+export interface CategoriesType {
+  maDanhMuc: string;
+  tenDanhMuc: string;
+}
+
+export interface CategoriesStateType {
+  categories: CategoriesType[] | null;
+  checkedCategories?: string[] | null;
+}
+/* CATEGORIES REDUCER INTERFACE */
