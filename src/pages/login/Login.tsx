@@ -7,7 +7,7 @@ const Login = (props: Props) => {
   return (
     <section className="login">
       <div className="login_header">
-        <h1>ĐĂNG NHẬP</h1>
+        <h1>Đăng nhập</h1>
         <Link to="/" className="badge">
           <i className="fa-solid fa-x"></i>
         </Link>

@@ -12,10 +12,12 @@
     border-bottom: 1px solid #eee;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     h1 {
-      font-size: 30px;
+      font-size: 20px;
       font-weight: 600;
       text-align: left;
+      padding: 0 10px;
     }
     a {
       text-align: center;
