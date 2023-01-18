@@ -38,7 +38,7 @@ const Categories = (props: Props) => {
     dispatch(setCheckCategories(arr));
 
     dispatch(setLimitCourses(limitCategoriesCourses));
-    let params: any = searchParams.get("params");
+    let params: any = searchParams.get("categories");
     params = JSON.parse(params);
     if (params === null) params = [];
     if (e.target.checked) {
@@ -48,12 +48,12 @@ const Categories = (props: Props) => {
       if (index !== -1) params.splice(index, 1);
     }
     if (params.length === 0) {
-      searchParams.delete("params");
+      searchParams.delete("categories");
       setSearchParams(params);
     } else {
       params = JSON.stringify(params);
       setSearchParams({
-        params,
+        categories: params,
       });
     }
   };
@@ -79,16 +79,12 @@ const Categories = (props: Props) => {
   };
 
   useEffect(() => {
-    let params: any = searchParams.get("params");
+    let params: any = searchParams.get("categories");
     if (params) {
       params = JSON.parse(params);
       dispatch(setCheckCategories(params));
     }
   }, []);
-
-  useEffect(() => {
-    console.log("render");
-  });
 
   return (
     <>
