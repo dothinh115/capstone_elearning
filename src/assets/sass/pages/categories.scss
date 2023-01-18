@@ -84,8 +84,13 @@
           width: calc(100% / 2 - 15px);
           padding: unset;
         }
-        button {
-          margin: auto;
+
+        &_btn {
+          width: 100%;
+          text-align: center;
+          button {
+            margin: auto;
+          }
         }
       }
     }

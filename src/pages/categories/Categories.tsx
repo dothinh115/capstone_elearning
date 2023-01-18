@@ -171,20 +171,23 @@ const Categories = (props: Props) => {
                     })}
                 </>
               )}
+
               {coursesByCategories()?.slice(0, limitCouses).length >=
                 limitCouses && (
-                <button
-                  className="btn"
-                  onClick={() => {
-                    dispatch(
-                      setLimitCourses(
-                        limitCouses + limitCategoriesCoursesViewMore
-                      )
-                    );
-                  }}
-                >
-                  Xem thêm
-                </button>
+                <div className="categories_container_main_body_btn">
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      dispatch(
+                        setLimitCourses(
+                          limitCouses + limitCategoriesCoursesViewMore
+                        )
+                      );
+                    }}
+                  >
+                    Xem thêm
+                  </button>
+                </div>
               )}
             </div>
           </div>

@@ -5,8 +5,8 @@ export const CYBERSOFT_TOKEN: string =
 
 export const numberRandomCourses: number = 3;
 export const numberRelatedCourses: number = 8;
-export const limitCategoriesCourses: number = 9; // thu gọn khóa học ở /categories
-export const limitCategoriesCoursesViewMore: number = 6; // bấm xem thêm sẽ hiện thêm
+export const limitCategoriesCourses: number = 6; // thu gọn khóa học ở /categories
+export const limitCategoriesCoursesViewMore: number = 4; // bấm xem thêm sẽ hiện thêm
 export const randomBadgeArr: string[] = [
   "danger",
   "info",
