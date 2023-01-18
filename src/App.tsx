@@ -1,4 +1,3 @@
-import { useDispatch } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Categories from "./pages/categories/Categories";
 import Course from "./pages/course/Course";

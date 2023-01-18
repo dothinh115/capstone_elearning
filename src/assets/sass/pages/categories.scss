@@ -71,6 +71,17 @@
         .card_item {
           width: calc(100% / 3 - 7px);
           padding: unset;
+          &_inner {
+            height: 150px;
+            body {
+              p {
+                display: none;
+              }
+            }
+            .footer {
+              display: none;
+            }
+          }
         }
       }
     }
