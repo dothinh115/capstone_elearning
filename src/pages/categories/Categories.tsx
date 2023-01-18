@@ -72,8 +72,12 @@ const Categories = (props: Props) => {
   };
 
   const checkCheked = (maDanhMuc: string): boolean => {
-    for (let value of checkedCategories!) {
-      if (value === maDanhMuc) return true;
+    let params: any = searchParams.get("categories");
+    if (params) {
+      params = params.split("+");
+      for (let value of params) {
+        if (value === maDanhMuc) return true;
+      }
     }
     return false;
   };
@@ -84,7 +88,7 @@ const Categories = (props: Props) => {
       params = params.split("+");
       dispatch(setCheckCategories(params));
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <>
