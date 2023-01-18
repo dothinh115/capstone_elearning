@@ -61,14 +61,16 @@
       &_body {
         display: flex;
         flex-wrap: wrap;
-        gap: 30px;
+        gap: 20px 30px;
         .selectedCategories {
           width: 100%;
           background-color: white;
           border: 1px solid #ccc;
-          padding: 10px;
-          line-height: 20px;
-          min-height: 55px;
+          padding: 0 10px;
+          line-height: 55px;
+          span {
+            line-height: 20px;
+          }
           i {
             margin-right: 10px;
             font-size: 18px;

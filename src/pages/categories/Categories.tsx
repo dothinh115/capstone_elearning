@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
@@ -48,11 +48,11 @@ const Categories = (props: Props) => {
     let arr: CourseType[] = [];
     if (checkedCategories !== null) {
       for (let value of checkedCategories!) {
-        coursesArr?.map((item: CourseType) =>
+        for (let item of coursesArr!) {
           item.danhMucKhoaHoc.maDanhMucKhoahoc === value
             ? (arr = [...arr, item])
-            : (arr = [...arr])
-        );
+            : (arr = [...arr]);
+        }
       }
     }
     return arr;
@@ -147,11 +147,20 @@ const Categories = (props: Props) => {
                 })}
               </div>
 
-              {coursesByCategories()!?.length === 0 && (
+              {coursesByCategories()!?.length === 0 ? (
                 <h1 className="notfound">
                   <img src="../../img/notfound.png" alt="" />
                   <div>Chưa có gì ở đây!</div>
                 </h1>
+              ) : (
+                <div className="selectedCategories result">
+                  <i className="fa-solid fa-arrow-right"></i>
+                  Đã tìm thấy:{" "}
+                  <span className="badge badge-info">
+                    {coursesByCategories()!?.length}
+                  </span>{" "}
+                  kết quả.
+                </div>
               )}
               {coursesByCategories()!?.length <= limitCouses ? (
                 <>
