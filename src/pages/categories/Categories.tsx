@@ -36,8 +36,6 @@ const Categories = (props: Props) => {
       if (index !== -1) arr.splice(index, 1);
     }
     dispatch(setCheckCategories(arr));
-
-    dispatch(setLimitCourses(limitCategoriesCourses));
     let params: any = searchParams.get("categories");
     params = params.split("+");
     if (params === null) params = [];
@@ -87,6 +85,7 @@ const Categories = (props: Props) => {
     if (params) {
       params = params.split("+");
       dispatch(setCheckCategories(params));
+      dispatch(setLimitCourses(limitCategoriesCourses));
     }
   }, [searchParams]);
 

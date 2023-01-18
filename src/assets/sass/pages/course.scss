@@ -249,7 +249,8 @@
                 height: 1px;
                 transition: all 0.2s;
               }
-              &:hover::after {
+              &:hover::after,
+              &.active::after {
                 border-left-color: #f9dd94;
               }
               i {
