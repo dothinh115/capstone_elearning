@@ -1,10 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { API, CategoriesStateType, CategoriesType } from "../../util/config";
+import {
+  API,
+  CategoriesStateType,
+  CategoriesType,
+  limitCategoriesCourses,
+} from "../../util/config";
 import { DispatchType } from "../store";
 
 const initialState: CategoriesStateType = {
   categories: [],
   checkedCategories: [],
+  limitCouses: limitCategoriesCourses,
 };
 
 const categoriesReducer = createSlice({
@@ -17,25 +23,22 @@ const categoriesReducer = createSlice({
     ) => {
       state.categories = action.payload;
     },
-    checkCategories: (
+    setCheckCategories: (
       state: CategoriesStateType,
-      action: PayloadAction<string>
+      action: PayloadAction<string[]>
     ) => {
-      state.checkedCategories?.push(action.payload);
+      state.checkedCategories = action.payload;
     },
-    unCheckCategories: (
+    setLimitCourses: (
       state: CategoriesStateType,
-      action: PayloadAction<string>
+      action: PayloadAction<number>
     ) => {
-      const index: any = state.checkedCategories?.findIndex(
-        (item: string) => item === action.payload
-      );
-      if (index !== -1) state.checkedCategories?.splice(index, 1);
+      state.limitCouses = action.payload;
     },
   },
 });
 
-export const { getCategoriesAction, checkCategories, unCheckCategories } =
+export const { getCategoriesAction, setCheckCategories, setLimitCourses } =
   categoriesReducer.actions;
 
 export default categoriesReducer.reducer;

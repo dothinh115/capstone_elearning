@@ -1,33 +1,64 @@
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
 import {
-  checkCategories,
-  unCheckCategories,
+  setCheckCategories,
+  setLimitCourses,
 } from "../../redux/categoriesReducer/categoriesReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { CategoriesType, CourseType } from "../../util/config";
+import {
+  CategoriesType,
+  CourseType,
+  limitCategoriesCourses,
+  limitCategoriesCoursesViewMore,
+} from "../../util/config";
 import { randomBadge } from "../../util/function";
 
 type Props = {};
 
 const Categories = (props: Props) => {
-  const { categories, checkedCategories } = useSelector(
+  const { categories, checkedCategories, limitCouses } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
   const { coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
   const dispatch: DispatchType = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
+    let arr: string[] = [...checkedCategories!];
     if (e.target.checked) {
-      dispatch(checkCategories(e.target.value));
+      arr = [...arr, e.target.value];
     } else {
-      dispatch(unCheckCategories(e.target.value));
+      const index = arr.findIndex((item: string) => item === e.target.value);
+      if (index !== -1) arr.splice(index, 1);
+    }
+    dispatch(setCheckCategories(arr));
+
+    dispatch(setLimitCourses(limitCategoriesCourses));
+    let params: any = searchParams.get("params");
+    params = JSON.parse(params);
+    if (params === null) params = [];
+    if (e.target.checked) {
+      params.push(e.target.value);
+    } else {
+      const index = params.findIndex((item: string) => item === e.target.value);
+      if (index !== -1) params.splice(index, 1);
+    }
+    if (params.length === 0) {
+      searchParams.delete("params");
+      setSearchParams(params);
+    } else {
+      params = JSON.stringify(params);
+      setSearchParams({
+        params,
+      });
     }
   };
 
-  const coursesByCategories = (): CourseType[] => {
+  const coursesByCategories = (): any => {
     let arr: CourseType[] = [];
     for (let value of checkedCategories!) {
       coursesArr?.map((item: CourseType) => {
@@ -36,8 +67,24 @@ const Categories = (props: Props) => {
         }
       });
     }
+    if (arr.length === 0) return coursesArr;
     return arr;
   };
+
+  const checkCheked = (maDanhMuc: string): boolean => {
+    for (let value of checkedCategories!) {
+      if (value === maDanhMuc) return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    let params: any = searchParams.get("params");
+    if (params) {
+      params = JSON.parse(params);
+      dispatch(setCheckCategories(params));
+    }
+  }, [searchParams.get("params")]);
 
   return (
     <>
@@ -55,11 +102,12 @@ const Categories = (props: Props) => {
                 <ul>
                   {categories?.map((item: CategoriesType, index: number) => {
                     return (
-                      <li>
+                      <li key={index}>
                         <input
                           type="checkbox"
                           value={item.maDanhMuc}
                           onChange={checkboxHandle}
+                          defaultChecked={checkCheked(item.maDanhMuc)}
                         />
                         {item.tenDanhMuc}
                       </li>
@@ -74,10 +122,8 @@ const Categories = (props: Props) => {
             <div className="categories_container_main_body">
               <div className="selectedCategories">
                 Khóa học đã chọn:{" "}
-                {coursesByCategories()?.length === 0 ? (
-                  <>
-                    <span className="badge badge-info">Tất cả khóa học</span>
-                  </>
+                {checkedCategories?.length === 0 ? (
+                  <span className="badge badge-info">Tất cả khóa học</span>
                 ) : (
                   <>
                     {checkedCategories?.map((item: string, index: number) => {
@@ -86,7 +132,10 @@ const Categories = (props: Props) => {
                       );
                       if (find !== undefined)
                         return (
-                          <span className={`badge badge-${randomBadge()}`}>
+                          <span
+                            className={`badge badge-${randomBadge()}`}
+                            key={index}
+                          >
                             {find.tenDanhMuc}
                           </span>
                         );
@@ -94,13 +143,7 @@ const Categories = (props: Props) => {
                   </>
                 )}
               </div>
-              {coursesByCategories()?.length === 0 ? (
-                <>
-                  {coursesArr?.map((item: CourseType, index: number) => {
-                    return <CardItem item={item} key={index} />;
-                  })}
-                </>
-              ) : (
+              {coursesByCategories()?.length <= limitCouses ? (
                 <>
                   {coursesByCategories()?.map(
                     (item: CourseType, index: number) => {
@@ -108,6 +151,29 @@ const Categories = (props: Props) => {
                     }
                   )}
                 </>
+              ) : (
+                <>
+                  {coursesByCategories()
+                    ?.slice(0, limitCouses)
+                    .map((item: CourseType, index: number) => {
+                      return <CardItem item={item} key={index} />;
+                    })}
+                </>
+              )}
+              {coursesByCategories()?.slice(0, limitCouses).length >=
+                limitCouses && (
+                <button
+                  className="btn"
+                  onClick={() => {
+                    dispatch(
+                      setLimitCourses(
+                        limitCouses + limitCategoriesCoursesViewMore
+                      )
+                    );
+                  }}
+                >
+                  Xem thêm
+                </button>
               )}
             </div>
           </div>
