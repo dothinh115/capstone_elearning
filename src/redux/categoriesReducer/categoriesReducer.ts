@@ -9,7 +9,7 @@ import { DispatchType } from "../store";
 
 const initialState: CategoriesStateType = {
   categories: [],
-  checkedCategories: [],
+  checkedCategories: null,
   limitCouses: limitCategoriesCourses,
 };
 
@@ -25,7 +25,7 @@ const categoriesReducer = createSlice({
     },
     setCheckCategories: (
       state: CategoriesStateType,
-      action: PayloadAction<string[]>
+      action: PayloadAction<string[] | null>
     ) => {
       state.checkedCategories = action.payload;
     },

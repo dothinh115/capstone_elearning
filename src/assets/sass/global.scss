@@ -131,31 +131,27 @@ h1 {
 .card_item {
   width: calc(100% / 3);
   padding: 15px;
+  display: table-cell;
   &_inner {
     border-radius: 10px;
     overflow: hidden;
     background-color: #f8f8f8;
     box-shadow: 0 14px 40px rgba(#333333, 0.2);
-    height: 440px;
-    flex-direction: column;
-    display: flex;
-    justify-content: stretch;
     i {
       margin-right: 5px;
       font-size: 20px;
     }
     .img {
-      height: 35%;
       img {
         width: 100%;
-        height: 100%;
+        height: 200px;
         object-fit: cover;
       }
       background-color: white;
     }
     .body {
       padding: 0 10px;
-      height: 45%;
+
       h3 {
         color: #252525;
         font-size: 18px;
@@ -168,6 +164,7 @@ h1 {
         border-top: 1px solid;
         border-color: #ccc;
         overflow: hidden;
+        height: 60px;
         i {
           color: orange;
           font-weight: 700;
@@ -175,7 +172,6 @@ h1 {
       }
     }
     .footer {
-      height: 20%;
       margin: 10px 0;
       padding: 0 10px;
       color: #252525;
@@ -187,6 +183,9 @@ h1 {
         border-top: 1px solid;
         border-color: #ccc;
         padding: 10px 0;
+        a {
+          color: #333;
+        }
       }
     }
   }

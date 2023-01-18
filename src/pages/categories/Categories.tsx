@@ -12,6 +12,7 @@ import {
   CourseType,
   limitCategoriesCourses,
   limitCategoriesCoursesViewMore,
+  randomBadgeArr,
 } from "../../util/config";
 import { randomBadge } from "../../util/function";
 
@@ -28,41 +29,33 @@ const Categories = (props: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
-    let arr: string[] = [...checkedCategories!];
+    let arr: string[] | null = [];
+    if (checkedCategories !== null) arr = [...checkedCategories!];
     if (e.target.checked) {
       arr = [...arr, e.target.value];
     } else {
       const index = arr.findIndex((item: string) => item === e.target.value);
       if (index !== -1) arr.splice(index, 1);
     }
-    dispatch(setCheckCategories(arr));
-    let params: any = searchParams.get("categories");
-    params === null ? (params = []) : (params = params.split("+"));
-    if (e.target.checked) {
-      params.push(e.target.value);
-    } else {
-      const index = params.findIndex((item: string) => item === e.target.value);
-      if (index !== -1) params.splice(index, 1);
-    }
-    if (params.length === 0) {
+    if (arr.length === 0) {
+      arr = null;
       searchParams.delete("categories");
-      setSearchParams(params);
-    } else {
-      params = params.join("+");
-      setSearchParams({
-        categories: params,
-      });
+      setSearchParams(searchParams);
     }
+    dispatch(setCheckCategories(arr));
   };
 
   const coursesByCategories = (): any => {
     let arr: CourseType[] = [];
-    for (let value of checkedCategories!) {
-      coursesArr?.map((item: CourseType) => {
-        if (item.danhMucKhoaHoc.maDanhMucKhoahoc === value)
-          arr = [...arr, item];
-      });
+    if (checkedCategories !== null) {
+      for (let value of checkedCategories!) {
+        coursesArr?.map((item: CourseType) => {
+          if (item.danhMucKhoaHoc.maDanhMucKhoahoc === value)
+            arr = [...arr, item];
+        });
+      }
     }
+
     if (arr.length === 0) return coursesArr;
     return arr;
   };
@@ -79,12 +72,28 @@ const Categories = (props: Props) => {
   };
 
   useEffect(() => {
+    let params: any = checkedCategories?.join("+");
+    if (params !== undefined) {
+      setSearchParams({
+        categories: params,
+      });
+    }
+  }, [checkedCategories]);
+
+  useEffect(() => {
     let params: any = searchParams.get("categories");
     if (params) {
       params = params.split("+");
       dispatch(setCheckCategories(params));
       dispatch(setLimitCourses(limitCategoriesCourses));
     }
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }, [searchParams]);
 
   return (
@@ -122,33 +131,26 @@ const Categories = (props: Props) => {
             <div className="categories_container_main_searchbar"></div>
             <div className="categories_container_main_body">
               <div className="selectedCategories">
+                <i className="fa-solid fa-arrow-right"></i>
                 Khóa học đã chọn:{" "}
-                {checkedCategories?.length === 0 ? (
+                {checkedCategories === null ? (
                   <span className="badge badge-info">Tất cả khóa học</span>
                 ) : (
                   <>
-                    {checkedCategories?.length === categories?.length ? (
-                      <span className="badge badge-info">Tất cả khóa học</span>
-                    ) : (
-                      <>
-                        {checkedCategories?.map(
-                          (item: string, index: number) => {
-                            const find = categories?.find(
-                              (val: CategoriesType) => val.maDanhMuc === item
-                            );
-                            if (find !== undefined)
-                              return (
-                                <span
-                                  className={`badge badge-${randomBadge()}`}
-                                  key={index}
-                                >
-                                  {find.tenDanhMuc}
-                                </span>
-                              );
-                          }
-                        )}
-                      </>
-                    )}
+                    {checkedCategories?.map((item: string, index: number) => {
+                      const find = categories?.find(
+                        (val: CategoriesType) => val.maDanhMuc === item
+                      );
+                      if (find !== undefined)
+                        return (
+                          <span
+                            className={`badge badge-${randomBadgeArr[index]}`}
+                            key={index}
+                          >
+                            {find.tenDanhMuc}
+                          </span>
+                        );
+                    })}
                   </>
                 )}
               </div>

@@ -9,8 +9,7 @@
   .random_courses {
     width: 80%;
     margin: 20px auto;
-    display: flex;
-    flex-wrap: wrap;
+    display: table;
     position: relative;
     z-index: 1;
   }
