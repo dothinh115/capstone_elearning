@@ -90,7 +90,7 @@ const Course = (props: Props) => {
                 <li style={{ textAlign: "right" }}>
                   <Link
                     key="abc"
-                    to={`/categories/${courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc}`}
+                    to={`/categories?categories=${courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc}`}
                     style={{ width: "unset" }}
                   >
                     <span
