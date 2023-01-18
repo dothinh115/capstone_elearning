@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
 import {
   setCheckCategories,
@@ -37,8 +37,7 @@ const Categories = (props: Props) => {
     }
     dispatch(setCheckCategories(arr));
     let params: any = searchParams.get("categories");
-    params = params.split("+");
-    if (params === null) params = [];
+    params === null ? (params = []) : (params = params.split("+"));
     if (e.target.checked) {
       params.push(e.target.value);
     } else {
@@ -60,9 +59,8 @@ const Categories = (props: Props) => {
     let arr: CourseType[] = [];
     for (let value of checkedCategories!) {
       coursesArr?.map((item: CourseType) => {
-        if (item.danhMucKhoaHoc.maDanhMucKhoahoc === value) {
+        if (item.danhMucKhoaHoc.maDanhMucKhoahoc === value)
           arr = [...arr, item];
-        }
       });
     }
     if (arr.length === 0) return coursesArr;
@@ -129,20 +127,28 @@ const Categories = (props: Props) => {
                   <span className="badge badge-info">Tất cả khóa học</span>
                 ) : (
                   <>
-                    {checkedCategories?.map((item: string, index: number) => {
-                      const find = categories?.find(
-                        (val: CategoriesType) => val.maDanhMuc === item
-                      );
-                      if (find !== undefined)
-                        return (
-                          <span
-                            className={`badge badge-${randomBadge()}`}
-                            key={index}
-                          >
-                            {find.tenDanhMuc}
-                          </span>
-                        );
-                    })}
+                    {checkedCategories?.length === categories?.length ? (
+                      <span className="badge badge-info">Tất cả khóa học</span>
+                    ) : (
+                      <>
+                        {checkedCategories?.map(
+                          (item: string, index: number) => {
+                            const find = categories?.find(
+                              (val: CategoriesType) => val.maDanhMuc === item
+                            );
+                            if (find !== undefined)
+                              return (
+                                <span
+                                  className={`badge badge-${randomBadge()}`}
+                                  key={index}
+                                >
+                                  {find.tenDanhMuc}
+                                </span>
+                              );
+                          }
+                        )}
+                      </>
+                    )}
                   </>
                 )}
               </div>
