@@ -61,7 +61,7 @@
       &_body {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
+        gap: 30px;
         .selectedCategories {
           width: 100%;
           background-color: white;
@@ -81,7 +81,7 @@
           }
         }
         .card_item {
-          width: calc(100% / 3 - 7px);
+          width: calc(100% / 2 - 15px);
           padding: unset;
         }
         button {

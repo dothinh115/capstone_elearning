@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Categories from "./pages/categories/Categories";
 import Course from "./pages/course/Course";
 import Home from "./pages/home/Home";
@@ -17,6 +17,7 @@ function App() {
           <Route path="course/:courseID" element={<Course />} />
           <Route path="login" element={<Login />} />
           <Route path="register" element={<Register />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
     </BrowserRouter>
