@@ -167,7 +167,7 @@ const Course = (props: Props) => {
                 {categories?.map((item: CategoriesType, index: number) => {
                   return (
                     <li key={index}>
-                      <Link to={`/categories/${item.maDanhMuc}`}>
+                      <Link to={`/categories?categories=${item.maDanhMuc}`}>
                         {item.tenDanhMuc}
                       </Link>
                     </li>

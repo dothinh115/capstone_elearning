@@ -39,7 +39,7 @@ const Categories = (props: Props) => {
 
     dispatch(setLimitCourses(limitCategoriesCourses));
     let params: any = searchParams.get("categories");
-    params = JSON.parse(params);
+    params = params.split("+");
     if (params === null) params = [];
     if (e.target.checked) {
       params.push(e.target.value);
@@ -51,7 +51,7 @@ const Categories = (props: Props) => {
       searchParams.delete("categories");
       setSearchParams(params);
     } else {
-      params = JSON.stringify(params);
+      params = params.join("+");
       setSearchParams({
         categories: params,
       });
@@ -81,7 +81,7 @@ const Categories = (props: Props) => {
   useEffect(() => {
     let params: any = searchParams.get("categories");
     if (params) {
-      params = JSON.parse(params);
+      params = params.split("+");
       dispatch(setCheckCategories(params));
     }
   }, []);
