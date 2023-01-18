@@ -8,17 +8,16 @@
   }
   .random_courses {
     width: 80%;
-    margin: 20px auto;
-    display: table;
+    margin: 40px auto;
     position: relative;
     z-index: 1;
+    display: flex;
+    gap: 5%;
   }
 }
 
 .card_item {
   width: calc(100% / 3);
-  padding: 20px;
-  display: table-cell;
   transition: all 0.5s;
   &_inner {
     border-radius: 5px;
