@@ -12,7 +12,7 @@ export const { randomArray, randomDiscount } = {
   },
   randomDiscount(): number {
     let random: number = Math.floor(Math.random() * 60);
-    while (random <= 20 || random === 60) {
+    while (random <= 20) {
       random = Math.floor(Math.random() * 60);
     }
     return random;

@@ -9,7 +9,7 @@ import {
 } from "../../util/config";
 import { DispatchType } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
-import { randomArray } from "../../util/function";
+import { randomArray, randomDiscount } from "../../util/function";
 
 const initialState: CourseStateType = {
   coursesArr: [],
@@ -80,14 +80,18 @@ export const getAllCoursesApi = async (dispatch: DispatchType) => {
   dispatch(setLoading);
   try {
     const result = await API.get("/QuanLyKhoaHoc/LayDanhSachKhoaHoc");
-    const getAllCourses: PayloadAction<CourseType[]> = getAllCoursesAction(
-      result.data
-    );
+    let arr: CourseType[] = [];
+    for (let value of result.data) {
+      value = {
+        ...value,
+        discount: randomDiscount(),
+      };
+      arr = [...arr, value];
+    }
+    const getAllCourses: PayloadAction<CourseType[]> = getAllCoursesAction(arr);
     dispatch(getAllCourses);
     const getRandomCourses: PayloadAction<CourseType[]> =
-      getRandomCoursesAction(
-        randomArray<CourseType>(result.data, numberRandomCourses)
-      );
+      getRandomCoursesAction(randomArray<CourseType>(arr, numberRandomCourses));
     dispatch(getRandomCourses);
   } catch (error) {
     console.log(error);
@@ -105,8 +109,12 @@ export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
       const result = await API.get(
         `/QuanLyKhoaHoc/LayThongTinKhoaHoc?maKhoaHoc=${maKhoaHoc}`
       );
+      let obj = {
+        ...result.data,
+        discount: randomDiscount(),
+      };
       const updateCourseDetailAction: PayloadAction<CourseType> =
-        getCourseDetailAction(result.data);
+        getCourseDetailAction(obj);
       dispatch(updateCourseDetailAction);
     } catch (error) {
       console.log(error);

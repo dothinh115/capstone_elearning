@@ -1,19 +1,19 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import {
-  getCourseDetailApi,
-  getCoursesByCategoryApi,
-} from "../../redux/courseReducer/courseReducer";
+import { getCourseDetailApi } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { CategoriesType, CourseType } from "../../util/config";
-import { randomDiscount } from "../../util/function";
+import {
+  CategoriesType,
+  CourseType,
+  numberRelatedCourses,
+} from "../../util/config";
 
 type Props = {};
 
 const Course = (props: Props) => {
   const { courseID } = useParams<{ courseID: string }>();
-  const { courseDetail, categories, coursesByCategory } = useSelector(
+  const { courseDetail, categories, coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
   const dispatch: DispatchType = useDispatch();
@@ -22,14 +22,6 @@ const Course = (props: Props) => {
   }, [courseID]);
 
   useEffect(() => {
-    if (courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc) {
-      dispatch(
-        getCoursesByCategoryApi(
-          courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc,
-          courseDetail?.maKhoaHoc
-        )
-      );
-    }
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -42,7 +34,8 @@ const Course = (props: Props) => {
           <div className="main_container">
             <div className="main_container_title">
               <span className="badge badge-danger">
-                <i className="fa-brands fa-hotjar"></i>-{randomDiscount()}%
+                <i className="fa-brands fa-hotjar"></i>-{courseDetail?.discount}
+                %
               </span>
               <span className="badge badge-info">
                 {courseDetail?.danhMucKhoaHoc.tenDanhMucKhoaHoc}
@@ -74,16 +67,23 @@ const Course = (props: Props) => {
                 KHÓA <mark>HỌC</mark> LIÊN QUAN
               </h1>
               <ul>
-                {coursesByCategory?.map((item: CourseType, index: number) => {
-                  if (item.maKhoaHoc === courseID) return false;
-                  return (
-                    <li key={index}>
-                      <Link to={`/course/${item.maKhoaHoc}`}>
-                        {item.tenKhoaHoc}
-                      </Link>
-                    </li>
-                  );
-                })}
+                {coursesArr
+                  ?.filter(
+                    (child: CourseType) =>
+                      child.danhMucKhoaHoc.maDanhMucKhoahoc ===
+                      courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc
+                  )
+                  .slice(0, numberRelatedCourses)
+                  .map((item: CourseType, index: number) => {
+                    if (item.maKhoaHoc === courseID) return false;
+                    return (
+                      <li key={index}>
+                        <Link to={`/course/${item.maKhoaHoc}`}>
+                          {item.tenKhoaHoc}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 <li style={{ textAlign: "right" }}>
                   <Link
                     key="abc"

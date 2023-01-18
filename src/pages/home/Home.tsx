@@ -14,8 +14,10 @@ const Home = (props: Props) => {
   return (
     <>
       <section className="banner">
-        <img src="../../../img/banner.jpg" alt="" />
-        <div className="banner-container">
+        <div className="banner_img">
+          <img src="../../../img/banner.jpg" alt="" />
+        </div>
+        <div className="banner_container">
           <h1>KHỞI ĐẦU SỰ NGHIỆP CỦA BẠN</h1>
           <p>Trở thành lập trình viên chuyên nghiệp tại Cybersoft</p>
           <Link to="/" className="btn btn-green">
@@ -87,7 +89,9 @@ const Home = (props: Props) => {
         </div>
       </section>
       <section className="courses">
-        <h1>Khóa <mark>học</mark> tiêu biểu</h1>
+        <h1>
+          Khóa <mark>học</mark> tiêu biểu
+        </h1>
         <div className="random_courses">
           {randomCoursesArr?.map((item: CourseType, index: number) => {
             return <CardItem item={item} key={index} />;

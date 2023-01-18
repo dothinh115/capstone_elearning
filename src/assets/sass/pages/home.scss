@@ -3,25 +3,30 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  margin: unset;
   height: 584px;
-
-  img {
-    position: absolute;
-    display: block;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    object-fit: cover;
+  @media (min-height: 1200px) {
+    height: 784px;
   }
-  &-container {
+  &_img {
+    img {
+      position: absolute;
+      display: block;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      object-fit: cover;
+      max-height: 584px;
+      @media (min-height: 1200px) {
+        max-height: 784px;
+      }
+    }
+  }
+  &_container {
     position: relative;
     width: 40%;
-    height: 200px;
     color: white;
     margin-right: 50px;
-    transform: translateY(-50%);
     h1 {
       position: relative;
       font-size: 55px;
