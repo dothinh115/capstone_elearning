@@ -84,7 +84,11 @@ const Categories = (props: Props) => {
       params = JSON.parse(params);
       dispatch(setCheckCategories(params));
     }
-  }, [searchParams.get("params")]);
+  }, []);
+
+  useEffect(() => {
+    console.log("render");
+  });
 
   return (
     <>
