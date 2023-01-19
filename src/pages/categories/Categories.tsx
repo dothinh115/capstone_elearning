@@ -141,7 +141,7 @@ const Categories = (props: Props) => {
           <div className="categories_container_main_body">
             <div className="selectedCategories">
               <i className="fa-solid fa-arrow-right"></i>
-              Khóa học đã chọn:{" "}
+              Danh mục đã chọn:{" "}
               {checkedCategories?.map((item: string, index: number) => {
                 const find = categories?.find(
                   (val: CategoriesType) => val.maDanhMuc === item
