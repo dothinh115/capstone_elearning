@@ -75,7 +75,7 @@ const Categories = (props: Props) => {
   };
 
   useEffect(() => {
-    let params: string | undefined | string[] = checkedCategories?.join("+");
+    let params: string | undefined = checkedCategories?.join("+");
     if (params !== undefined) {
       setSearchParams({
         categories: params,
