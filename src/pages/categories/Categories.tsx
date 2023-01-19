@@ -101,7 +101,6 @@ const Categories = (props: Props) => {
 
   useEffect(() => {
     window.addEventListener("scroll", setHeight);
-    return window.removeEventListener("scroll", setHeight);
   });
 
   return (
