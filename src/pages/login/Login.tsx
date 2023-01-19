@@ -17,7 +17,7 @@ const Login = (props: Props) => {
         <form>
           <div className="item">
             <div className="item_title">
-              <i className="fa-solid fa-envelope"></i>Email:
+              <i className="fa-solid fa-user"></i>Tài khoản:
             </div>
             <div className="item_input">
               <input type="text" />

@@ -8,6 +8,11 @@
     &_sidebar {
       width: 25%;
       &_inner {
+        &.fixed {
+          position: fixed;
+          top: 20px;
+          width: 275px;
+        }
         border: 1px solid #eee;
         border-radius: 5px;
         overflow: hidden;

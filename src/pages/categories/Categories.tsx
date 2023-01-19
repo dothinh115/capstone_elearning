@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
@@ -24,8 +24,13 @@ const Categories = (props: Props) => {
   const { coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
+  const [offsetHeight, setOffsetHeight] = useState<number>(0);
   const dispatch: DispatchType = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const setHeight = (): void => {
+    setOffsetHeight(window.pageYOffset);
+  };
 
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
     let arr: string[] | null = [];
@@ -94,11 +99,20 @@ const Categories = (props: Props) => {
     });
   }, [searchParams]);
 
+  useEffect(() => {
+    window.addEventListener("scroll", setHeight);
+    return window.removeEventListener("scroll", setHeight);
+  });
+
   return (
     <section className="categories">
       <div className="categories_container">
         <div className="categories_container_sidebar">
-          <div className="categories_container_sidebar_inner">
+          <div
+            className={`categories_container_sidebar_inner${
+              offsetHeight > 85 ? " fixed" : ""
+            }`}
+          >
             <div className="categories_container_sidebar_inner_header">
               <h1>
                 <i className="fa-solid fa-list"></i>Bộ lọc
