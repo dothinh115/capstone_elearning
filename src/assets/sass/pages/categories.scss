@@ -89,7 +89,7 @@
           }
         }
         .card_item {
-          width: calc(100% / 2 - 15px);
+          width: calc(100% / 2 - (30px / 2 * 1));
         }
         h1 {
           &.notfound {

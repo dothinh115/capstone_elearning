@@ -12,12 +12,13 @@
     position: relative;
     z-index: 1;
     display: flex;
-    gap: 5%;
+    gap: 30px;
+    flex-wrap: wrap;
   }
 }
 
 .card_item {
-  width: calc(100% / 3);
+  width: calc(100% / 3 - (30px / 3 * 2));
   transition: all 0.5s;
   &_inner {
     border-radius: 5px;
