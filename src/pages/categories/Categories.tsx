@@ -20,9 +20,6 @@ type Props = {};
 const Categories = (props: Props) => {
   const { categories, checkedCategories, limitCouses, coursesByCategories } =
     useSelector((store: ReduxRootType) => store.categoriesReducer);
-  const { coursesArr } = useSelector(
-    (store: ReduxRootType) => store.courseReducer
-  );
   const [offsetHeight, setOffsetHeight] = useState<number>(0);
   const dispatch: DispatchType = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
