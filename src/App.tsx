@@ -6,8 +6,13 @@ import Login from "./pages/login/Login";
 import Register from "./pages/register/Register";
 import HomeTemplate from "./templates/HomeTemplate";
 import "../src/assets/sass/style.scss";
+import LoggedInRoute from "./hoc/LoggedInRoute";
+import NotLoggedInRoute from "./hoc/NotLoggedInRoute";
+import Profile from "./pages/profile/Profile";
+import useToken from "./hooks/useToken";
 
 function App() {
+  const { token }: { token: string } = useToken();
   return (
     <BrowserRouter>
       <Routes>
@@ -15,8 +20,13 @@ function App() {
           <Route index element={<Home />} />
           <Route path="categories" element={<Categories />} />
           <Route path="course/:courseID" element={<Course />} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route element={<NotLoggedInRoute token={token} />}>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
+          <Route element={<LoggedInRoute token={token} />}>
+            <Route path="profile" element={<Profile />} />
+          </Route>
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>

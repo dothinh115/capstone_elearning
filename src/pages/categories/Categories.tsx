@@ -17,6 +17,7 @@ import { CourseType } from "../../util/interface/courseReducerInterface";
 
 type Props = {};
 
+
 const Categories = (props: Props) => {
   const { categories, checkedCategories, limitCouses, coursesByCategories } =
     useSelector((store: ReduxRootType) => store.categoriesReducer);
@@ -76,12 +77,15 @@ const Categories = (props: Props) => {
     });
   }, [checkedCategories]);
 
+  // const a = ["a", "b", "c"];
+  // a.join("+"); //a+b+c
+  // string.split("+");
+
   useEffect(() => {
     let params: string | null | string[] = searchParams.get("categories");
     if (params) {
       params = params.split("+");
       dispatch(setCheckCategoriesAction(params));
-      dispatch(getCoursesByCategoriesApi(params));
       setChecked(params);
     }
   }, []);

@@ -33,3 +33,61 @@ API.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+interface LoginInputType {
+  id: string[];
+  title: string[];
+  icon: string[];
+}
+
+interface RegisterConfigType {
+  id: string[];
+  title: string[];
+  icon: string[];
+  regex: string[];
+  errors: string[];
+  placeHolder: string[];
+}
+
+export const loginInputData: LoginInputType = {
+  id: ["taiKhoan", "matKhau"], //id[0]
+  title: ["Tài khoản", "Mật khẩu"],
+  icon: ["user", "lock"],
+};
+
+export const registerInputData: RegisterConfigType = {
+  id: ["taiKhoan", "matKhau", "hoTen", "soDT", "maNhom", "email"],
+  title: [
+    "Tài khoản",
+    "Mật khẩu",
+    "Họ Tên",
+    "Số điện thoại",
+    "Mã nhóm",
+    "Email",
+  ],
+  icon: ["user", "lock", "file-signature", "phone", "user-group", "at"],
+  regex: [
+    "",
+    "/^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*s).{0,}$/",
+    "/^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ ụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$/",
+    "/^[0-9]+$/",
+    "",
+    "/^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$/",
+  ],
+  errors: [
+    "",
+    "Mật khẩu không đúng định dạng!",
+    "Chỉ chứa ký tự!",
+    "Chỉ chứa số!",
+    "",
+    "Email không đúng định dạng",
+  ],
+  placeHolder: [
+    "Tên tài khoản",
+    "Phải chứa ký tự in hoa, ký tự thường, số, và ký tự đặc biệt!",
+    "Chỉ chứa ký tự!",
+    "Chỉ chứa số!",
+    "",
+    "yourname@example.com",
+  ],
+};
