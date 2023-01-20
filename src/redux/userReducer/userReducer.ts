@@ -44,8 +44,11 @@ export const loginApi = (dataLogin: LoginType) => {
       dispatch(userInfoApi);
       saveLocalStorage<UserInfoType>("userInfo", result.data);
       window.location.reload();
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      history.push(window.location.pathname, {
+        errorMessage: error.response.data,
+      });
     } finally {
       const setLoading: PayloadAction<Boolean> = setLoadingAction(false);
       dispatch(setLoading);
@@ -56,8 +59,7 @@ export const loginApi = (dataLogin: LoginType) => {
 export const registerApi = (dataRegister: RegisterInputType) => {
   return async () => {
     try {
-      const result = await API.post("/QuanLyNguoiDung/DangKy", dataRegister);
-      console.log(result);
+      await API.post("/QuanLyNguoiDung/DangKy", dataRegister);
     } catch (error: any) {
       console.log(error);
       history.push(window.location.pathname, {

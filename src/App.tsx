@@ -18,6 +18,7 @@ import Profile from "./pages/profile/Profile";
 import useToken from "./hooks/useToken";
 import { createBrowserHistory } from "history";
 import { getLocalStorage } from "./util/function";
+import UserHandle from "./templates/UserHandle";
 export const history: any = createBrowserHistory();
 
 function App() {
@@ -29,15 +30,17 @@ function App() {
           <Route index element={<Home />} />
           <Route path="categories" element={<Categories />} />
           <Route path="course/:courseID" element={<Course />} />
-          <Route element={<NotLoggedInRoute token={token} />}>
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-          </Route>
           <Route element={<LoggedInRoute token={token} />}>
             <Route path="profile" element={<Profile />} />
           </Route>
-          <Route path="*" element={<Navigate to="/" />} />
         </Route>
+        <Route element={<NotLoggedInRoute token={token} />}>
+          <Route element={<UserHandle />}>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
+        </Route>
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </HistoryRouter>
   );
