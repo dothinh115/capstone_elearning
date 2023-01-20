@@ -10,8 +10,11 @@
     background-color: #f8f8f8;
     border-radius: 10px;
     width: 30%;
-    @media (min-width:998px) {
+    @media (min-width: 998px) {
       width: 40%;
+    }
+    @media (min-width: 1200px) {
+      width: 35%;
     }
     &_header {
       padding: 10px;
