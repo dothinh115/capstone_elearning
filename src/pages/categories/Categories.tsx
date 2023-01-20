@@ -80,13 +80,6 @@ const Categories = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [searchParams]);
-
-  useEffect(() => {
     window.addEventListener("scroll", setHeight);
   });
 
