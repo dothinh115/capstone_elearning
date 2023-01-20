@@ -196,7 +196,7 @@ const Categories = (props: Props) => {
               </>
             )}
 
-            {coursesByCategories!?.length >= limitCouses && (
+            {coursesByCategories!?.length > limitCouses && (
               <div className="categories_container_main_body_btn">
                 <button
                   className="btn"
