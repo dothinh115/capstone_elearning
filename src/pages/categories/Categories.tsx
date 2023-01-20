@@ -81,6 +81,8 @@ const Categories = (props: Props) => {
     }
   }, []);
 
+  console.log("render");
+
   useLayoutEffect(() => {
     const topDivAnimate = fixedSidebar.current!.getBoundingClientRect().top;
     const onScroll = () => {

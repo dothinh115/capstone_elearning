@@ -17,10 +17,12 @@ import NotLoggedInRoute from "./hoc/NotLoggedInRoute";
 import Profile from "./pages/profile/Profile";
 import useToken from "./hooks/useToken";
 import { createBrowserHistory } from "history";
+import { getLocalStorage } from "./util/function";
 export const history: any = createBrowserHistory();
 
 function App() {
   const { token }: { token: string } = useToken();
+  const loaiNguoiDung = getLocalStorage("userInfo").loaiNguoiDung;
   return (
     <HistoryRouter history={history}>
       <Routes>

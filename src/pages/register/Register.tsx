@@ -63,7 +63,7 @@ const Register = (props: Props) => {
                 <div className="item_input">
                   {item === "maNhom" ? (
                     <select {...register(item)}>
-                      {showMaNhom().map((val: JSX.Element, i: number) => {
+                      {showMaNhom().map((val: JSX.Element) => {
                         return val;
                       })}
                     </select>
