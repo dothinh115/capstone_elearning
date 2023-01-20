@@ -64,12 +64,20 @@ const Categories = (props: Props) => {
     }
   };
 
-  useEffect(() => {
-    let params: string | null | string[] = searchParams.get("categories");
+  const getCategoriesFromParams = (): string[] | null => {
+    let params: string | null | undefined = searchParams.get("categories");
+    let arr: string[] | null = null;
     if (params) {
-      params = params.split("+");
-      dispatch(getCoursesByCategoriesApi(params));
-      setChecked(params);
+      arr = params.split("+");
+    }
+    return arr;
+  };
+
+  useEffect(() => {
+    const checkedList: string[] | null = getCategoriesFromParams();
+    if (checkedList) {
+      dispatch(getCoursesByCategoriesApi(checkedList));
+      setChecked(checkedList);
     }
     window.scrollTo(0, 0);
   }, []);
@@ -141,7 +149,7 @@ const Categories = (props: Props) => {
             <div className="selectedCategories">
               <i className="fa-solid fa-arrow-right"></i>
               Danh mục đã chọn:{" "}
-              {checked?.map((item: string, index: number) => {
+              {getCategoriesFromParams()?.map((item: string, index: number) => {
                 const find = categories?.find(
                   (val: CategoriesType) => val.maDanhMuc === item
                 );
