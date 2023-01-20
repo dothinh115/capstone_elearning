@@ -36,23 +36,6 @@ a:hover {
   text-decoration: none;
 }
 
-.main-block {
-  background-color: white;
-  padding: 15px;
-  width: 98%;
-  margin: auto;
-  border-radius: 15px;
-  margin-top: 15px;
-  &-header {
-    border-bottom: 1px solid #eee;
-    margin-bottom: 10px;
-    h1 {
-      color: dimgrey;
-      font-weight: 200;
-    }
-  }
-}
-
 section {
   position: relative;
   & > h1 {

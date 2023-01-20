@@ -5,13 +5,21 @@
     margin: auto;
     display: flex;
     gap: 20px;
+    @media (max-width: 600px) {
+      width: 98%;
+    }
+    @media (min-width: 600px) {
+      width: 98%;
+    }
     &_sidebar {
       width: 25%;
+      position: relative;
       &_inner {
-        &.fixed {
-          position: fixed;
-          top: 20px;
-          width: 275px;
+        &.absolute {
+          display: block;
+          position: absolute;
+          left: 0;
+          width: 100%;
         }
         border: 1px solid #eee;
         border-radius: 5px;
