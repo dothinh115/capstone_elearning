@@ -23,6 +23,7 @@ const Categories = (props: Props) => {
   const [offsetHeight, setOffsetHeight] = useState<number>(0);
   const dispatch: DispatchType = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [checked, setChecked] = useState<string[] | null>(null);
 
   const setHeight = (): void => {
     setOffsetHeight(window.pageYOffset);
@@ -30,7 +31,7 @@ const Categories = (props: Props) => {
 
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
     let arr: string[] | null = [];
-    if (checkedCategories !== null) arr = [...checkedCategories!];
+    if (checked !== null) arr = [...checked];
     if (e.target.checked) {
       arr = [...arr, e.target.value];
     } else {
@@ -38,7 +39,7 @@ const Categories = (props: Props) => {
       if (index !== -1) arr.splice(index, 1);
     }
     if (arr.length === 0) arr = null;
-    dispatch(setCheckCategoriesAction(arr));
+    setChecked(arr);
   };
 
   const checkCheked = (maDanhMuc: string): boolean => {
@@ -54,21 +55,26 @@ const Categories = (props: Props) => {
 
   const sortSubmitHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+    dispatch(setCheckCategoriesAction(checked));
+    if (checked === null) {
+      searchParams.delete("categories");
+      setSearchParams(searchParams);
+    }
+  };
+
+  useEffect(() => {
     dispatch(getCoursesByCategoriesApi(checkedCategories));
     let params: string | undefined = checkedCategories?.join("+");
     if (params !== undefined) {
       setSearchParams({
         categories: params,
       });
-    } else {
-      searchParams.delete("categories");
-      setSearchParams(searchParams);
     }
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
-  };
+  }, [checkedCategories]);
 
   useEffect(() => {
     let params: string | null | string[] = searchParams.get("categories");
@@ -76,6 +82,7 @@ const Categories = (props: Props) => {
       params = params.split("+");
       dispatch(setCheckCategoriesAction(params));
       dispatch(getCoursesByCategoriesApi(params));
+      setChecked(params);
     }
   }, []);
 
