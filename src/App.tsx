@@ -22,7 +22,6 @@ export const history: any = createBrowserHistory();
 
 function App() {
   const { token }: { token: string } = useToken();
-  const loaiNguoiDung = getLocalStorage("userInfo").loaiNguoiDung;
   return (
     <HistoryRouter history={history}>
       <Routes>
