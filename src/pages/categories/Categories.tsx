@@ -154,7 +154,6 @@ const Categories = (props: Props) => {
                 );
               })}
             </div>
-
             {coursesByCategories?.length === 0 ? (
               <h1 className="notfound">
                 <img src="../../img/notfound.png" alt="" />
