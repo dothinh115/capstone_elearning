@@ -34,6 +34,7 @@ const Login = (props: Props) => {
           </Link>
         </div>
 
+        <div className="login_inner_show_errors"></div>
         <div className="login_inner_container">
           <form onSubmit={handleSubmit(onSubmit)}>
             {loginInputData.id.map((item: string | any, index: number) => {
@@ -47,14 +48,18 @@ const Login = (props: Props) => {
                   </div>
                   <div className="item_input">
                     <input
+                      className={`${
+                        errors[item as keyof LoginType]?.message && "isInvalid"
+                      }`}
                       type="text"
                       {...register(item, {
-                        required: "Tài khoản không được để trống!",
+                        required: `${loginInputData.title[index]} không được để trống!`,
                       })}
                     />
                   </div>
                   {errors[item as keyof LoginType]?.message && (
-                    <div className="item_errors" style={{ color: "red" }}>
+                    <div className="item_errors">
+                      <i className="fa-solid fa-circle-exclamation"></i>
                       {errors[item as keyof LoginType]?.message}
                     </div>
                   )}
