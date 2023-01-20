@@ -17,7 +17,6 @@ import { CourseType } from "../../util/interface/courseReducerInterface";
 
 type Props = {};
 
-
 const Categories = (props: Props) => {
   const { categories, checkedCategories, limitCouses, coursesByCategories } =
     useSelector((store: ReduxRootType) => store.categoriesReducer);
@@ -73,10 +72,6 @@ const Categories = (props: Props) => {
     });
   }, [checkedCategories]);
 
-  // const a = ["a", "b", "c"];
-  // a.join("+"); //a+b+c
-  // string.split("+");
-
   useEffect(() => {
     let params: string | null | string[] = searchParams.get("categories");
     if (params) {
@@ -87,13 +82,21 @@ const Categories = (props: Props) => {
   }, []);
 
   useLayoutEffect(() => {
-    const divAnimate = fixedSidebar.current!.getBoundingClientRect().top;
+    const topDivAnimate = fixedSidebar.current!.getBoundingClientRect().top;
     const onScroll = () => {
-      if (divAnimate < window.scrollY) {
+      if (topDivAnimate < window.scrollY) {
         fixedSidebar.current!.classList.add("absolute");
         fixedSidebar.current!.style.top = `${window.scrollY - 75}px`;
       } else {
         fixedSidebar.current!.classList.remove("absolute");
+      }
+      const body = document.querySelector(".home");
+      if (window.scrollY > body!?.clientHeight - 300) {
+        fixedSidebar.current!.style.top = "unset";
+        fixedSidebar.current!.style.bottom = "0px";
+      } else {
+        fixedSidebar.current!.style.bottom = "unset";
+        fixedSidebar.current!.style.top = `${window.scrollY - 75}px`;
       }
     };
     window.addEventListener("scroll", onScroll);
@@ -108,7 +111,7 @@ const Categories = (props: Props) => {
         <div className="categories_container_sidebar">
           <div
             ref={fixedSidebar}
-            className={"categories_container_sidebar_inner"}
+            className="categories_container_sidebar_inner"
           >
             <div className="categories_container_sidebar_inner_header">
               <h1>
