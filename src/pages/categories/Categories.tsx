@@ -23,7 +23,8 @@ const Categories = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [checked, setChecked] = useState<string[] | null>(null);
-  const fixedSidebar = useRef<HTMLDivElement>(null);
+  const absoluteSidebar = useRef<HTMLDivElement | null>(null);
+  const parentDiv = useRef<HTMLDivElement | null>(null);
 
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
     let arr: string[] | null = [];
@@ -78,26 +79,25 @@ const Categories = (props: Props) => {
       dispatch(setCheckCategoriesAction(params));
       setChecked(params);
     }
+    absoluteSidebar.current!.classList.remove("absolute");
   }, []);
 
-  console.log("render");
-
   useLayoutEffect(() => {
-    const topDivAnimate = fixedSidebar.current!.getBoundingClientRect().top;
+    const topDivAnimate = absoluteSidebar.current!.getBoundingClientRect().top;
+    absoluteSidebar.current!.classList.remove("absolute");
     const onScroll = () => {
       if (topDivAnimate < window.scrollY) {
-        fixedSidebar.current!.classList.add("absolute");
-        fixedSidebar.current!.style.top = `${window.scrollY - 75}px`;
+        absoluteSidebar.current!.classList.add("absolute");
+        absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
       } else {
-        fixedSidebar.current!.classList.remove("absolute");
+        absoluteSidebar.current!.classList.remove("absolute");
       }
-      const body = document.querySelector(".home");
-      if (window.scrollY > body!?.clientHeight - 300) {
-        fixedSidebar.current!.style.top = "unset";
-        fixedSidebar.current!.style.bottom = "0px";
+      if (window.scrollY > parentDiv.current!.clientHeight - 300) {
+        absoluteSidebar.current!.style.top = "unset";
+        absoluteSidebar.current!.style.bottom = "0px";
       } else {
-        fixedSidebar.current!.style.bottom = "unset";
-        fixedSidebar.current!.style.top = `${window.scrollY - 75}px`;
+        absoluteSidebar.current!.style.bottom = "unset";
+        absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
       }
     };
     window.addEventListener("scroll", onScroll);
@@ -107,11 +107,11 @@ const Categories = (props: Props) => {
   }, []);
 
   return (
-    <section className="categories">
+    <section className="categories" ref={parentDiv}>
       <div className="categories_container">
         <div className="categories_container_sidebar">
           <div
-            ref={fixedSidebar}
+            ref={absoluteSidebar}
             className="categories_container_sidebar_inner"
           >
             <div className="categories_container_sidebar_inner_header">
