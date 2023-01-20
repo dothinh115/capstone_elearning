@@ -64,7 +64,7 @@ const Categories = (props: Props) => {
 
   useEffect(() => {
     dispatch(getCoursesByCategoriesApi(checkedCategories));
-    let params: string | undefined = checkedCategories?.join("+");
+    let params: string | undefined = checked?.join("+");
     if (params !== undefined) {
       setSearchParams({
         categories: params,
@@ -81,7 +81,6 @@ const Categories = (props: Props) => {
     if (params) {
       params = params.split("+");
       dispatch(setCheckCategoriesAction(params));
-      dispatch(getCoursesByCategoriesApi(params));
       setChecked(params);
     }
   }, []);
@@ -181,8 +180,7 @@ const Categories = (props: Props) => {
               </>
             )}
 
-            {coursesByCategories!?.slice(0, limitCouses).length >=
-              limitCouses && (
+            {coursesByCategories!?.length >= limitCouses && (
               <div className="categories_container_main_body_btn">
                 <button
                   className="btn"
