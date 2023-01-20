@@ -49,6 +49,12 @@ const Register = (props: Props) => {
             <i className="fa-solid fa-x"></i>
           </Link>
         </div>
+        {state?.errorMessage && (
+          <div className="login_inner_show_errors">
+            <i className="fa-solid fa-circle-exclamation"></i>
+            {state?.errorMessage}
+          </div>
+        )}
 
         <div className="login_inner_container">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -70,6 +76,10 @@ const Register = (props: Props) => {
                       </select>
                     ) : (
                       <input
+                        className={`${
+                          errors[item as keyof RegisterInputType]?.message &&
+                          "isInvalid"
+                        }`}
                         type="text"
                         {...register(item, {
                           required: `${registerInputData.title[index]} không được để trống!`,
@@ -78,8 +88,11 @@ const Register = (props: Props) => {
                     )}
                   </div>
                   {errors[item as keyof RegisterInputType]?.message && (
-                    <div className="item_errors" style={{ color: "red" }}>
-                      <>{errors[item as keyof RegisterInputType]?.message}</>
+                    <div className="item_errors">
+                      <>
+                        <i className="fa-solid fa-circle-exclamation"></i>
+                        {errors[item as keyof RegisterInputType]?.message}
+                      </>
                     </div>
                   )}
                 </div>

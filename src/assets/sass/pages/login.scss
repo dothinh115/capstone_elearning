@@ -36,10 +36,21 @@
         }
       }
     }
+    &_show_errors {
+      padding: 20px 40px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      color: red;
+      font-weight: 600;
+      i {
+        margin-right: 10px;
+      }
+    }
     &_container {
       padding: 30px 40px;
       .item {
-        margin-top: 20px;
+        margin-top: 10px;
         &_title {
           i {
             font-size: 16px;
@@ -48,7 +59,7 @@
           }
         }
         &_input {
-          margin-top: 5px;
+          margin-top: 10px;
           input {
             text-align: left;
           }
@@ -58,6 +69,13 @@
           text-align: center;
           button {
             width: 100%;
+          }
+        }
+        &_errors {
+          color: red;
+          margin-top: 10px;
+          i {
+            margin-right: 10px;
           }
         }
       }
