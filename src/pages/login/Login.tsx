@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { DispatchType } from "../../redux/store";
 import { loginApi } from "../../redux/userReducer/userReducer";
 import { loginInputData } from "../../util/config";
@@ -10,6 +10,7 @@ type Props = {};
 
 const Login = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
+  const { state } = useLocation();
   const {
     register,
     handleSubmit,
@@ -33,8 +34,6 @@ const Login = (props: Props) => {
             <i className="fa-solid fa-x"></i>
           </Link>
         </div>
-
-        <div className="login_inner_show_errors"></div>
         <div className="login_inner_container">
           <form onSubmit={handleSubmit(onSubmit)}>
             {loginInputData.id.map((item: string | any, index: number) => {
@@ -71,6 +70,12 @@ const Login = (props: Props) => {
             </div>
           </form>
         </div>
+        {state?.errorMessage && (
+          <div className="login_inner_show_errors">
+            <i className="fa-solid fa-circle-exclamation"></i>
+            {state?.errorMessage}
+          </div>
+        )}
         <div className="login_footer">
           <div className="hr_span_footer">
             <span>Hoặc</span>
