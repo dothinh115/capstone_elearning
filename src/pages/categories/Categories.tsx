@@ -46,9 +46,8 @@ const Categories = (props: Props) => {
     let params: string | null | string[] = searchParams.get("categories");
     if (params) {
       params = params.split("+");
-      for (let value of params) {
-        if (value === maDanhMuc) return true;
-      }
+      const find = params.find((item: string) => item === maDanhMuc);
+      if (find) return true;
     }
     return false;
   };
