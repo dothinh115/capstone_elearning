@@ -3,11 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getCourseDetailApi } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import {
-  CategoriesType,
-  CourseType,
-  numberRelatedCourses,
-} from "../../util/config";
+import { numberRelatedCourses } from "../../util/config";
+import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
+import { CourseType } from "../../util/interface/courseReducerInterface";
 
 type Props = {};
 

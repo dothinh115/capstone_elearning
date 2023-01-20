@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { CourseType } from "../../util/config";
+import { CourseType } from "../../util/interface/courseReducerInterface";
 
 type Props = {
   item: CourseType;

@@ -1,9 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
 import { ReduxRootType } from "../../redux/store";
-import { CourseType } from "../../util/config";
+import { CourseType } from "../../util/interface/courseReducerInterface";
 
 type Props = {};
 

@@ -3,24 +3,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
 import {
+  getCoursesByCategoriesApi,
   setCheckCategoriesAction,
   setLimitCoursesAction,
 } from "../../redux/categoriesReducer/categoriesReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import {
-  CategoriesType,
-  CourseType,
-  limitCategoriesCourses,
   limitCategoriesCoursesViewMore,
   randomBadgeArr,
 } from "../../util/config";
+import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
+import { CourseType } from "../../util/interface/courseReducerInterface";
 
 type Props = {};
 
 const Categories = (props: Props) => {
-  const { categories, checkedCategories, limitCouses } = useSelector(
-    (store: ReduxRootType) => store.categoriesReducer
-  );
+  const { categories, checkedCategories, limitCouses, coursesByCategories } =
+    useSelector((store: ReduxRootType) => store.categoriesReducer);
   const { coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
@@ -41,26 +40,8 @@ const Categories = (props: Props) => {
       const index = arr.findIndex((item: string) => item === e.target.value);
       if (index !== -1) arr.splice(index, 1);
     }
-    if (arr.length === 0) {
-      arr = null;
-      searchParams.delete("categories");
-      setSearchParams(searchParams);
-    }
+    if (arr.length === 0) arr = null;
     dispatch(setCheckCategoriesAction(arr));
-  };
-
-  const coursesByCategories = (): CourseType[] => {
-    let arr: CourseType[] = [];
-    if (checkedCategories !== null) {
-      for (let value of checkedCategories!) {
-        for (let item of coursesArr!) {
-          item.danhMucKhoaHoc.maDanhMucKhoahoc === value
-            ? (arr = [...arr, item])
-            : (arr = [...arr]);
-        }
-      }
-    }
-    return arr;
   };
 
   const checkCheked = (maDanhMuc: string): boolean => {
@@ -74,21 +55,30 @@ const Categories = (props: Props) => {
     return false;
   };
 
-  useEffect(() => {
+  const sortSubmitHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    dispatch(getCoursesByCategoriesApi(checkedCategories));
     let params: string | undefined = checkedCategories?.join("+");
     if (params !== undefined) {
       setSearchParams({
         categories: params,
       });
+    } else {
+      searchParams.delete("categories");
+      setSearchParams(searchParams);
     }
-  }, [checkedCategories]);
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     let params: string | null | string[] = searchParams.get("categories");
     if (params) {
       params = params.split("+");
       dispatch(setCheckCategoriesAction(params));
-      dispatch(setLimitCoursesAction(limitCategoriesCourses));
+      dispatch(getCoursesByCategoriesApi(params));
     }
   }, []);
 
@@ -134,6 +124,11 @@ const Categories = (props: Props) => {
                   );
                 })}
               </ul>
+              <div className="categories_container_sidebar_inner_body_btn">
+                <button className="btn btn-primary" onClick={sortSubmitHandle}>
+                  <i className="fa-solid fa-filter"></i>Lọc
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -159,7 +154,7 @@ const Categories = (props: Props) => {
               })}
             </div>
 
-            {coursesByCategories()!?.length === 0 ? (
+            {coursesByCategories?.length === 0 ? (
               <h1 className="notfound">
                 <img src="../../img/notfound.png" alt="" />
                 <div>Chưa có gì ở đây!</div>
@@ -169,22 +164,20 @@ const Categories = (props: Props) => {
                 <i className="fa-solid fa-arrow-right"></i>
                 Đã tìm thấy:{" "}
                 <span className="badge badge-info">
-                  {coursesByCategories()!?.length}
+                  {coursesByCategories?.length}
                 </span>{" "}
                 kết quả.
               </div>
             )}
-            {coursesByCategories()!?.length <= limitCouses ? (
+            {coursesByCategories!?.length <= limitCouses ? (
               <>
-                {coursesByCategories()?.map(
-                  (item: CourseType, index: number) => {
-                    return <CardItem item={item} key={index} />;
-                  }
-                )}
+                {coursesByCategories?.map((item: CourseType, index: number) => {
+                  return <CardItem item={item} key={index} />;
+                })}
               </>
             ) : (
               <>
-                {coursesByCategories()
+                {coursesByCategories
                   ?.slice(0, limitCouses)
                   .map((item: CourseType, index: number) => {
                     return <CardItem item={item} key={index} />;
@@ -192,7 +185,7 @@ const Categories = (props: Props) => {
               </>
             )}
 
-            {coursesByCategories()!?.slice(0, limitCouses).length >=
+            {coursesByCategories!?.slice(0, limitCouses).length >=
               limitCouses && (
               <div className="categories_container_main_body_btn">
                 <button

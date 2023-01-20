@@ -1,21 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  API,
-  CourseStateType,
-  CourseType,
-  numberRandomCourses,
-  numberRelatedCourses,
-} from "../../util/config";
+import { API, numberRandomCourses } from "../../util/config";
 import { DispatchType } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { randomArray, randomDiscount } from "../../util/function";
+import {
+  CourseStateType,
+  CourseType,
+} from "../../util/interface/courseReducerInterface";
 
 const initialState: CourseStateType = {
   coursesArr: [],
   randomCoursesArr: [],
   loading: false,
   courseDetail: null,
-  coursesByCategory: [],
 };
 
 const courseReducer = createSlice({
@@ -46,13 +43,6 @@ const courseReducer = createSlice({
     ) => {
       state.courseDetail = action.payload;
     },
-
-    getRelatedCoursesAction: (
-      state: CourseStateType,
-      action: PayloadAction<CourseType[]>
-    ) => {
-      state.coursesByCategory = action.payload;
-    },
   },
 });
 
@@ -61,7 +51,6 @@ export const {
   getRandomCoursesAction,
   setLoadingAction,
   getCourseDetailAction,
-  getRelatedCoursesAction,
 } = courseReducer.actions;
 
 export default courseReducer.reducer;
@@ -108,33 +97,6 @@ export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
       const updateCourseDetailAction: PayloadAction<CourseType> =
         getCourseDetailAction(obj);
       dispatch(updateCourseDetailAction);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      const setLoading: PayloadAction<boolean> = setLoadingAction(false);
-      dispatch(setLoading);
-    }
-  };
-};
-
-export const getCoursesByCategoryApi = (
-  maDanhMuc: string,
-  maKhoaHoc?: string
-) => {
-  return async (dispatch: DispatchType) => {
-    const setLoading: PayloadAction<boolean> = setLoadingAction(true);
-    dispatch(setLoading);
-    try {
-      const result = await API.get(
-        `/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${maDanhMuc}`
-      );
-      const getRelatedCourses: PayloadAction<CourseType[]> =
-        getRelatedCoursesAction(
-          result.data.length > numberRelatedCourses
-            ? result.data.slice(0, numberRelatedCourses)
-            : result.data
-        );
-      dispatch(getRelatedCourses);
     } catch (error) {
       console.log(error);
     } finally {
