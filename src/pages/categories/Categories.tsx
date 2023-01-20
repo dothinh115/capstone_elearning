@@ -4,7 +4,6 @@ import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
 import {
   getCoursesByCategoriesApi,
-  setCheckCategoriesAction,
   setLimitCoursesAction,
 } from "../../redux/categoriesReducer/categoriesReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
@@ -18,8 +17,9 @@ import { CourseType } from "../../util/interface/courseReducerInterface";
 type Props = {};
 
 const Categories = (props: Props) => {
-  const { categories, checkedCategories, limitCouses, coursesByCategories } =
-    useSelector((store: ReduxRootType) => store.categoriesReducer);
+  const { categories, limitCouses, coursesByCategories } = useSelector(
+    (store: ReduxRootType) => store.categoriesReducer
+  );
   const dispatch: DispatchType = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [checked, setChecked] = useState<string[] | null>(null);
@@ -51,38 +51,31 @@ const Categories = (props: Props) => {
 
   const sortSubmitHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    dispatch(setCheckCategoriesAction(checked));
-    if (checked === null) {
+    if (checked !== null) {
+      dispatch(getCoursesByCategoriesApi(checked));
+      let params: string | undefined = checked?.join("+");
+      setSearchParams({
+        categories: params,
+      });
+      window.scrollTo(0, 0);
+    } else {
       searchParams.delete("categories");
       setSearchParams(searchParams);
     }
   };
 
   useEffect(() => {
-    dispatch(getCoursesByCategoriesApi(checkedCategories));
-    let params: string | undefined = checked?.join("+");
-    if (params !== undefined) {
-      setSearchParams({
-        categories: params,
-      });
-    }
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, [checkedCategories]);
-
-  useEffect(() => {
     let params: string | null | string[] = searchParams.get("categories");
     if (params) {
       params = params.split("+");
-      dispatch(setCheckCategoriesAction(params));
+      dispatch(getCoursesByCategoriesApi(params));
       setChecked(params);
     }
     absoluteSidebar.current!.classList.remove("absolute");
+    window.scrollTo(0, 0);
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const topDivAnimate = absoluteSidebar.current!.getBoundingClientRect().top;
     absoluteSidebar.current!.classList.remove("absolute");
     const onScroll = () => {
@@ -149,7 +142,7 @@ const Categories = (props: Props) => {
             <div className="selectedCategories">
               <i className="fa-solid fa-arrow-right"></i>
               Danh mục đã chọn:{" "}
-              {checkedCategories?.map((item: string, index: number) => {
+              {checked?.map((item: string, index: number) => {
                 const find = categories?.find(
                   (val: CategoriesType) => val.maDanhMuc === item
                 );

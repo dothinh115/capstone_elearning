@@ -7,7 +7,6 @@ export interface CategoriesType {
 
 export interface CategoriesStateType {
   categories: CategoriesType[] | null;
-  checkedCategories?: string[] | null;
   limitCouses: number;
   coursesByCategories: CourseType[] | null;
   categoriesLoading: boolean;
