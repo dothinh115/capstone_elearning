@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
@@ -20,14 +20,10 @@ type Props = {};
 const Categories = (props: Props) => {
   const { categories, checkedCategories, limitCouses, coursesByCategories } =
     useSelector((store: ReduxRootType) => store.categoriesReducer);
-  const [offsetHeight, setOffsetHeight] = useState<number>(0);
   const dispatch: DispatchType = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
   const [checked, setChecked] = useState<string[] | null>(null);
-
-  const setHeight = (): void => {
-    setOffsetHeight(window.pageYOffset);
-  };
+  const fixedSidebar = useRef<HTMLDivElement>(null);
 
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
     let arr: string[] | null = [];
@@ -63,7 +59,7 @@ const Categories = (props: Props) => {
 
   useEffect(() => {
     dispatch(getCoursesByCategoriesApi(checkedCategories));
-    let params: string | undefined = checkedCategories?.join("+");
+    let params: string | undefined = checked?.join("+");
     if (params !== undefined) {
       setSearchParams({
         categories: params,
@@ -80,23 +76,43 @@ const Categories = (props: Props) => {
     if (params) {
       params = params.split("+");
       dispatch(setCheckCategoriesAction(params));
-      dispatch(getCoursesByCategoriesApi(params));
       setChecked(params);
     }
   }, []);
 
-  useEffect(() => {
-    window.addEventListener("scroll", setHeight);
-  });
+  console.log("render");
+
+  useLayoutEffect(() => {
+    const topDivAnimate = fixedSidebar.current!.getBoundingClientRect().top;
+    const onScroll = () => {
+      if (topDivAnimate < window.scrollY) {
+        fixedSidebar.current!.classList.add("absolute");
+        fixedSidebar.current!.style.top = `${window.scrollY - 75}px`;
+      } else {
+        fixedSidebar.current!.classList.remove("absolute");
+      }
+      const body = document.querySelector(".home");
+      if (window.scrollY > body!?.clientHeight - 300) {
+        fixedSidebar.current!.style.top = "unset";
+        fixedSidebar.current!.style.bottom = "0px";
+      } else {
+        fixedSidebar.current!.style.bottom = "unset";
+        fixedSidebar.current!.style.top = `${window.scrollY - 75}px`;
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   return (
     <section className="categories">
       <div className="categories_container">
         <div className="categories_container_sidebar">
           <div
-            className={`categories_container_sidebar_inner${
-              offsetHeight > 85 ? " fixed" : ""
-            }`}
+            ref={fixedSidebar}
+            className="categories_container_sidebar_inner"
           >
             <div className="categories_container_sidebar_inner_header">
               <h1>
@@ -180,8 +196,7 @@ const Categories = (props: Props) => {
               </>
             )}
 
-            {coursesByCategories!?.slice(0, limitCouses).length >=
-              limitCouses && (
+            {coursesByCategories!?.length >= limitCouses && (
               <div className="categories_container_main_body_btn">
                 <button
                   className="btn"

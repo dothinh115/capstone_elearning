@@ -1,6 +1,12 @@
 import { randomBadgeArr } from "./config";
 
-export const { randomArray, randomDiscount, randomBadge } = {
+export const {
+  randomArray,
+  randomDiscount,
+  randomBadge,
+  saveLocalStorage,
+  getLocalStorage,
+} = {
   randomArray<T>(arr: T[], limit: number): T[] {
     arr = [...arr];
     let result: T[] = [];
@@ -22,5 +28,16 @@ export const { randomArray, randomDiscount, randomBadge } = {
   randomBadge(): string {
     let random: number = Math.floor(Math.random() * randomBadgeArr.length);
     return randomBadgeArr[random];
+  },
+  saveLocalStorage<T>(name: string, data: T): void {
+    const save: string = JSON.stringify(data);
+    localStorage.setItem(name, save);
+  },
+  getLocalStorage(name: string): any {
+    let data: any = localStorage.getItem(name);
+    if (data) {
+      data = JSON.parse(data);
+    }
+    return data;
   },
 };

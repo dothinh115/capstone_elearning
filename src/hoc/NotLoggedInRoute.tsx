@@ -5,9 +5,9 @@ type Props = {
   token: string;
 };
 
-const LoggedInRoute = ({ token }: Props) => {
-  if (!token) return <Navigate to="/" />;
+const NotLoggedInRoute = ({ token }: Props) => {
+  if (token) return <Navigate to="/profile" />;
   return <Outlet />;
 };
 
-export default LoggedInRoute;
+export default NotLoggedInRoute;
