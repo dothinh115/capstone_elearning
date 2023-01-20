@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useLayoutEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
@@ -71,7 +71,6 @@ const Categories = (props: Props) => {
       dispatch(getCoursesByCategoriesApi(params));
       setChecked(params);
     }
-    absoluteSidebar.current!.classList.remove("absolute");
     window.scrollTo(0, 0);
   }, []);
 
