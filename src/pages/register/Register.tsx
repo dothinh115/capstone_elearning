@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { DispatchType } from "../../redux/store";
 import { registerApi } from "../../redux/userReducer/userReducer";
 import { registerInputData } from "../../util/config";
@@ -10,6 +10,7 @@ type Props = {};
 
 const Register = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
+  const { state }: { state: { errorMessage: string } } = useLocation();
   const {
     register,
     handleSubmit,

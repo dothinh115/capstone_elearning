@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { log } from "console";
+import { history } from "../../App";
 import { API } from "../../util/config";
 import { saveLocalStorage } from "../../util/function";
 import {
@@ -58,8 +58,11 @@ export const registerApi = (dataRegister: RegisterInputType) => {
     try {
       const result = await API.post("/QuanLyNguoiDung/DangKy", dataRegister);
       console.log(result);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      history.push(window.location.pathname, {
+        errorMessage: error.response.data,
+      });
     }
   };
 };

@@ -1,4 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Navigate,
+  Route,
+  Routes,
+  unstable_HistoryRouter as HistoryRouter,
+} from "react-router-dom";
 import Categories from "./pages/categories/Categories";
 import Course from "./pages/course/Course";
 import Home from "./pages/home/Home";
@@ -10,11 +16,13 @@ import LoggedInRoute from "./hoc/LoggedInRoute";
 import NotLoggedInRoute from "./hoc/NotLoggedInRoute";
 import Profile from "./pages/profile/Profile";
 import useToken from "./hooks/useToken";
+import { createBrowserHistory } from "history";
+export const history: any = createBrowserHistory();
 
 function App() {
   const { token }: { token: string } = useToken();
   return (
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <Routes>
         <Route path="/" element={<HomeTemplate />}>
           <Route index element={<Home />} />
@@ -30,7 +38,7 @@ function App() {
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 
