@@ -49,16 +49,11 @@ const Register = (props: Props) => {
             <i className="fa-solid fa-x"></i>
           </Link>
         </div>
-        {state?.errorMessage && (
-          <div className="login_inner_show_errors">
-            <i className="fa-solid fa-circle-exclamation"></i>
-            {state?.errorMessage}
-          </div>
-        )}
 
         <div className="login_inner_container">
           <form onSubmit={handleSubmit(onSubmit)}>
             {registerInputData.id.map((item: string | any, index: number) => {
+              const reg = new RegExp(registerInputData.regex[index]);
               return (
                 <div className="item" key={index}>
                   <div className="item_title">
@@ -83,6 +78,10 @@ const Register = (props: Props) => {
                         type="text"
                         {...register(item, {
                           required: `${registerInputData.title[index]} không được để trống!`,
+                          pattern: {
+                            value: reg,
+                            message: registerInputData.errors[index],
+                          },
                         })}
                       />
                     )}
@@ -103,6 +102,12 @@ const Register = (props: Props) => {
             </div>
           </form>
         </div>
+        {state?.errorMessage && (
+          <div className="login_inner_show_errors">
+            <i className="fa-solid fa-circle-exclamation"></i>
+            {state?.errorMessage}
+          </div>
+        )}
         <div className="login_footer">
           <div className="hr_span_footer">
             <span>Hoặc</span>
