@@ -10,7 +10,7 @@ const Header = (props: Props) => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   return (
     <section className="header">
-      <nav>
+      <nav className="header_container">
         <div className="header-logo">
           <NavLink to="/">
             <img src="../../img/logo.png" alt="" />

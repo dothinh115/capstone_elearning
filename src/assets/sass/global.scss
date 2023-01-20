@@ -38,6 +38,14 @@ a:hover {
 
 section {
   position: relative;
+  & > [class*="_container"] {
+    @media (max-width: 600px) {
+      width: 98% !important;
+    }
+    @media (min-width: 600px) {
+      width: 98% !important;
+    }
+  }
   & > h1 {
     font-size: 48px;
     text-align: center;

@@ -16,7 +16,7 @@ const Home = (props: Props) => {
         <h1>
           Why <mark>choose</mark> Cybersoft???
         </h1>
-        <div className="feature_content">
+        <div className="feature_container">
           <div className="feature_item">
             <div className="feature_item_inner">
               <div className="feature_item_inner_left">
@@ -79,7 +79,7 @@ const Home = (props: Props) => {
         <h1>
           Khóa <mark>học</mark> tiêu biểu
         </h1>
-        <div className="random_courses">
+        <div className="courses_container">
           {randomCoursesArr?.map((item: CourseType, index: number) => {
             return <CardItem item={item} key={index} />;
           })}

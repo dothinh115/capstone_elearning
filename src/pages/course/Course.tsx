@@ -31,7 +31,7 @@ const Course = (props: Props) => {
   return (
     <>
       <section className="course_detail">
-        <div className="container">
+        <div className="course_detail_container">
           <div className="main_container">
             <div className="main_container_title">
               <span className="badge badge-danger">

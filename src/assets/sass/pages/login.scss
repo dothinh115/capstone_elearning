@@ -48,7 +48,8 @@
       display: flex;
       align-items: center;
       color: red;
-      font-weight: 600;
+      font-weight: 400;
+      font-size: 14px;
       i {
         margin-right: 10px;
       }
@@ -80,6 +81,7 @@
         &_errors {
           color: red;
           margin-top: 10px;
+          font-size: 14px;
           i {
             margin-right: 10px;
           }

@@ -4,6 +4,9 @@
   justify-content: flex-end;
   align-items: center;
   height: 584px;
+  @media (min-width: 998px) {
+    justify-content: center;
+  }
   @media (min-height: 1200px) {
     height: 784px;
   }
@@ -17,6 +20,7 @@
       z-index: 0;
       object-fit: cover;
       max-height: 584px;
+      height: 100%;
       @media (min-height: 1200px) {
         max-height: 784px;
       }
@@ -24,9 +28,14 @@
   }
   &_container {
     position: relative;
-    width: 40%;
     color: white;
-    margin-right: 50px;
+    @media (min-width: 998px) {
+      position: relative;
+      top: unset;
+      left: unset;
+      height: unset;
+      display: block;
+    }
     h1 {
       position: relative;
       font-size: 55px;
@@ -74,7 +83,7 @@
 
 .feature {
   margin-top: 50px;
-  &_content {
+  &_container {
     display: flex;
     width: 80%;
     margin: 20px auto;
