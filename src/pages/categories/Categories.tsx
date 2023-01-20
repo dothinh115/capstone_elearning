@@ -39,11 +39,19 @@ const Categories = (props: Props) => {
     setChecked(arr);
   };
 
-  const checkCheked = (maDanhMuc: string): boolean => {
-    let params: string | null | string[] = searchParams.get("categories");
+  const getCategoriesFromParams = (): string[] | null => {
+    let params: string | null | undefined = searchParams.get("categories");
+    let arr: string[] | null = null;
     if (params) {
-      params = params.split("+");
-      const find = params.find((item: string) => item === maDanhMuc);
+      arr = params.split("+");
+    }
+    return arr;
+  };
+
+  const checkCheked = (maDanhMuc: string): boolean => {
+    const checkedList: string[] | null = getCategoriesFromParams();
+    if (checkedList) {
+      const find = checkedList.find((item: string) => item === maDanhMuc);
       if (find) return true;
     }
     return false;
@@ -64,15 +72,6 @@ const Categories = (props: Props) => {
     }
   };
 
-  const getCategoriesFromParams = (): string[] | null => {
-    let params: string | null | undefined = searchParams.get("categories");
-    let arr: string[] | null = null;
-    if (params) {
-      arr = params.split("+");
-    }
-    return arr;
-  };
-
   useEffect(() => {
     const checkedList: string[] | null = getCategoriesFromParams();
     if (checkedList) {
@@ -83,9 +82,10 @@ const Categories = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    const topDivAnimate = absoluteSidebar.current!.getBoundingClientRect().top;
+    const topDivAnimate: number =
+      absoluteSidebar.current!.getBoundingClientRect().top;
     absoluteSidebar.current!.classList.remove("absolute");
-    const onScroll = () => {
+    const onScroll = (): void => {
       if (topDivAnimate < window.scrollY) {
         absoluteSidebar.current!.classList.add("absolute");
         absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
