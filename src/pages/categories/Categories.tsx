@@ -32,7 +32,9 @@ const Categories = (props: Props) => {
     if (e.target.checked) {
       arr = [...arr, e.target.value];
     } else {
-      const index = arr.findIndex((item: string) => item === e.target.value);
+      const index: number = arr.findIndex(
+        (item: string) => item === e.target.value
+      );
       if (index !== -1) arr.splice(index, 1);
     }
     if (arr.length === 0) arr = null;
@@ -51,7 +53,9 @@ const Categories = (props: Props) => {
   const checkCheked = (maDanhMuc: string): boolean => {
     const checkedList: string[] | null = getCategoriesFromParams();
     if (checkedList) {
-      const find = checkedList.find((item: string) => item === maDanhMuc);
+      const find: string | undefined = checkedList.find(
+        (item: string) => item === maDanhMuc
+      );
       if (find) return true;
     }
     return false;
