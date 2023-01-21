@@ -71,7 +71,7 @@ export const getAllCategoriesApi = async (dispatch: DispatchType) => {
 export const getCoursesByCategoriesApi = (
   maDanhMuc: string[] | undefined | null
 ) => {
-  let resultCoursesArr: CourseType[] = [];
+  let resultCoursesArr: CourseType[] | null = [];
   return async (dispatch: DispatchType) => {
     const loadingAction: PayloadAction<boolean> =
       setCategoriesLoadingAction(true);
@@ -83,11 +83,12 @@ export const getCoursesByCategoriesApi = (
           `/QuanLyKhoaHoc/LayKhoaHocTheoDanhMuc?maDanhMuc=${value}`
         );
         for (let courses of result.data) {
-          resultCoursesArr = [...resultCoursesArr, courses];
+          resultCoursesArr = [...resultCoursesArr!, courses];
         }
       }
+      if (resultCoursesArr!.length === 0) resultCoursesArr = null;
       const coursesByCategoriesAction: PayloadAction<CourseType[]> =
-        getCoursesByCategoriesAction(resultCoursesArr);
+        getCoursesByCategoriesAction(resultCoursesArr!);
       dispatch(coursesByCategoriesAction);
       const setLimitCourses: PayloadAction<number> = setLimitCoursesAction(
         limitCategoriesCourses
