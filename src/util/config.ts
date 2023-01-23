@@ -1,7 +1,10 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
+import { getLocalStorage } from "./function";
 
 export const CYBERSOFT_TOKEN: string =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNUUiLCJIZXRIYW5TdHJpbmciOiIwNy8wNi8yMDIzIiwiSGV0SGFuVGltZSI6IjE2ODYwOTYwMDAwMDAiLCJuYmYiOjE2NTczODYwMDAsImV4cCI6MTY4NjI0MzYwMH0.XsCcIZvawxcwye8KVYB2vJK4d3Gbr1XROtNyAL8nypA";
+
+export const token = getLocalStorage("userInfo")?.accessToken;
 
 export const numberRandomCourses: number = 6;
 export const numberRelatedCourses: number = 8;
@@ -21,7 +24,7 @@ export const randomBadgeArr: string[] = [
 export const API: AxiosInstance = axios.create({
   baseURL: "https://elearningnew.cybersoft.edu.vn/api",
   headers: {
-    Authorization: "token",
+    Authorization: "Bearer " + token,
     TokenCybersoft: CYBERSOFT_TOKEN,
   },
 });

@@ -31,3 +31,14 @@ export interface CourseStateType {
   loading: boolean;
   courseDetail: CourseType | null;
 }
+
+export interface RegisterdCoursesDetailType {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+  biDanh: string;
+  moTa: string;
+  luotXem: number;
+  hinhAnh: string;
+  ngayTao: string;
+  danhGia: number;
+}

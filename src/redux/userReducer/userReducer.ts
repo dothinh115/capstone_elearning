@@ -7,6 +7,7 @@ import {
   RegisterInputType,
   UserInfoStateType,
   UserInfoType,
+  UserLoginType,
 } from "../../util/interface/userReducerInterface";
 import { setLoadingAction } from "../courseReducer/courseReducer";
 import { DispatchType } from "../store";
@@ -19,7 +20,7 @@ const userReducer = createSlice({
   name: "userReducer",
   initialState,
   reducers: {
-    loginAction: (
+    setUserInfoAction: (
       state: UserInfoStateType,
       action: PayloadAction<UserInfoType>
     ) => {
@@ -28,7 +29,7 @@ const userReducer = createSlice({
   },
 });
 
-export const { loginAction } = userReducer.actions;
+export const { setUserInfoAction } = userReducer.actions;
 
 export default userReducer.reducer;
 
@@ -40,9 +41,7 @@ export const loginApi = (dataLogin: LoginType) => {
     dispatch(setLoading);
     try {
       const result = await API.post("/QuanLyNguoiDung/DangNhap", dataLogin);
-      const userInfoApi = loginAction(result.data);
-      dispatch(userInfoApi);
-      saveLocalStorage<UserInfoType>("userInfo", result.data);
+      saveLocalStorage<UserLoginType>("userInfo", result.data);
       window.location.reload();
     } catch (error: any) {
       console.log(error);
@@ -59,8 +58,7 @@ export const loginApi = (dataLogin: LoginType) => {
 export const registerApi = (dataRegister: RegisterInputType) => {
   return async () => {
     try {
-      const result = await API.post("/QuanLyNguoiDung/DangKy", dataRegister);
-      console.log(result.data);
+      await API.post("/QuanLyNguoiDung/DangKy", dataRegister);
       history.push(window.location.pathname, {
         successMessage: registerSuccessMess,
       });
@@ -71,4 +69,21 @@ export const registerApi = (dataRegister: RegisterInputType) => {
       });
     }
   };
+};
+
+export const getUserInfoApi = async (dispatch: DispatchType) => {
+  const setLoading: PayloadAction<boolean> = setLoadingAction(true);
+  dispatch(setLoading);
+  try {
+    const result = await API.post("/QuanLyNguoiDung/ThongTinNguoiDung");
+    const userInfoAction: PayloadAction<UserInfoType> = setUserInfoAction(
+      result.data
+    );
+    dispatch(userInfoAction);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    const setLoading: PayloadAction<boolean> = setLoadingAction(false);
+    dispatch(setLoading);
+  }
 };

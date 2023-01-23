@@ -22,7 +22,7 @@ const Login = (props: Props) => {
       matKhau: "",
     },
   });
-  const onSubmit = (data: LoginType) => {
+  const onSubmit = (data: LoginType): void => {
     dispatch(loginApi(data));
   };
   return (

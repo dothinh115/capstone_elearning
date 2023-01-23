@@ -14,6 +14,7 @@ import "../src/assets/sass/style.scss";
 import LoggedInRoute from "./hoc/LoggedInRoute";
 import NotLoggedInRoute from "./hoc/NotLoggedInRoute";
 import Profile from "./pages/profile/Profile";
+import UserTemplate from "./templates/UserTemplate";
 import useToken from "./hooks/useToken";
 import { createBrowserHistory } from "history";
 export const history: any = createBrowserHistory();
@@ -23,13 +24,13 @@ function App() {
   return (
     <HistoryRouter history={history}>
       <Routes>
-        <Route path="/" element={<HomeTemplate />}>
+        <Route element={<HomeTemplate />}>
           <Route index element={<Home />} />
           <Route path="categories" element={<Categories />} />
           <Route path="course/:courseID" element={<Course />} />
-          <Route element={<LoggedInRoute token={token} />}>
-            <Route path="profile" element={<Profile />} />
-          </Route>
+        </Route>
+        <Route element={<LoggedInRoute token={token} />}>
+          <Route path="profile" element={<Profile />} />
         </Route>
         <Route element={<NotLoggedInRoute token={token} />}>
           <Route path="login" element={<Login />} />

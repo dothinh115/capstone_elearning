@@ -6,18 +6,18 @@ import { DispatchType } from "../redux/store";
 import { useEffect } from "react";
 import { getAllCoursesApi } from "../redux/courseReducer/courseReducer";
 import { getAllCategoriesApi } from "../redux/categoriesReducer/categoriesReducer";
-import { getLocalStorage } from "../util/function";
-import { loginAction } from "../redux/userReducer/userReducer";
+import useToken from "../hooks/useToken";
+import { getUserInfoApi } from "../redux/userReducer/userReducer";
 
 type Props = {};
 
 const HomeTemplate = (props: Props) => {
-  const userInfo = getLocalStorage("userInfo");
   const dispatch: DispatchType = useDispatch();
+  const { token } = useToken();
   useEffect(() => {
     dispatch(getAllCoursesApi);
     dispatch(getAllCategoriesApi);
-    dispatch(loginAction(userInfo));
+    if (token) dispatch(getUserInfoApi);
   }, []);
   return (
     <>
