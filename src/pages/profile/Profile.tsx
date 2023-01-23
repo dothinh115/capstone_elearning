@@ -24,19 +24,17 @@ const Profile = (props: Props) => {
               <ul>
                 <li>
                   <NavLink to="/thongtin">
-                    <i className="fa-solid fa-arrow-right"></i>Thông tin tài
-                    khoản
+                    <i className="fa-solid fa-house"></i>Thông tin tài khoản
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/thongtin">
-                    <i className="fa-solid fa-arrow-right"></i>Đổi mật khẩu
+                    <i className="fa-solid fa-key"></i>Đổi mật khẩu
                   </NavLink>
                 </li>
                 <li>
                   <NavLink to="/thongtin">
-                    <i className="fa-solid fa-arrow-right"></i>Khóa học đã ghi
-                    danh
+                    <i className="fa-solid fa-desktop"></i>Khóa học đã ghi danh
                   </NavLink>
                 </li>
                 <li>
