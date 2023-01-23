@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { history } from "../../App";
-import { API } from "../../util/config";
+import { API, registerSuccessMess } from "../../util/config";
 import { saveLocalStorage } from "../../util/function";
 import {
   LoginType,
@@ -59,7 +59,11 @@ export const loginApi = (dataLogin: LoginType) => {
 export const registerApi = (dataRegister: RegisterInputType) => {
   return async () => {
     try {
-      await API.post("/QuanLyNguoiDung/DangKy", dataRegister);
+      const result = await API.post("/QuanLyNguoiDung/DangKy", dataRegister);
+      console.log(result.data);
+      history.push(window.location.pathname, {
+        successMessage: registerSuccessMess,
+      });
     } catch (error: any) {
       console.log(error);
       history.push(window.location.pathname, {

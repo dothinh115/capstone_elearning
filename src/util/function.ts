@@ -6,6 +6,7 @@ export const {
   randomBadge,
   saveLocalStorage,
   getLocalStorage,
+  removeLocalStorage,
 } = {
   randomArray<T>(arr: T[], limit: number): T[] {
     arr = [...arr];
@@ -39,5 +40,8 @@ export const {
       data = JSON.parse(data);
     }
     return data;
+  },
+  removeLocalStorage(name: string): void {
+    localStorage.removeItem(name);
   },
 };

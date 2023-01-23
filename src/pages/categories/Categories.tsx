@@ -83,6 +83,9 @@ const Categories = (props: Props) => {
       setChecked(checkedList);
     }
     window.scrollTo(0, 0);
+    return () => {
+      dispatch(getCoursesByCategoriesApi(null));
+    };
   }, []);
 
   useEffect(() => {
@@ -169,7 +172,7 @@ const Categories = (props: Props) => {
                 );
               })}
             </div>
-            {coursesByCategories?.length === 0 ? (
+            {coursesByCategories === null ? (
               <h1 className="notfound">
                 <img src="../../img/notfound.png" alt="" />
                 <div>Chưa có gì ở đây!</div>

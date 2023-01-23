@@ -51,6 +51,13 @@
     }
     &_container {
       padding: 30px 40px;
+      &_success {
+        color: green;
+        font-weight: 600;
+        i {
+          margin-right: 10px;
+        }
+      }
       .item {
         margin-top: 10px;
         &_title {

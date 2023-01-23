@@ -166,6 +166,9 @@
       }
       &_info {
         padding: 5px;
+        @media (min-width: 1200px) {
+          padding: 30px;
+        }
         p {
           display: flex;
           justify-content: space-between;
@@ -198,6 +201,9 @@
       }
       &_footer {
         padding: 0 5px;
+        @media (min-width: 1200px) {
+          padding: 0 30px;
+        }
         h1 {
           margin: 20px 0;
         }

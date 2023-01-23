@@ -10,7 +10,8 @@ type Props = {};
 
 const Register = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
-  const { state }: { state: { errorMessage: string } } = useLocation();
+  const { state }: { state: { errorMessage: string; successMessage: string } } =
+    useLocation();
   const {
     register,
     handleSubmit,
@@ -51,56 +52,64 @@ const Register = (props: Props) => {
         </div>
 
         <div className="login_inner_container">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            {registerInputData.id.map((item: string | any, index: number) => {
-              const reg = new RegExp(registerInputData.regex[index]);
-              return (
-                <div className="item" key={index}>
-                  <div className="item_title">
-                    <i
-                      className={`fa-solid fa-${registerInputData.icon[index]}`}
-                    ></i>
-                    {registerInputData.title[index]}
-                  </div>
-                  <div className="item_input">
-                    {item === "maNhom" ? (
-                      <select {...register(item)}>
-                        {showMaNhom().map((val: JSX.Element) => {
-                          return val;
-                        })}
-                      </select>
-                    ) : (
-                      <input
-                        className={`${
-                          errors[item as keyof RegisterInputType]?.message &&
-                          "isInvalid"
-                        }`}
-                        type="text"
-                        {...register(item, {
-                          required: `${registerInputData.title[index]} không được để trống!`,
-                          pattern: {
-                            value: reg,
-                            message: registerInputData.errors[index],
-                          },
-                        })}
-                      />
+          {state?.successMessage ? (
+            <div className="login_inner_container_success">
+              <i className="fa-solid fa-check"></i>
+              {state?.successMessage}
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {registerInputData.id.map((item: string | any, index: number) => {
+                const reg = new RegExp(registerInputData.regex[index]);
+                return (
+                  <div className="item" key={index}>
+                    <div className="item_title">
+                      <i
+                        className={`fa-solid fa-${registerInputData.icon[index]}`}
+                      ></i>
+                      {registerInputData.title[index]}
+                    </div>
+                    <div className="item_input">
+                      {item === "maNhom" ? (
+                        <select {...register(item)}>
+                          {showMaNhom().map((val: JSX.Element) => {
+                            return val;
+                          })}
+                        </select>
+                      ) : (
+                        <input
+                          className={`${
+                            errors[item as keyof RegisterInputType]?.message &&
+                            "isInvalid"
+                          }`}
+                          type={`${item === "matKhau" ? "password" : "text"}`}
+                          placeholder={registerInputData.placeHolder[index]}
+                          {...register(item, {
+                            required: `${registerInputData.title[index]} không được để trống!`,
+                            pattern: {
+                              value: reg,
+                              message: registerInputData.errors[index],
+                            },
+                          })}
+                        />
+                      )}
+                    </div>
+                    {errors[item as keyof RegisterInputType]?.message && (
+                      <div className="item_errors">
+                        <>
+                          <i className="fa-solid fa-circle-exclamation"></i>
+                          {errors[item as keyof RegisterInputType]?.message}
+                        </>
+                      </div>
                     )}
                   </div>
-                  {errors[item as keyof RegisterInputType]?.message && (
-                    <div className="item_errors">
-                      <>
-                        <i className="fa-solid fa-circle-exclamation"></i>
-                        {errors[item as keyof RegisterInputType]?.message}
-                      </>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-            <div className="item_btn">
-              <button className="btn btn-primary">Đăng ký</button>
-            </div>
-          </form>
+                );
+              })}
+              <div className="item_btn">
+                <button className="btn btn-primary">Đăng ký</button>
+              </div>
+            </form>
+          )}
         </div>
         {state?.errorMessage && (
           <div className="login_inner_show_errors">
@@ -110,7 +119,13 @@ const Register = (props: Props) => {
         )}
         <div className="login_footer">
           <div className="hr_span_footer">
-            <span>Hoặc</span>
+            <span className={state?.successMessage && "success"}>
+              {state?.successMessage ? (
+                <i className="fa-solid fa-arrow-down"></i>
+              ) : (
+                "Hoặc"
+              )}
+            </span>
             <div>
               <Link className="btn" to="/login">
                 Đăng nhập

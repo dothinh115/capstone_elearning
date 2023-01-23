@@ -50,7 +50,7 @@ const Login = (props: Props) => {
                       className={`${
                         errors[item as keyof LoginType]?.message && "isInvalid"
                       }`}
-                      type="text"
+                      type={`${item === "matKhau" ? "password" : "text"}`}
                       {...register(item, {
                         required: `${loginInputData.title[index]} không được để trống!`,
                       })}

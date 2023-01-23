@@ -17,7 +17,7 @@
         height: 50px;
       }
     }
-    .header-menu {
+    .header_menu {
       width: 50%;
       text-align: right;
       ul {
@@ -25,16 +25,84 @@
           list-style-type: none;
           display: inline-block;
           margin-left: 10px;
-          a {
+          position: relative;
+          button#header_icon {
             color: white;
+            display: inline-block;
+            background-color: #f8f8f8;
+            color: #309255;
+            border: none;
             padding: 5px;
             i {
-              margin-right: 5px;
+              font-size: 25px;
+              display: inline-block;
+              border: 1px solid white;
+              border-radius: 50%;
             }
-            &.active {
-              background-color: rgba(white, 0.55);
-              border-radius: 5px;
-              color: indigo;
+          }
+          a {
+            color: white;
+            display: inline-block;
+            padding: 5px;
+            background-color: #f8f8f8;
+            color: #309255;
+
+            img {
+              height: 30px;
+              width: 30px;
+              border-radius: 50%;
+            }
+
+            i {
+              margin-right: 5px;
+              width: 30px;
+              height: 30px;
+              border: 1px solid white;
+              line-height: 30px;
+              text-align: center;
+              border-radius: 50%;
+            }
+          }
+          & > .menu_dropdown {
+            display: block;
+            position: absolute;
+            width: 100%;
+            top: 115%;
+            right: 0;
+            z-index: 10;
+            min-width: 200px;
+            &.hide {
+              display: none;
+            }
+            &.show {
+              display: block;
+            }
+            ul {
+              background-color: #f8f8f8;
+              text-align: left;
+              border: 1px solid #eee;
+              li {
+                list-style-type: none;
+                margin: unset;
+                display: block;
+                &:hover {
+                  background-color: #ccc;
+                }
+                a {
+                  color: #333;
+                  padding: 5px;
+                  height: 100%;
+                  width: 100%;
+                  display: inline-block;
+                  i {
+                    border: unset;
+                    font-size: 20px;
+                  }
+                }
+                &:not(:last-of-type) {
+                  border-bottom: 1px solid #eee;
+                }
+              }
             }
           }
         }

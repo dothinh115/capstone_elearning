@@ -7,6 +7,7 @@ export const numberRandomCourses: number = 6;
 export const numberRelatedCourses: number = 8;
 export const limitCategoriesCourses: number = 6; // thu gọn khóa học ở /categories
 export const limitCategoriesCoursesViewMore: number = 4; // bấm xem thêm sẽ hiện thêm
+export const registerSuccessMess = "Đăng ký tài khoản thành công";
 export const randomBadgeArr: string[] = [
   "danger",
   "info",
@@ -60,7 +61,7 @@ export const registerInputData: RegisterConfigType = {
   title: [
     "Tài khoản",
     "Mật khẩu",
-    "Họ Tên",
+    "Họ tên",
     "Số điện thoại",
     "Mã nhóm",
     "Email",
@@ -68,11 +69,11 @@ export const registerInputData: RegisterConfigType = {
   icon: ["user", "lock", "file-signature", "phone", "user-group", "at"],
   regex: [
     /[^]*/,
-    /^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*s).{0,}$/,
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
     /^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ ụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$/,
     /^[0-9]+$/,
     /[^]*/,
-    /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+    /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
   ],
   errors: [
     "",
