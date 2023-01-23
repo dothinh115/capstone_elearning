@@ -1,5 +1,4 @@
 import {
-  BrowserRouter,
   Navigate,
   Route,
   Routes,
@@ -17,8 +16,6 @@ import NotLoggedInRoute from "./hoc/NotLoggedInRoute";
 import Profile from "./pages/profile/Profile";
 import useToken from "./hooks/useToken";
 import { createBrowserHistory } from "history";
-import { getLocalStorage } from "./util/function";
-import UserHandle from "./templates/UserHandle";
 export const history: any = createBrowserHistory();
 
 function App() {
@@ -35,10 +32,8 @@ function App() {
           </Route>
         </Route>
         <Route element={<NotLoggedInRoute token={token} />}>
-          <Route element={<UserHandle />}>
-            <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-          </Route>
+          <Route path="login" element={<Login />} />
+          <Route path="register" element={<Register />} />
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

@@ -1,14 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import useToken from "../../hooks/useToken";
-import { ReduxRootType } from "../../redux/store";
 import { removeLocalStorage } from "../../util/function";
 type Props = {};
 
 const Header = (props: Props) => {
   const { token } = useToken();
-  const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const dropdownMenu = useRef<HTMLDivElement | null>(null);
   const dropdownButton = useRef<HTMLButtonElement | null>(null);
   const logout = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -21,16 +18,17 @@ const Header = (props: Props) => {
       event.target.parentNode === dropdownButton.current ||
       event.target === dropdownButton.current
     ) {
-      dropdownMenu.current?.classList.contains("hide")
-        ? (dropdownMenu.current.className = "menu_dropdown show")
-        : (dropdownMenu.current!.className = "menu_dropdown hide");
+      dropdownMenu.current!.classList.toggle("show");
     } else {
       if (dropdownMenu.current?.classList.contains("show"))
-        dropdownMenu.current!.className = "menu_dropdown hide";
+        dropdownMenu.current!.classList.toggle("show");
     }
   };
   useEffect(() => {
     document.addEventListener("click", dropdownClickHandle);
+    return (): void => {
+      document.removeEventListener("click", dropdownClickHandle);
+    };
   }, []);
   return (
     <section className="header">

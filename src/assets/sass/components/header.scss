@@ -32,34 +32,11 @@
             background-color: #f8f8f8;
             color: #309255;
             border: none;
-            padding: 5px;
+            padding: 5px 10px;
             i {
               font-size: 25px;
               display: inline-block;
               border: 1px solid white;
-              border-radius: 50%;
-            }
-          }
-          a {
-            color: white;
-            display: inline-block;
-            padding: 5px;
-            background-color: #f8f8f8;
-            color: #309255;
-
-            img {
-              height: 30px;
-              width: 30px;
-              border-radius: 50%;
-            }
-
-            i {
-              margin-right: 5px;
-              width: 30px;
-              height: 30px;
-              border: 1px solid white;
-              line-height: 30px;
-              text-align: center;
               border-radius: 50%;
             }
           }
@@ -71,9 +48,7 @@
             right: 0;
             z-index: 10;
             min-width: 200px;
-            &.hide {
-              display: none;
-            }
+            display: none;
             &.show {
               display: block;
             }
@@ -90,13 +65,14 @@
                 }
                 a {
                   color: #333;
-                  padding: 5px;
+                  padding: 10px;
                   height: 100%;
                   width: 100%;
                   display: inline-block;
                   i {
                     border: unset;
                     font-size: 20px;
+                    margin-right: 10px;
                   }
                 }
                 &:not(:last-of-type) {
