@@ -7,7 +7,6 @@ import {
   CourseStateType,
   CourseType,
 } from "../../util/interface/courseReducerInterface";
-import { getUserInfoApi } from "../userReducer/userReducer";
 
 const initialState: CourseStateType = {
   coursesArr: [],
@@ -75,7 +74,6 @@ export const getAllCoursesApi = async (dispatch: DispatchType) => {
     const getRandomCourses: PayloadAction<CourseType[]> =
       getRandomCoursesAction(randomArray<CourseType>(arr, numberRandomCourses));
     dispatch(getRandomCourses);
-    dispatch(getUserInfoApi);
   } catch (error) {
     console.log(error);
   } finally {

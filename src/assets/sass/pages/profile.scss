@@ -97,6 +97,14 @@
           &_input {
             margin-top: 5px;
           }
+          &_error {
+            font-size: 13px;
+            color: red;
+            margin-top: 5px;
+            i {
+              margin-right: 5px;
+            }
+          }
         }
       }
       ul {

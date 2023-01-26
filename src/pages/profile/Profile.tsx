@@ -102,6 +102,7 @@ const Profile = ({ page }: Props) => {
                   {registerInputData.id.map(
                     (item: string | any, index: number) => {
                       if (index === 1) return false;
+                      const reg = new RegExp(registerInputData.regex[index]);
                       return (
                         <div
                           className="profile_container_main_block_item"
@@ -128,6 +129,10 @@ const Profile = ({ page }: Props) => {
                                 }`}
                                 {...register(item, {
                                   required: `${registerInputData.title[index]} không được để trống!`,
+                                  pattern: {
+                                    value: reg,
+                                    message: registerInputData.errors[index],
+                                  },
                                 })}
                                 placeholder={
                                   registerInputData.placeHolder[index]

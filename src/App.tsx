@@ -21,6 +21,7 @@ import { DispatchType } from "./redux/store";
 import { useDispatch } from "react-redux";
 import { getAllCoursesApi } from "./redux/courseReducer/courseReducer";
 import { getAllCategoriesApi } from "./redux/categoriesReducer/categoriesReducer";
+import { getUserInfoApi } from "./redux/userReducer/userReducer";
 export const history: any = createBrowserHistory();
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
   useEffect(() => {
     dispatch(getAllCoursesApi);
     dispatch(getAllCategoriesApi);
+    dispatch(getUserInfoApi);
   }, []);
   return (
     <HistoryRouter history={history}>
