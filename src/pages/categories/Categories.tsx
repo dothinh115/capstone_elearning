@@ -1,10 +1,8 @@
-import { PayloadAction } from "@reduxjs/toolkit";
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
 import {
-  getCoursesByCategoriesAction,
   getCoursesByCategoriesApi,
   setLimitCoursesAction,
 } from "../../redux/categoriesReducer/categoriesReducer";
@@ -28,6 +26,7 @@ const Categories = (props: Props) => {
   const absoluteSidebar = useRef<HTMLDivElement | null>(null);
   const parentDiv = useRef<HTMLDivElement | null>(null);
   const searchValue = useRef<HTMLInputElement | null>(null);
+  const [result, setResult] = useState<CourseType[] | null | undefined>(null);
 
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
     let arr: string[] | null = [];
@@ -64,7 +63,9 @@ const Categories = (props: Props) => {
     return false;
   };
 
-  const sortSubmitHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const sortSubmitHandle = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
     event.preventDefault();
     if (checked !== null) {
       let params: string | undefined = checked?.join("+");
@@ -84,7 +85,7 @@ const Categories = (props: Props) => {
       absoluteSidebar.current!.getBoundingClientRect().top;
     if (topDivAnimate < window.scrollY) {
       absoluteSidebar.current!.classList.add("absolute");
-      absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
+      absoluteSidebar.current!.style.top = `${window.scrollY - 60}px`;
     } else {
       absoluteSidebar.current!.classList.remove("absolute");
     }
@@ -93,24 +94,23 @@ const Categories = (props: Props) => {
       absoluteSidebar.current!.style.bottom = "0px";
     } else {
       absoluteSidebar.current!.style.bottom = "unset";
-      absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
+      absoluteSidebar.current!.style.top = `${window.scrollY - 60}px`;
     }
   };
 
-  const searchSubmitHandle = (event: React.FormEvent<HTMLFormElement>) => {
+  const searchSubmitHandle = (
+    event: React.FormEvent<HTMLFormElement>
+  ): void => {
     event.preventDefault();
+    let findArr: CourseType[] | null | undefined = null;
     if (searchValue.current?.value.length !== 0) {
-      let findArr: CourseType[] | null | undefined =
-        coursesByCategories?.filter((item: CourseType) =>
-          item.tenKhoaHoc.includes(searchValue.current!.value)
-        );
+      findArr = coursesByCategories?.filter((item: CourseType) =>
+        item.tenKhoaHoc.includes(searchValue.current!.value)
+      );
       if (findArr?.length === 0) findArr = null;
-      const setSearchResultAction: PayloadAction<
-        CourseType[] | null | undefined
-      > = getCoursesByCategoriesAction(findArr);
-      dispatch(setSearchResultAction);
+      setResult(findArr);
     } else {
-      dispatch(getCoursesByCategoriesApi(checked));
+      setResult(coursesByCategories);
     }
   };
 
@@ -127,6 +127,10 @@ const Categories = (props: Props) => {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
+
+  useEffect(() => {
+    setResult(coursesByCategories);
+  }, [coursesByCategories]);
 
   return (
     <section className="categories" ref={parentDiv}>
@@ -194,34 +198,33 @@ const Categories = (props: Props) => {
                 <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
               </button>
             </form>
-            {coursesByCategories === null && (
+
+            {!result && (
               <h1 className="notfound">
                 <img src="../../img/notfound.png" alt="" />
                 <div>Không tìm thấy kết quả nào!</div>
               </h1>
             )}
-            {coursesByCategories !== null && (
+            {result && (
               <>
                 <div className="selectedCategories result">
                   <i className="fa-solid fa-arrow-right"></i>
                   Đã tìm thấy:{" "}
-                  <span className="badge badge-info">
-                    {coursesByCategories?.length}
-                  </span>{" "}
-                  kết quả.
+                  <span className="badge badge-info">{result?.length}</span> kết
+                  quả.
                 </div>
               </>
             )}
 
-            {coursesByCategories!?.length <= limitCouses ? (
+            {result!?.length <= limitCouses ? (
               <>
-                {coursesByCategories?.map((item: CourseType, index: number) => {
+                {result?.map((item: CourseType, index: number) => {
                   return <CardItem item={item} key={index} />;
                 })}
               </>
             ) : (
               <>
-                {coursesByCategories
+                {result
                   ?.slice(0, limitCouses)
                   .map((item: CourseType, index: number) => {
                     return <CardItem item={item} key={index} />;
@@ -229,7 +232,7 @@ const Categories = (props: Props) => {
               </>
             )}
 
-            {coursesByCategories!?.length > limitCouses && (
+            {result!?.length > limitCouses && (
               <div className="categories_container_main_body_btn">
                 <button
                   className="btn"

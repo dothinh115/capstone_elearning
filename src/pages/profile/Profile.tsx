@@ -38,9 +38,8 @@ const Profile = ({ page }: Props) => {
     defaultValues: { ...userInfo, maLoaiNguoiDung: userInfo?.maLoaiNguoiDung },
   });
 
-  const submitHandle = (data: UserInfoType): void => {
+  const submitHandle = (data: UserInfoType) =>
     dispatch(updateUserInfoApi(data));
-  };
 
   const huyGhiDanhBtnHandle = (maKhoaHoc: string) => {
     const data: dataGhiDanh = {
