@@ -1,13 +1,19 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { ReduxRootType } from "../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
+import useToken from "../../hooks/useToken";
+import { DispatchType, ReduxRootType } from "../../redux/store";
+import {
+  getUserInfoApi,
+  ghiDanhApi,
+} from "../../redux/userReducer/userReducer";
 
 import { registerInputData } from "../../util/config";
 import { showMaNhom } from "../../util/function";
 import { RegisterdCoursesDetailType } from "../../util/interface/courseReducerInterface";
 import {
+  dataGhiDanh,
   RegisterInputType,
   UserInfoType,
 } from "../../util/interface/userReducerInterface";
@@ -16,6 +22,9 @@ type Props = {
 };
 
 const Profile = ({ page }: Props) => {
+  const { token } = useToken();
+  const dispatch: DispatchType = useDispatch();
+
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const {
     register,
@@ -26,13 +35,21 @@ const Profile = ({ page }: Props) => {
     defaultValues: { ...userInfo },
   });
 
+  useEffect(() => {
+    if (token) dispatch(getUserInfoApi);
+  }, [token]);
+
   const submitHandle = (data: UserInfoType): void => {
     console.log(data);
   };
 
-  let abc: string | string[] = ["abcdefz", "apfng world", "pfiek"];
-  const filter = abc.filter((item) => item.includes("adsfads"));
-  console.log(filter);
+  const huyGhiDanhBtnHandle = (maKhoaHoc: string) => {
+    const data: dataGhiDanh = {
+      maKhoaHoc,
+      taiKhoan: userInfo?.taiKhoan,
+    };
+    dispatch(ghiDanhApi(false, data));
+  };
 
   return (
     <>
@@ -139,14 +156,31 @@ const Profile = ({ page }: Props) => {
 
             {page === "registed_courses" && (
               <ul>
-                {userInfo?.chiTietKhoaHocGhiDanh?.map(
-                  (course: RegisterdCoursesDetailType, index: number) => {
-                    return (
-                      <>
-                        <li key={index}>{course.tenKhoaHoc}</li>
-                      </>
-                    );
-                  }
+                {userInfo?.chiTietKhoaHocGhiDanh?.length === 0 ? (
+                  <div className="profile_container_main_block">
+                    {" "}
+                    Chưa ghi danh khóa học nào!
+                  </div>
+                ) : (
+                  userInfo?.chiTietKhoaHocGhiDanh?.map(
+                    (course: RegisterdCoursesDetailType, index: number) => {
+                      return (
+                        <li key={index}>
+                          <Link to={`/course/${course.maKhoaHoc}`}>
+                            {course.tenKhoaHoc}
+                          </Link>
+                          <button
+                            className="btn btn-danger"
+                            onClick={() =>
+                              huyGhiDanhBtnHandle(course.maKhoaHoc)
+                            }
+                          >
+                            <i className="fa-solid fa-trash"></i>
+                          </button>
+                        </li>
+                      );
+                    }
+                  )
                 )}
               </ul>
             )}

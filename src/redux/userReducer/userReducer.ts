@@ -3,6 +3,7 @@ import { history } from "../../App";
 import { API, registerSuccessMess } from "../../util/config";
 import { saveLocalStorage } from "../../util/function";
 import {
+  dataGhiDanh,
   LoginType,
   RegisterInputType,
   UserInfoStateType,
@@ -86,4 +87,19 @@ export const getUserInfoApi = async (dispatch: DispatchType) => {
     const setLoading: PayloadAction<boolean> = setLoadingAction(false);
     dispatch(setLoading);
   }
+};
+
+export const ghiDanhApi = (bool: boolean, data: dataGhiDanh) => {
+  //false: hủy ghi danh, true: ghi danh
+  return async (dispatch: DispatchType) => {
+    try {
+      await API.post(
+        `/QuanLyKhoaHoc/${bool ? "DangKyKhoaHoc" : "HuyGhiDanh"}`,
+        data
+      );
+      dispatch(getUserInfoApi);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };

@@ -3,9 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { getCourseDetailApi } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
+import { ghiDanhApi } from "../../redux/userReducer/userReducer";
 import { numberRelatedCourses } from "../../util/config";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
-import { CourseType } from "../../util/interface/courseReducerInterface";
+import {
+  CourseType,
+  RegisterdCoursesDetailType,
+} from "../../util/interface/courseReducerInterface";
+import { dataGhiDanh } from "../../util/interface/userReducerInterface";
 
 type Props = {};
 
@@ -14,10 +19,29 @@ const Course = (props: Props) => {
   const { courseDetail, coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
+  const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
   const dispatch: DispatchType = useDispatch();
+
+  const findIfRegisted = (): boolean => {
+    const find = userInfo?.chiTietKhoaHocGhiDanh?.find(
+      (item: RegisterdCoursesDetailType) =>
+        item.maKhoaHoc === courseDetail?.maKhoaHoc
+    );
+    if (find) return true;
+    return false;
+  };
+
+  const ghidanhHandle = (): void => {
+    const data: dataGhiDanh = {
+      maKhoaHoc: courseDetail?.maKhoaHoc,
+      taiKhoan: userInfo?.taiKhoan,
+    };
+    dispatch(ghiDanhApi(!findIfRegisted(), data));
+  };
+
   useEffect(() => {
     dispatch(getCourseDetailApi(courseID));
   }, [courseID]);
@@ -61,6 +85,25 @@ const Course = (props: Props) => {
               </div>
             </div>
             <div className="main_container_info">
+              <div className="main_container_info_btn">
+                <button
+                  className={`btn btn-${
+                    findIfRegisted() ? "danger" : "primary"
+                  }`}
+                  onClick={ghidanhHandle}
+                >
+                  {findIfRegisted() ? (
+                    <>
+                      <i className="fa-solid fa-x"></i>Hủy ghi danh
+                    </>
+                  ) : (
+                    <>
+                      <i className="fa-solid fa-cart-shopping"></i>Ghi danh khóa
+                      học này
+                    </>
+                  )}
+                </button>
+              </div>
               <p>{courseDetail?.moTa}</p>
             </div>
             <div className="main_container_related">

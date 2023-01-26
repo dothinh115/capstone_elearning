@@ -38,3 +38,8 @@ export interface RegisterInputType {
   maNhom: string;
   email: string;
 }
+
+export interface dataGhiDanh {
+  maKhoaHoc: string | undefined;
+  taiKhoan: string | undefined;
+}

@@ -63,12 +63,19 @@
         }
       }
       &_info {
+        padding-top: 10px;
+        border-bottom: 1px solid #f8f8f8;
         p {
           line-height: 30px;
           font-size: 15px;
+          padding: 40px 0;
         }
-        padding: 40px 0;
-        border-bottom: 1px solid #f8f8f8;
+        &_btn {
+          text-align: right;
+          i {
+            margin-right: 10px;
+          }
+        }
       }
       &_related {
         h1 {

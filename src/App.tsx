@@ -17,16 +17,18 @@ import Profile from "./pages/profile/Profile";
 import useToken from "./hooks/useToken";
 import { createBrowserHistory } from "history";
 import { useEffect } from "react";
-import { getUserInfoApi } from "./redux/userReducer/userReducer";
 import { DispatchType } from "./redux/store";
 import { useDispatch } from "react-redux";
+import { getAllCoursesApi } from "./redux/courseReducer/courseReducer";
+import { getAllCategoriesApi } from "./redux/categoriesReducer/categoriesReducer";
 export const history: any = createBrowserHistory();
 
 function App() {
   const { token }: { token: string } = useToken();
   const dispatch: DispatchType = useDispatch();
   useEffect(() => {
-    if (token) dispatch(getUserInfoApi);
+    dispatch(getAllCoursesApi);
+    dispatch(getAllCategoriesApi);
   }, []);
   return (
     <HistoryRouter history={history}>
