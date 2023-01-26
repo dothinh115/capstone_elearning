@@ -99,13 +99,12 @@ const Categories = (props: Props) => {
 
   const searchSubmitHandle = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (searchValue.current!.value.length !== 0) {
+    if (searchValue.current?.value.length !== 0) {
       let findArr: CourseType[] | null | undefined =
         coursesByCategories?.filter((item: CourseType) =>
           item.tenKhoaHoc.includes(searchValue.current!.value)
         );
-      if (findArr?.length === 0 || findArr === null || findArr === undefined)
-        findArr = null;
+      if (findArr?.length === 0) findArr = null;
       const setSearchResultAction: PayloadAction<
         CourseType[] | null | undefined
       > = getCoursesByCategoriesAction(findArr);
