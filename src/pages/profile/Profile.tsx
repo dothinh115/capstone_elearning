@@ -11,7 +11,7 @@ import {
 } from "../../redux/userReducer/userReducer";
 
 import { registerInputData } from "../../util/config";
-import { showMaNhom } from "../../util/function";
+import { removeLocalStorage, showMaNhom } from "../../util/function";
 import { RegisterdCoursesDetailType } from "../../util/interface/courseReducerInterface";
 import {
   dataGhiDanh,
@@ -48,6 +48,12 @@ const Profile = ({ page }: Props) => {
       taiKhoan: userInfo?.taiKhoan,
     };
     dispatch(ghiDanhApi(false, data));
+  };
+
+  const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
+    event.preventDefault();
+    removeLocalStorage("userInfo");
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -90,9 +96,9 @@ const Profile = ({ page }: Props) => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/thongtin">
+                  <button onClick={logout}>
                     <i className="fa-solid fa-right-from-bracket"></i>Đăng xuất
-                  </NavLink>
+                  </button>
                 </li>
               </ul>
             </div>

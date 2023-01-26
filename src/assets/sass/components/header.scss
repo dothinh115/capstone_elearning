@@ -70,12 +70,17 @@
                 &:hover {
                   background-color: #ccc;
                 }
-                a {
+                a,
+                button {
                   color: #333;
                   padding: 10px;
                   height: 100%;
                   width: 100%;
                   display: inline-block;
+                  border: unset;
+                  text-align: left;
+                  background-color: unset;
+                  cursor: pointer;
                   i {
                     border: unset;
                     font-size: 20px;

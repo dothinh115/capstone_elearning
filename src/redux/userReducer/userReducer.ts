@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { history } from "../../App";
 import { API, registerSuccessMess } from "../../util/config";
-import { saveLocalStorage } from "../../util/function";
+import { getLocalStorage, saveLocalStorage } from "../../util/function";
 import {
   dataGhiDanh,
   LoginType,
@@ -73,6 +73,7 @@ export const registerApi = (dataRegister: RegisterInputType) => {
 };
 
 export const getUserInfoApi = async (dispatch: DispatchType) => {
+  if (!getLocalStorage("userInfo")?.accessToken) return;
   const setLoading: PayloadAction<boolean> = setLoadingAction(true);
   dispatch(setLoading);
   try {

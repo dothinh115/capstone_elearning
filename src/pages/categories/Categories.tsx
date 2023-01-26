@@ -76,39 +76,34 @@ const Categories = (props: Props) => {
     }
   };
 
+  const onScroll = (): void => {
+    const topDivAnimate: number =
+      absoluteSidebar.current!.getBoundingClientRect().top;
+    if (topDivAnimate < window.scrollY) {
+      absoluteSidebar.current!.classList.add("absolute");
+      absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
+    } else {
+      absoluteSidebar.current!.classList.remove("absolute");
+    }
+    if (window.scrollY > parentDiv.current!.clientHeight - 300) {
+      absoluteSidebar.current!.style.top = "unset";
+      absoluteSidebar.current!.style.bottom = "0px";
+    } else {
+      absoluteSidebar.current!.style.bottom = "unset";
+      absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
+    }
+  };
+
   useEffect(() => {
     const checkedList: string[] | null = getCategoriesFromParams();
     if (checkedList) {
       dispatch(getCoursesByCategoriesApi(checkedList));
       setChecked(checkedList);
     }
+    window.addEventListener("scroll", onScroll);
     window.scrollTo(0, 0);
     return () => {
       dispatch(getCoursesByCategoriesApi(null));
-    };
-  }, []);
-
-  useEffect(() => {
-    const topDivAnimate: number =
-      absoluteSidebar.current!.getBoundingClientRect().top;
-    absoluteSidebar.current!.classList.remove("absolute");
-    const onScroll = (): void => {
-      if (topDivAnimate < window.scrollY) {
-        absoluteSidebar.current!.classList.add("absolute");
-        absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
-      } else {
-        absoluteSidebar.current!.classList.remove("absolute");
-      }
-      if (window.scrollY > parentDiv.current!.clientHeight - 300) {
-        absoluteSidebar.current!.style.top = "unset";
-        absoluteSidebar.current!.style.bottom = "0px";
-      } else {
-        absoluteSidebar.current!.style.bottom = "unset";
-        absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
-      }
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);

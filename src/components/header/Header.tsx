@@ -8,7 +8,7 @@ const Header = (props: Props) => {
   const { token } = useToken();
   const dropdownMenu = useRef<HTMLDivElement | null>(null);
   const dropdownButton = useRef<HTMLButtonElement | null>(null);
-  const logout = (event: React.MouseEvent<HTMLAnchorElement>): void => {
+  const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     removeLocalStorage("userInfo");
     window.location.reload();
@@ -61,10 +61,10 @@ const Header = (props: Props) => {
                         </NavLink>
                       </li>
                       <li>
-                        <a onClick={logout}>
+                        <button onClick={logout}>
                           <i className="fa-solid fa-right-from-bracket"></i>
                           Thoát
-                        </a>
+                        </button>
                       </li>
                     </>
                   ) : (
