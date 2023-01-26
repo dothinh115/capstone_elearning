@@ -7,6 +7,7 @@ import { DispatchType, ReduxRootType } from "../../redux/store";
 import {
   getUserInfoApi,
   ghiDanhApi,
+  updateUserInfoApi,
 } from "../../redux/userReducer/userReducer";
 
 import { registerInputData } from "../../util/config";
@@ -45,7 +46,7 @@ const Profile = ({ page }: Props) => {
   }, [userInfo]);
 
   const submitHandle = (data: UserInfoType): void => {
-    console.log(data);
+    dispatch(updateUserInfoApi(data));
   };
 
   const huyGhiDanhBtnHandle = (maKhoaHoc: string) => {

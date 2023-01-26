@@ -103,3 +103,14 @@ export const ghiDanhApi = (bool: boolean, data: dataGhiDanh) => {
     }
   };
 };
+
+export const updateUserInfoApi = (data: UserInfoType) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      await API.put("/QuanLyNguoiDung/CapNhatThongTinNguoiDung", data);
+      dispatch(getUserInfoApi);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

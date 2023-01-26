@@ -52,15 +52,17 @@
         margin-top: 10px;
       }
       &_menu {
+        padding: 15px;
         ul {
-          border-width: 1px 0;
-          border-style: solid;
-          border-color: #eee;
+          border: 1px solid #eee;
           li {
             list-style-type: none;
             background-color: white;
             &:not(:last-of-type) {
               border-bottom: 1px solid #eee;
+            }
+            &:hover {
+              background-color: #f9dd94;
             }
             a {
               color: #333;
