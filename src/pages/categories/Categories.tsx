@@ -73,6 +73,7 @@ const Categories = (props: Props) => {
     } else {
       searchParams.delete("categories");
       setSearchParams(searchParams);
+      dispatch(getCoursesByCategoriesApi(null));
     }
   };
 
