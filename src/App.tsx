@@ -16,10 +16,18 @@ import NotLoggedInRoute from "./hoc/NotLoggedInRoute";
 import Profile from "./pages/profile/Profile";
 import useToken from "./hooks/useToken";
 import { createBrowserHistory } from "history";
+import { useEffect } from "react";
+import { getUserInfoApi } from "./redux/userReducer/userReducer";
+import { DispatchType } from "./redux/store";
+import { useDispatch } from "react-redux";
 export const history: any = createBrowserHistory();
 
 function App() {
   const { token }: { token: string } = useToken();
+  const dispatch: DispatchType = useDispatch();
+  useEffect(() => {
+    if (token) dispatch(getUserInfoApi);
+  }, []);
   return (
     <HistoryRouter history={history}>
       <Routes>
@@ -29,7 +37,11 @@ function App() {
           <Route path="course/:courseID" element={<Course />} />
         </Route>
         <Route element={<LoggedInRoute token={token} />}>
-          <Route path="profile" element={<Profile />} />
+          <Route path="profile" element={<Profile page={null} />} />
+          <Route
+            path="profile/registed_courses"
+            element={<Profile page="registed_courses" />}
+          />
         </Route>
         <Route element={<NotLoggedInRoute token={token} />}>
           <Route path="login" element={<Login />} />

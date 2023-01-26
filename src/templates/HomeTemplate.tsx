@@ -6,18 +6,13 @@ import { DispatchType } from "../redux/store";
 import { useEffect } from "react";
 import { getAllCoursesApi } from "../redux/courseReducer/courseReducer";
 import { getAllCategoriesApi } from "../redux/categoriesReducer/categoriesReducer";
-import useToken from "../hooks/useToken";
-import { getUserInfoApi } from "../redux/userReducer/userReducer";
-
 type Props = {};
 
 const HomeTemplate = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
-  const { token } = useToken();
   useEffect(() => {
     dispatch(getAllCoursesApi);
     dispatch(getAllCategoriesApi);
-    if (token) dispatch(getUserInfoApi);
   }, []);
   return (
     <>

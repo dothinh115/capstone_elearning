@@ -7,6 +7,7 @@ export const {
   saveLocalStorage,
   getLocalStorage,
   removeLocalStorage,
+  showMaNhom,
 } = {
   randomArray<T>(arr: T[], limit: number): T[] {
     arr = [...arr];
@@ -41,5 +42,16 @@ export const {
   },
   removeLocalStorage(name: string): void {
     localStorage.removeItem(name);
+  },
+  showMaNhom(): JSX.Element[] {
+    let html: JSX.Element[] = [];
+    for (let i: number = 1; i <= 10; i++) {
+      html.push(
+        <option key={i} value={`GP${i !== 10 ? "0" + i : i}`}>
+          GP{i !== 10 ? "0" + i : i}
+        </option>
+      );
+    }
+    return html;
   },
 };

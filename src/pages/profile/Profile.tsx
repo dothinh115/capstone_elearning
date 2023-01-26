@@ -1,9 +1,39 @@
-import React from "react";
+import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { ReduxRootType } from "../../redux/store";
 
-type Props = {};
+import { registerInputData } from "../../util/config";
+import { showMaNhom } from "../../util/function";
+import { RegisterdCoursesDetailType } from "../../util/interface/courseReducerInterface";
+import {
+  RegisterInputType,
+  UserInfoType,
+} from "../../util/interface/userReducerInterface";
+type Props = {
+  page?: string | null;
+};
 
-const Profile = (props: Props) => {
+const Profile = ({ page }: Props) => {
+  const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserInfoType>({
+    mode: "onChange",
+    defaultValues: { ...userInfo },
+  });
+
+  const submitHandle = (data: UserInfoType): void => {
+    console.log(data);
+  };
+
+  let abc: string | string[] = ["abcdefz", "apfng world", "pfiek"];
+  const filter = abc.filter((item) => item.includes("adsfads"));
+  console.log(filter);
+
   return (
     <>
       <section className="profile">
@@ -26,18 +56,13 @@ const Profile = (props: Props) => {
             <div className="profile_container_sidebar_menu">
               <ul>
                 <li>
-                  <NavLink to="/thongtin">
+                  <NavLink to="/profile">
                     <i className="fa-solid fa-house"></i>Thông tin tài khoản
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/thongtin">
-                    <i className="fa-solid fa-key"></i>Đổi mật khẩu
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/thongtin">
-                    <i className="fa-solid fa-desktop"></i>Khóa học đã ghi danh
+                  <NavLink to="/profile/registed_courses">
+                    <i className="fa-solid fa-key"></i>Khóa học đã đăng ký
                   </NavLink>
                 </li>
                 <li>
@@ -49,58 +74,82 @@ const Profile = (props: Props) => {
             </div>
           </div>
           <div className="profile_container_main">
-            <div className="profile_container_main_block">
-              <div className="profile_container_main_block_item">
-                <div className="profile_container_main_block_item_title">
-                  <i className="fa-regular fa-id-card"></i>
-                  ID:
+            {page === null && (
+              <form onSubmit={handleSubmit(submitHandle)}>
+                <div className="profile_container_main_block">
+                  {registerInputData.id.map(
+                    (item: string | any, index: number) => {
+                      if (index === 1) return false;
+                      return (
+                        <div
+                          className="profile_container_main_block_item"
+                          key={index}
+                        >
+                          <div className="profile_container_main_block_item_title">
+                            <i
+                              className={`fa fa-${registerInputData.icon[index]}`}
+                            ></i>
+                            {registerInputData.title[index]}:
+                          </div>
+                          <div className="profile_container_main_block_item_input">
+                            {index === 4 ? (
+                              <select {...register(item)}>
+                                {showMaNhom().map((val: JSX.Element) => {
+                                  return val;
+                                })}
+                              </select>
+                            ) : (
+                              <input
+                                type={`${
+                                  (item === "soDT" && "number") ||
+                                  (item === "email" && "email")
+                                }`}
+                                {...register(item, {
+                                  required: `${registerInputData.title[index]} không được để trống!`,
+                                })}
+                                placeholder={
+                                  registerInputData.placeHolder[index]
+                                }
+                              />
+                            )}
+                          </div>
+                          {errors[item as keyof RegisterInputType]?.message && (
+                            <div className="profile_container_main_block_item_error">
+                              <p>
+                                <i className="fa-solid fa-circle-exclamation"></i>
+                                {
+                                  errors[item as keyof RegisterInputType]
+                                    ?.message
+                                }
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    }
+                  )}
                 </div>
-                <div className="profile_container_main_block_item_input">
-                  <input type="text" />
+                <div className="profile_container_main_block">
+                  <div className="profile_container_main_block_button">
+                    <button className="btn btn-primary">Update</button>
+                  </div>
                 </div>
-              </div>
-              <div className="profile_container_main_block_item">
-                <div className="profile_container_main_block_item_title">
-                  <i className="fa-solid fa-key"></i>
-                  Password:
-                </div>
-                <div className="profile_container_main_block_item_input">
-                  <input type="text" />
-                </div>
-              </div>
-              <div className="profile_container_main_block_item">
-                <div className="profile_container_main_block_item_title">
-                  <i className="fa-solid fa-signature"></i>
-                  Họ tên:
-                </div>
-                <div className="profile_container_main_block_item_input">
-                  <input type="text" />
-                </div>
-              </div>
-              <div className="profile_container_main_block_item">
-                <div className="profile_container_main_block_item_title">
-                  <i className="fa-solid fa-phone"></i>
-                  Số điện thoại:
-                </div>
-                <div className="profile_container_main_block_item_input">
-                  <input type="text" />
-                </div>
-              </div>
-              <div className="profile_container_main_block_item">
-                <div className="profile_container_main_block_item_title">
-                  <i className="fa-solid fa-envelope"></i>
-                  Email:
-                </div>
-                <div className="profile_container_main_block_item_input">
-                  <input type="text" />
-                </div>
-              </div>
-            </div>
-            <div className="profile_container_main_block">
-              <div className="profile_container_main_block_button">
-                <button className="btn btn-primary">Update</button>
-              </div>
-            </div>
+              </form>
+            )}
+
+            {page === "registed_courses" && (
+              <ul>
+                {userInfo?.chiTietKhoaHocGhiDanh?.map(
+                  (course: RegisterdCoursesDetailType, index: number) => {
+                    return (
+                      <>
+                        <li key={index}>{course.tenKhoaHoc}</li>
+                      </>
+                    );
+                  }
+                )}
+              </ul>
+            )}
           </div>
         </div>
       </section>

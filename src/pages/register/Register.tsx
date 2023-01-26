@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import { DispatchType } from "../../redux/store";
 import { registerApi } from "../../redux/userReducer/userReducer";
 import { registerInputData } from "../../util/config";
+import { showMaNhom } from "../../util/function";
 import { RegisterInputType } from "../../util/interface/userReducerInterface";
 
 type Props = {};
@@ -30,17 +31,7 @@ const Register = (props: Props) => {
   const onSubmit = (data: RegisterInputType): void => {
     dispatch(registerApi(data));
   };
-  const showMaNhom = (): JSX.Element[] => {
-    let html: JSX.Element[] = [];
-    for (let i: number = 1; i <= 10; i++) {
-      html.push(
-        <option key={i} value={`GP${i !== 10 ? "0" + i : i}`}>
-          GP{i !== 10 ? "0" + i : i}
-        </option>
-      );
-    }
-    return html;
-  };
+
   return (
     <section className="login">
       <div className="login_inner">
