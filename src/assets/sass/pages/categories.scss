@@ -105,10 +105,23 @@
         .searchInResult {
           width: 100%;
           display: flex;
-          gap: 10px;
+          border: 1px solid #ccc;
+          height: 50px;
+          align-items: center;
+          padding: 5px 10px;
           button {
             padding: unset;
-            width: 100px;
+            height: 32px;
+            width: 32px;
+            background-color: transparent;
+            color: #333;
+            border: unset;
+          }
+          input,
+          input:focus {
+            border: none;
+            box-shadow: none;
+            font-size: 16px;
           }
         }
         .card_item {

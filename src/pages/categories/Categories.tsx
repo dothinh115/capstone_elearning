@@ -190,7 +190,9 @@ const Categories = (props: Props) => {
 
             <form className="searchInResult" onClick={searchSubmitHandle}>
               <input ref={searchValue} type="text" placeholder="Tìm kiếm..." />
-              <button className="btn btn-primary">Tìm kiếm</button>
+              <button className="btn btn-primary">
+                <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
+              </button>
             </form>
             {coursesByCategories === null && (
               <h1 className="notfound">
