@@ -37,14 +37,6 @@ const Profile = ({ page }: Props) => {
     defaultValues: { ...userInfo },
   });
 
-  useEffect(() => {
-    if (token) dispatch(getUserInfoApi);
-  }, []);
-
-  useEffect(() => {
-    reset({ ...userInfo });
-  }, [userInfo]);
-
   const submitHandle = (data: UserInfoType): void => {
     dispatch(updateUserInfoApi(data));
   };
@@ -56,6 +48,14 @@ const Profile = ({ page }: Props) => {
     };
     dispatch(ghiDanhApi(false, data));
   };
+
+  useEffect(() => {
+    if (token) dispatch(getUserInfoApi);
+  }, []);
+
+  useEffect(() => {
+    reset({ ...userInfo });
+  }, [userInfo]);
 
   return (
     <>
