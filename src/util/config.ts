@@ -60,12 +60,21 @@ export const loginInputData: LoginInputType = {
 };
 
 export const registerInputData: RegisterConfigType = {
-  id: ["taiKhoan", "matKhau", "hoTen", "soDT", "maNhom", "email"],
+  id: [
+    "taiKhoan",
+    "matKhau",
+    "hoTen",
+    "soDT",
+    "maLoaiNguoiDung",
+    "maNhom",
+    "email",
+  ],
   title: [
     "Tài khoản",
     "Mật khẩu",
     "Họ tên",
     "Số điện thoại",
+    "Mã loại người dùng",
     "Mã nhóm",
     "Email",
   ],
@@ -76,6 +85,7 @@ export const registerInputData: RegisterConfigType = {
     /^[a-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶ ẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợ ụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s]+$/,
     /^[0-9]+$/,
     /[^]*/,
+    /[^]*/,
     /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/,
   ],
   errors: [
@@ -84,6 +94,7 @@ export const registerInputData: RegisterConfigType = {
     "Chỉ chứa ký tự!",
     "Chỉ chứa số!",
     "",
+    "",
     "Email không đúng định dạng",
   ],
   placeHolder: [
@@ -91,6 +102,7 @@ export const registerInputData: RegisterConfigType = {
     "Phải chứa ký tự in hoa, ký tự thường, số, và ký tự đặc biệt!",
     "Chỉ chứa ký tự!",
     "Chỉ chứa số!",
+    "",
     "",
     "yourname@example.com",
   ],

@@ -34,7 +34,7 @@ const Profile = ({ page }: Props) => {
     reset,
   } = useForm<UserInfoType>({
     mode: "onChange",
-    defaultValues: { ...userInfo },
+    defaultValues: { ...userInfo, maLoaiNguoiDung: userInfo?.maLoaiNguoiDung },
   });
 
   const submitHandle = (data: UserInfoType): void => {
@@ -54,7 +54,7 @@ const Profile = ({ page }: Props) => {
   }, []);
 
   useEffect(() => {
-    reset({ ...userInfo });
+    reset({ ...userInfo, maLoaiNguoiDung: userInfo?.maLoaiNguoiDung });
   }, [userInfo]);
 
   return (
@@ -102,7 +102,7 @@ const Profile = ({ page }: Props) => {
                 <div className="profile_container_main_block">
                   {registerInputData.id.map(
                     (item: string | any, index: number) => {
-                      if (index === 1) return false;
+                      if (item === "matKhau") return false;
                       const reg = new RegExp(registerInputData.regex[index]);
                       return (
                         <div
@@ -116,7 +116,7 @@ const Profile = ({ page }: Props) => {
                             {registerInputData.title[index]}:
                           </div>
                           <div className="profile_container_main_block_item_input">
-                            {index === 4 ? (
+                            {item === "maNhom" ? (
                               <select {...register(item)}>
                                 {showMaNhom().map((val: JSX.Element) => {
                                   return val;

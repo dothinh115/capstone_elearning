@@ -51,6 +51,7 @@ const Register = (props: Props) => {
           ) : (
             <form onSubmit={handleSubmit(onSubmit)}>
               {registerInputData.id.map((item: string | any, index: number) => {
+                if (item === "maLoaiNguoiDung") return false;
                 const reg = new RegExp(registerInputData.regex[index]);
                 return (
                   <div className="item" key={index}>
