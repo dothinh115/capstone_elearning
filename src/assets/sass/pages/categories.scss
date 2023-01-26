@@ -102,6 +102,15 @@
             border-radius: 50%;
           }
         }
+        .searchInResult {
+          width: 100%;
+          display: flex;
+          gap: 10px;
+          button {
+            padding: unset;
+            width: 100px;
+          }
+        }
         .card_item {
           width: calc(100% / 2 - (30px / 2 * 1));
         }

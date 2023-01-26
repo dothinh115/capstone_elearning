@@ -33,7 +33,7 @@ const categoriesReducer = createSlice({
     },
     getCoursesByCategoriesAction: (
       state: CategoriesStateType,
-      action: PayloadAction<CourseType[]>
+      action: PayloadAction<CourseType[] | null | undefined>
     ) => {
       state.coursesByCategories = action.payload;
     },
@@ -87,8 +87,9 @@ export const getCoursesByCategoriesApi = (
         }
       }
       if (resultCoursesArr!.length === 0) resultCoursesArr = null;
-      const coursesByCategoriesAction: PayloadAction<CourseType[]> =
-        getCoursesByCategoriesAction(resultCoursesArr!);
+      const coursesByCategoriesAction: PayloadAction<
+        CourseType[] | null | undefined
+      > = getCoursesByCategoriesAction(resultCoursesArr!);
       dispatch(coursesByCategoriesAction);
       const setLimitCourses: PayloadAction<number> = setLimitCoursesAction(
         limitCategoriesCourses

@@ -1,8 +1,10 @@
-import { useEffect, useState, useRef } from "react";
+import { PayloadAction } from "@reduxjs/toolkit";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
 import {
+  getCoursesByCategoriesAction,
   getCoursesByCategoriesApi,
   setLimitCoursesAction,
 } from "../../redux/categoriesReducer/categoriesReducer";
@@ -25,6 +27,7 @@ const Categories = (props: Props) => {
   const [checked, setChecked] = useState<string[] | null>(null);
   const absoluteSidebar = useRef<HTMLDivElement | null>(null);
   const parentDiv = useRef<HTMLDivElement | null>(null);
+  const searchValue = useRef<HTMLInputElement | null>(null);
 
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
     let arr: string[] | null = [];
@@ -64,7 +67,6 @@ const Categories = (props: Props) => {
   const sortSubmitHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (checked !== null) {
-      dispatch(getCoursesByCategoriesApi(checked));
       let params: string | undefined = checked?.join("+");
       setSearchParams({
         categories: params,
@@ -73,8 +75,8 @@ const Categories = (props: Props) => {
     } else {
       searchParams.delete("categories");
       setSearchParams(searchParams);
-      dispatch(getCoursesByCategoriesApi(null));
     }
+    dispatch(getCoursesByCategoriesApi(checked));
   };
 
   const onScroll = (): void => {
@@ -92,6 +94,24 @@ const Categories = (props: Props) => {
     } else {
       absoluteSidebar.current!.style.bottom = "unset";
       absoluteSidebar.current!.style.top = `${window.scrollY - 75}px`;
+    }
+  };
+
+  const searchSubmitHandle = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (searchValue.current!.value.length !== 0) {
+      let findArr: CourseType[] | null | undefined =
+        coursesByCategories?.filter((item: CourseType) =>
+          item.tenKhoaHoc.includes(searchValue.current!.value)
+        );
+      if (findArr?.length === 0 || findArr === null || findArr === undefined)
+        findArr = null;
+      const setSearchResultAction: PayloadAction<
+        CourseType[] | null | undefined
+      > = getCoursesByCategoriesAction(findArr);
+      dispatch(setSearchResultAction);
+    } else {
+      dispatch(getCoursesByCategoriesApi(checked));
     }
   };
 
@@ -168,21 +188,30 @@ const Categories = (props: Props) => {
                 );
               })}
             </div>
-            {coursesByCategories === null ? (
+
+            <form className="searchInResult" onClick={searchSubmitHandle}>
+              <input ref={searchValue} type="text" placeholder="Tìm kiếm..." />
+              <button className="btn btn-primary">Tìm kiếm</button>
+            </form>
+            {coursesByCategories === null && (
               <h1 className="notfound">
                 <img src="../../img/notfound.png" alt="" />
-                <div>Chưa có gì ở đây!</div>
+                <div>Không tìm thấy kết quả nào!</div>
               </h1>
-            ) : (
-              <div className="selectedCategories result">
-                <i className="fa-solid fa-arrow-right"></i>
-                Đã tìm thấy:{" "}
-                <span className="badge badge-info">
-                  {coursesByCategories?.length}
-                </span>{" "}
-                kết quả.
-              </div>
             )}
+            {coursesByCategories !== null && (
+              <>
+                <div className="selectedCategories result">
+                  <i className="fa-solid fa-arrow-right"></i>
+                  Đã tìm thấy:{" "}
+                  <span className="badge badge-info">
+                    {coursesByCategories?.length}
+                  </span>{" "}
+                  kết quả.
+                </div>
+              </>
+            )}
+
             {coursesByCategories!?.length <= limitCouses ? (
               <>
                 {coursesByCategories?.map((item: CourseType, index: number) => {

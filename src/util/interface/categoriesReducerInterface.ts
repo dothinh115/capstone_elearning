@@ -8,6 +8,6 @@ export interface CategoriesType {
 export interface CategoriesStateType {
   categories: CategoriesType[] | null;
   limitCouses: number;
-  coursesByCategories: CourseType[] | null;
+  coursesByCategories: CourseType[] | null | undefined;
   categoriesLoading: boolean;
 }

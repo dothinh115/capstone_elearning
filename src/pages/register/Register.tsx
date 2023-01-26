@@ -50,7 +50,7 @@ const Register = (props: Props) => {
             </div>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)}>
-              {registerInputData.id.map((item: string | any, index: number) => {
+              {registerInputData.id.map((item: string, index: number) => {
                 if (item === "maLoaiNguoiDung") return false;
                 const reg = new RegExp(registerInputData.regex[index]);
                 return (
@@ -76,7 +76,7 @@ const Register = (props: Props) => {
                           }`}
                           type={`${item === "matKhau" ? "password" : "text"}`}
                           placeholder={registerInputData.placeHolder[index]}
-                          {...register(item, {
+                          {...register(item as keyof RegisterInputType, {
                             required: `${registerInputData.title[index]} không được để trống!`,
                             pattern: {
                               value: reg,

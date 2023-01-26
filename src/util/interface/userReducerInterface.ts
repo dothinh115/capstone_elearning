@@ -26,8 +26,8 @@ export interface UserLoginType {
 }
 
 export interface LoginType {
-  taiKhoan?: string;
-  matKhau?: string;
+  taiKhoan: string;
+  matKhau: string;
 }
 
 export interface RegisterInputType {

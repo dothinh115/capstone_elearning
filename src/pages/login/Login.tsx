@@ -36,7 +36,7 @@ const Login = (props: Props) => {
         </div>
         <div className="login_inner_container">
           <form onSubmit={handleSubmit(onSubmit)}>
-            {loginInputData.id.map((item: string | any, index: number) => {
+            {loginInputData.id.map((item: string, index: number) => {
               return (
                 <div className="item" key={index}>
                   <div className="item_title">
@@ -51,7 +51,7 @@ const Login = (props: Props) => {
                         errors[item as keyof LoginType]?.message && "isInvalid"
                       }`}
                       type={`${item === "matKhau" ? "password" : "text"}`}
-                      {...register(item, {
+                      {...register(item as keyof LoginType, {
                         required: `${loginInputData.title[index]} không được để trống!`,
                       })}
                     />
