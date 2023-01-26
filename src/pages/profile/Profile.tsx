@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import {
@@ -25,6 +25,7 @@ type Props = {
 const Profile = ({ page }: Props) => {
   const { token } = useToken();
   const dispatch: DispatchType = useDispatch();
+  const { state } = useLocation();
 
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const {
@@ -157,6 +158,26 @@ const Profile = ({ page }: Props) => {
                     }
                   )}
                 </div>
+                {(state?.errorMess || state?.successMess) && (
+                  <div className="profile_container_main_block">
+                    <p
+                      className={`show_result ${
+                        (state.errorMess && "errors") ||
+                        (state.successMess && "success")
+                      }`}
+                    >
+                      <i
+                        className={`fa-solid fa-${
+                          (state.errorMess && "circle-exclamation fa-sharp") ||
+                          (state.successMess && "check")
+                        }`}
+                      ></i>
+                      {state.errorMess}
+                      {state.successMess}
+                    </p>
+                  </div>
+                )}
+
                 <div className="profile_container_main_block">
                   <div className="profile_container_main_block_button">
                     <button className="btn btn-primary">Update</button>

@@ -109,8 +109,14 @@ export const updateUserInfoApi = (data: UserInfoType) => {
     try {
       await API.put("/QuanLyNguoiDung/CapNhatThongTinNguoiDung", data);
       dispatch(getUserInfoApi);
-    } catch (error) {
+      history.push(window.location.pathname, {
+        successMess: "Thay đổi thông tin thành công!",
+      });
+    } catch (error: any) {
       console.log(error);
+      history.push(window.location.pathname, {
+        errorMess: error.response.data,
+      });
     }
   };
 };
