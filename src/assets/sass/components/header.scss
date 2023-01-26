@@ -33,18 +33,23 @@
             color: #309255;
             border: none;
             padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 10px;
             i {
               font-size: 25px;
               display: inline-block;
               border: 1px solid white;
               border-radius: 50%;
+              &:first-of-type {
+                margin-right: 20px;
+              }
             }
           }
           & > .menu_dropdown {
             display: block;
             position: absolute;
             width: 100%;
-            top: 115%;
+            top: 120%;
             right: 0;
             z-index: 10;
             min-width: 200px;
@@ -56,6 +61,8 @@
               background-color: #f8f8f8;
               text-align: left;
               border: 1px solid #eee;
+              border-radius: 5px;
+              overflow: hidden;
               li {
                 list-style-type: none;
                 margin: unset;

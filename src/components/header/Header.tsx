@@ -8,12 +8,12 @@ const Header = (props: Props) => {
   const { token } = useToken();
   const dropdownMenu = useRef<HTMLDivElement | null>(null);
   const dropdownButton = useRef<HTMLButtonElement | null>(null);
-  const logout = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  const logout = (event: React.MouseEvent<HTMLAnchorElement>): void => {
     event.preventDefault();
     removeLocalStorage("userInfo");
     window.location.reload();
   };
-  const dropdownClickHandle = (event: any) => {
+  const dropdownClickHandle = (event: any): void => {
     if (
       event.target.parentNode === dropdownButton.current ||
       event.target === dropdownButton.current
@@ -42,6 +42,7 @@ const Header = (props: Props) => {
           <ul>
             <li>
               <button id="header_icon" ref={dropdownButton}>
+                <i className="fa-solid fa-user"></i>
                 <i className="fa-solid fa-bars"></i>
               </button>
               <div ref={dropdownMenu} className={`menu_dropdown hide`}>
@@ -60,7 +61,7 @@ const Header = (props: Props) => {
                         </NavLink>
                       </li>
                       <li>
-                        <a href="#" onClick={logout}>
+                        <a onClick={logout}>
                           <i className="fa-solid fa-right-from-bracket"></i>
                           Thoát
                         </a>

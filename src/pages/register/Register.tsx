@@ -27,7 +27,7 @@ const Register = (props: Props) => {
       email: "",
     },
   });
-  const onSubmit = (data: RegisterInputType) => {
+  const onSubmit = (data: RegisterInputType): void => {
     dispatch(registerApi(data));
   };
   const showMaNhom = (): JSX.Element[] => {

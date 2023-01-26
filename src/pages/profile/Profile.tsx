@@ -8,9 +8,12 @@ const Profile = (props: Props) => {
     <>
       <section className="profile">
         <div className="profile_container">
-          <NavLink id="getout" to="/">
-            <i className="fa-solid fa-x"></i>
-          </NavLink>
+          <div className="profile_container_header">
+            <NavLink id="getout" to="/" className="btn btn-primary">
+              <i className="fa-solid fa-arrow-left-long"></i>
+            </NavLink>
+            <h2>Trang cá nhân</h2>
+          </div>
           <div className="profile_container_sidebar">
             <div className="profile_container_sidebar_header">
               <div className="profile_container_sidebar_header_avatar">
@@ -45,7 +48,60 @@ const Profile = (props: Props) => {
               </ul>
             </div>
           </div>
-          <div className="profile_container_main">Nội dung hiển thị ở đây</div>
+          <div className="profile_container_main">
+            <div className="profile_container_main_block">
+              <div className="profile_container_main_block_item">
+                <div className="profile_container_main_block_item_title">
+                  <i className="fa-regular fa-id-card"></i>
+                  ID:
+                </div>
+                <div className="profile_container_main_block_item_input">
+                  <input type="text" />
+                </div>
+              </div>
+              <div className="profile_container_main_block_item">
+                <div className="profile_container_main_block_item_title">
+                  <i className="fa-solid fa-key"></i>
+                  Password:
+                </div>
+                <div className="profile_container_main_block_item_input">
+                  <input type="text" />
+                </div>
+              </div>
+              <div className="profile_container_main_block_item">
+                <div className="profile_container_main_block_item_title">
+                  <i className="fa-solid fa-signature"></i>
+                  Họ tên:
+                </div>
+                <div className="profile_container_main_block_item_input">
+                  <input type="text" />
+                </div>
+              </div>
+              <div className="profile_container_main_block_item">
+                <div className="profile_container_main_block_item_title">
+                  <i className="fa-solid fa-phone"></i>
+                  Số điện thoại:
+                </div>
+                <div className="profile_container_main_block_item_input">
+                  <input type="text" />
+                </div>
+              </div>
+              <div className="profile_container_main_block_item">
+                <div className="profile_container_main_block_item_title">
+                  <i className="fa-solid fa-envelope"></i>
+                  Email:
+                </div>
+                <div className="profile_container_main_block_item_input">
+                  <input type="text" />
+                </div>
+              </div>
+            </div>
+            <div className="profile_container_main_block">
+              <div className="profile_container_main_block_button">
+                <button className="btn btn-primary">Update</button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

@@ -36,9 +36,7 @@ export const {
   },
   getLocalStorage(name: string): any {
     let data: any = localStorage.getItem(name);
-    if (data) {
-      data = JSON.parse(data);
-    }
+    data ? (data = JSON.parse(data)) : (data = null);
     return data;
   },
   removeLocalStorage(name: string): void {

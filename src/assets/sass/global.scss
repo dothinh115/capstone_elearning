@@ -156,6 +156,10 @@ input.isInvalid {
     background-color: #007bff;
     color: white;
   }
+  &-danger {
+    background-color: red;
+    color: white;
+  }
 }
 
 .hr_span_footer {

@@ -14,7 +14,6 @@ import "../src/assets/sass/style.scss";
 import LoggedInRoute from "./hoc/LoggedInRoute";
 import NotLoggedInRoute from "./hoc/NotLoggedInRoute";
 import Profile from "./pages/profile/Profile";
-import UserTemplate from "./templates/UserTemplate";
 import useToken from "./hooks/useToken";
 import { createBrowserHistory } from "history";
 export const history: any = createBrowserHistory();
