@@ -30,6 +30,7 @@ const Profile = ({ page }: Props) => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<UserInfoType>({
     mode: "onChange",
     defaultValues: { ...userInfo },
@@ -37,7 +38,11 @@ const Profile = ({ page }: Props) => {
 
   useEffect(() => {
     if (token) dispatch(getUserInfoApi);
-  }, [token]);
+  }, []);
+
+  useEffect(() => {
+    reset({ ...userInfo });
+  }, [userInfo]);
 
   const submitHandle = (data: UserInfoType): void => {
     console.log(data);
@@ -67,7 +72,7 @@ const Profile = ({ page }: Props) => {
                 <img src="../../img/12693195.jpg" alt="" />
               </div>
               <div className="profile_container_sidebar_header_info">
-                <h3>Đỗ Thịnh</h3>
+                <h3>{userInfo?.hoTen}</h3>
               </div>
             </div>
             <div className="profile_container_sidebar_menu">
