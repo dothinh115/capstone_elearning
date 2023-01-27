@@ -78,15 +78,13 @@
     &_main {
       width: 75%;
       &_body {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px 30px;
         .selectedCategories {
           width: 100%;
           background-color: white;
           border: 1px solid #ccc;
           padding: 0 10px;
           line-height: 55px;
+          margin-bottom: 10px;
           span {
             line-height: 20px;
           }
@@ -109,6 +107,7 @@
           height: 50px;
           align-items: center;
           padding: 5px 10px;
+          margin-bottom: 10px;
           button {
             padding: unset;
             height: 32px;
@@ -124,8 +123,61 @@
             font-size: 16px;
           }
         }
-        .card_item {
-          width: calc(100% / 3 - (30px / 3 * 2));
+        ul {
+          li {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            background-color: white;
+            img {
+              height: 70px;
+              width: 100px;
+              margin-right: 10px;
+              border-right: 1px solid #ccc;
+            }
+            a {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              color: #333;
+              p {
+                margin-top: 5px;
+                &:first-of-type i {
+                  color: #087f23;
+                }
+                &:nth-of-type(2) i {
+                  color: #f6ba35;
+                }
+                i {
+                  margin-right: 5px;
+                  font-size: 16px;
+                }
+              }
+            }
+            button {
+              border-left: 1px solid #eee;
+              height: 70px;
+              width: 70px;
+              border: unset;
+              cursor: pointer;
+              font-size: 16px;
+              &:nth-of-type(1) {
+                background-color: #007bff;
+                color: white;
+              }
+              &.register {
+                background-color: #41b294;
+                color: white;
+              }
+              &.cancel {
+                background-color: rgba(red, 0.65);
+                color: white;
+              }
+            }
+          }
         }
         h1 {
           &.notfound {

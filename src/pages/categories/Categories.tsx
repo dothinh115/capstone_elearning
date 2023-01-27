@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import CardItem from "../../components/cardItem/CardItem";
 import {
   getCoursesByCategoriesApi,
   setLimitCoursesAction,
@@ -13,6 +12,7 @@ import {
 } from "../../util/config";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { CourseType } from "../../util/interface/courseReducerInterface";
+import CoursesList from "./CoursesList";
 
 type Props = {};
 
@@ -221,7 +221,7 @@ const Categories = (props: Props) => {
             {result!?.length <= limitCouses ? (
               <>
                 {result?.map((item: CourseType, index: number) => {
-                  return <CardItem item={item} key={index} />;
+                  return <CoursesList item={item} key={index} />;
                 })}
               </>
             ) : (
@@ -229,7 +229,7 @@ const Categories = (props: Props) => {
                 {result
                   ?.slice(0, limitCouses)
                   .map((item: CourseType, index: number) => {
-                    return <CardItem item={item} key={index} />;
+                    return <CoursesList item={item} key={index} />;
                   })}
               </>
             )}

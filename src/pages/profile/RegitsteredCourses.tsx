@@ -11,7 +11,7 @@ const RegitsteredCourses = (props: Props) => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const dispatch: DispatchType = useDispatch();
 
-  const huyGhiDanhBtnHandle = (maKhoaHoc: string) => {
+  const ghiDanhBtnHandle = (maKhoaHoc: string) => {
     const data: dataGhiDanh = {
       maKhoaHoc,
       taiKhoan: userInfo?.taiKhoan,
@@ -38,7 +38,7 @@ const RegitsteredCourses = (props: Props) => {
                     <p>
                       {course.moTa.length > 50
                         ? course.moTa.substring(0, 49) + "..."
-                        : course.moTa.length}
+                        : course.moTa}
                     </p>
                     <p>
                       <i className="fa-solid fa-calendar-days"></i>
@@ -50,7 +50,7 @@ const RegitsteredCourses = (props: Props) => {
                     </p>
                   </div>
                 </Link>
-                <button onClick={() => huyGhiDanhBtnHandle(course.maKhoaHoc)}>
+                <button onClick={() => ghiDanhBtnHandle(course.maKhoaHoc)}>
                   <i className="fa-solid fa-trash"></i>
                 </button>
               </li>
