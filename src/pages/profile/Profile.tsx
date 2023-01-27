@@ -1,21 +1,11 @@
 import { useEffect } from "react";
-import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import {
-  getUserInfoApi,
-  ghiDanhApi,
-  updateUserInfoApi,
-} from "../../redux/userReducer/userReducer";
+import { getUserInfoApi } from "../../redux/userReducer/userReducer";
 
-import { removeLocalStorage, showMaNhom } from "../../util/function";
-import { RegisterdCoursesDetailType } from "../../util/interface/courseReducerInterface";
-import {
-  dataGhiDanh,
-  UserInfoType,
-} from "../../util/interface/userReducerInterface";
+import { removeLocalStorage } from "../../util/function";
 import EditProfile from "./EditProfile";
 import RegitsteredCourses from "./RegitsteredCourses";
 type Props = {
