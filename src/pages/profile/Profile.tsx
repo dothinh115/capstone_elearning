@@ -204,10 +204,25 @@ const Profile = ({ page }: Props) => {
                       return (
                         <li key={index}>
                           <Link to={`/course/${course.maKhoaHoc}`}>
-                            {course.tenKhoaHoc}
+                            <img src={course.hinhAnh} alt="" />
+                            <div className="course_info">
+                              <h3>{course.tenKhoaHoc}</h3>
+                              <p>
+                                {course.moTa.length > 50
+                                  ? course.moTa.substring(0, 49) + "..."
+                                  : course.moTa.length}
+                              </p>
+                              <p>
+                                <i className="fa-solid fa-calendar-days"></i>
+                                {course.ngayTao
+                                  .substring(0, 10)
+                                  .split("-")
+                                  .reverse()
+                                  .join("/")}
+                              </p>
+                            </div>
                           </Link>
                           <button
-                            className="btn btn-danger"
                             onClick={() =>
                               huyGhiDanhBtnHandle(course.maKhoaHoc)
                             }
