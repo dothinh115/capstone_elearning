@@ -72,6 +72,7 @@
                 }
                 a,
                 button {
+                  font-family: "Montserrat";
                   color: #333;
                   padding: 10px;
                   height: 100%;
@@ -80,7 +81,9 @@
                   border: unset;
                   text-align: left;
                   background-color: unset;
+                  font-weight: 400;
                   cursor: pointer;
+
                   i {
                     border: unset;
                     font-size: 20px;
