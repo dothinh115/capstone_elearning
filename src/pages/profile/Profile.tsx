@@ -10,14 +10,14 @@ import {
   updateUserInfoApi,
 } from "../../redux/userReducer/userReducer";
 
-import { registerInputData } from "../../util/config";
 import { removeLocalStorage, showMaNhom } from "../../util/function";
 import { RegisterdCoursesDetailType } from "../../util/interface/courseReducerInterface";
 import {
   dataGhiDanh,
-  RegisterInputType,
   UserInfoType,
 } from "../../util/interface/userReducerInterface";
+import EditProfile from "./EditProfile";
+import RegitsteredCourses from "./RegitsteredCourses";
 type Props = {
   page?: string | null;
 };
@@ -25,29 +25,8 @@ type Props = {
 const Profile = ({ page }: Props) => {
   const { token } = useToken();
   const dispatch: DispatchType = useDispatch();
-  const { state } = useLocation();
 
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<UserInfoType>({
-    mode: "onChange",
-    defaultValues: { ...userInfo, maLoaiNguoiDung: userInfo?.maLoaiNguoiDung },
-  });
-
-  const submitHandle = (data: UserInfoType) =>
-    dispatch(updateUserInfoApi(data));
-
-  const huyGhiDanhBtnHandle = (maKhoaHoc: string) => {
-    const data: dataGhiDanh = {
-      maKhoaHoc,
-      taiKhoan: userInfo?.taiKhoan,
-    };
-    dispatch(ghiDanhApi(false, data));
-  };
 
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
@@ -58,10 +37,6 @@ const Profile = ({ page }: Props) => {
   useEffect(() => {
     if (token) dispatch(getUserInfoApi);
   }, []);
-
-  useEffect(() => {
-    reset({ ...userInfo, maLoaiNguoiDung: userInfo?.maLoaiNguoiDung });
-  }, [userInfo]);
 
   return (
     <>
@@ -103,139 +78,9 @@ const Profile = ({ page }: Props) => {
             </div>
           </div>
           <div className="profile_container_main">
-            {page === null && (
-              <form onSubmit={handleSubmit(submitHandle)}>
-                <div className="profile_container_main_block">
-                  {registerInputData.id.map(
-                    (item: string | any, index: number) => {
-                      if (item === "matKhau") return false;
-                      const reg = new RegExp(registerInputData.regex[index]);
-                      return (
-                        <div
-                          className="profile_container_main_block_item"
-                          key={index}
-                        >
-                          <div className="profile_container_main_block_item_title">
-                            <i
-                              className={`fa fa-${registerInputData.icon[index]}`}
-                            ></i>
-                            {registerInputData.title[index]}:
-                          </div>
-                          <div className="profile_container_main_block_item_input">
-                            {item === "maNhom" ? (
-                              <select {...register(item)}>
-                                {showMaNhom().map((val: JSX.Element) => {
-                                  return val;
-                                })}
-                              </select>
-                            ) : (
-                              <input
-                                type={`${
-                                  (item === "soDT" && "number") ||
-                                  (item === "email" && "email")
-                                }`}
-                                {...register(item, {
-                                  required: `${registerInputData.title[index]} không được để trống!`,
-                                  pattern: {
-                                    value: reg,
-                                    message: registerInputData.errors[index],
-                                  },
-                                })}
-                                placeholder={
-                                  registerInputData.placeHolder[index]
-                                }
-                              />
-                            )}
-                          </div>
-                          {errors[item as keyof RegisterInputType]?.message && (
-                            <div className="profile_container_main_block_item_error">
-                              <p>
-                                <i className="fa-solid fa-circle-exclamation"></i>
-                                {
-                                  errors[item as keyof RegisterInputType]
-                                    ?.message
-                                }
-                              </p>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    }
-                  )}
-                </div>
-                {(state?.errorMess || state?.successMess) && (
-                  <div className="profile_container_main_block">
-                    <p
-                      className={`show_result ${
-                        (state.errorMess && "errors") ||
-                        (state.successMess && "success")
-                      }`}
-                    >
-                      <i
-                        className={`fa-solid fa-${
-                          (state.errorMess && "circle-exclamation fa-sharp") ||
-                          (state.successMess && "check")
-                        }`}
-                      ></i>
-                      {state.errorMess}
-                      {state.successMess}
-                    </p>
-                  </div>
-                )}
+            {page === null && <EditProfile />}
 
-                <div className="profile_container_main_block">
-                  <div className="profile_container_main_block_button">
-                    <button className="btn btn-primary">Update</button>
-                  </div>
-                </div>
-              </form>
-            )}
-
-            {page === "registed_courses" && (
-              <ul>
-                {userInfo?.chiTietKhoaHocGhiDanh?.length === 0 ? (
-                  <div className="profile_container_main_block">
-                    {" "}
-                    Chưa ghi danh khóa học nào!
-                  </div>
-                ) : (
-                  userInfo?.chiTietKhoaHocGhiDanh?.map(
-                    (course: RegisterdCoursesDetailType, index: number) => {
-                      return (
-                        <li key={index}>
-                          <Link to={`/course/${course.maKhoaHoc}`}>
-                            <img src={course.hinhAnh} alt="" />
-                            <div className="course_info">
-                              <h3>{course.tenKhoaHoc}</h3>
-                              <p>
-                                {course.moTa.length > 50
-                                  ? course.moTa.substring(0, 49) + "..."
-                                  : course.moTa.length}
-                              </p>
-                              <p>
-                                <i className="fa-solid fa-calendar-days"></i>
-                                {course.ngayTao
-                                  .substring(0, 10)
-                                  .split("-")
-                                  .reverse()
-                                  .join("/")}
-                              </p>
-                            </div>
-                          </Link>
-                          <button
-                            onClick={() =>
-                              huyGhiDanhBtnHandle(course.maKhoaHoc)
-                            }
-                          >
-                            <i className="fa-solid fa-trash"></i>
-                          </button>
-                        </li>
-                      );
-                    }
-                  )
-                )}
-              </ul>
-            )}
+            {page === "registed_courses" && <RegitsteredCourses />}
           </div>
         </div>
       </section>
