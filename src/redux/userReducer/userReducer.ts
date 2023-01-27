@@ -13,6 +13,8 @@ import {
 import { setLoadingAction } from "../courseReducer/courseReducer";
 import { DispatchType } from "../store";
 
+const token: string = getLocalStorage("userInfo")?.accessToken;
+
 const initialState: UserInfoStateType = {
   userInfo: null,
 };
@@ -91,6 +93,7 @@ export const getUserInfoApi = async (dispatch: DispatchType) => {
 };
 
 export const ghiDanhApi = (bool: boolean, data: dataGhiDanh) => {
+  if (!token) history.push("/login");
   //false: hủy ghi danh, true: ghi danh
   return async (dispatch: DispatchType) => {
     try {

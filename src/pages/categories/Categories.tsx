@@ -105,7 +105,9 @@ const Categories = (props: Props) => {
     let findArr: CourseType[] | null | undefined = null;
     if (searchValue.current?.value.length !== 0) {
       findArr = coursesByCategories?.filter((item: CourseType) =>
-        item.tenKhoaHoc.includes(searchValue.current!.value)
+        item.tenKhoaHoc
+          .toLowerCase()
+          .includes(searchValue.current!.value.toLowerCase())
       );
       if (findArr?.length === 0) findArr = null;
       setResult(findArr);
