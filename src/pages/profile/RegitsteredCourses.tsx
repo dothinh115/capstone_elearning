@@ -32,11 +32,17 @@ const RegitsteredCourses = (props: Props) => {
             return (
               <li key={index}>
                 <Link to={`/course/${course.maKhoaHoc}`}>
-                  <img src={course.hinhAnh} alt="" />
+                  <img
+                    src={course.hinhAnh}
+                    alt=""
+                    onError={({ currentTarget }) => {
+                      currentTarget.src = "../../img/Nodejs.png";
+                    }}
+                  />
                   <div className="course_info">
                     <h3>{course.tenKhoaHoc}</h3>
                     <p>
-                      {course.moTa.length > 50
+                      {course.moTa?.length > 50
                         ? course.moTa.substring(0, 49) + "..."
                         : course.moTa}
                     </p>

@@ -137,6 +137,8 @@
               width: 100px;
               margin-right: 10px;
               border-right: 1px solid #ccc;
+              object-fit: cover;
+              min-width: 100px;
             }
             .course_info {
               width: 100%;
