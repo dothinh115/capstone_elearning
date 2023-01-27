@@ -138,18 +138,26 @@
               margin-right: 10px;
               border-right: 1px solid #ccc;
             }
+            .course_info {
+              width: 100%;
+            }
             a {
               display: flex;
-              justify-content: space-between;
               align-items: center;
               color: #333;
+              width: 80%;
               p {
                 margin-top: 5px;
                 &:first-of-type i {
                   color: #087f23;
                 }
                 &:nth-of-type(2) i {
-                  color: #f6ba35;
+                  &:first-of-type {
+                    color: #f6ba35;
+                  }
+                  &:nth-of-type(2) {
+                    color: #007bff;
+                  }
                 }
                 i {
                   margin-right: 5px;

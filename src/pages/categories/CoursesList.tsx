@@ -58,7 +58,9 @@ const CoursesList = ({ item }: Props) => {
             </p>
             <p>
               <i className="fa-solid fa-user"></i>
-              {item.nguoiTao.hoTen}
+              {item.nguoiTao.hoTen + " | "}
+              <i className="fa-solid fa-calendar-days"></i>
+              {" " + item.ngayTao}
             </p>
           </div>
         </Link>
