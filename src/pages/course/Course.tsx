@@ -1,35 +1,52 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import {
-  getCourseDetailApi,
-  getCoursesByCategoryApi,
-} from "../../redux/courseReducer/courseReducer";
+import { getCourseDetailApi } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { CategoriesType, CourseType } from "../../util/config";
-import { randomDiscount } from "../../util/function";
+import { ghiDanhApi } from "../../redux/userReducer/userReducer";
+import { numberRelatedCourses } from "../../util/config";
+import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
+import {
+  CourseType,
+  RegisterdCoursesDetailType,
+} from "../../util/interface/courseReducerInterface";
+import { dataGhiDanh } from "../../util/interface/userReducerInterface";
 
 type Props = {};
 
 const Course = (props: Props) => {
   const { courseID } = useParams<{ courseID: string }>();
-  const { courseDetail, categories, coursesByCategory } = useSelector(
+  const { courseDetail, coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
+  const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
+  const { categories } = useSelector(
+    (store: ReduxRootType) => store.categoriesReducer
+  );
   const dispatch: DispatchType = useDispatch();
+
+  const findIfRegisted = (): boolean => {
+    const find = userInfo?.chiTietKhoaHocGhiDanh?.find(
+      (item: RegisterdCoursesDetailType) =>
+        item.maKhoaHoc === courseDetail?.maKhoaHoc
+    );
+    if (find) return true;
+    return false;
+  };
+
+  const ghidanhHandle = (): void => {
+    const data: dataGhiDanh = {
+      maKhoaHoc: courseDetail?.maKhoaHoc,
+      taiKhoan: userInfo?.taiKhoan,
+    };
+    dispatch(ghiDanhApi(!findIfRegisted(), data));
+  };
+
   useEffect(() => {
     dispatch(getCourseDetailApi(courseID));
   }, [courseID]);
 
   useEffect(() => {
-    if (courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc) {
-      dispatch(
-        getCoursesByCategoryApi(
-          courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc,
-          courseDetail?.maKhoaHoc
-        )
-      );
-    }
     window.scrollTo({
       top: 0,
       behavior: "smooth",
@@ -38,11 +55,12 @@ const Course = (props: Props) => {
   return (
     <>
       <section className="course_detail">
-        <div className="container">
+        <div className="course_detail_container">
           <div className="main_container">
             <div className="main_container_title">
               <span className="badge badge-danger">
-                <i className="fa-brands fa-hotjar"></i>-{randomDiscount()}%
+                <i className="fa-brands fa-hotjar"></i>-{courseDetail?.discount}
+                %
               </span>
               <span className="badge badge-info">
                 {courseDetail?.danhMucKhoaHoc.tenDanhMucKhoaHoc}
@@ -67,6 +85,25 @@ const Course = (props: Props) => {
               </div>
             </div>
             <div className="main_container_info">
+              <div className="main_container_info_btn">
+                <button
+                  className={`btn btn-${
+                    findIfRegisted() ? "danger" : "primary"
+                  }`}
+                  onClick={ghidanhHandle}
+                >
+                  {findIfRegisted() ? (
+                    <>
+                      <i className="fa-solid fa-x"></i>Hủy ghi danh
+                    </>
+                  ) : (
+                    <>
+                      <i className="fa-solid fa-cart-shopping"></i>Ghi danh khóa
+                      học này
+                    </>
+                  )}
+                </button>
+              </div>
               <p>{courseDetail?.moTa}</p>
             </div>
             <div className="main_container_related">
@@ -74,20 +111,27 @@ const Course = (props: Props) => {
                 KHÓA <mark>HỌC</mark> LIÊN QUAN
               </h1>
               <ul>
-                {coursesByCategory?.map((item: CourseType, index: number) => {
-                  if (item.maKhoaHoc === courseID) return false;
-                  return (
-                    <li key={index}>
-                      <Link to={`/course/${item.maKhoaHoc}`}>
-                        {item.tenKhoaHoc}
-                      </Link>
-                    </li>
-                  );
-                })}
+                {coursesArr
+                  ?.filter(
+                    (child: CourseType) =>
+                      child.danhMucKhoaHoc.maDanhMucKhoahoc ===
+                      courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc
+                  )
+                  .slice(0, numberRelatedCourses)
+                  .map((item: CourseType, index: number) => {
+                    if (item.maKhoaHoc === courseID) return false;
+                    return (
+                      <li key={index}>
+                        <Link to={`/course/${item.maKhoaHoc}`}>
+                          {item.tenKhoaHoc}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 <li style={{ textAlign: "right" }}>
                   <Link
                     key="abc"
-                    to={`/categories/${courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc}`}
+                    to={`/categories?categories=${courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc}`}
                     style={{ width: "unset" }}
                   >
                     <span
@@ -164,7 +208,15 @@ const Course = (props: Props) => {
                 {categories?.map((item: CategoriesType, index: number) => {
                   return (
                     <li key={index}>
-                      <Link to={`/categories/${item.maDanhMuc}`}>
+                      <Link
+                        to={`/categories?categories=${item.maDanhMuc}`}
+                        className={
+                          item.maDanhMuc ===
+                          courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc
+                            ? "active"
+                            : ""
+                        }
+                      >
                         {item.tenDanhMuc}
                       </Link>
                     </li>

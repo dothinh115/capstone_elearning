@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { CourseType } from "../../util/config";
+import { CourseType } from "../../util/interface/courseReducerInterface";
 
 type Props = {
   item: CourseType;
@@ -31,9 +31,9 @@ const CardItem = ({ item }: Props) => {
 
           <p>
             <i className="fa-solid fa-file-lines"></i>
-            {item.moTa?.length > 170
-              ? item.moTa.substring(0, 169) + "..."
-              : item.moTa}
+            {item.moTa?.length > 100
+              ? item.moTa.substr(0, 50) + "..."
+              : "Lập trình hiện đang là xu hướng trên toàn thế giới..."}
           </p>
         </div>
         <div className="footer">

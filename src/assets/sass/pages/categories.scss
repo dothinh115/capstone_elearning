@@ -1,50 +1,208 @@
 .categories {
+  margin: 30px 0;
   &_container {
     width: 80%;
     margin: auto;
-    h1 {
-      margin: 30px 0;
-      font-size: 35px;
-    }
-    ul {
-      counter-reset: li;
-      li {
-        list-style-type: none;
-        padding: 10px 0;
-        &:not(:last-of-type) {
-          border-bottom: 1px solid #eee;
-        }
-        a {
-          color: #333;
-          display: inline-block;
+    display: flex;
+    gap: 20px;
+    &_sidebar {
+      width: 25%;
+      position: relative;
+      &_inner {
+        &.absolute {
+          display: block;
+          position: absolute;
+          left: 0;
           width: 100%;
-          font-size: 20px;
+          z-index: 10;
+        }
+        border: 1px solid #eee;
+        border-radius: 5px;
+        overflow: hidden;
+        background-color: rgba(255, 255, 255, 0.795);
+        &_header {
+          background-image: url("../../img/1000_F_224901003_4KNpLNpMXCSLeVcUHScBaEu4MLEJ9wt3.jpg");
+          background-repeat: no-repeat;
           position: relative;
-          &::before {
-            display: inline-block;
-            content: counter(li);
-            counter-increment: li;
-            margin-right: 10px;
-            height: 35px;
-            width: 35px;
-            text-align: center;
-            line-height: 35px;
-            background-color: #f9dd94;
+          h1 {
+            padding: 20px 10px;
+            color: white;
+            position: relative;
+            z-index: 1;
+            i {
+              margin-right: 10px;
+            }
           }
           &::after {
-            display: inline-block;
             position: absolute;
+            display: block;
             content: "";
-            width: 1px;
-            height: 1px;
-            border: 7px solid transparent;
-            top: 50%;
-            transform: translateY(-50%);
-            left: 35px;
-            transition: all 0.2s;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-color: rgba(black, 0.5);
+            z-index: 0;
           }
-          &:hover::after {
-            border-left-color: #f9dd94;
+        }
+        &_body {
+          padding: 30px;
+
+          h1 {
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+          }
+          ul {
+            padding: 10px 0;
+            li {
+              list-style-type: none;
+              margin-bottom: 10px;
+              input {
+                margin-right: 10px;
+              }
+            }
+          }
+          &_btn {
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            button {
+              width: 100%;
+              i {
+                margin-right: 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+    &_main {
+      width: 75%;
+      &_body {
+        .selectedCategories {
+          width: 100%;
+          background-color: white;
+          border: 1px solid #ccc;
+          padding: 0 10px;
+          line-height: 55px;
+          margin-bottom: 10px;
+          span {
+            line-height: 20px;
+          }
+          i {
+            margin-right: 10px;
+            font-size: 18px;
+            width: 25px;
+            height: 25px;
+            line-height: 25px;
+            background-color: green;
+            text-align: center;
+            color: white;
+            border-radius: 50%;
+          }
+        }
+        .searchInResult {
+          width: 100%;
+          display: flex;
+          border: 1px solid #ccc;
+          height: 50px;
+          align-items: center;
+          padding: 5px 10px;
+          margin-bottom: 10px;
+          button {
+            padding: unset;
+            height: 32px;
+            width: 32px;
+            background-color: transparent;
+            color: #333;
+            border: unset;
+          }
+          input,
+          input:focus {
+            border: none;
+            box-shadow: none;
+            font-size: 16px;
+          }
+        }
+        ul {
+          li {
+            list-style-type: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            background-color: white;
+            img {
+              height: 70px;
+              width: 100px;
+              margin-right: 10px;
+              border-right: 1px solid #ccc;
+              object-fit: cover;
+              min-width: 100px;
+            }
+            .course_info {
+              width: 100%;
+            }
+            a {
+              display: flex;
+              align-items: center;
+              color: #333;
+              width: 80%;
+              p {
+                margin-top: 5px;
+                &:first-of-type i {
+                  color: #087f23;
+                }
+                &:nth-of-type(2) i {
+                  &:first-of-type {
+                    color: #f6ba35;
+                  }
+                  &:nth-of-type(2) {
+                    color: #007bff;
+                  }
+                }
+                i {
+                  margin-right: 5px;
+                  font-size: 16px;
+                }
+              }
+            }
+            button {
+              border-left: 1px solid #eee;
+              height: 70px;
+              width: 70px;
+              border: unset;
+              cursor: pointer;
+              font-size: 16px;
+              &:nth-of-type(1) {
+                background-color: #007bff;
+                color: white;
+              }
+              &.register {
+                background-color: #41b294;
+                color: white;
+              }
+              &.cancel {
+                background-color: rgba(red, 0.65);
+                color: white;
+              }
+            }
+          }
+        }
+        h1 {
+          &.notfound {
+            text-align: center;
+            width: 100%;
+            img {
+              width: 100px;
+            }
+          }
+        }
+        &_btn {
+          width: 100%;
+          text-align: center;
+          button {
+            margin: auto;
           }
         }
       }

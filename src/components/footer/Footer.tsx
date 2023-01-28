@@ -5,7 +5,7 @@ type Props = {};
 const Footer = (props: Props) => {
   return (
     <section className="footer">
-      <div className="footer_inner">
+      <div className="footer_inner footer_container">
         <div className="footer_inner_left">
           <h1>
             CyberSoft <mark>E-learning</mark>

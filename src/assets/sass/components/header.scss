@@ -1,21 +1,23 @@
 .header {
-  margin: unset;
   background-color: #309255;
-
+  background-image: url("../../img/nav.png");
+  background-repeat: no-repeat;
+  background-size: cover;
   nav {
     display: flex;
-    min-height: 50px;
+    min-height: 44px;
     width: 80%;
     margin: auto;
     align-items: center;
     justify-content: space-between;
+    max-width: 1400px;
     .header-logo {
       width: 50%;
       img {
         height: 50px;
       }
     }
-    .header-menu {
+    .header_menu {
       width: 50%;
       text-align: right;
       ul {
@@ -23,16 +25,75 @@
           list-style-type: none;
           display: inline-block;
           margin-left: 10px;
-          a {
+          position: relative;
+          button#header_icon {
             color: white;
-            padding: 5px;
+            display: inline-block;
+            background-color: #f8f8f8;
+            color: #309255;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 10px;
             i {
-              margin-right: 5px;
+              font-size: 25px;
+              display: inline-block;
+              border: 1px solid white;
+              border-radius: 50%;
+              &:first-of-type {
+                margin-right: 20px;
+              }
             }
-            &.active {
-              background-color: rgba(white, 0.55);
+          }
+          & > .menu_dropdown {
+            display: block;
+            position: absolute;
+            width: 100%;
+            top: 120%;
+            right: 0;
+            z-index: 10;
+            min-width: 200px;
+            display: none;
+            &.show {
+              display: block;
+            }
+            ul {
+              background-color: #f8f8f8;
+              text-align: left;
+              border: 1px solid #eee;
               border-radius: 5px;
-              color: indigo;
+              overflow: hidden;
+              li {
+                list-style-type: none;
+                margin: unset;
+                display: block;
+                &:hover {
+                  background-color: #ccc;
+                }
+                a,
+                button {
+                  font-family: "Montserrat";
+                  color: #333;
+                  padding: 10px;
+                  height: 100%;
+                  width: 100%;
+                  display: inline-block;
+                  border: unset;
+                  text-align: left;
+                  background-color: unset;
+                  font-weight: 400;
+                  cursor: pointer;
+
+                  i {
+                    border: unset;
+                    font-size: 20px;
+                    margin-right: 10px;
+                  }
+                }
+                &:not(:last-of-type) {
+                  border-bottom: 1px solid #eee;
+                }
+              }
             }
           }
         }

@@ -1,89 +1,265 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import CardItem from "../../components/cardItem/CardItem";
-import { getCoursesByCategoryApi } from "../../redux/courseReducer/courseReducer";
+import { useSearchParams } from "react-router-dom";
+import {
+  getCoursesByCategoriesApi,
+  setLimitCoursesAction,
+} from "../../redux/categoriesReducer/categoriesReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { CategoriesType, CourseType } from "../../util/config";
+import {
+  limitCategoriesCourses,
+  limitCategoriesCoursesViewMore,
+  randomBadgeArr,
+} from "../../util/config";
+import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
+import { CourseType } from "../../util/interface/courseReducerInterface";
+import CoursesList from "./CoursesList";
 
 type Props = {};
 
 const Categories = (props: Props) => {
-  const { categories, randomCoursesArr, coursesByCategory } = useSelector(
-    (store: ReduxRootType) => store.courseReducer
+  const { categories, limitCouses, coursesByCategories } = useSelector(
+    (store: ReduxRootType) => store.categoriesReducer
   );
-  const { categoryID } = useParams<{ categoryID: string }>();
   const dispatch: DispatchType = useDispatch();
-  useEffect(() => {
-    if (categoryID) {
-      dispatch(getCoursesByCategoryApi(categoryID));
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-    }
-  }, [categoryID]);
-  return (
-    <>
-      <section className="categories">
-        <div
-          className="categories_container"
-          style={{ width: !categoryID ? "80%" : "100%" }}
-        >
-          <>
-            {!categoryID && <h1>DANH MỤC KHÓA HỌC</h1>}
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [checked, setChecked] = useState<string[] | null>(null);
+  const absoluteSidebar = useRef<HTMLDivElement | null>(null);
+  const parentDiv = useRef<HTMLDivElement | null>(null);
+  const searchValue = useRef<HTMLInputElement | null>(null);
+  const [result, setResult] = useState<CourseType[] | null | undefined>(null);
 
-            <ul>
-              {!categoryID ? (
-                <>
-                  {categories?.map((item: CategoriesType, index: number) => {
-                    return (
-                      <li key={index}>
-                        <Link to={`/categories/${item.maDanhMuc}`}>
-                          {item.tenDanhMuc}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </>
-              ) : (
-                <>
-                  <section className="courses" style={{ marginTop: "unset" }}>
-                    <h1>
-                      {categories?.map(
-                        (item: CategoriesType, index: number) => {
-                          if (item.maDanhMuc === categoryID)
-                            return item.maDanhMuc;
-                        }
-                      )}
-                    </h1>
-                    <div className="random_courses">
-                      {coursesByCategory?.map(
-                        (item: CourseType, index: number) => {
-                          return <CardItem item={item} key={index} />;
-                        }
-                      )}
-                    </div>
-                  </section>
-                </>
-              )}
-            </ul>
-          </>
-        </div>
-      </section>
-      {!categoryID && (
-        <section className="courses">
-          <h1>
-            Khóa <mark>học</mark> tiêu biểu
-          </h1>
-          <div className="random_courses">
-            {randomCoursesArr?.map((item: CourseType, index: number) => {
-              return <CardItem item={item} key={index} />;
-            })}
+  const checkboxHandle = (e: { target: HTMLInputElement }) => {
+    let arr: string[] | null = [];
+    if (checked !== null) arr = [...checked];
+    if (e.target.checked) {
+      arr = [...arr, e.target.value];
+    } else {
+      const index: number = arr.findIndex(
+        (item: string) => item === e.target.value
+      );
+      if (index !== -1) arr.splice(index, 1);
+    }
+    if (arr.length === 0) arr = null;
+    setChecked(arr);
+  };
+
+  const getCategoriesFromParams = (): string[] | null => {
+    let params: string | null | undefined = searchParams.get("categories");
+    let arr: string[] | null = null;
+    if (params) {
+      arr = params.split("+");
+    }
+    return arr;
+  };
+
+  const checkCheked = (maDanhMuc: string): boolean => {
+    const checkedList: string[] | null = getCategoriesFromParams();
+    if (checkedList) {
+      const find: string | undefined = checkedList.find(
+        (item: string) => item === maDanhMuc
+      );
+      if (find) return true;
+    }
+    return false;
+  };
+
+  const sortSubmitHandle = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    event.preventDefault();
+    if (checked !== null) {
+      let params: string | undefined = checked?.join("+");
+      setSearchParams({
+        categories: params,
+      });
+      window.scrollTo(0, 0);
+    } else {
+      searchParams.delete("categories");
+      setSearchParams(searchParams);
+    }
+    dispatch(getCoursesByCategoriesApi(checked));
+    dispatch(setLimitCoursesAction(limitCategoriesCourses));
+  };
+
+  const onScroll = (): void => {
+    const topDivAnimate: number =
+      absoluteSidebar.current!.getBoundingClientRect().top;
+    if (topDivAnimate < window.scrollY) {
+      absoluteSidebar.current!.classList.add("absolute");
+      absoluteSidebar.current!.style.top = `${window.scrollY - 55}px`;
+    } else {
+      absoluteSidebar.current!.classList.remove("absolute");
+    }
+    if (window.scrollY > parentDiv.current!.clientHeight - 300) {
+      absoluteSidebar.current!.style.top = "unset";
+      absoluteSidebar.current!.style.bottom = "0px";
+    } else {
+      absoluteSidebar.current!.style.bottom = "unset";
+      absoluteSidebar.current!.style.top = `${window.scrollY - 55}px`;
+    }
+  };
+
+  const searchSubmitHandle = (
+    event: React.FormEvent<HTMLFormElement>
+  ): void => {
+    event.preventDefault();
+    let findArr: CourseType[] | null | undefined = null;
+    if (searchValue.current?.value.length !== 0) {
+      findArr = coursesByCategories?.filter((item: CourseType) =>
+        item.tenKhoaHoc
+          .toLowerCase()
+          .includes(searchValue.current!.value.toLowerCase())
+      );
+      if (findArr?.length === 0) findArr = null;
+      setResult(findArr);
+    } else {
+      setResult(coursesByCategories);
+    }
+  };
+
+  useEffect(() => {
+    const checkedList: string[] | null = getCategoriesFromParams();
+    if (checkedList) {
+      dispatch(getCoursesByCategoriesApi(checkedList));
+      setChecked(checkedList);
+    }
+    window.addEventListener("scroll", onScroll);
+    return () => {
+      dispatch(getCoursesByCategoriesApi(null));
+      window.removeEventListener("scroll", onScroll);
+    };
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    setResult(coursesByCategories);
+  }, [coursesByCategories]);
+
+  return (
+    <section className="categories" ref={parentDiv}>
+      <div className="categories_container">
+        <div className="categories_container_sidebar">
+          <div
+            ref={absoluteSidebar}
+            className="categories_container_sidebar_inner"
+          >
+            <div className="categories_container_sidebar_inner_header">
+              <h1>
+                <i className="fa-solid fa-list"></i>Bộ lọc
+              </h1>
+            </div>
+            <div className="categories_container_sidebar_inner_body">
+              <h1>Tất cả danh mục</h1>
+              <ul>
+                {categories?.map((item: CategoriesType, index: number) => {
+                  return (
+                    <li key={index}>
+                      <input
+                        type="checkbox"
+                        value={item.maDanhMuc}
+                        onChange={checkboxHandle}
+                        defaultChecked={checkCheked(item.maDanhMuc)}
+                      />
+                      {item.tenDanhMuc}
+                    </li>
+                  );
+                })}
+              </ul>
+              <div className="categories_container_sidebar_inner_body_btn">
+                <button className="btn btn-primary" onClick={sortSubmitHandle}>
+                  <i className="fa-solid fa-filter"></i>Lọc
+                </button>
+              </div>
+            </div>
           </div>
-        </section>
-      )}
-    </>
+        </div>
+        <div className="categories_container_main">
+          <div className="categories_container_main_body">
+            <div className="selectedCategories">
+              <i className="fa-solid fa-arrow-right"></i>
+              Danh mục đã chọn:{" "}
+              {getCategoriesFromParams()?.map((item: string, index: number) => {
+                const find = categories?.find(
+                  (val: CategoriesType) => val.maDanhMuc === item
+                );
+                return (
+                  find !== undefined && (
+                    <span
+                      className={`badge badge-${randomBadgeArr[index]}`}
+                      key={index}
+                    >
+                      {find.tenDanhMuc}
+                    </span>
+                  )
+                );
+              })}
+            </div>
+
+            <form className="searchInResult" onClick={searchSubmitHandle}>
+              <input ref={searchValue} type="text" placeholder="Tìm kiếm..." />
+              <button className="btn btn-primary">
+                <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
+              </button>
+            </form>
+
+            {!result && (
+              <h1 className="notfound">
+                <img src="../../img/notfound.png" alt="" />
+                {!checked ? (
+                  <div>Chưa chọn lọc khóa học!</div>
+                ) : (
+                  <div>Không tìm thấy kết quả nào!</div>
+                )}
+              </h1>
+            )}
+            {result && (
+              <>
+                <div className="selectedCategories result">
+                  <i className="fa-solid fa-arrow-right"></i>
+                  Đã tìm thấy:{" "}
+                  <span className="badge badge-info">{result?.length}</span> kết
+                  quả.
+                </div>
+              </>
+            )}
+
+            {result!?.length <= limitCouses ? (
+              <>
+                {result?.map((item: CourseType, index: number) => {
+                  return <CoursesList item={item} key={index} />;
+                })}
+              </>
+            ) : (
+              <>
+                {result
+                  ?.slice(0, limitCouses)
+                  .map((item: CourseType, index: number) => {
+                    return <CoursesList item={item} key={index} />;
+                  })}
+              </>
+            )}
+
+            {result!?.length > limitCouses && (
+              <div className="categories_container_main_body_btn">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    dispatch(
+                      setLimitCoursesAction(
+                        limitCouses + limitCategoriesCoursesViewMore
+                      )
+                    );
+                  }}
+                >
+                  Xem thêm
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

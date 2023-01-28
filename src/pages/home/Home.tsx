@@ -1,9 +1,8 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import CardItem from "../../components/cardItem/CardItem";
 import { ReduxRootType } from "../../redux/store";
-import { CourseType } from "../../util/config";
+import { CourseType } from "../../util/interface/courseReducerInterface";
 
 type Props = {};
 
@@ -13,21 +12,11 @@ const Home = (props: Props) => {
   );
   return (
     <>
-      <section className="banner">
-        <img src="../../../img/banner.jpg" alt="" />
-        <div className="banner-container">
-          <h1>KHỞI ĐẦU SỰ NGHIỆP CỦA BẠN</h1>
-          <p>Trở thành lập trình viên chuyên nghiệp tại Cybersoft</p>
-          <Link to="/" className="btn btn-green">
-            Xem khóa học
-          </Link>
-        </div>
-      </section>
       <section className="feature">
         <h1>
           Why <mark>choose</mark> Cybersoft???
         </h1>
-        <div className="feature_content">
+        <div className="feature_container">
           <div className="feature_item">
             <div className="feature_item_inner">
               <div className="feature_item_inner_left">
@@ -87,8 +76,10 @@ const Home = (props: Props) => {
         </div>
       </section>
       <section className="courses">
-        <h1>Khóa <mark>học</mark> tiêu biểu</h1>
-        <div className="random_courses">
+        <h1>
+          Khóa <mark>học</mark> tiêu biểu
+        </h1>
+        <div className="courses_container">
           {randomCoursesArr?.map((item: CourseType, index: number) => {
             return <CardItem item={item} key={index} />;
           })}

@@ -1,0 +1,94 @@
+.login {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 0;
+  &_inner {
+    border: 1px solid #eee;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    max-width: 460px;
+    width: 100%;
+    &_header {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      h1 {
+        font-size: 20px;
+        font-weight: 600;
+        text-align: left;
+        padding: 0 10px;
+      }
+      a {
+        text-align: center;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        i {
+          margin: unset;
+        }
+      }
+    }
+    &_show_errors {
+      padding: 20px 40px;
+      border-top: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      color: red;
+      font-weight: 400;
+      font-size: 14px;
+      i {
+        margin-right: 10px;
+      }
+    }
+    &_container {
+      padding: 30px 40px;
+      &_success {
+        color: green;
+        font-weight: 600;
+        i {
+          margin-right: 10px;
+        }
+      }
+      .item {
+        margin-top: 10px;
+        &_title {
+          i {
+            font-size: 16px;
+            color: #333;
+            margin-right: 5px;
+          }
+        }
+        &_input {
+          margin-top: 10px;
+          input {
+            text-align: left;
+          }
+        }
+        &_btn {
+          margin-top: 20px;
+          text-align: center;
+          button {
+            width: 100%;
+          }
+        }
+        &_errors {
+          color: red;
+          margin-top: 10px;
+          font-size: 14px;
+          i {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
