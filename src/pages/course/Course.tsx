@@ -85,25 +85,6 @@ const Course = (props: Props) => {
               </div>
             </div>
             <div className="main_container_info">
-              <div className="main_container_info_btn">
-                <button
-                  className={`btn btn-${
-                    findIfRegisted() ? "danger" : "primary"
-                  }`}
-                  onClick={ghidanhHandle}
-                >
-                  {findIfRegisted() ? (
-                    <>
-                      <i className="fa-solid fa-x"></i>Hủy ghi danh
-                    </>
-                  ) : (
-                    <>
-                      <i className="fa-solid fa-cart-shopping"></i>Ghi danh khóa
-                      học này
-                    </>
-                  )}
-                </button>
-              </div>
               <p>{courseDetail?.moTa}</p>
             </div>
             <div className="main_container_related">
@@ -156,7 +137,23 @@ const Course = (props: Props) => {
                 alt=""
               />
             </div>
+
             <div className="sidebar_info">
+              <button
+                className={`btn btn-${findIfRegisted() ? "danger" : "primary"}`}
+                onClick={ghidanhHandle}
+              >
+                {findIfRegisted() ? (
+                  <>
+                    <i className="fa-solid fa-x"></i>Hủy ghi danh
+                  </>
+                ) : (
+                  <>
+                    <i className="fa-solid fa-cart-shopping"></i>Ghi danh khóa
+                    học này
+                  </>
+                )}
+              </button>
               <p>
                 <span>
                   <i className="fa-solid fa-sliders"></i>

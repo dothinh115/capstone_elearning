@@ -62,21 +62,6 @@
           }
         }
       }
-      &_info {
-        padding-top: 10px;
-        border-bottom: 1px solid #f8f8f8;
-        p {
-          line-height: 30px;
-          font-size: 15px;
-          padding: 40px 0;
-        }
-        &_btn {
-          text-align: right;
-          i {
-            margin-right: 10px;
-          }
-        }
-      }
       &_related {
         h1 {
           font-size: 30px;
@@ -174,7 +159,11 @@
       &_info {
         padding: 5px;
         @media (min-width: 1200px) {
-          padding: 30px;
+          padding: 20px;
+        }
+        button {
+          display: block;
+          width: 100%;
         }
         p {
           display: flex;
@@ -209,7 +198,7 @@
       &_footer {
         padding: 0 5px;
         @media (min-width: 1200px) {
-          padding: 0 30px;
+          padding: 0 20px;
         }
         h1 {
           margin: 20px 0;
