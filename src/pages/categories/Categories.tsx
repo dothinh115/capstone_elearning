@@ -141,12 +141,12 @@ const Categories = (props: Props) => {
 
   useEffect(() => {
     setResult(coursesByCategories);
-    const keywords = searchParams.get("keywords");
+    const keywords: string | null = searchParams.get("keywords");
     if (keywords) search(keywords);
   }, [coursesByCategories]);
 
   useEffect(() => {
-    const keywords = searchParams.get("keywords");
+    const keywords: string | null = searchParams.get("keywords");
     if (keywords) {
       reset({
         search: keywords,
