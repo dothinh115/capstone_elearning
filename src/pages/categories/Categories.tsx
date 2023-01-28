@@ -118,6 +118,7 @@ const Categories = (props: Props) => {
         ...(value && { keywords: value }),
       });
     }
+    if (findArr?.length === 0) findArr = null;
     setResult(findArr);
   };
 
@@ -233,6 +234,7 @@ const Categories = (props: Props) => {
                 <div>Không tìm thấy kết quả nào!</div>
               </h1>
             )}
+
             {result && (
               <>
                 <div className="selectedCategories result">
