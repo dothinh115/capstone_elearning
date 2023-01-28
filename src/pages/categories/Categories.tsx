@@ -112,9 +112,9 @@ const Categories = (props: Props) => {
       findArr = findArr?.filter((item: CourseType) =>
         item.tenKhoaHoc.toLowerCase().includes(value.toLowerCase())
       );
-      const categories = getCategoriesFromParams();
+      let params: string | null | undefined = searchParams.get("categories");
       setSearchParams({
-        ...(categories && { categories }),
+        ...(params && { categories: params }),
         ...(value && { keywords: value }),
       });
     }
