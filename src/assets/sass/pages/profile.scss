@@ -10,6 +10,8 @@
     background-color: #f8f8f8;
     border: 1px solid #eee;
     border-radius: 10px;
+    max-height: 60vh;
+    position: relative;
     overflow: hidden;
     &_header {
       height: 40px;
@@ -88,6 +90,7 @@
     &_main {
       width: 70%;
       padding: 15px;
+      max-height: 100%;
       &_block {
         background-color: white;
         padding: 10px;
@@ -129,6 +132,8 @@
         }
       }
       ul {
+        height: 500px;
+        overflow: auto;
         li {
           list-style-type: none;
           display: flex;

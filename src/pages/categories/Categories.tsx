@@ -7,6 +7,7 @@ import {
 } from "../../redux/categoriesReducer/categoriesReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import {
+  limitCategoriesCourses,
   limitCategoriesCoursesViewMore,
   randomBadgeArr,
 } from "../../util/config";
@@ -78,6 +79,7 @@ const Categories = (props: Props) => {
       setSearchParams(searchParams);
     }
     dispatch(getCoursesByCategoriesApi(checked));
+    dispatch(setLimitCoursesAction(limitCategoriesCourses));
   };
 
   const onScroll = (): void => {
@@ -85,7 +87,7 @@ const Categories = (props: Props) => {
       absoluteSidebar.current!.getBoundingClientRect().top;
     if (topDivAnimate < window.scrollY) {
       absoluteSidebar.current!.classList.add("absolute");
-      absoluteSidebar.current!.style.top = `${window.scrollY - 60}px`;
+      absoluteSidebar.current!.style.top = `${window.scrollY - 55}px`;
     } else {
       absoluteSidebar.current!.classList.remove("absolute");
     }
@@ -94,7 +96,7 @@ const Categories = (props: Props) => {
       absoluteSidebar.current!.style.bottom = "0px";
     } else {
       absoluteSidebar.current!.style.bottom = "unset";
-      absoluteSidebar.current!.style.top = `${window.scrollY - 60}px`;
+      absoluteSidebar.current!.style.top = `${window.scrollY - 55}px`;
     }
   };
 
@@ -123,11 +125,11 @@ const Categories = (props: Props) => {
       setChecked(checkedList);
     }
     window.addEventListener("scroll", onScroll);
-    window.scrollTo(0, 0);
     return () => {
       dispatch(getCoursesByCategoriesApi(null));
       window.removeEventListener("scroll", onScroll);
     };
+    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {

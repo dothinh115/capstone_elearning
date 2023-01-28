@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { DispatchType, ReduxRootType } from "../../redux/store";
@@ -10,6 +11,7 @@ type Props = {};
 const RegitsteredCourses = (props: Props) => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const dispatch: DispatchType = useDispatch();
+  const [resultNumber, setResultNumber] = useState<number>(5);
 
   const ghiDanhBtnHandle = (maKhoaHoc: string) => {
     const data: dataGhiDanh = {
@@ -27,8 +29,9 @@ const RegitsteredCourses = (props: Props) => {
           Chưa ghi danh khóa học nào!
         </div>
       ) : (
-        userInfo?.chiTietKhoaHocGhiDanh?.map(
-          (course: RegisterdCoursesDetailType, index: number) => {
+        userInfo?.chiTietKhoaHocGhiDanh
+          ?.slice(0, resultNumber)
+          .map((course: RegisterdCoursesDetailType, index: number) => {
             return (
               <li key={index}>
                 <Link to={`/course/${course.maKhoaHoc}`}>
@@ -61,8 +64,20 @@ const RegitsteredCourses = (props: Props) => {
                 </button>
               </li>
             );
-          }
-        )
+          })
+      )}
+      {userInfo?.chiTietKhoaHocGhiDanh?.length! > resultNumber && (
+        <div className="profile_container_main_block">
+          <button
+            style={{ display: "block", width: "100%" }}
+            className="btn btn-primary"
+            onClick={(): void => {
+              setResultNumber(resultNumber + 5);
+            }}
+          >
+            Xem thêm
+          </button>
+        </div>
       )}
     </ul>
   );
