@@ -11,7 +11,7 @@ type Props = {};
 const RegitsteredCourses = (props: Props) => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const dispatch: DispatchType = useDispatch();
-  const [resultNumber, setResultNumber] = useState<number>(5);
+  const [resultNumber, setResultNumber] = useState<number>(10);
 
   const ghiDanhBtnHandle = (maKhoaHoc: string) => {
     const data: dataGhiDanh = {

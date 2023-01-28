@@ -13,7 +13,6 @@ import HomeTemplate from "./templates/HomeTemplate";
 import "../src/assets/sass/style.scss";
 import LoggedInRoute from "./hoc/LoggedInRoute";
 import NotLoggedInRoute from "./hoc/NotLoggedInRoute";
-import Profile from "./pages/profile/Profile";
 import useToken from "./hooks/useToken";
 import { createBrowserHistory } from "history";
 import { useEffect } from "react";
@@ -22,6 +21,10 @@ import { useDispatch } from "react-redux";
 import { getAllCoursesApi } from "./redux/courseReducer/courseReducer";
 import { getAllCategoriesApi } from "./redux/categoriesReducer/categoriesReducer";
 import { getUserInfoApi } from "./redux/userReducer/userReducer";
+import UserTemplate from "./templates/UserTemplate";
+import EditProfile from "./pages/profile/EditProfile";
+import RegitsteredCourses from "./pages/profile/RegitsteredCourses";
+import CoursesManage from "./pages/profile/CoursesManage";
 export const history: any = createBrowserHistory();
 
 function App() {
@@ -41,11 +44,11 @@ function App() {
           <Route path="course/:courseID" element={<Course />} />
         </Route>
         <Route element={<LoggedInRoute token={token} />}>
-          <Route path="profile" element={<Profile page={null} />} />
-          <Route
-            path="profile/registed_courses"
-            element={<Profile page="registed_courses" />}
-          />
+          <Route path="profile" element={<UserTemplate />}>
+            <Route index element={<EditProfile />} />
+            <Route path="registered_courses" element={<RegitsteredCourses />} />
+            <Route path="courses_manage" element={<CoursesManage />} />
+          </Route>
         </Route>
         <Route element={<NotLoggedInRoute token={token} />}>
           <Route path="login" element={<Login />} />

@@ -10,7 +10,6 @@
     background-color: #f8f8f8;
     border: 1px solid #eee;
     border-radius: 10px;
-    min-height: 60vh;
     position: relative;
     overflow: hidden;
     margin: 50px 0;
@@ -38,8 +37,6 @@
     }
     &_sidebar {
       width: 30%;
-      border-right: 1px solid #eee;
-
       &_header {
         text-align: center;
         padding: 15px;
@@ -99,6 +96,10 @@
         font-size: 14px;
         font-weight: 400;
         margin-bottom: 10px;
+        button {
+          display: block;
+          width: 100%;
+        }
         &_item {
           margin-bottom: 10px;
           &_title {
@@ -129,6 +130,22 @@
           color: green;
           i {
             margin-right: 5px;
+          }
+        }
+        &_search {
+          display: flex;
+          input,
+          input:focus {
+            border: unset !important;
+            box-shadow: none;
+            font-size: 16px;
+          }
+          button {
+            border: unset;
+            background-color: unset;
+            font-size: 20px;
+            margin-right: 10px;
+            width: unset;
           }
         }
       }
@@ -169,14 +186,20 @@
             }
           }
           button {
-            width: 70px;
+            width: 75px;
             height: 70px;
-            background-color: red;
             border: unset;
-            color: white;
             font-size: 20px;
             font-weight: 600;
             cursor: pointer;
+            &:first-of-type {
+              color: white;
+              background-color: #007bff;
+            }
+            &:last-of-type {
+              color: white;
+              background-color: red;
+            }
           }
         }
       }
