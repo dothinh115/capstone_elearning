@@ -65,7 +65,6 @@ const CoursesList = ({ item }: Props) => {
           </div>
         </Link>
         <div>
-          <button>Sửa</button>
           <button
             className={checkIfRegisterd() ? "cancel" : "register"}
             onClick={ghiDanhClickHandle}

@@ -104,21 +104,19 @@ const Categories = (props: Props) => {
     event: React.FormEvent<HTMLFormElement>
   ): void => {
     event.preventDefault();
-    let findArr: CourseType[] | null | undefined = null;
-    if (searchValue.current?.value.length !== 0) {
+    let findArr: CourseType[] | null | undefined = coursesByCategories;
+    if (searchValue.current?.value !== null) {
       findArr = coursesByCategories?.filter((item: CourseType) =>
         item.tenKhoaHoc
           .toLowerCase()
           .includes(searchValue.current!.value.toLowerCase())
       );
-      if (findArr?.length === 0) findArr = null;
-      setResult(findArr);
-    } else {
-      setResult(coursesByCategories);
     }
+    setResult(findArr);
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const checkedList: string[] | null = getCategoriesFromParams();
     if (checkedList) {
       dispatch(getCoursesByCategoriesApi(checkedList));
@@ -129,7 +127,6 @@ const Categories = (props: Props) => {
       dispatch(getCoursesByCategoriesApi(null));
       window.removeEventListener("scroll", onScroll);
     };
-    window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -196,7 +193,7 @@ const Categories = (props: Props) => {
               })}
             </div>
 
-            <form className="searchInResult" onClick={searchSubmitHandle}>
+            <form className="searchInResult" onSubmit={searchSubmitHandle}>
               <input ref={searchValue} type="text" placeholder="Tìm kiếm..." />
               <button className="btn btn-primary">
                 <i className="fa-sharp fa-solid fa-magnifying-glass"></i>

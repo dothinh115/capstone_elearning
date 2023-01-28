@@ -130,6 +130,21 @@
             margin-right: 5px;
           }
         }
+        &_search {
+          display: flex;
+          input,
+          input:focus {
+            border: unset !important;
+            box-shadow: none;
+            font-size: 16px;
+          }
+          button {
+            border: unset;
+            background-color: unset;
+            font-size: 20px;
+            margin-right: 10px;
+          }
+        }
       }
       ul {
         height: 500px;
