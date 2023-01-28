@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -26,8 +27,13 @@ const Categories = (props: Props) => {
   const [checked, setChecked] = useState<string[] | null>(null);
   const absoluteSidebar = useRef<HTMLDivElement | null>(null);
   const parentDiv = useRef<HTMLDivElement | null>(null);
-  const searchValue = useRef<HTMLInputElement | null>(null);
   const [result, setResult] = useState<CourseType[] | null | undefined>(null);
+  const { register, handleSubmit, reset } = useForm<{ search: string }>({
+    mode: "onSubmit",
+    defaultValues: {
+      search: "",
+    },
+  });
 
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
     let arr: string[] | null = [];
@@ -100,20 +106,23 @@ const Categories = (props: Props) => {
     }
   };
 
-  const searchSubmitHandle = (
-    event: React.FormEvent<HTMLFormElement>
-  ): void => {
-    event.preventDefault();
+  const search = (value: string): void => {
     let findArr: CourseType[] | null | undefined = coursesByCategories;
-    if (searchValue.current?.value !== null) {
-      findArr = coursesByCategories?.filter((item: CourseType) =>
-        item.tenKhoaHoc
-          .toLowerCase()
-          .includes(searchValue.current!.value.toLowerCase())
+    if (value !== null) {
+      findArr = findArr?.filter((item: CourseType) =>
+        item.tenKhoaHoc.toLowerCase().includes(value.toLowerCase())
       );
+      const categories = getCategoriesFromParams();
+      setSearchParams({
+        ...(categories && { categories }),
+        ...(value && { keywords: value }),
+      });
     }
     setResult(findArr);
   };
+
+  const searchSubmitHandle = (data: { search: string }): void =>
+    search(data.search);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -131,7 +140,18 @@ const Categories = (props: Props) => {
 
   useEffect(() => {
     setResult(coursesByCategories);
+    const keywords = searchParams.get("keywords");
+    if (keywords) search(keywords);
   }, [coursesByCategories]);
+
+  useEffect(() => {
+    const keywords = searchParams.get("keywords");
+    if (keywords) {
+      reset({
+        search: keywords,
+      });
+    }
+  }, [searchParams]);
 
   return (
     <section className="categories" ref={parentDiv}>
@@ -193,8 +213,15 @@ const Categories = (props: Props) => {
               })}
             </div>
 
-            <form className="searchInResult" onSubmit={searchSubmitHandle}>
-              <input ref={searchValue} type="text" placeholder="Tìm kiếm..." />
+            <form
+              className="searchInResult"
+              onSubmit={handleSubmit(searchSubmitHandle)}
+            >
+              <input
+                type="text"
+                placeholder="Tìm kiếm..."
+                {...register("search")}
+              />
               <button className="btn btn-primary">
                 <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
               </button>
