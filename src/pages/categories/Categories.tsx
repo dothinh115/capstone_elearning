@@ -206,7 +206,7 @@ const Categories = (props: Props) => {
             {!result && (
               <h1 className="notfound">
                 <img src="../../img/notfound.png" alt="" />
-                {!result ? (
+                {!checked ? (
                   <div>Chưa chọn lọc khóa học!</div>
                 ) : (
                   <div>Không tìm thấy kết quả nào!</div>
