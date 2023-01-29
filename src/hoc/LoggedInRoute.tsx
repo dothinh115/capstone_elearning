@@ -1,12 +1,12 @@
-import React from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 type Props = {
   token: string;
 };
 
 const LoggedInRoute = ({ token }: Props) => {
-  if (!token) return <Navigate to="/" />;
+  const { pathname } = useLocation();
+  if (!token) return <Navigate to={`/login?next=${pathname}`} />;
   return <Outlet />;
 };
 

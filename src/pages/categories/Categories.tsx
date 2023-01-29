@@ -97,7 +97,7 @@ const Categories = (props: Props) => {
     } else {
       absoluteSidebar.current!.classList.remove("absolute");
     }
-    if (window.scrollY > parentDiv.current!.clientHeight - 300) {
+    if (window.scrollY > parentDiv.current!.clientHeight - 207) {
       absoluteSidebar.current!.style.top = "unset";
       absoluteSidebar.current!.style.bottom = "0px";
     } else {
@@ -106,7 +106,7 @@ const Categories = (props: Props) => {
     }
   };
 
-  const search = (value: string): void => {
+  const search = (value: string | null): void => {
     let findArr: CourseType[] | null | undefined = coursesByCategories;
     if (value !== null) {
       findArr = findArr?.filter((item: CourseType) =>
@@ -140,13 +140,12 @@ const Categories = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    setResult(coursesByCategories);
-    const keywords: string | null = searchParams.get("keywords");
-    if (keywords) search(keywords);
+    const keywords = searchParams.get("keywords");
+    search(keywords);
   }, [coursesByCategories]);
 
   useEffect(() => {
-    const keywords: string | null = searchParams.get("keywords");
+    const keywords = searchParams.get("keywords");
     if (keywords) {
       reset({
         search: keywords,
@@ -238,7 +237,6 @@ const Categories = (props: Props) => {
                 )}
               </h1>
             )}
-
             {result && (
               <>
                 <div className="selectedCategories result">

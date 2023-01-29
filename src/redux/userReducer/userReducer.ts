@@ -45,7 +45,6 @@ export const loginApi = (dataLogin: LoginType) => {
     try {
       const result = await API.post("/QuanLyNguoiDung/DangNhap", dataLogin);
       saveLocalStorage<UserLoginType>("userInfo", result.data);
-      window.location.reload();
     } catch (error: any) {
       console.log(error);
       history.push(window.location.pathname, {
@@ -93,7 +92,6 @@ export const getUserInfoApi = async (dispatch: DispatchType) => {
 };
 
 export const ghiDanhApi = (bool: boolean, data: dataGhiDanh) => {
-  if (!token) history.push("/login");
   //false: hủy ghi danh, true: ghi danh
   return async (dispatch: DispatchType) => {
     try {

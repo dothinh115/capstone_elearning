@@ -1,8 +1,14 @@
 import { useState, useRef, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Modal from "../../components/modal/Modal";
+import useModal from "../../hooks/useModal";
 import { ReduxRootType } from "../../redux/store";
-import { CourseType } from "../../util/interface/courseReducerInterface";
+import {
+  CourseType,
+  UpdateCourseType,
+} from "../../util/interface/courseReducerInterface";
 
 type Props = {};
 
@@ -15,6 +21,28 @@ const CoursesManage = (props: Props) => {
   const [searchResult, setSearchResult] = useState<
     CourseType[] | null | undefined
   >(null);
+  const { show, toggle } = useModal();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<UpdateCourseType>({
+    mode: "onChange",
+    defaultValues: {
+      maKhoaHoc: "",
+      biDanh: "",
+      tenKhoaHoc: "",
+      moTa: "",
+      luotXem: 0,
+      danhGia: 0,
+      hinhAnh: "",
+      maNhom: "",
+      ngayTAO: "",
+      maDanhMucKhoaHoc: "",
+      taiKhoanNguoiTAO: "",
+    },
+  });
   const searchSubmitHandle = (
     event: React.FormEvent<HTMLFormElement>
   ): void => {
@@ -28,7 +56,6 @@ const CoursesManage = (props: Props) => {
       );
     }
     setSearchResult(filterArr);
-    console.log(searchResult);
   };
 
   useEffect(() => {
@@ -37,6 +64,78 @@ const CoursesManage = (props: Props) => {
 
   return (
     <>
+      <Modal show={show} toggle={toggle} title="Thay đổi thông tin khóa học">
+        <>
+          <div className="modal_body_item">
+            <div className="modal_body_item_title">Mã khóa học</div>
+            <div className="modal_body_item_input">
+              <input
+                disabled
+                type="text"
+                {...register("maKhoaHoc", {
+                  required: "Không được để trống!",
+                })}
+              />
+            </div>
+          </div>
+
+          <div className="modal_body_item">
+            <div className="modal_body_item_title">Tên khóa học</div>
+            <div className="modal_body_item_input">
+              <input
+                disabled
+                type="text"
+                {...register("tenKhoaHoc", {
+                  required: "Không được để trống!",
+                })}
+              />
+            </div>
+            {errors.tenKhoaHoc?.message && (
+              <div className="modal_body_item_title">
+                <i className="fa-solid fa-circle-exclamation"></i>
+                {errors.tenKhoaHoc?.message}
+              </div>
+            )}
+          </div>
+
+          <div className="modal_body_item">
+            <div className="modal_body_item_title">Danh mục</div>
+            <div className="modal_body_item_input">
+              <input
+                disabled
+                type="text"
+                {...register("maDanhMucKhoaHoc", {
+                  required: "Không được để trống!",
+                })}
+              />
+            </div>
+            {errors.maDanhMucKhoaHoc?.message && (
+              <div className="modal_body_item_title">
+                <i className="fa-solid fa-circle-exclamation"></i>
+                {errors.maDanhMucKhoaHoc?.message}
+              </div>
+            )}
+          </div>
+
+          <div className="modal_body_item">
+            <div className="modal_body_item_title">Danh mục</div>
+            <div className="modal_body_item_input">
+              <textarea
+                disabled
+                {...register("moTa", {
+                  required: "Không được để trống!",
+                })}
+              />
+            </div>
+            {errors.tenKhoaHoc?.message && (
+              <div className="modal_body_item_title">
+                <i className="fa-solid fa-circle-exclamation"></i>
+                {errors.moTa?.message}
+              </div>
+            )}
+          </div>
+        </>
+      </Modal>
       <div className="profile_container_main_block">
         <button className="btn">Thêm khóa học mới</button>
       </div>
@@ -100,7 +199,26 @@ const CoursesManage = (props: Props) => {
                       </p>
                     </div>
                   </Link>
-                  <button>
+                  <button
+                    onClick={() => {
+                      const obj = {
+                        maKhoaHoc: course.maKhoaHoc,
+                        biDanh: course.biDanh,
+                        tenKhoaHoc: course.tenKhoaHoc,
+                        moTa: course.moTa,
+                        luotXem: course.luotXem,
+                        danhGia: 5,
+                        hinhAnh: course.hinhAnh,
+                        maNhom: course.maNhom,
+                        ngayTAO: course.ngayTao,
+                        maDanhMucKhoaHoc:
+                          course.danhMucKhoaHoc.maDanhMucKhoahoc,
+                        taiKhoanNguoiTAO: course.nguoiTao.taiKhoan,
+                      };
+                      reset(obj);
+                      toggle();
+                    }}
+                  >
                     <i className="fa-solid fa-gear"></i>
                   </button>
                   <button>

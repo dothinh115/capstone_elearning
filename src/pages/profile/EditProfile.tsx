@@ -9,7 +9,7 @@ import {
   RegisterInputType,
   UserInfoType,
 } from "../../util/interface/userReducerInterface";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {};
 
@@ -17,6 +17,7 @@ const EditProfile = (props: Props) => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { state } = useLocation();
   const dispatch: DispatchType = useDispatch();
+  const [editing, setEditing] = useState<boolean>(false);
 
   const {
     register,
@@ -27,11 +28,19 @@ const EditProfile = (props: Props) => {
     mode: "onChange",
     defaultValues: { ...userInfo, maLoaiNguoiDung: userInfo?.maLoaiNguoiDung },
   });
-  const submitHandle = (data: UserInfoType) =>
-    dispatch(updateUserInfoApi(data));
+  const submitHandle = (data: UserInfoType) => {
+    if (!editing) {
+      setEditing(true);
+    } else {
+      dispatch(updateUserInfoApi(data));
+      setEditing(false);
+    }
+  };
+
   useEffect(() => {
     reset({ ...userInfo, maLoaiNguoiDung: userInfo?.maLoaiNguoiDung });
   }, [userInfo]);
+
   return (
     <form onSubmit={handleSubmit(submitHandle)}>
       <div className="profile_container_main_block">
@@ -39,34 +48,59 @@ const EditProfile = (props: Props) => {
           if (item === "matKhau") return false;
           const reg = new RegExp(registerInputData.regex[index]);
           return (
-            <div className="profile_container_main_block_item" key={index}>
-              <div className="profile_container_main_block_item_title">
-                <i className={`fa fa-${registerInputData.icon[index]}`}></i>
-                {registerInputData.title[index]}:
+            <div
+              style={{ marginBottom: !editing ? "30px" : "" }}
+              className="profile_container_main_block_item"
+              key={index}
+            >
+              <div
+                className="profile_container_main_block_item_title"
+                style={{
+                  display: !editing ? "flex" : "block",
+                  justifyContent: !editing ? "space-between" : "",
+                }}
+              >
+                <>
+                  <span>
+                    <i className={`fa fa-${registerInputData.icon[index]}`}></i>
+                    {registerInputData.title[index]}:
+                  </span>
+                  <span>
+                    {!editing && userInfo !== null
+                      ? userInfo[item as keyof UserInfoType]
+                      : ""}
+                  </span>
+                </>
               </div>
               <div className="profile_container_main_block_item_input">
-                {item === "maNhom" ? (
-                  <select {...register(item)}>
-                    {showMaNhom().map((val: JSX.Element) => {
-                      return val;
-                    })}
-                  </select>
-                ) : (
-                  <input
-                    type={`${
-                      (item === "soDT" && "number") ||
-                      (item === "email" && "email")
-                    }`}
-                    {...register(item, {
-                      required: `${registerInputData.title[index]} không được để trống!`,
-                      pattern: {
-                        value: reg,
-                        message: registerInputData.errors[index],
-                      },
-                    })}
-                    placeholder={registerInputData.placeHolder[index]}
-                  />
-                )}
+                <>
+                  {editing && (
+                    <>
+                      {item === "maNhom" ? (
+                        <select {...register(item)}>
+                          {showMaNhom().map((val: JSX.Element) => {
+                            return val;
+                          })}
+                        </select>
+                      ) : (
+                        <input
+                          type={`${
+                            (item === "soDT" && "number") ||
+                            (item === "email" && "email")
+                          }`}
+                          {...register(item, {
+                            required: `${registerInputData.title[index]} không được để trống!`,
+                            pattern: {
+                              value: reg,
+                              message: registerInputData.errors[index],
+                            },
+                          })}
+                          placeholder={registerInputData.placeHolder[index]}
+                        />
+                      )}
+                    </>
+                  )}
+                </>
               </div>
               {errors[item as keyof RegisterInputType]?.message && (
                 <div className="profile_container_main_block_item_error">

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { history } from "../../App";
 import { DispatchType } from "../../redux/store";
 import { loginApi } from "../../redux/userReducer/userReducer";
 import { loginInputData } from "../../util/config";
@@ -11,6 +12,7 @@ type Props = {};
 const Login = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const { state } = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -24,13 +26,21 @@ const Login = (props: Props) => {
   });
   const onSubmit = (data: LoginType): void => {
     dispatch(loginApi(data));
+    window.location.href = searchParams.get("next")!;
   };
   return (
     <section className="login">
       <div className="login_inner">
         <div className="login_inner_header">
           <h1>Đăng nhập tài khoản</h1>
-          <Link to="/" className="badge">
+          <Link
+            to={
+              searchParams.get("next")
+                ? searchParams.get("next")!.replace("+", "%2B")
+                : "/"
+            }
+            className="badge"
+          >
             <i className="fa-solid fa-x"></i>
           </Link>
         </div>
