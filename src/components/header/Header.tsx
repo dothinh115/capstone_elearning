@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import useToken from "../../hooks/useToken";
 import { removeLocalStorage } from "../../util/function";
 type Props = {};
@@ -8,6 +8,7 @@ const Header = (props: Props) => {
   const { token } = useToken();
   const dropdownMenu = useRef<HTMLDivElement | null>(null);
   const dropdownButton = useRef<HTMLButtonElement | null>(null);
+  const { pathname } = useLocation(); //window.location.pathname || null = "/"
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     removeLocalStorage("userInfo");
@@ -70,7 +71,7 @@ const Header = (props: Props) => {
                   ) : (
                     <>
                       <li>
-                        <NavLink to="/login">
+                        <NavLink to={`/login?next=${pathname}`}>
                           <i className="fa-solid fa-right-to-bracket"></i>
                           Đăng nhập
                         </NavLink>

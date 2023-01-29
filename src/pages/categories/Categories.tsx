@@ -97,7 +97,7 @@ const Categories = (props: Props) => {
     } else {
       absoluteSidebar.current!.classList.remove("absolute");
     }
-    if (window.scrollY > parentDiv.current!.clientHeight - 300) {
+    if (window.scrollY > parentDiv.current!.clientHeight - 207) {
       absoluteSidebar.current!.style.top = "unset";
       absoluteSidebar.current!.style.bottom = "0px";
     } else {
@@ -106,13 +106,13 @@ const Categories = (props: Props) => {
     }
   };
 
-  const search = (value: string): void => {
+  const search = (value: string | null): void => {
     let findArr: CourseType[] | null | undefined = coursesByCategories;
     if (value !== null) {
       findArr = findArr?.filter((item: CourseType) =>
         item.tenKhoaHoc.toLowerCase().includes(value.toLowerCase())
       );
-      const categories = getCategoriesFromParams();
+      const categories = searchParams.get("categories");
       setSearchParams({
         ...(categories && { categories }),
         ...(value && { keywords: value }),
@@ -139,9 +139,8 @@ const Categories = (props: Props) => {
   }, []);
 
   useEffect(() => {
-    setResult(coursesByCategories);
     const keywords = searchParams.get("keywords");
-    if (keywords) search(keywords);
+    search(keywords);
   }, [coursesByCategories]);
 
   useEffect(() => {

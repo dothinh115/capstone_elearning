@@ -5,7 +5,7 @@ export interface UserInfoStateType {
 }
 
 export interface UserInfoType {
-  chiTietKhoaHocGhiDanh?: RegisterdCoursesDetailType[];
+  chiTietKhoaHocGhiDanh?: RegisterdCoursesDetailType[] | any;
   taiKhoan: string;
   matKhau?: string;
   hoTen: string;

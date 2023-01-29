@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { history } from "../../App";
+import useToken from "../../hooks/useToken";
 import { getCourseDetailApi } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { ghiDanhApi } from "../../redux/userReducer/userReducer";
@@ -23,6 +25,8 @@ const Course = (props: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
+  const { token } = useToken();
+  const { pathname } = useLocation();
   const dispatch: DispatchType = useDispatch();
 
   const findIfRegisted = (): boolean => {
@@ -35,6 +39,10 @@ const Course = (props: Props) => {
   };
 
   const ghidanhHandle = (): void => {
+    if (!token) {
+      history.push(`/login?next=${pathname}`);
+      return;
+    }
     const data: dataGhiDanh = {
       maKhoaHoc: courseDetail?.maKhoaHoc,
       taiKhoan: userInfo?.taiKhoan,
