@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
-import { getLocalStorage } from "./function";
+import { getLocalStorage, removeLocalStorage } from "./function";
 
 export const CYBERSOFT_TOKEN: string =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNUUiLCJIZXRIYW5TdHJpbmciOiIwNy8wNi8yMDIzIiwiSGV0SGFuVGltZSI6IjE2ODYwOTYwMDAwMDAiLCJuYmYiOjE2NTczODYwMDAsImV4cCI6MTY4NjI0MzYwMH0.XsCcIZvawxcwye8KVYB2vJK4d3Gbr1XROtNyAL8nypA";
@@ -34,6 +34,10 @@ API.interceptors.response.use(
     return res;
   },
   (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      removeLocalStorage("userInfo");
+      window.location.reload();
+    }
     return Promise.reject(error);
   }
 );

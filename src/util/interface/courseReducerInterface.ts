@@ -25,6 +25,20 @@ export interface CourseType {
   discount?: number;
 }
 
+export interface UpdateCourseType {
+  maKhoaHoc: string;
+  biDanh: string;
+  tenKhoaHoc: string;
+  moTa: string;
+  luotXem: number;
+  danhGia: number;
+  hinhAnh: string;
+  maNhom: string;
+  ngayTAO: string;
+  maDanhMucKhoaHoc: string;
+  taiKhoanNguoiTAO: string;
+}
+
 export interface CourseStateType {
   coursesArr: CourseType[] | null;
   randomCoursesArr: CourseType[] | null;
