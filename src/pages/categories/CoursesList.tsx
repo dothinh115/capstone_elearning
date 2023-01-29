@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { history } from "../../App";
 import useToken from "../../hooks/useToken";
 import { DispatchType, ReduxRootType } from "../../redux/store";
@@ -18,9 +18,10 @@ const CoursesList = ({ item }: Props) => {
   const { token } = useToken();
   const dispatch: DispatchType = useDispatch();
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
+  const { pathname, search } = useLocation();
   const ghiDanhClickHandle = () => {
     if (!token) {
-      history.push("/login");
+      history.push({ pathname: `/login?next=${pathname + search}` });
       return;
     }
     const data: dataGhiDanh = {
