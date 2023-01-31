@@ -131,7 +131,7 @@ export const createNewCourse = (data: UpdateCourseType) => {
       await API.post("/QuanLyKhoaHoc/ThemKhoaHoc", data);
       dispatch(getAllCoursesApi);
       history.push(`/course/${data.maKhoaHoc}`);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
     }
   };

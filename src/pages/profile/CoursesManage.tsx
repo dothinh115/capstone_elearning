@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { history } from "../../App";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
 import {
@@ -81,6 +82,12 @@ const CoursesManage = (props: Props) => {
   };
 
   const addNewSubmitHandle = (data: UpdateCourseType): void => {
+    if (userInfo?.maLoaiNguoiDung !== "GV") {
+      history.push(window.location.pathname, {
+        errorMess: "Tài khoản người tạo phải là tài khoản GV!",
+      });
+      return;
+    }
     const biDanh = toNonAccentVietnamese(data.tenKhoaHoc); //Đỗ Thịnh => do-thinh
     const date = new Date();
     const newDate = `${date.getDay()}/${
@@ -185,6 +192,18 @@ const CoursesManage = (props: Props) => {
               </div>
             )}
           </div>
+          {state && (
+            <div className="modal_body_item_result">
+              <span
+                className={`btn ${
+                  (state.successMess && "btn-success") ||
+                  (state.errorMess && "btn-danger")
+                }`}
+              >
+                {state.successMess} {state.errorMess}
+              </span>
+            </div>
+          )}
           <div className="modal_body_item">
             <div className="modal_body_item_button">
               <button type="submit" className="btn btn-primary">
