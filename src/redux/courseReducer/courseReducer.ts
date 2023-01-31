@@ -124,3 +124,15 @@ export const courseUpdateApi = (data: UpdateCourseType) => {
     }
   };
 };
+
+export const createNewCourse = (data: UpdateCourseType) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      await API.post("/QuanLyKhoaHoc/ThemKhoaHoc", data);
+      dispatch(getAllCoursesApi);
+      history.push(`/course/${data.maKhoaHoc}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};

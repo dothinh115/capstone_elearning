@@ -192,13 +192,9 @@
             font-size: 20px;
             font-weight: 600;
             cursor: pointer;
-            &:first-of-type {
+            & {
               color: white;
               background-color: #007bff;
-            }
-            &:last-of-type {
-              color: white;
-              background-color: red;
             }
           }
         }
