@@ -38,6 +38,10 @@ API.interceptors.response.use(
       removeLocalStorage("userInfo");
       window.location.reload();
     }
+
+    if (error.response?.status === 400) {
+      window.location.href = "/";
+    }
     return Promise.reject(error);
   }
 );

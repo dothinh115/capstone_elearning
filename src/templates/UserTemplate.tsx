@@ -5,6 +5,7 @@ import { removeLocalStorage } from "../util/function";
 
 const UserTemplate = () => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
+  const { prevPage } = useSelector((store: ReduxRootType) => store.pageReducer);
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     removeLocalStorage("userInfo");
@@ -14,7 +15,7 @@ const UserTemplate = () => {
     <section className="profile">
       <div className="profile_container">
         <div className="profile_container_header">
-          <NavLink id="getout" to="/" className="btn btn-primary">
+          <NavLink id="getout" to={prevPage} className="btn btn-primary">
             <i className="fa-solid fa-arrow-left-long"></i>
           </NavLink>
           <h2>Trang cá nhân</h2>

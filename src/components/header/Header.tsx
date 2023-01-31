@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
 import useToken from "../../hooks/useToken";
+import { updatePrevPageRecuder } from "../../redux/pageReducer/pageReducer";
+import { DispatchType } from "../../redux/store";
 import { removeLocalStorage } from "../../util/function";
 type Props = {};
 
@@ -9,6 +12,7 @@ const Header = (props: Props) => {
   const dropdownMenu = useRef<HTMLDivElement | null>(null);
   const dropdownButton = useRef<HTMLButtonElement | null>(null);
   const { pathname } = useLocation(); //window.location.pathname || null = "/"
+  const dispatch: DispatchType = useDispatch();
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     removeLocalStorage("userInfo");
@@ -56,7 +60,17 @@ const Header = (props: Props) => {
                   {token ? (
                     <>
                       <li>
-                        <NavLink to="/profile">
+                        <NavLink
+                          to="/profile"
+                          onClick={(): void => {
+                            dispatch(
+                              updatePrevPageRecuder(
+                                window.location.pathname +
+                                  window.location.search.replace("+", "%2B")
+                              )
+                            );
+                          }}
+                        >
                           <i className="fa-solid fa-magnifying-glass"></i>
                           Trang cá nhân
                         </NavLink>

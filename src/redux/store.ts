@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import categoriesReducer from "./categoriesReducer/categoriesReducer";
 import courseReducer from "./courseReducer/courseReducer";
+import pageReducer from "./pageReducer/pageReducer";
 import userReducer from "./userReducer/userReducer";
 
 export const store = configureStore({
@@ -8,6 +9,7 @@ export const store = configureStore({
     courseReducer,
     categoriesReducer,
     userReducer,
+    pageReducer,
   },
 });
 
