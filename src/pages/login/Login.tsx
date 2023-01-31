@@ -1,7 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
-import { history } from "../../App";
 import { DispatchType } from "../../redux/store";
 import { loginApi } from "../../redux/userReducer/userReducer";
 import { loginInputData } from "../../util/config";
