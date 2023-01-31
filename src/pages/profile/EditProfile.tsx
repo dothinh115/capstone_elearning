@@ -10,6 +10,7 @@ import {
   UserInfoType,
 } from "../../util/interface/userReducerInterface";
 import { useEffect, useState } from "react";
+import { history } from "../../App";
 
 type Props = {};
 
@@ -28,17 +29,19 @@ const EditProfile = (props: Props) => {
     mode: "onChange",
     defaultValues: { ...userInfo, maLoaiNguoiDung: userInfo?.maLoaiNguoiDung },
   });
+
   const submitHandle = (data: UserInfoType) => {
     if (!editing) {
       setEditing(true);
+      history.push(window.location.pathname);
     } else {
       dispatch(updateUserInfoApi(data));
-      setEditing(false);
     }
   };
 
   useEffect(() => {
     reset({ ...userInfo, maLoaiNguoiDung: userInfo?.maLoaiNguoiDung });
+    if (!state?.errorMess) setEditing(false);
   }, [userInfo]);
 
   return (
