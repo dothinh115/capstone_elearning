@@ -160,6 +160,10 @@ input.isInvalid {
     background-color: red;
     color: white;
   }
+  &-success {
+    background-color: green;
+    color: white;
+  }
 }
 
 .hr_span_footer {
@@ -213,16 +217,97 @@ input.isInvalid {
   background-color: rgba(black, 0.8);
   left: 0;
   top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .modal {
+    background-color: #fff;
+    animation: modalAnimation 0.5s;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    min-width: 400px;
+    &_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #eee;
+      padding: 10px;
+      button {
+        border: 1px solid #ccc;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        background-color: #f8f8f8;
+        cursor: pointer;
+        i {
+          font-size: 20px;
+          font-weight: 700;
+        }
+      }
+    }
+    &_body {
+      padding: 10px;
+      &_item {
+        margin-bottom: 10px;
+        &_title {
+          font-size: 15px;
+          color: #333;
+          margin-bottom: 5px;
+          i {
+            margin-right: 5px;
+          }
+        }
+        &_input {
+          textarea {
+            width: 100%;
+            background-color: unset;
+            border: 1px solid #eee;
+            padding: 5px;
+            color: #333;
+            font-size: 14px;
+            min-height: 100px;
+            &:focus {
+              outline: none;
+            }
+          }
+        }
+        &_button {
+          button {
+            display: block;
+            width: 100%;
+          }
+        }
+        &_error {
+          color: red;
+          font-size: 14px;
+          margin-top: 5px;
+          i {
+            margin-right: 5px;
+          }
+        }
+        &_result {
+          span {
+            display: block;
+            width: 100%;
+            cursor: unset;
+            margin: 10px 0;
+          }
+        }
+      }
+    }
+  }
 }
 
-.modal {
-  position: fixed;
-  width: 50%;
-  height: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border: 1px solid #eee;
-  z-index: 10;
+@keyframes modalAnimation {
+  0% {
+    transform: scale(90%);
+  }
+  50% {
+    transform: scale(110%);
+  }
+  100% {
+    transform: scale(100%);
+  }
 }

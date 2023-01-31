@@ -6,7 +6,9 @@ import { randomArray, randomDiscount } from "../../util/function";
 import {
   CourseStateType,
   CourseType,
+  UpdateCourseType,
 } from "../../util/interface/courseReducerInterface";
+import { history } from "../../App";
 
 const initialState: CourseStateType = {
   coursesArr: [],
@@ -102,6 +104,23 @@ export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
     } finally {
       const setLoading: PayloadAction<boolean> = setLoadingAction(false);
       dispatch(setLoading);
+    }
+  };
+};
+
+export const courseUpdateApi = (data: UpdateCourseType) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      await API.put("/QuanLyKhoaHoc/CapNhatKhoaHoc", data);
+      dispatch(getAllCoursesApi);
+      history.push(window.location.pathname, {
+        successMess: "Cập nhật thành công!",
+      });
+    } catch (error: any) {
+      console.log(error);
+      history.push(window.location.pathname, {
+        errorMess: error.response.data,
+      });
     }
   };
 };
