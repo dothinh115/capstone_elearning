@@ -76,6 +76,25 @@ const CreateNewCourseForm = ({
         </div>
       </div>
       <div className="profile_main_info_item">
+        <div className="profile_main_info_item_title">
+          <i className="fa-solid fa-image"></i>Hình ảnh
+        </div>
+        <div className="profile_main_info_item_input">
+          <input
+            type="text"
+            {...register("hinhAnh", {
+              required: "Không được để trống!",
+            })}
+          />
+        </div>
+        {errors.hinhAnh?.message && (
+          <div className="profile_main_info_item_error">
+            <i className="fa-solid fa-circle-exclamation"></i>
+            {errors.hinhAnh?.message}
+          </div>
+        )}
+      </div>
+      <div className="profile_main_info_item">
         <div className="profile_main_info_item_title">Mô tả</div>
         <div className="profile_main_info_item_input">
           <textarea

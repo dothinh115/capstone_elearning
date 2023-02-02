@@ -10,7 +10,7 @@
       gap: unset;
       display: block;
       button {
-        margin: 5px auto;
+        margin: 10px auto;
         display: block;
         width: inherit;
       }
@@ -145,7 +145,7 @@
         }
         ul {
           background-color: #f8f8f8;
-          padding: 15px;
+          padding: 10px;
           margin-bottom: 10px;
           li {
             list-style-type: none;
@@ -153,7 +153,9 @@
             justify-content: space-between;
             align-items: center;
             border: 1px solid #eee;
-            margin-bottom: 10px;
+            &:not(:last-of-type) {
+              margin-bottom: 10px;
+            }
             background-color: white;
             img {
               height: 70px;

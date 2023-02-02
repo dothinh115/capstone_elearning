@@ -98,8 +98,6 @@ const CoursesManage = (props: Props) => {
       danhGia: 0,
       maNhom: "GP01",
       taiKhoanNguoiTAO: userInfo.taiKhoan,
-      hinhAnh:
-        "https://images.pexels.com/photos/127160/pexels-photo-127160.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     };
     dispatch(createNewCourse(data));
   };
