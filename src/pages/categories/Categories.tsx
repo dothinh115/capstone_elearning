@@ -2,18 +2,20 @@ import React, { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import Modal from "../../components/modal/Modal";
+import useModal from "../../hooks/useModal";
 import {
   getCoursesByCategoriesApi,
   setLimitCoursesAction,
 } from "../../redux/categoriesReducer/categoriesReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import {
-  limitCategoriesCourses,
   limitCategoriesCoursesViewMore,
   randomBadgeArr,
 } from "../../util/config";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { CourseType } from "../../util/interface/courseReducerInterface";
+import CategoriesSidebar from "./CategoriesSidebar";
 import CoursesList from "./CoursesList";
 
 type Props = {};
@@ -24,31 +26,17 @@ const Categories = (props: Props) => {
   );
   const dispatch: DispatchType = useDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [checked, setChecked] = useState<string[] | null>(null);
   const absoluteSidebar = useRef<HTMLDivElement | null>(null);
   const parentDiv = useRef<HTMLDivElement | null>(null);
+  const [checked, setChecked] = useState<string[] | null>(null);
   const [result, setResult] = useState<CourseType[] | null | undefined>(null);
+  const { show, toggle } = useModal();
   const { register, handleSubmit, reset } = useForm<{ search: string }>({
     mode: "onSubmit",
     defaultValues: {
       search: "",
     },
   });
-
-  const checkboxHandle = (e: { target: HTMLInputElement }) => {
-    let arr: string[] | null = [];
-    if (checked !== null) arr = [...checked];
-    if (e.target.checked) {
-      arr = [...arr, e.target.value];
-    } else {
-      const index: number = arr.findIndex(
-        (item: string) => item === e.target.value
-      );
-      if (index !== -1) arr.splice(index, 1);
-    }
-    if (arr.length === 0) arr = null;
-    setChecked(arr);
-  };
 
   const getCategoriesFromParams = (): string[] | null => {
     let params: string | null | undefined = searchParams.get("categories");
@@ -57,35 +45,6 @@ const Categories = (props: Props) => {
       arr = params.split("+");
     }
     return arr;
-  };
-
-  const checkCheked = (maDanhMuc: string): boolean => {
-    const checkedList: string[] | null = getCategoriesFromParams();
-    if (checkedList) {
-      const find: string | undefined = checkedList.find(
-        (item: string) => item === maDanhMuc
-      );
-      if (find) return true;
-    }
-    return false;
-  };
-
-  const sortSubmitHandle = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    event.preventDefault();
-    if (checked !== null) {
-      let params: string | undefined = checked?.join("+");
-      setSearchParams({
-        categories: params,
-      });
-      window.scrollTo(0, 0);
-    } else {
-      searchParams.delete("categories");
-      setSearchParams(searchParams);
-    }
-    dispatch(getCoursesByCategoriesApi(checked));
-    dispatch(setLimitCoursesAction(limitCategoriesCourses));
   };
 
   const onScroll = (): void => {
@@ -132,7 +91,8 @@ const Categories = (props: Props) => {
       dispatch(getCoursesByCategoriesApi(checkedList));
       setChecked(checkedList);
     }
-    window.addEventListener("scroll", onScroll);
+    if (absoluteSidebar.current) window.addEventListener("scroll", onScroll);
+
     return () => {
       dispatch(getCoursesByCategoriesApi(null));
       window.removeEventListener("scroll", onScroll);
@@ -156,40 +116,35 @@ const Categories = (props: Props) => {
   return (
     <section className="categories" ref={parentDiv}>
       <div className="categories_container">
+        {window.innerWidth <= 768 && (
+          <button className="btn btn-primary" onClick={toggle}>
+            Lọc danh mục
+          </button>
+        )}
+
         <div className="categories_container_sidebar">
-          <div
-            ref={absoluteSidebar}
-            className="categories_container_sidebar_inner"
-          >
-            <div className="categories_container_sidebar_inner_header">
-              <h1>
-                <i className="fa-solid fa-list"></i>Bộ lọc
-              </h1>
-            </div>
-            <div className="categories_container_sidebar_inner_body">
-              <h1>Tất cả danh mục</h1>
-              <ul>
-                {categories?.map((item: CategoriesType, index: number) => {
-                  return (
-                    <li key={index}>
-                      <input
-                        type="checkbox"
-                        value={item.maDanhMuc}
-                        onChange={checkboxHandle}
-                        defaultChecked={checkCheked(item.maDanhMuc)}
-                      />
-                      {item.tenDanhMuc}
-                    </li>
-                  );
-                })}
-              </ul>
-              <div className="categories_container_sidebar_inner_body_btn">
-                <button className="btn btn-primary" onClick={sortSubmitHandle}>
-                  <i className="fa-solid fa-filter"></i>Lọc
-                </button>
+          {window.innerWidth <= 768 ? (
+            <Modal show={show} toggle={toggle} title="Lọc danh mục">
+              <CategoriesSidebar
+                checked={checked}
+                setChecked={setChecked}
+                getCategoriesFromParams={getCategoriesFromParams}
+                toggle={toggle}
+              />
+            </Modal>
+          ) : (
+            <>
+              <div ref={absoluteSidebar}>
+                <div className="categories_container_sidebar_inner">
+                  <CategoriesSidebar
+                    checked={checked}
+                    setChecked={setChecked}
+                    getCategoriesFromParams={getCategoriesFromParams}
+                  />
+                </div>
               </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
         <div className="categories_container_main">
           <div className="categories_container_main_body">

@@ -48,19 +48,51 @@ const CoursesList = ({ item }: Props) => {
           alt=""
         />
         <div className="course_info">
-          <h3>{item.tenKhoaHoc}</h3>
+          <h3>
+            {window.innerWidth <= 600 && (
+              <>
+                {item.tenKhoaHoc?.length > 20
+                  ? item.tenKhoaHoc.substring(0, 19) + "..."
+                  : item.tenKhoaHoc}
+              </>
+            )}
+
+            {window.innerWidth > 600 && (
+              <>
+                {item.tenKhoaHoc?.length > 60
+                  ? item.tenKhoaHoc.substring(0, 59) + "..."
+                  : item.tenKhoaHoc}
+              </>
+            )}
+          </h3>
           <></>
           <p>
             <i className="fa-solid fa-circle-info"></i>
-            {item.moTa?.length > 50
-              ? item.moTa.substring(0, 49) + "..."
-              : item.moTa}
+            {window.innerWidth <= 600 && (
+              <>
+                {item.moTa?.length > 20
+                  ? item.moTa.substring(0, 19) + "..."
+                  : item.moTa}
+              </>
+            )}
+
+            {window.innerWidth > 600 && (
+              <>
+                {item.moTa?.length > 60
+                  ? item.moTa.substring(0, 59) + "..."
+                  : item.moTa}
+              </>
+            )}
           </p>
           <p>
             <i className="fa-solid fa-user"></i>
-            {item.nguoiTao.hoTen + " | "}
-            <i className="fa-solid fa-calendar-days"></i>
-            {" " + item.ngayTao}
+            {item.nguoiTao.hoTen}
+            {window.innerWidth > 600 && (
+              <>
+                " | " <i className="fa-solid fa-calendar-days"></i>
+                {" " + item.ngayTao}
+              </>
+            )}
           </p>
         </div>
       </Link>

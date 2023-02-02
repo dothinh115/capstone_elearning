@@ -10,9 +10,12 @@
     margin: auto;
     align-items: center;
     justify-content: space-between;
-    max-width: 1400px;
     @media (max-width: 600px) {
       width: 98%;
+    }
+    @media (min-width: 600px) {
+      width: 98%;
+      max-width: 1400px;
     }
     .header-logo {
       width: 50%;

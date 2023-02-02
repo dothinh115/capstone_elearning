@@ -8,13 +8,15 @@
     width: 80%;
     margin: auto;
     display: flex;
-    max-width: 1400px;
+
     flex-wrap: wrap;
     @media (max-width: 600px) {
       width: 98%;
     }
     @media (min-width: 600px) {
       gap: 40px;
+      width: 98%;
+      max-width: 1400px;
     }
     & > div {
       padding: 15px;

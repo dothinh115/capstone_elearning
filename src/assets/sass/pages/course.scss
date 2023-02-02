@@ -11,6 +11,10 @@
     @media (max-width: 600px) {
       width: 98%;
     }
+    @media (min-width: 600px) {
+      width: 98%;
+      max-width: 1400px;
+    }
     .main_container {
       width: 70%;
       @media (max-width: 998px) {
