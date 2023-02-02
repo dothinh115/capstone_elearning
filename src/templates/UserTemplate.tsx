@@ -1,14 +1,16 @@
 import { useSelector } from "react-redux";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import Modal from "../components/modal/Modal";
 import useModal from "../hooks/useModal";
 import { ReduxRootType } from "../redux/store";
 import { removeLocalStorage } from "../util/function";
+import { useEffect } from "react";
 
 const UserTemplate = () => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { prevPage } = useSelector((store: ReduxRootType) => store.pageReducer);
   const { show, toggle } = useModal();
+  const { pathname } = useLocation();
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     removeLocalStorage("userInfo");
@@ -17,6 +19,10 @@ const UserTemplate = () => {
   const showModal = (): void => {
     if (window.innerWidth <= 600) toggle();
   };
+
+  useEffect(() => {
+    if (pathname !== "/profile" && window.innerWidth <= 600) toggle();
+  }, []);
   return (
     <section className="profile">
       <div className="profile_container">

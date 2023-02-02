@@ -47,8 +47,8 @@ const RegitsteredCourses = (props: Props) => {
                       <h3>
                         {window.innerWidth <= 600 && (
                           <>
-                            {course.tenKhoaHoc?.length > 20
-                              ? course.tenKhoaHoc.substring(0, 19) + "..."
+                            {course.tenKhoaHoc?.length > 22
+                              ? course.tenKhoaHoc.substring(0, 21) + "..."
                               : course.tenKhoaHoc}
                           </>
                         )}
@@ -63,8 +63,8 @@ const RegitsteredCourses = (props: Props) => {
                       <p>
                         {window.innerWidth <= 600 && (
                           <>
-                            {course.moTa?.length > 20
-                              ? course.moTa.substring(0, 19) + "..."
+                            {course.moTa?.length > 28
+                              ? course.moTa.substring(0, 27) + "..."
                               : course.moTa}
                           </>
                         )}

@@ -193,8 +193,8 @@ const CoursesManage = (props: Props) => {
                       <h3>
                         {window.innerWidth <= 600 && (
                           <>
-                            {course.tenKhoaHoc?.length > 20
-                              ? course.tenKhoaHoc.substring(0, 19) + "..."
+                            {course.tenKhoaHoc?.length > 22
+                              ? course.tenKhoaHoc.substring(0, 21) + "..."
                               : course.tenKhoaHoc}
                           </>
                         )}
@@ -209,16 +209,15 @@ const CoursesManage = (props: Props) => {
                       <p>
                         {window.innerWidth <= 600 && (
                           <>
-                            {course.moTa?.length > 20
-                              ? course.moTa.substring(0, 19) + "..."
+                            {course.moTa?.length > 28
+                              ? course.moTa.substring(0, 27) + "..."
                               : course.moTa}
                           </>
                         )}
-
                         {window.innerWidth > 600 && (
                           <>
-                            {course.moTa?.length > 60
-                              ? course.moTa.substring(0, 59) + "..."
+                            {course.moTa?.length > 50
+                              ? course.moTa.substring(0, 49) + "..."
                               : course.moTa}
                           </>
                         )}
