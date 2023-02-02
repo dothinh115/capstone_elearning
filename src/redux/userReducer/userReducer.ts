@@ -13,8 +13,6 @@ import {
 import { setLoadingAction } from "../courseReducer/courseReducer";
 import { DispatchType } from "../store";
 
-const token: string = getLocalStorage("userInfo")?.accessToken;
-
 const initialState: UserInfoStateType = {
   userInfo: null,
 };

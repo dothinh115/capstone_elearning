@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   margin: auto;
+  width: 100%;
   &_container {
     display: flex;
     flex-wrap: wrap;
@@ -37,6 +38,9 @@
     }
     &_sidebar {
       width: 30%;
+      @media (max-width: 600px) {
+        width: 100%;
+      }
       &_header {
         text-align: center;
         padding: 15px;
@@ -52,9 +56,10 @@
         margin-top: 10px;
       }
       &_menu {
-        padding: 15px;
         ul {
-          border: 1px solid #eee;
+          border-width: 1px 0;
+          border-style: solid;
+          border-color: #eee;
           li {
             list-style-type: none;
             background-color: white;
@@ -89,6 +94,10 @@
       width: 70%;
       padding: 15px;
       max-height: 100%;
+      border-left: 1px solid #eee;
+      @media (max-width: 600px) {
+        display: none;
+      }
       &_block {
         background-color: white;
         padding: 10px;

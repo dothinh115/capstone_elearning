@@ -97,10 +97,20 @@ const CoursesManage = (props: Props) => {
       ...data,
       biDanh,
       ngayTAO: newDate,
+      luotXem: 0,
+      danhGia: 0,
+      maNhom: "GP01",
+      taiKhoanNguoiTAO: userInfo.taiKhoan,
       hinhAnh:
         "https://images.pexels.com/photos/127160/pexels-photo-127160.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
     };
     dispatch(createNewCourse(data));
+  };
+
+  const nameToCode = (event: { target: HTMLInputElement }): void => {
+    reset({
+      maKhoaHoc: toNonAccentVietnamese(event.target.value),
+    });
   };
 
   useEffect(() => {
@@ -121,26 +131,6 @@ const CoursesManage = (props: Props) => {
         <form onSubmit={handleSubmit(addNewSubmitHandle)}>
           <div className="modal_body_item">
             <div className="modal_body_item_title">
-              {" "}
-              <i className="fa-solid fa-sliders"></i>Mã khóa học
-            </div>
-            <div className="modal_body_item_input">
-              <input
-                type="text"
-                {...register("maKhoaHoc", {
-                  required: "Không được để trống!",
-                })}
-              />
-            </div>
-            {errors.maKhoaHoc?.message && (
-              <div className="modal_body_item_error">
-                <i className="fa-solid fa-circle-exclamation"></i>
-                {errors.maKhoaHoc?.message}
-              </div>
-            )}
-          </div>
-          <div className="modal_body_item">
-            <div className="modal_body_item_title">
               <i className="fa-solid fa-tag"></i>Tên khóa học
             </div>
             <div className="modal_body_item_input">
@@ -149,6 +139,7 @@ const CoursesManage = (props: Props) => {
                 {...register("tenKhoaHoc", {
                   required: "Không được để trống!",
                 })}
+                onChange={nameToCode}
               />
             </div>
             {errors.tenKhoaHoc?.message && (
