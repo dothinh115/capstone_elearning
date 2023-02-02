@@ -124,19 +124,22 @@
           }
         }
         ul {
+          background-color: #f8f8f8;
+          padding: 15px;
+          margin-bottom: 10px;
           li {
             list-style-type: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #ccc;
+            border: 1px solid #eee;
             margin-bottom: 10px;
             background-color: white;
             img {
               height: 70px;
               width: 100px;
               margin-right: 10px;
-              border-right: 1px solid #ccc;
+              border-right: 1px solid #eee;
               object-fit: cover;
               min-width: 100px;
             }

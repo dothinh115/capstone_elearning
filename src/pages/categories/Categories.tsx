@@ -249,19 +249,19 @@ const Categories = (props: Props) => {
             )}
 
             {result!?.length <= limitCouses ? (
-              <>
+              <ul>
                 {result?.map((item: CourseType, index: number) => {
                   return <CoursesList item={item} key={index} />;
                 })}
-              </>
+              </ul>
             ) : (
-              <>
+              <ul>
                 {result
                   ?.slice(0, limitCouses)
                   .map((item: CourseType, index: number) => {
                     return <CoursesList item={item} key={index} />;
                   })}
-              </>
+              </ul>
             )}
 
             {result!?.length > limitCouses && (

@@ -38,43 +38,41 @@ const CoursesList = ({ item }: Props) => {
     return false;
   };
   return (
-    <ul>
-      <li>
-        <Link to={`/course/${item.maKhoaHoc}`}>
-          <img
-            src={`${item.hinhAnh}`}
-            onError={({ currentTarget }) => {
-              currentTarget.src = "../../img/Nodejs.png";
-            }}
-            alt=""
-          />
-          <div className="course_info">
-            <h3>{item.tenKhoaHoc}</h3>
-            <></>
-            <p>
-              <i className="fa-solid fa-circle-info"></i>
-              {item.moTa?.length > 50
-                ? item.moTa.substring(0, 49) + "..."
-                : item.moTa}
-            </p>
-            <p>
-              <i className="fa-solid fa-user"></i>
-              {item.nguoiTao.hoTen + " | "}
-              <i className="fa-solid fa-calendar-days"></i>
-              {" " + item.ngayTao}
-            </p>
-          </div>
-        </Link>
-        <div>
-          <button
-            className={checkIfRegisterd() ? "cancel" : "register"}
-            onClick={ghiDanhClickHandle}
-          >
-            {checkIfRegisterd() ? "Hủy" : "Đăng ký"}
-          </button>
+    <li>
+      <Link to={`/course/${item.maKhoaHoc}`}>
+        <img
+          src={`${item.hinhAnh}`}
+          onError={({ currentTarget }) => {
+            currentTarget.src = "../../img/Nodejs.png";
+          }}
+          alt=""
+        />
+        <div className="course_info">
+          <h3>{item.tenKhoaHoc}</h3>
+          <></>
+          <p>
+            <i className="fa-solid fa-circle-info"></i>
+            {item.moTa?.length > 50
+              ? item.moTa.substring(0, 49) + "..."
+              : item.moTa}
+          </p>
+          <p>
+            <i className="fa-solid fa-user"></i>
+            {item.nguoiTao.hoTen + " | "}
+            <i className="fa-solid fa-calendar-days"></i>
+            {" " + item.ngayTao}
+          </p>
         </div>
-      </li>
-    </ul>
+      </Link>
+      <div>
+        <button
+          className={checkIfRegisterd() ? "cancel" : "register"}
+          onClick={ghiDanhClickHandle}
+        >
+          {checkIfRegisterd() ? "Hủy" : "Đăng ký"}
+        </button>
+      </div>
+    </li>
   );
 };
 
