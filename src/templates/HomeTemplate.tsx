@@ -28,8 +28,8 @@ const HomeTemplate = (props: Props) => {
       </Routes>
       <div className="home">
         <Outlet />
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };

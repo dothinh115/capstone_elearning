@@ -221,6 +221,10 @@ input.isInvalid {
   }
 }
 
+.noscroll {
+  overflow: hidden;
+}
+
 .modal_overlay {
   position: fixed;
   width: 100%;
@@ -235,9 +239,6 @@ input.isInvalid {
   max-width: 100vw;
   max-height: 100vh;
   overflow: hidden;
-  @media (max-width: 600px) {
-    align-items: unset;
-  }
   .modal {
     background-color: #fff;
     animation: modalAnimation 0.5s;
