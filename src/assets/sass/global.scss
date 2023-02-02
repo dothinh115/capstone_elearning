@@ -261,6 +261,9 @@ input.isInvalid {
       align-items: center;
       border-bottom: 1px solid #eee;
       padding: 10px;
+      h2 {
+        width: 90%;
+      }
       button {
         border: 1px solid #ccc;
         border-radius: 50%;
@@ -269,6 +272,7 @@ input.isInvalid {
         text-align: center;
         line-height: 40px;
         background-color: #f8f8f8;
+        display: unset;
         cursor: pointer;
         i {
           font-size: 20px;

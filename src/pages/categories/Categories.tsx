@@ -116,14 +116,14 @@ const Categories = (props: Props) => {
   return (
     <section className="categories" ref={parentDiv}>
       <div className="categories_container">
-        {window.innerWidth <= 768 && (
+        {window.innerWidth <= 820 && (
           <button className="btn btn-primary" onClick={toggle}>
             Lọc danh mục
           </button>
         )}
 
         <div className="categories_container_sidebar">
-          {window.innerWidth <= 768 ? (
+          {window.innerWidth <= 820 ? (
             <Modal show={show} toggle={toggle} title="Lọc danh mục">
               <CategoriesSidebar
                 checked={checked}
