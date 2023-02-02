@@ -8,6 +8,9 @@
     position: relative;
     z-index: 1;
     gap: 10px;
+    @media (max-width: 600px) {
+      width: 98%;
+    }
     .main_container {
       width: 70%;
       @media (max-width: 998px) {

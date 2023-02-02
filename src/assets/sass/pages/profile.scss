@@ -12,9 +12,12 @@
     border-radius: 10px;
     position: relative;
     overflow: hidden;
-    margin: 50px 0;
+    margin: auto;
     @media (min-width: 1200px) {
       max-width: 768px !important;
+    }
+    @media (min-width: 600px) {
+      width: 98%;
     }
     &_header {
       height: 40px;

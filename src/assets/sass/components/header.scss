@@ -11,6 +11,9 @@
     align-items: center;
     justify-content: space-between;
     max-width: 1400px;
+    @media (max-width: 600px) {
+      width: 98%;
+    }
     .header-logo {
       width: 50%;
       img {

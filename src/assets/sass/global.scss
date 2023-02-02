@@ -32,7 +32,7 @@ body {
     width: 100%;
   }
   @media (min-width: 1200px) {
-    max-width: 1200px;
+    max-width: 1400px;
   }
   margin: auto;
   min-height: 73vh;
@@ -45,7 +45,7 @@ a:hover {
 
 section {
   position: relative;
-  & > [class*="_container"] {
+  & > [class*="_container"]:not(:last-of-type) {
     @media (max-width: 600px) {
       width: 98% !important;
     }

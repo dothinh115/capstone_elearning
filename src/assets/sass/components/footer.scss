@@ -1,5 +1,6 @@
 .footer {
   margin-top: 20px;
+  margin-bottom: unset;
   h1 {
     font-size: 30px;
   }
@@ -9,19 +10,24 @@
     display: flex;
     max-width: 1400px;
     flex-wrap: wrap;
+    @media (max-width: 600px) {
+      width: 98%;
+    }
     @media (min-width: 600px) {
-      gap: unset;
+      gap: 40px;
     }
     & > div {
-      padding: 15px 40px;
+      padding: 15px;
       @media (max-width: 600px) {
         width: 100%;
+        padding: unset;
       }
       @media (min-width: 600px) {
-        width: 49%;
+        width: calc(50% - 30px);
+        padding: unset;
       }
       @media (min-width: 998px) {
-        width: calc(100% / 3);
+        width: calc(100% / 3 - 30px);
       }
     }
     &_left {
