@@ -1,20 +1,27 @@
 import { useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router-dom";
+import Modal from "../components/modal/Modal";
+import useModal from "../hooks/useModal";
 import { ReduxRootType } from "../redux/store";
 import { removeLocalStorage } from "../util/function";
 
 const UserTemplate = () => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
+  const { prevPage } = useSelector((store: ReduxRootType) => store.pageReducer);
+  const { show, toggle } = useModal();
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     removeLocalStorage("userInfo");
     window.location.reload();
   };
+  const showModal = (): void => {
+    if (window.innerWidth <= 600) toggle();
+  };
   return (
     <section className="profile">
       <div className="profile_container">
         <div className="profile_container_header">
-          <NavLink id="getout" to="/" className="btn btn-primary">
+          <NavLink id="getout" to={prevPage} className="btn btn-primary">
             <i className="fa-solid fa-arrow-left-long"></i>
           </NavLink>
           <h2>Trang cá nhân</h2>
@@ -31,17 +38,17 @@ const UserTemplate = () => {
           <div className="profile_container_sidebar_menu">
             <ul>
               <li>
-                <NavLink to="/profile">
+                <NavLink to="/profile" onClick={showModal}>
                   <i className="fa-solid fa-house"></i>Thông tin tài khoản
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/profile/registered_courses">
+                <NavLink to="/profile/registered_courses" onClick={showModal}>
                   <i className="fa-solid fa-key"></i>Khóa học đã đăng ký
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/profile/courses_manage">
+                <NavLink to="/profile/courses_manage" onClick={showModal}>
                   <i className="fa-solid fa-list-check"></i>
                   Quản lý khóa học
                 </NavLink>
@@ -55,7 +62,13 @@ const UserTemplate = () => {
           </div>
         </div>
         <div className="profile_container_main">
-          <Outlet />
+          {window.innerWidth <= 600 ? (
+            <Modal show={show} toggle={toggle}>
+              <Outlet />
+            </Modal>
+          ) : (
+            <Outlet />
+          )}
         </div>
       </div>
     </section>

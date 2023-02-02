@@ -133,6 +133,9 @@ export const createNewCourse = (data: UpdateCourseType) => {
       history.push(`/course/${data.maKhoaHoc}`);
     } catch (error: any) {
       console.log(error);
+      history.push(window.location.pathname, {
+        errorMess: error.response.data,
+      });
     }
   };
 };

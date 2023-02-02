@@ -10,6 +10,9 @@
     gap: 10px;
     .main_container {
       width: 70%;
+      @media (max-width: 998px) {
+        width: 100%;
+      }
       h1 {
         border-top: 1px solid #f8f8f8;
         padding-top: 10px;
@@ -44,6 +47,20 @@
           margin-bottom: 10px;
           display: flex;
           align-items: center;
+          @media (max-width: 600px) {
+            //0 - 600
+            flex-wrap: wrap;
+            button {
+              margin-top: 10px;
+              display: block;
+              width: 100%;
+            }
+          }
+
+          @media (min-width: 768px) {
+            // 600 - 998
+            justify-content: space-between;
+          }
           i {
             color: #f6ba35;
             font-size: 20px;
@@ -129,6 +146,9 @@
       background-color: white;
       overflow: hidden;
       padding-bottom: 20px;
+      @media (max-width: 998px) {
+        width: 0%;
+      }
       &_img {
         text-align: center;
         background-image: url("../../img/course_background.jpg");

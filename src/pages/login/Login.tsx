@@ -23,9 +23,8 @@ const Login = (props: Props) => {
       matKhau: "",
     },
   });
-  const onSubmit = (data: LoginType): void => {
-    dispatch(loginApi(data));
-    window.location.href = searchParams.get("next")!;
+  const onSubmit = async (data: LoginType) => {
+    await dispatch(loginApi(data, searchParams.get("next")!));
   };
   return (
     <section className="login">

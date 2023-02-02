@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { history } from "../../App";
 type Props = {
   title?: string;
@@ -14,7 +14,10 @@ const Modal = ({
   toggle,
 }: Props): JSX.Element | null => {
   const modalOverlay = useRef<HTMLDivElement | null>(null);
-
+  useEffect(() => {
+    if (show) document.getElementById("root")?.classList.add("noscroll");
+    else document.getElementById("root")?.classList.remove("noscroll");
+  });
   if (show) {
     return (
       <>
