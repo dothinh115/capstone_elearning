@@ -58,7 +58,7 @@ const EditProfile = (props: Props) => {
                 key={index}
               >
                 <div
-                  className="rofile_main_info_item_title"
+                  className="profile_main_info_item_title"
                   style={{
                     display: !editing ? "flex" : "block",
                     justifyContent: !editing ? "space-between" : "",

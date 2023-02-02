@@ -100,7 +100,7 @@ export const registerInputData: RegisterConfigType = {
     "Mã nhóm",
     "Email",
   ],
-  icon: ["user", "lock", "file-signature", "phone", "user-group", "at"],
+  icon: ["user", "lock", "file-signature", "phone", "user-group", "code", "at"],
   regex: [
     /[^]*/,
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
