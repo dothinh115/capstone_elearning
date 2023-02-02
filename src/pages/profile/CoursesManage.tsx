@@ -122,18 +122,18 @@ const CoursesManage = (props: Props) => {
   }, [coursesArr]);
 
   return (
-    <>
+    <div className="profile_main_info">
       <Modal
         title="Thêm khóa học mới"
         show={newCourseModal.show}
         toggle={newCourseModal.toggle}
       >
         <form onSubmit={handleSubmit(addNewSubmitHandle)}>
-          <div className="modal_body_item">
-            <div className="modal_body_item_title">
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_title">
               <i className="fa-solid fa-tag"></i>Tên khóa học
             </div>
-            <div className="modal_body_item_input">
+            <div className="profile_main_info_item_input">
               <input
                 type="text"
                 {...register("tenKhoaHoc", {
@@ -143,17 +143,17 @@ const CoursesManage = (props: Props) => {
               />
             </div>
             {errors.tenKhoaHoc?.message && (
-              <div className="modal_body_item_error">
+              <div className="profile_main_info_item_error">
                 <i className="fa-solid fa-circle-exclamation"></i>
                 {errors.tenKhoaHoc?.message}
               </div>
             )}
           </div>
-          <div className="modal_body_item">
-            <div className="modal_body_item_title">
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_title">
               <i className="fa-solid fa-bars"></i>Danh mục
             </div>
-            <div className="modal_body_item_input">
+            <div className="profile_main_info_item_input">
               <select
                 {...register("maDanhMucKhoaHoc", {
                   required: "Không được để trống!",
@@ -167,9 +167,9 @@ const CoursesManage = (props: Props) => {
               </select>
             </div>
           </div>
-          <div className="modal_body_item">
-            <div className="modal_body_item_title">Mô tả</div>
-            <div className="modal_body_item_input">
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_title">Mô tả</div>
+            <div className="profile_main_info_item_input">
               <textarea
                 {...register("moTa", {
                   required: "Không được để trống!",
@@ -177,14 +177,14 @@ const CoursesManage = (props: Props) => {
               />
             </div>
             {errors.moTa?.message && (
-              <div className="modal_body_item_error">
+              <div className="profile_main_info_item_error">
                 <i className="fa-solid fa-circle-exclamation"></i>
                 {errors.moTa?.message}
               </div>
             )}
           </div>
           {state && (
-            <div className="modal_body_item_result">
+            <div className="profile_main_info_item_result">
               <span
                 className={`btn ${
                   (state.successMess && "btn-success") ||
@@ -195,8 +195,8 @@ const CoursesManage = (props: Props) => {
               </span>
             </div>
           )}
-          <div className="modal_body_item">
-            <div className="modal_body_item_button">
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_button">
               <button type="submit" className="btn btn-primary">
                 Thêm mới
               </button>
@@ -207,12 +207,12 @@ const CoursesManage = (props: Props) => {
 
       <Modal show={show} toggle={toggle} title="Thay đổi thông tin khóa học">
         <form onSubmit={handleSubmit(editSubmitHandle)}>
-          <div className="modal_body_item">
-            <div className="modal_body_item_title">
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_title">
               {" "}
               <i className="fa-solid fa-sliders"></i>Mã khóa học
             </div>
-            <div className="modal_body_item_input">
+            <div className="profile_main_info_item_input">
               <input
                 disabled
                 type="text"
@@ -223,11 +223,11 @@ const CoursesManage = (props: Props) => {
             </div>
           </div>
 
-          <div className="modal_body_item">
-            <div className="modal_body_item_title">
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_title">
               <i className="fa-solid fa-tag"></i>Tên khóa học
             </div>
-            <div className="modal_body_item_input">
+            <div className="profile_main_info_item_input">
               <input
                 type="text"
                 {...register("tenKhoaHoc", {
@@ -236,18 +236,18 @@ const CoursesManage = (props: Props) => {
               />
             </div>
             {errors.tenKhoaHoc?.message && (
-              <div className="modal_body_item_error">
+              <div className="profile_main_info_item_error">
                 <i className="fa-solid fa-circle-exclamation"></i>
                 {errors.tenKhoaHoc?.message}
               </div>
             )}
           </div>
 
-          <div className="modal_body_item">
-            <div className="modal_body_item_title">
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_title">
               <i className="fa-solid fa-bars"></i>Danh mục
             </div>
-            <div className="modal_body_item_input">
+            <div className="profile_main_info_item_input">
               <select
                 {...register("maDanhMucKhoaHoc", {
                   required: "Không được để trống!",
@@ -262,9 +262,9 @@ const CoursesManage = (props: Props) => {
             </div>
           </div>
 
-          <div className="modal_body_item">
-            <div className="modal_body_item_title">Mô tả</div>
-            <div className="modal_body_item_input">
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_title">Mô tả</div>
+            <div className="profile_main_info_item_input">
               <textarea
                 {...register("moTa", {
                   required: "Không được để trống!",
@@ -272,7 +272,7 @@ const CoursesManage = (props: Props) => {
               />
             </div>
             {errors.moTa?.message && (
-              <div className="modal_body_item_error">
+              <div className="profile_main_info_item_error">
                 <i className="fa-solid fa-circle-exclamation"></i>
                 {errors.moTa?.message}
               </div>
@@ -280,7 +280,7 @@ const CoursesManage = (props: Props) => {
           </div>
 
           {state && (
-            <div className="modal_body_item_result">
+            <div className="profile_main_info_item_result">
               <span
                 className={`btn ${
                   (state.successMess && "btn-success") ||
@@ -292,8 +292,8 @@ const CoursesManage = (props: Props) => {
             </div>
           )}
 
-          <div className="modal_body_item">
-            <div className="modal_body_item_button">
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_button">
               <button type="submit" className="btn btn-primary">
                 Update
               </button>
@@ -322,7 +322,7 @@ const CoursesManage = (props: Props) => {
         style={{ padding: "unset" }}
       >
         <form
-          className="profile_container_main_block_search"
+          className="profile_main_info_search"
           onSubmit={searchSubmitHandle}
         >
           <input ref={searchValue} type="text" placeholder="Tìm kiếm" />
@@ -417,7 +417,7 @@ const CoursesManage = (props: Props) => {
           </div>
         )}
       </ul>
-    </>
+    </div>
   );
 };
 
