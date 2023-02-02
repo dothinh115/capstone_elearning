@@ -44,16 +44,20 @@ a:hover {
 section {
   position: relative;
   & > [class*="_container"] {
-    margin: auto;
     @media (max-width: 600px) {
       width: 98% !important;
     }
     @media (min-width: 600px) {
       width: 98% !important;
     }
+    @media (min-width: 768px) {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
     @media (min-width: 1200px) {
       max-width: 80%;
     }
+    margin: auto;
   }
   & > h1 {
     font-size: 48px;

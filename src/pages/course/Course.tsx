@@ -192,10 +192,11 @@ const Course = (props: Props) => {
                     Lượt xem: {courseDetail?.luotXem}
                   </span>
                 </span>
-
-                <button className="btn btn-primary" onClick={toggle}>
-                  Xem chi tiết khóa học
-                </button>
+                {window.innerWidth <= 998 && (
+                  <button className="btn btn-primary" onClick={toggle}>
+                    Xem chi tiết khóa học
+                  </button>
+                )}
               </div>
             </div>
             <div className="main_container_info">
