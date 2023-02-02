@@ -70,8 +70,8 @@ const CoursesList = ({ item }: Props) => {
             <i className="fa-solid fa-circle-info"></i>
             {window.innerWidth <= 600 && (
               <>
-                {item.moTa?.length > 20
-                  ? item.moTa.substring(0, 19) + "..."
+                {item.moTa?.length > 25
+                  ? item.moTa.substring(0, 23) + "..."
                   : item.moTa}
               </>
             )}
