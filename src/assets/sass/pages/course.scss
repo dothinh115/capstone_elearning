@@ -26,6 +26,10 @@
         margin-top: 10px;
         font-size: 45px;
         line-height: 75px;
+        @media (max-width: 600px) {
+          font-size: 35px;
+          line-height: 55px;
+        }
       }
       &_title {
         border-bottom: 1px solid #f8f8f8;
@@ -91,6 +95,10 @@
           font-size: 30px;
           line-height: 30px;
           border: unset;
+          @media (max-width: 600px) {
+            font-size: 20px;
+            line-height: 20px;
+          }
         }
         ul {
           margin: 30px 0;
