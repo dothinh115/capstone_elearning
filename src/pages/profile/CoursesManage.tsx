@@ -191,12 +191,20 @@ const CoursesManage = (props: Props) => {
                     />
                     <div className="course_info">
                       <h3>
-                        {(window.innerWidth <= 600 &&
-                        course.tenKhoaHoc?.length > 20
-                          ? course.tenKhoaHoc.substring(0, 19) + "..."
-                          : course.tenKhoaHoc) || course.tenKhoaHoc?.length > 30
-                          ? course.tenKhoaHoc.substring(0, 29) + "..."
-                          : course.tenKhoaHoc}
+                        {window.innerWidth <= 600 && (
+                          <>
+                            {course.tenKhoaHoc?.length > 20
+                              ? course.tenKhoaHoc.substring(0, 19) + "..."
+                              : course.tenKhoaHoc}
+                          </>
+                        )}
+                        {window.innerWidth > 600 && (
+                          <>
+                            {course.tenKhoaHoc?.length > 30
+                              ? course.tenKhoaHoc.substring(0, 29) + "..."
+                              : course.tenKhoaHoc}
+                          </>
+                        )}
                       </h3>
                       <p>
                         {window.innerWidth <= 600 && (

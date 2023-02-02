@@ -83,6 +83,7 @@
               background-color: unset;
               text-align: left;
               font-weight: 400;
+              font-size: 15px;
               cursor: pointer;
               i {
                 margin-right: 10px;
@@ -217,6 +218,14 @@
               margin-right: 5px;
               font-size: 15px;
               color: #007bff;
+            }
+          }
+          @media (max-width: 600px) {
+            h3 {
+              font-size: 14px;
+            }
+            p {
+              font-size: 12px;
             }
           }
         }
