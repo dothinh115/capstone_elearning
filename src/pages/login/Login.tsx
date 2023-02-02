@@ -25,8 +25,7 @@ const Login = (props: Props) => {
     },
   });
   const onSubmit = async (data: LoginType) => {
-    await dispatch(loginApi(data));
-    window.location.href = searchParams.get("next")!;
+    await dispatch(loginApi(data, searchParams.get("next")!));
   };
   return (
     <section className="login">

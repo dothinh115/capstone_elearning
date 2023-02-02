@@ -36,16 +36,17 @@ export default userReducer.reducer;
 
 /************Async Action**********/
 
-export const loginApi = (dataLogin: LoginType) => {
+export const loginApi = (dataLogin: LoginType, next: string) => {
   return async (dispatch: DispatchType) => {
     const setLoading: PayloadAction<boolean> = setLoadingAction(true);
     dispatch(setLoading);
     try {
       const result = await API.post("/QuanLyNguoiDung/DangNhap", dataLogin);
       saveLocalStorage<UserLoginType>("userInfo", result.data);
+      window.location.href = next;
     } catch (error: any) {
       console.log(error);
-      history.push(window.location.pathname, {
+      history.push(window.location.pathname + window.location.search, {
         errorMessage: error.response.data,
       });
     } finally {
