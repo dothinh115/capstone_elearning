@@ -13,6 +13,9 @@
     position: relative;
     overflow: hidden;
     margin: auto;
+    @media (max-width: 600px) {
+      width: 98%;
+    }
     @media (min-width: 600px) {
       width: 98%;
     }
