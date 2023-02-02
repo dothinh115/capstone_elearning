@@ -12,7 +12,7 @@ const UserTemplate = () => {
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
     removeLocalStorage("userInfo");
-    window.location.reload();
+    window.location.href = "/";
   };
   const showModal = (): void => {
     if (window.innerWidth <= 600) toggle();

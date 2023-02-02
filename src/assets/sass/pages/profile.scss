@@ -1,5 +1,4 @@
 .profile {
-  width: 870px;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -15,7 +14,7 @@
     overflow: hidden;
     margin: 50px 0;
     @media (min-width: 1200px) {
-      width: 60% !important;
+      max-width: 998px !important;
     }
     &_header {
       height: 40px;
@@ -132,6 +131,9 @@
         padding: 5px;
         color: #333;
         outline: none;
+        height: 100px;
+        font-family: "Montserrat", sans-serif;
+        font-size: 14px;
       }
     }
     &_error {
@@ -226,6 +228,10 @@
         font-size: 20px;
         font-weight: 600;
         cursor: pointer;
+        &.delete {
+          background-color: red;
+          color: white;
+        }
         & {
           color: white;
           background-color: #007bff;

@@ -191,24 +191,43 @@ const CoursesManage = (props: Props) => {
                     />
                     <div className="course_info">
                       <h3>
-                        {course.tenKhoaHoc?.length > 30
+                        {(window.innerWidth <= 600 &&
+                        course.tenKhoaHoc?.length > 20
+                          ? course.tenKhoaHoc.substring(0, 19) + "..."
+                          : course.tenKhoaHoc) || course.tenKhoaHoc?.length > 30
                           ? course.tenKhoaHoc.substring(0, 29) + "..."
                           : course.tenKhoaHoc}
                       </h3>
                       <p>
-                        {course.moTa?.length > 40
-                          ? course.moTa.substring(0, 39) + "..."
-                          : course.moTa}
+                        {window.innerWidth <= 600 && (
+                          <>
+                            {course.moTa?.length > 20
+                              ? course.moTa.substring(0, 19) + "..."
+                              : course.moTa}
+                          </>
+                        )}
+
+                        {window.innerWidth > 600 && (
+                          <>
+                            {course.moTa?.length > 60
+                              ? course.moTa.substring(0, 59) + "..."
+                              : course.moTa}
+                          </>
+                        )}
                       </p>
                       <p>
                         <i className="fa-solid fa-user"></i>
-                        {course.nguoiTao.hoTen + " | "}
-                        <i className="fa-solid fa-calendar-days"></i>
-                        {course.ngayTao
-                          .substring(0, 10)
-                          .split("-")
-                          .reverse()
-                          .join("/")}
+                        {course.nguoiTao.hoTen}
+                        {window.innerWidth > 600 && (
+                          <>
+                            " | " <i className="fa-solid fa-calendar-days"></i>
+                            {course.ngayTao
+                              .substring(0, 10)
+                              .split("-")
+                              .reverse()
+                              .join("/")}
+                          </>
+                        )}
                       </p>
                     </div>
                   </Link>

@@ -46,9 +46,20 @@ const RegitsteredCourses = (props: Props) => {
                     <div className="course_info">
                       <h3>{course.tenKhoaHoc}</h3>
                       <p>
-                        {course.moTa?.length > 50
-                          ? course.moTa.substring(0, 49) + "..."
-                          : course.moTa}
+                        {window.innerWidth <= 600 && (
+                          <>
+                            {course.moTa?.length > 20
+                              ? course.moTa.substring(0, 19) + "..."
+                              : course.moTa}
+                          </>
+                        )}
+                        {window.innerWidth > 600 && (
+                          <>
+                            {course.moTa?.length > 50
+                              ? course.moTa.substring(0, 49) + "..."
+                              : course.moTa}
+                          </>
+                        )}
                       </p>
                       <p>
                         <i className="fa-solid fa-calendar-days"></i>
@@ -60,7 +71,10 @@ const RegitsteredCourses = (props: Props) => {
                       </p>
                     </div>
                   </Link>
-                  <button onClick={() => ghiDanhBtnHandle(course.maKhoaHoc)}>
+                  <button
+                    className="delete"
+                    onClick={() => ghiDanhBtnHandle(course.maKhoaHoc)}
+                  >
                     <i className="fa-solid fa-trash"></i>
                   </button>
                 </li>
