@@ -82,11 +82,18 @@ const EditProfile = (props: Props) => {
                   <>
                     {editing && (
                       <>
-                        {item === "maNhom" ? (
+                        {item === "maNhom" || item === "maLoaiNguoiDung" ? (
                           <select {...register(item)}>
-                            {showMaNhom().map((val: JSX.Element) => {
-                              return val;
-                            })}
+                            {item === "maNhom" &&
+                              showMaNhom().map((val: JSX.Element) => {
+                                return val;
+                              })}
+                            {item === "maLoaiNguoiDung" && (
+                              <>
+                                <option value="GV">GV</option>
+                                <option value="HV">HV</option>
+                              </>
+                            )}
                           </select>
                         ) : (
                           <input

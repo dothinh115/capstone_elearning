@@ -76,7 +76,7 @@ export const profileMenuConfig: ProfileMenuConfigType = {
 };
 
 export const loginInputData: LoginInputType = {
-  id: ["taiKhoan", "matKhau"], //id[0]
+  id: ["taiKhoan", "matKhau"],
   title: ["Tài khoản", "Mật khẩu"],
   icon: ["user", "lock"],
 };
