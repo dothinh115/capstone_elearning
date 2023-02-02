@@ -21,8 +21,8 @@ const Modal = ({
     toggle();
   };
   useEffect(() => {
-    if (show) document.getElementById("root")?.classList.add("noscroll");
-    else document.getElementById("root")?.classList.remove("noscroll");
+    if (show) document.querySelector("body")?.classList.add("noscroll");
+    else document.querySelector("body")?.classList.remove("noscroll");
   });
   if (show) {
     return (
