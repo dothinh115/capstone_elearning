@@ -13,12 +13,13 @@
     position: relative;
     overflow: hidden;
     margin: auto;
-    @media (min-width: 1200px) {
-      max-width: 768px !important;
-    }
     @media (min-width: 600px) {
       width: 98%;
     }
+    @media (min-width: 998px) {
+      max-width: 768px !important;
+    }
+
     &_header {
       height: 40px;
       width: 100%;
