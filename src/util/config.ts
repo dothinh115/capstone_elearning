@@ -61,6 +61,20 @@ interface RegisterConfigType {
   placeHolder: string[];
 }
 
+interface ProfileMenuConfigType {
+  path: string[];
+  title: string[];
+  modalPopup: boolean[];
+  icon: string[];
+}
+
+export const profileMenuConfig: ProfileMenuConfigType = {
+  path: ["/profile", "/profile/registered_courses", "/profile/courses_manage"],
+  title: ["Thông tin tài khoản", "Khóa học đã đăng ký", "Quản lý khóa học"],
+  modalPopup: [false, true, true],
+  icon: ["house", "key", "list-check"],
+};
+
 export const loginInputData: LoginInputType = {
   id: ["taiKhoan", "matKhau"], //id[0]
   title: ["Tài khoản", "Mật khẩu"],

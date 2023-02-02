@@ -5,6 +5,7 @@ import useModal from "../hooks/useModal";
 import { ReduxRootType } from "../redux/store";
 import { removeLocalStorage } from "../util/function";
 import { useEffect } from "react";
+import { profileMenuConfig } from "../util/config";
 
 const UserTemplate = () => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
@@ -16,6 +17,7 @@ const UserTemplate = () => {
     removeLocalStorage("userInfo");
     window.location.href = "/";
   };
+
   const showModal = (): void => {
     if (window.innerWidth <= 600) toggle();
   };
@@ -43,22 +45,18 @@ const UserTemplate = () => {
           </div>
           <div className="profile_container_sidebar_menu">
             <ul>
-              <li>
-                <NavLink to="/profile" onClick={showModal}>
-                  <i className="fa-solid fa-house"></i>Thông tin tài khoản
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/profile/registered_courses" onClick={showModal}>
-                  <i className="fa-solid fa-key"></i>Khóa học đã đăng ký
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/profile/courses_manage" onClick={showModal}>
-                  <i className="fa-solid fa-list-check"></i>
-                  Quản lý khóa học
-                </NavLink>
-              </li>
+              {profileMenuConfig.path.map((item: string, index: number) => {
+                return (
+                  <li key={index}>
+                    <NavLink to={item} onClick={showModal}>
+                      <i
+                        className={`fa-solid fa-${profileMenuConfig.icon[index]}`}
+                      ></i>
+                      {profileMenuConfig.title[index]}
+                    </NavLink>
+                  </li>
+                );
+              })}
               <li>
                 <button onClick={logout}>
                   <i className="fa-solid fa-right-from-bracket"></i>Đăng xuất
@@ -69,7 +67,15 @@ const UserTemplate = () => {
         </div>
         <div className="profile_container_main">
           {window.innerWidth <= 600 ? (
-            <Modal show={show} toggle={toggle}>
+            <Modal
+              show={show}
+              toggle={toggle}
+              title={
+                profileMenuConfig.title[
+                  profileMenuConfig.path.indexOf(pathname)
+                ]
+              }
+            >
               <Outlet />
             </Modal>
           ) : (
