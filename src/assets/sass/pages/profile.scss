@@ -95,9 +95,6 @@
       padding: 15px;
       max-height: 100%;
       border-left: 1px solid #eee;
-      @media (max-width: 600px) {
-        display: none;
-      }
       &_block {
         background-color: white;
         padding: 10px;

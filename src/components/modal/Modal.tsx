@@ -15,10 +15,8 @@ const Modal = ({
 }: Props): JSX.Element | null => {
   const modalOverlay = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
-    document.getElementById("root")?.classList.add("noscroll");
-    return () => {
-      document.getElementById("root")?.classList.remove("noscroll");
-    };
+    if (show) document.getElementById("root")?.classList.add("noscroll");
+    else document.getElementById("root")?.classList.remove("noscroll");
   });
   if (show) {
     return (

@@ -19,9 +19,6 @@ const UserTemplate = () => {
   };
   return (
     <section className="profile">
-      <Modal show={show} toggle={toggle}>
-        <Outlet />
-      </Modal>
       <div className="profile_container">
         <div className="profile_container_header">
           <NavLink id="getout" to={prevPage} className="btn btn-primary">
@@ -65,7 +62,13 @@ const UserTemplate = () => {
           </div>
         </div>
         <div className="profile_container_main">
-          <Outlet />
+          {window.innerWidth <= 600 ? (
+            <Modal show={show} toggle={toggle}>
+              <Outlet />
+            </Modal>
+          ) : (
+            <Outlet />
+          )}
         </div>
       </div>
     </section>
