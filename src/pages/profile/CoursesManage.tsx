@@ -11,11 +11,12 @@ import {
 } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { toNonAccentVietnamese } from "../../util/function";
-import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import {
   CourseType,
   UpdateCourseType,
 } from "../../util/interface/courseReducerInterface";
+import CourseEditForm from "./CourseEditForm";
+import CreateNewCourseForm from "./CreateNewCourseForm";
 
 type Props = {};
 
@@ -23,11 +24,7 @@ const CoursesManage = (props: Props) => {
   const { coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
-  const { categories } = useSelector(
-    (store: ReduxRootType) => store.categoriesReducer
-  );
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
-  const { state } = useLocation();
   const [resultNumber, setResultNumber] = useState<number>(10);
   const searchValue = useRef<HTMLInputElement | null>(null);
   const [searchResult, setSearchResult] = useState<
@@ -88,7 +85,7 @@ const CoursesManage = (props: Props) => {
       });
       return;
     }
-    const biDanh = toNonAccentVietnamese(data.tenKhoaHoc); //Đỗ Thịnh => do-thinh
+    const biDanh = toNonAccentVietnamese(data.tenKhoaHoc);
     const date = new Date();
     const newDate = `${date.getDay()}/${
       date.getMonth() + 1
@@ -107,12 +104,6 @@ const CoursesManage = (props: Props) => {
     dispatch(createNewCourse(data));
   };
 
-  const nameToCode = (event: { target: HTMLInputElement }): void => {
-    reset({
-      maKhoaHoc: toNonAccentVietnamese(event.target.value),
-    });
-  };
-
   useEffect(() => {
     if (searchValue.current?.value !== null) {
       search();
@@ -128,178 +119,22 @@ const CoursesManage = (props: Props) => {
         show={newCourseModal.show}
         toggle={newCourseModal.toggle}
       >
-        <form onSubmit={handleSubmit(addNewSubmitHandle)}>
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_title">
-              <i className="fa-solid fa-tag"></i>Tên khóa học
-            </div>
-            <div className="profile_main_info_item_input">
-              <input
-                type="text"
-                {...register("tenKhoaHoc", {
-                  required: "Không được để trống!",
-                })}
-                onChange={nameToCode}
-              />
-            </div>
-            {errors.tenKhoaHoc?.message && (
-              <div className="profile_main_info_item_error">
-                <i className="fa-solid fa-circle-exclamation"></i>
-                {errors.tenKhoaHoc?.message}
-              </div>
-            )}
-          </div>
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_title">
-              <i className="fa-solid fa-bars"></i>Danh mục
-            </div>
-            <div className="profile_main_info_item_input">
-              <select
-                {...register("maDanhMucKhoaHoc", {
-                  required: "Không được để trống!",
-                })}
-              >
-                {categories?.map((item: CategoriesType, index: number) => {
-                  return (
-                    <option value={item.maDanhMuc}>{item.tenDanhMuc}</option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_title">Mô tả</div>
-            <div className="profile_main_info_item_input">
-              <textarea
-                {...register("moTa", {
-                  required: "Không được để trống!",
-                })}
-              />
-            </div>
-            {errors.moTa?.message && (
-              <div className="profile_main_info_item_error">
-                <i className="fa-solid fa-circle-exclamation"></i>
-                {errors.moTa?.message}
-              </div>
-            )}
-          </div>
-          {state && (
-            <div className="profile_main_info_item_result">
-              <span
-                className={`btn ${
-                  (state.successMess && "btn-success") ||
-                  (state.errorMess && "btn-danger")
-                }`}
-              >
-                {state.successMess} {state.errorMess}
-              </span>
-            </div>
-          )}
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_button">
-              <button type="submit" className="btn btn-primary">
-                Thêm mới
-              </button>
-            </div>
-          </div>
-        </form>
+        <CreateNewCourseForm
+          addNewSubmitHandle={addNewSubmitHandle}
+          handleSubmit={handleSubmit}
+          errors={errors}
+          reset={reset}
+          register={register}
+        />
       </Modal>
 
       <Modal show={show} toggle={toggle} title="Thay đổi thông tin khóa học">
-        <form onSubmit={handleSubmit(editSubmitHandle)}>
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_title">
-              {" "}
-              <i className="fa-solid fa-sliders"></i>Mã khóa học
-            </div>
-            <div className="profile_main_info_item_input">
-              <input
-                disabled
-                type="text"
-                {...register("maKhoaHoc", {
-                  required: "Không được để trống!",
-                })}
-              />
-            </div>
-          </div>
-
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_title">
-              <i className="fa-solid fa-tag"></i>Tên khóa học
-            </div>
-            <div className="profile_main_info_item_input">
-              <input
-                type="text"
-                {...register("tenKhoaHoc", {
-                  required: "Không được để trống!",
-                })}
-              />
-            </div>
-            {errors.tenKhoaHoc?.message && (
-              <div className="profile_main_info_item_error">
-                <i className="fa-solid fa-circle-exclamation"></i>
-                {errors.tenKhoaHoc?.message}
-              </div>
-            )}
-          </div>
-
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_title">
-              <i className="fa-solid fa-bars"></i>Danh mục
-            </div>
-            <div className="profile_main_info_item_input">
-              <select
-                {...register("maDanhMucKhoaHoc", {
-                  required: "Không được để trống!",
-                })}
-              >
-                {categories?.map((item: CategoriesType, index: number) => {
-                  return (
-                    <option value={item.maDanhMuc}>{item.tenDanhMuc}</option>
-                  );
-                })}
-              </select>
-            </div>
-          </div>
-
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_title">Mô tả</div>
-            <div className="profile_main_info_item_input">
-              <textarea
-                {...register("moTa", {
-                  required: "Không được để trống!",
-                })}
-              />
-            </div>
-            {errors.moTa?.message && (
-              <div className="profile_main_info_item_error">
-                <i className="fa-solid fa-circle-exclamation"></i>
-                {errors.moTa?.message}
-              </div>
-            )}
-          </div>
-
-          {state && (
-            <div className="profile_main_info_item_result">
-              <span
-                className={`btn ${
-                  (state.successMess && "btn-success") ||
-                  (state.errorMess && "btn-danger")
-                }`}
-              >
-                {state.successMess} {state.errorMess}
-              </span>
-            </div>
-          )}
-
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_button">
-              <button type="submit" className="btn btn-primary">
-                Update
-              </button>
-            </div>
-          </div>
-        </form>
+        <CourseEditForm
+          handleSubmit={handleSubmit}
+          editSubmitHandle={editSubmitHandle}
+          register={register}
+          errors={errors}
+        />
       </Modal>
 
       <div className="profile_container_main_block">
