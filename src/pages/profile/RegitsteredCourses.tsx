@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
@@ -52,7 +52,7 @@ const RegitsteredCourses = (props: Props) => {
                 <li key={index}>
                   <Link
                     to={`/course/${course.maKhoaHoc}`}
-                    onClick={() => {
+                    onClick={(): void => {
                       dispatch(setregisteredCoursesScroll(index * 82));
                     }}
                   >
