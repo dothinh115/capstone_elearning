@@ -16,9 +16,6 @@ const Course = (props: Props) => {
   const { courseDetail, coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
-  const { categories } = useSelector(
-    (store: ReduxRootType) => store.categoriesReducer
-  );
   const dispatch: DispatchType = useDispatch();
   const { show, toggle } = useModal();
 

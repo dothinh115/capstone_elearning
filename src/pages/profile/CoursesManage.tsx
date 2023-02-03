@@ -132,7 +132,7 @@ const CoursesManage = (props: Props) => {
         search: keywords,
       });
     } else setSearchResult(coursesArr);
-  }, [coursesArr, searchParams.get("keywords")]);
+  }, [coursesArr, searchParams]);
 
   return (
     <div className="profile_main_info">
