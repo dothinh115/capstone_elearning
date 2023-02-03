@@ -196,6 +196,9 @@
   ul {
     height: 500px;
     overflow: auto;
+    @media (max-width: 600px) {
+      height: unset;
+    }
     li {
       list-style-type: none;
       display: flex;
