@@ -63,7 +63,7 @@ const CourseEditForm = ({ toggle }: Props) => {
   });
 
   const editSubmitHandle = (data: UpdateCourseType): void => {
-    dispatch(courseUpdateApi(data));
+    if (!choXetDuyet && !daXetDuyet) dispatch(courseUpdateApi(data));
   };
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
