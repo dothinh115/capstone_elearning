@@ -1,41 +1,84 @@
-import React from "react";
-import {
-  UseFormHandleSubmit,
-  UseFormRegister,
-  UseFormReset,
-} from "react-hook-form";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { ReduxRootType } from "../../redux/store";
+import { history } from "../../App";
+import { createNewCourse } from "../../redux/courseReducer/courseReducer";
+import { DispatchType, ReduxRootType } from "../../redux/store";
 import { toNonAccentVietnamese } from "../../util/function";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
 
-type Props = {
-  handleSubmit: UseFormHandleSubmit<UpdateCourseType>;
-  register: UseFormRegister<UpdateCourseType>;
-  errors: any;
-  reset: UseFormReset<UpdateCourseType>;
-  addNewSubmitHandle: any;
-};
+type Props = {};
 
-const CreateNewCourseForm = ({
-  handleSubmit,
-  register,
-  errors,
-  reset,
-  addNewSubmitHandle,
-}: Props) => {
+const CreateNewCourseForm = (props: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
+  const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { state } = useLocation();
+  const dispatch: DispatchType = useDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<UpdateCourseType>({
+    mode: "onChange",
+    defaultValues: {
+      maKhoaHoc: "",
+      biDanh: "",
+      tenKhoaHoc: "",
+      moTa: "",
+      luotXem: 0,
+      danhGia: 0,
+      hinhAnh: "",
+      maNhom: "",
+      ngayTAO: "",
+      maDanhMucKhoaHoc: "BackEnd",
+      taiKhoanNguoiTAO: "",
+    },
+  });
+
+  const addNewSubmitHandle = (data: UpdateCourseType): void => {
+    if (userInfo?.maLoaiNguoiDung !== "GV") {
+      history.push(window.location.pathname, {
+        errorMess: "Tài khoản người tạo phải là tài khoản GV!",
+      });
+      return;
+    }
+    const biDanh = toNonAccentVietnamese(data.tenKhoaHoc);
+    const date = new Date();
+    const newDate = `${date.getDay()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()}`;
+    data = {
+      ...data,
+      biDanh,
+      ngayTAO: newDate,
+      luotXem: 0,
+      danhGia: 0,
+      maNhom: "GP01",
+      taiKhoanNguoiTAO: userInfo.taiKhoan,
+    };
+    dispatch(createNewCourse(data));
+  };
 
   const nameToCode = (event: { target: HTMLInputElement }): void => {
     reset({
       maKhoaHoc: toNonAccentVietnamese(event.target.value),
     });
   };
+
+  useEffect(() => {
+    reset({
+      taiKhoanNguoiTAO: userInfo?.taiKhoan,
+      danhGia: 0,
+      luotXem: 0,
+    });
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(addNewSubmitHandle)}>
@@ -50,6 +93,7 @@ const CreateNewCourseForm = ({
               required: "Không được để trống!",
             })}
             onChange={nameToCode}
+            placeholder="Tên khóa học"
           />
         </div>
         {errors.tenKhoaHoc?.message && (
@@ -85,6 +129,7 @@ const CreateNewCourseForm = ({
             {...register("hinhAnh", {
               required: "Không được để trống!",
             })}
+            placeholder="Link hình ảnh"
           />
         </div>
         {errors.hinhAnh?.message && (
@@ -101,6 +146,7 @@ const CreateNewCourseForm = ({
             {...register("moTa", {
               required: "Không được để trống!",
             })}
+            placeholder="Mô tả khóa học"
           />
         </div>
         {errors.moTa?.message && (

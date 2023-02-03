@@ -10,18 +10,13 @@ import {
 import { history } from "../../App";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
-import { createNewCourse } from "../../redux/courseReducer/courseReducer";
 import {
   setCoursesManageScroll,
   setCoursesViewNumber,
 } from "../../redux/profileReducer/profileReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { limitProfileCoursesViewMore } from "../../util/config";
-import { toNonAccentVietnamese } from "../../util/function";
-import {
-  CourseType,
-  UpdateCourseType,
-} from "../../util/interface/courseReducerInterface";
+import { CourseType } from "../../util/interface/courseReducerInterface";
 import CourseEditForm from "./CourseEditForm";
 import CreateNewCourseForm from "./CreateNewCourseForm";
 
@@ -31,7 +26,6 @@ const CoursesManage = (props: Props) => {
   const { coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
-  const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const [searchResult, setSearchResult] = useState<
     CourseType[] | null | undefined
   >(null);
@@ -45,27 +39,6 @@ const CoursesManage = (props: Props) => {
   );
   const courseList = useRef<HTMLUListElement | null>(null);
   const { courseID } = useParams();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<UpdateCourseType>({
-    mode: "onChange",
-    defaultValues: {
-      maKhoaHoc: "",
-      biDanh: "",
-      tenKhoaHoc: "",
-      moTa: "",
-      luotXem: 0,
-      danhGia: 0,
-      hinhAnh: "",
-      maNhom: "",
-      ngayTAO: "",
-      maDanhMucKhoaHoc: "",
-      taiKhoanNguoiTAO: "",
-    },
-  });
 
   const searchMethod = useForm<{ search: string }>({
     mode: "onSubmit",
@@ -89,30 +62,6 @@ const CoursesManage = (props: Props) => {
 
   const searchSubmitHandle = (data: { search: string }) => {
     searchHandle(data.search);
-  };
-
-  const addNewSubmitHandle = (data: UpdateCourseType): void => {
-    if (userInfo?.maLoaiNguoiDung !== "GV") {
-      history.push(window.location.pathname, {
-        errorMess: "Tài khoản người tạo phải là tài khoản GV!",
-      });
-      return;
-    }
-    const biDanh = toNonAccentVietnamese(data.tenKhoaHoc);
-    const date = new Date();
-    const newDate = `${date.getDay()}/${
-      date.getMonth() + 1
-    }/${date.getFullYear()}`;
-    data = {
-      ...data,
-      biDanh,
-      ngayTAO: newDate,
-      luotXem: 0,
-      danhGia: 0,
-      maNhom: "GP01",
-      taiKhoanNguoiTAO: userInfo.taiKhoan,
-    };
-    dispatch(createNewCourse(data));
   };
 
   useEffect(() => {
@@ -144,31 +93,15 @@ const CoursesManage = (props: Props) => {
         show={newCourseModal.show}
         toggle={newCourseModal.toggle}
       >
-        <CreateNewCourseForm
-          addNewSubmitHandle={addNewSubmitHandle}
-          handleSubmit={handleSubmit}
-          errors={errors}
-          reset={reset}
-          register={register}
-        />
+        <CreateNewCourseForm />
       </Modal>
 
       <Modal show={show} toggle={toggle} title="Thay đổi thông tin khóa học">
-        <CourseEditForm toggle={toggle} />
+        <CourseEditForm />
       </Modal>
 
       <div className="profile_container_main_block">
-        <button
-          onClick={() => {
-            newCourseModal.toggle();
-            reset({
-              taiKhoanNguoiTAO: userInfo?.taiKhoan,
-              danhGia: 0,
-              luotXem: 0,
-            });
-          }}
-          className="btn"
-        >
+        <button onClick={newCourseModal.toggle} className="btn">
           Thêm khóa học mới
         </button>
       </div>

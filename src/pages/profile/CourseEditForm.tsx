@@ -23,11 +23,9 @@ import {
   dataGhiDanh,
 } from "../../util/interface/userReducerInterface";
 
-type Props = {
-  toggle: any;
-};
+type Props = {};
 
-const CourseEditForm = ({ toggle }: Props) => {
+const CourseEditForm = (props: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
@@ -134,7 +132,16 @@ const CourseEditForm = ({ toggle }: Props) => {
     };
   }, []);
 
-  if (state?.deleteSuccess) return <>{state?.deleteSuccess}</>;
+  if (state?.deleteSuccess)
+    return (
+      <>
+        <i
+          style={{ color: "green", fontSize: "16px", marginRight: "5px" }}
+          className="fa-solid fa-check"
+        ></i>{" "}
+        {state?.deleteSuccess}
+      </>
+    );
 
   return (
     <>
