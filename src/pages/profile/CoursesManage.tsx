@@ -33,6 +33,7 @@ const CoursesManage = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const { show, toggle } = useModal();
   const newCourseModal = useModal();
+  const { pathname } = useLocation();
   const {
     register,
     handleSubmit,
@@ -189,36 +190,24 @@ const CoursesManage = (props: Props) => {
                     />
                     <div className="course_info">
                       <h3>
-                        {window.innerWidth <= 600 && (
-                          <>
-                            {course.tenKhoaHoc?.length > 22
-                              ? course.tenKhoaHoc.substring(0, 21) + "..."
-                              : course.tenKhoaHoc}
-                          </>
-                        )}
-                        {window.innerWidth > 600 && (
-                          <>
-                            {course.tenKhoaHoc?.length > 30
-                              ? course.tenKhoaHoc.substring(0, 29) + "..."
-                              : course.tenKhoaHoc}
-                          </>
-                        )}
+                        {window.innerWidth <= 600 &&
+                          (course.tenKhoaHoc?.length > 22
+                            ? course.tenKhoaHoc.substring(0, 21) + "..."
+                            : course.tenKhoaHoc)}
+                        {window.innerWidth > 600 &&
+                          (course.tenKhoaHoc?.length > 30
+                            ? course.tenKhoaHoc.substring(0, 29) + "..."
+                            : course.tenKhoaHoc)}
                       </h3>
                       <p>
-                        {window.innerWidth <= 600 && (
-                          <>
-                            {course.moTa?.length > 28
-                              ? course.moTa.substring(0, 27) + "..."
-                              : course.moTa}
-                          </>
-                        )}
-                        {window.innerWidth > 600 && (
-                          <>
-                            {course.moTa?.length > 50
-                              ? course.moTa.substring(0, 49) + "..."
-                              : course.moTa}
-                          </>
-                        )}
+                        {window.innerWidth <= 600 &&
+                          (course.moTa?.length > 28
+                            ? course.moTa.substring(0, 27) + "..."
+                            : course.moTa)}
+                        {window.innerWidth > 600 &&
+                          (course.moTa?.length > 50
+                            ? course.moTa.substring(0, 49) + "..."
+                            : course.moTa)}
                       </p>
                       <p>
                         <i className="fa-solid fa-user"></i>
@@ -254,6 +243,7 @@ const CoursesManage = (props: Props) => {
                       };
                       reset(obj);
                       toggle();
+                      history.push(pathname);
                     }}
                   >
                     <i className="fa-solid fa-gear"></i>

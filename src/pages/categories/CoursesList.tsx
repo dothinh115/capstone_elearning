@@ -49,40 +49,28 @@ const CoursesList = ({ item }: Props) => {
         />
         <div className="course_info">
           <h3>
-            {window.innerWidth <= 600 && (
-              <>
-                {item.tenKhoaHoc?.length > 20
-                  ? item.tenKhoaHoc.substring(0, 19) + "..."
-                  : item.tenKhoaHoc}
-              </>
-            )}
+            {window.innerWidth <= 600 &&
+              (item.tenKhoaHoc?.length > 20
+                ? item.tenKhoaHoc.substring(0, 19) + "..."
+                : item.tenKhoaHoc)}
 
-            {window.innerWidth > 600 && (
-              <>
-                {item.tenKhoaHoc?.length > 60
-                  ? item.tenKhoaHoc.substring(0, 59) + "..."
-                  : item.tenKhoaHoc}
-              </>
-            )}
+            {window.innerWidth > 600 &&
+              (item.tenKhoaHoc?.length > 60
+                ? item.tenKhoaHoc.substring(0, 59) + "..."
+                : item.tenKhoaHoc)}
           </h3>
-          <></>
+
           <p>
             <i className="fa-solid fa-circle-info"></i>
-            {window.innerWidth <= 600 && (
-              <>
-                {item.moTa?.length > 25
-                  ? item.moTa.substring(0, 23) + "..."
-                  : item.moTa}
-              </>
-            )}
+            {window.innerWidth <= 600 &&
+              (item.moTa?.length > 25
+                ? item.moTa.substring(0, 23) + "..."
+                : item.moTa)}
 
-            {window.innerWidth > 600 && (
-              <>
-                {item.moTa?.length > 60
-                  ? item.moTa.substring(0, 59) + "..."
-                  : item.moTa}
-              </>
-            )}
+            {window.innerWidth > 600 &&
+              (item.moTa?.length > 60
+                ? item.moTa.substring(0, 59) + "..."
+                : item.moTa)}
           </p>
           <p>
             <i className="fa-solid fa-user"></i>
