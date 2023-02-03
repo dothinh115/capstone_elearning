@@ -114,7 +114,11 @@ const CreateNewCourseForm = (props: Props) => {
             })}
           >
             {categories?.map((item: CategoriesType, index: number) => {
-              return <option value={item.maDanhMuc}>{item.tenDanhMuc}</option>;
+              return (
+                <option key={index} value={item.maDanhMuc}>
+                  {item.tenDanhMuc}
+                </option>
+              );
             })}
           </select>
         </div>

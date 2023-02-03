@@ -61,13 +61,12 @@ const CourseEditForm = (props: Props) => {
   });
 
   const editSubmitHandle = (data: UpdateCourseType): void => {
-    if (!choXetDuyet && !daXetDuyet) dispatch(courseUpdateApi(data));
+    dispatch(courseUpdateApi(data));
   };
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const maKhoaHoc = courseID;
-    dispatch(courseDeleteApi(maKhoaHoc));
+    if (!choXetDuyet && !daXetDuyet) dispatch(courseDeleteApi(courseID));
   };
 
   const registeredUserDeleteHandle = async (
