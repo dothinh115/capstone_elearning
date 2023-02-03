@@ -39,6 +39,7 @@ const CoursesManage = (props: Props) => {
   );
   const courseList = useRef<HTMLUListElement | null>(null);
   const { courseID } = useParams();
+  const modal = useRef<HTMLDivElement | null>(null);
 
   const searchMethod = useForm<{ search: string }>({
     mode: "onSubmit",
@@ -66,10 +67,11 @@ const CoursesManage = (props: Props) => {
 
   useEffect(() => {
     if (coursesManageScroll)
-      courseList.current?.scroll({
-        top: coursesManageScroll,
-        behavior: "smooth",
-      });
+      courseList.current?.scrollTo(0, coursesManageScroll);
+
+    if (window.innerWidth <= 820) {
+      document.querySelector(".modal")?.scrollTo(0, coursesManageScroll!);
+    }
   }, [searchResult]);
 
   useEffect(() => {
@@ -91,7 +93,7 @@ const CoursesManage = (props: Props) => {
   }, [pathname]);
 
   return (
-    <div className="profile_main_info">
+    <div className="profile_main_info" ref={modal}>
       <Modal
         title="Thêm khóa học mới"
         show={newCourseModal.show}

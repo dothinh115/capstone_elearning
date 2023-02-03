@@ -34,6 +34,9 @@ const RegitsteredCourses = (props: Props) => {
       coursesList.current?.scroll({
         top: registeredCoursesScroll,
       });
+    if (window.innerWidth <= 820) {
+      document.querySelector(".modal")?.scrollTo(0, registeredCoursesScroll!);
+    }
   }, [userInfo?.chiTietKhoaHocGhiDanh]);
 
   return (
