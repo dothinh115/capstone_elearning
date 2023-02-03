@@ -36,7 +36,7 @@ const CoursesManage = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const { show, toggle } = useModal();
   const newCourseModal = useModal();
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const { coursesManageScroll, coursesViewNumber } = useSelector(
     (store: ReduxRootType) => store.profileReducer
@@ -71,7 +71,7 @@ const CoursesManage = (props: Props) => {
     },
   });
 
-  const search = (value: string | undefined | null): void => {
+  const searchHandle = (value: string | undefined | null): void => {
     let filterArr: CourseType[] | null | undefined = coursesArr;
     if (value) {
       filterArr = filterArr?.filter((item: CourseType) =>
@@ -85,7 +85,7 @@ const CoursesManage = (props: Props) => {
   };
 
   const searchSubmitHandle = (data: { search: string }) => {
-    search(data.search);
+    searchHandle(data.search);
   };
 
   const editSubmitHandle = (data: UpdateCourseType): void => {
@@ -127,7 +127,7 @@ const CoursesManage = (props: Props) => {
   useEffect(() => {
     const keywords = searchParams.get("keywords");
     if (keywords) {
-      search(keywords);
+      searchHandle(keywords);
       searchMethod.reset({
         search: keywords,
       });
@@ -275,7 +275,7 @@ const CoursesManage = (props: Props) => {
                       };
                       reset(obj);
                       toggle();
-                      history.push(pathname);
+                      history.push(pathname + search);
                     }}
                   >
                     <i className="fa-solid fa-gear"></i>
