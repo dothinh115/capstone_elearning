@@ -10,6 +10,8 @@ export const numberRandomCourses: number = 6;
 export const numberRelatedCourses: number = 8;
 export const limitCategoriesCourses: number = 9; // thu gọn khóa học ở /categories
 export const limitCategoriesCoursesViewMore: number = 6; // bấm xem thêm sẽ hiện thêm
+export const limitProfileCoursesView: number = 10;
+export const limitProfileCoursesViewMore: number = 5;
 export const registerSuccessMess = "Đăng ký tài khoản thành công";
 export const randomBadgeArr: string[] = [
   "danger",

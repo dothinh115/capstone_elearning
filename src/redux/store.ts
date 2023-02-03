@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import categoriesReducer from "./categoriesReducer/categoriesReducer";
 import courseReducer from "./courseReducer/courseReducer";
 import pageReducer from "./pageReducer/pageReducer";
+import profileReducer from "./profileReducer/profileReducer";
 import userReducer from "./userReducer/userReducer";
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
     categoriesReducer,
     userReducer,
     pageReducer,
+    profileReducer,
   },
 });
 

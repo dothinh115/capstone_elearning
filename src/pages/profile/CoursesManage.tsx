@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
@@ -9,7 +9,12 @@ import {
   courseUpdateApi,
   createNewCourse,
 } from "../../redux/courseReducer/courseReducer";
+import {
+  setCoursesManageScroll,
+  setCoursesViewNumber,
+} from "../../redux/profileReducer/profileReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
+import { limitProfileCoursesViewMore } from "../../util/config";
 import { toNonAccentVietnamese } from "../../util/function";
 import {
   CourseType,
@@ -25,7 +30,6 @@ const CoursesManage = (props: Props) => {
     (store: ReduxRootType) => store.courseReducer
   );
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
-  const [resultNumber, setResultNumber] = useState<number>(10);
   const searchValue = useRef<HTMLInputElement | null>(null);
   const [searchResult, setSearchResult] = useState<
     CourseType[] | null | undefined
@@ -34,6 +38,10 @@ const CoursesManage = (props: Props) => {
   const { show, toggle } = useModal();
   const newCourseModal = useModal();
   const { pathname } = useLocation();
+  const { coursesManageScroll, coursesViewNumber } = useSelector(
+    (store: ReduxRootType) => store.profileReducer
+  );
+  const courseList = useRef<HTMLUListElement | null>(null);
   const {
     register,
     handleSubmit,
@@ -111,6 +119,14 @@ const CoursesManage = (props: Props) => {
     }
   }, [coursesArr]);
 
+  useEffect(() => {
+    if (coursesManageScroll)
+      courseList.current?.scroll({
+        top: coursesManageScroll,
+        behavior: "smooth",
+      });
+  }, [searchResult]);
+
   return (
     <div className="profile_main_info">
       <Modal
@@ -166,7 +182,7 @@ const CoursesManage = (props: Props) => {
         </form>
       </div>
 
-      <ul>
+      <ul ref={courseList}>
         {searchResult?.length === 0 ? (
           <>
             <div className="profile_container_main_block">
@@ -176,11 +192,16 @@ const CoursesManage = (props: Props) => {
           </>
         ) : (
           searchResult
-            ?.slice(0, resultNumber)
+            ?.slice(0, coursesViewNumber)
             .map((course: CourseType, index: number) => {
               return (
-                <li key={index}>
-                  <Link to={`/course/${course.maKhoaHoc}`}>
+                <li key={index} id={course.maKhoaHoc}>
+                  <Link
+                    to={`/course/${course.maKhoaHoc}`}
+                    onClick={() => {
+                      dispatch(setCoursesManageScroll(index * 82));
+                    }}
+                  >
                     <img
                       src={course.hinhAnh}
                       alt=""
@@ -252,13 +273,17 @@ const CoursesManage = (props: Props) => {
               );
             })
         )}
-        {searchResult?.length! > resultNumber && (
+        {searchResult?.length! > coursesViewNumber && (
           <div className="profile_container_main_block">
             <button
               style={{ display: "block", width: "100%" }}
               className="btn btn-primary"
               onClick={(): void => {
-                setResultNumber(resultNumber + 5);
+                dispatch(
+                  setCoursesViewNumber(
+                    coursesViewNumber + limitProfileCoursesViewMore
+                  )
+                );
               }}
             >
               Xem thêm
