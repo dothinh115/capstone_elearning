@@ -77,7 +77,7 @@ const CoursesList = ({ item }: Props) => {
             {item.nguoiTao.hoTen}
             {window.innerWidth > 600 && (
               <>
-                " | " <i className="fa-solid fa-calendar-days"></i>
+                | <i className="fa-solid fa-calendar-days"></i>
                 {" " + item.ngayTao}
               </>
             )}
