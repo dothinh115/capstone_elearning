@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
-import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
+import { history } from "../../App";
 import {
   courseDeleteApi,
+  courseUpdateApi,
+  getCourseDetailAction,
+  getCourseDetailApi,
   layDSChoXetDuyetAction,
   layDSChoXetDuyetApi,
   layDSDaXetDuyetAction,
@@ -20,30 +24,51 @@ import {
 } from "../../util/interface/userReducerInterface";
 
 type Props = {
-  handleSubmit: UseFormHandleSubmit<UpdateCourseType>;
-  editSubmitHandle: any;
-  register: UseFormRegister<UpdateCourseType>;
-  errors: any;
+  toggle: any;
 };
 
-const CourseEditForm = ({
-  handleSubmit,
-  editSubmitHandle,
-  register,
-  errors,
-}: Props) => {
+const CourseEditForm = ({ toggle }: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
   const { choXetDuyet, daXetDuyet } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
-  const { state } = useLocation();
+  const { courseDetail } = useSelector(
+    (store: ReduxRootType) => store.courseReducer
+  );
+  const { courseID } = useParams();
+  const { state, search } = useLocation();
   const dispatch: DispatchType = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<UpdateCourseType>({
+    mode: "onChange",
+    defaultValues: {
+      maKhoaHoc: "",
+      biDanh: "",
+      tenKhoaHoc: "",
+      moTa: "",
+      luotXem: 0,
+      danhGia: 0,
+      hinhAnh: "",
+      maNhom: "",
+      ngayTAO: "",
+      maDanhMucKhoaHoc: "",
+      taiKhoanNguoiTAO: "",
+    },
+  });
+
+  const editSubmitHandle = (data: UpdateCourseType): void => {
+    dispatch(courseUpdateApi(data));
+  };
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    const maKhoaHoc = state?.maKhoaHoc;
+    const maKhoaHoc = courseID;
     dispatch(courseDeleteApi(maKhoaHoc));
   };
 
@@ -53,7 +78,7 @@ const CourseEditForm = ({
   ) => {
     event.preventDefault();
     const data: dataGhiDanh = {
-      maKhoaHoc: state?.maKhoaHoc,
+      maKhoaHoc: courseID,
       taiKhoan,
     };
     await dispatch(dangKyApi(false, data));
@@ -66,7 +91,7 @@ const CourseEditForm = ({
   ) => {
     event.preventDefault();
     const data: dataGhiDanh = {
-      maKhoaHoc: state?.maKhoaHoc,
+      maKhoaHoc: courseID,
       taiKhoan,
     };
     await dispatch(xetDuyetHocVienApi(data));
@@ -74,22 +99,42 @@ const CourseEditForm = ({
   };
 
   const getCourseUserList = () => {
-    dispatch(layDSChoXetDuyetApi(state?.maKhoaHoc));
-    dispatch(layDSDaXetDuyetApi(state?.maKhoaHoc));
+    dispatch(layDSChoXetDuyetApi(courseID));
+    dispatch(layDSDaXetDuyetApi(courseID));
   };
 
   useEffect(() => {
-    if (state.maKhoaHoc) getCourseUserList();
-  }, [state]);
+    getCourseUserList();
+    dispatch(getCourseDetailApi(courseID));
+  }, [courseID]);
+
+  useEffect(() => {
+    const obj = {
+      maKhoaHoc: courseDetail?.maKhoaHoc,
+      biDanh: courseDetail?.biDanh,
+      tenKhoaHoc: courseDetail?.tenKhoaHoc,
+      moTa: courseDetail?.moTa,
+      luotXem: courseDetail?.luotXem,
+      danhGia: 5,
+      hinhAnh: courseDetail?.hinhAnh,
+      maNhom: courseDetail?.maNhom,
+      ngayTAO: courseDetail?.ngayTao,
+      maDanhMucKhoaHoc: courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc,
+      taiKhoanNguoiTAO: courseDetail?.nguoiTao.taiKhoan,
+    };
+    reset(obj);
+  }, [courseDetail]);
 
   useEffect(() => {
     return () => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
+      dispatch(getCourseDetailAction(null));
+      history.push(`/profile/courses_manage${search}`);
     };
   }, []);
 
-  if (state.deleteSuccess) return <>{state.deleteSuccess}</>;
+  if (state?.deleteSuccess) return <>{state?.deleteSuccess}</>;
 
   return (
     <>
@@ -168,7 +213,7 @@ const CourseEditForm = ({
           )}
         </div>
 
-        {(state.successMess || state.errorMess) && (
+        {(state?.successMess || state?.errorMess) && (
           <div className="profile_main_info_item_result">
             <span
               className={`btn ${

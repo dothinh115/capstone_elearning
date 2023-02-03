@@ -138,12 +138,19 @@ input {
   transition: all ease 0.5s;
 }
 input:not(input[type="checkbox"]),
-select {
+select,
+textarea {
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 5px;
   padding: 10px;
   outline: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  color: #333;
+}
+textarea {
+  height: 100px;
 }
 input:disabled {
   cursor: not-allowed;

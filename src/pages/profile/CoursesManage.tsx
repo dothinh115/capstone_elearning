@@ -1,14 +1,16 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import { history } from "../../App";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
-import {
-  courseUpdateApi,
-  createNewCourse,
-} from "../../redux/courseReducer/courseReducer";
+import { createNewCourse } from "../../redux/courseReducer/courseReducer";
 import {
   setCoursesManageScroll,
   setCoursesViewNumber,
@@ -42,6 +44,7 @@ const CoursesManage = (props: Props) => {
     (store: ReduxRootType) => store.profileReducer
   );
   const courseList = useRef<HTMLUListElement | null>(null);
+  const { courseID } = useParams();
   const {
     register,
     handleSubmit,
@@ -88,10 +91,6 @@ const CoursesManage = (props: Props) => {
     searchHandle(data.search);
   };
 
-  const editSubmitHandle = (data: UpdateCourseType): void => {
-    dispatch(courseUpdateApi(data));
-  };
-
   const addNewSubmitHandle = (data: UpdateCourseType): void => {
     if (userInfo?.maLoaiNguoiDung !== "GV") {
       history.push(window.location.pathname, {
@@ -134,6 +133,10 @@ const CoursesManage = (props: Props) => {
     } else setSearchResult(coursesArr);
   }, [coursesArr, searchParams]);
 
+  useEffect(() => {
+    if (courseID) toggle();
+  }, [courseID]);
+
   return (
     <div className="profile_main_info">
       <Modal
@@ -151,12 +154,7 @@ const CoursesManage = (props: Props) => {
       </Modal>
 
       <Modal show={show} toggle={toggle} title="Thay đổi thông tin khóa học">
-        <CourseEditForm
-          handleSubmit={handleSubmit}
-          editSubmitHandle={editSubmitHandle}
-          register={register}
-          errors={errors}
-        />
+        <CourseEditForm toggle={toggle} />
       </Modal>
 
       <div className="profile_container_main_block">
@@ -259,25 +257,7 @@ const CoursesManage = (props: Props) => {
                   </Link>
                   <button
                     onClick={() => {
-                      const obj = {
-                        maKhoaHoc: course.maKhoaHoc,
-                        biDanh: course.biDanh,
-                        tenKhoaHoc: course.tenKhoaHoc,
-                        moTa: course.moTa,
-                        luotXem: course.luotXem,
-                        danhGia: 5,
-                        hinhAnh: course.hinhAnh,
-                        maNhom: course.maNhom,
-                        ngayTAO: course.ngayTao,
-                        maDanhMucKhoaHoc:
-                          course.danhMucKhoaHoc.maDanhMucKhoahoc,
-                        taiKhoanNguoiTAO: course.nguoiTao.taiKhoan,
-                      };
-                      reset(obj);
-                      toggle();
-                      history.push(pathname + search, {
-                        maKhoaHoc: course.maKhoaHoc,
-                      });
+                      history.push(`${pathname}/${course.maKhoaHoc}${search}`);
                     }}
                   >
                     <i className="fa-solid fa-gear"></i>

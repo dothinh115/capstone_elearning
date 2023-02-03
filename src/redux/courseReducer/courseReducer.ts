@@ -188,7 +188,7 @@ export const xetDuyetHocVienApi = (data: dataGhiDanh) => {
   };
 };
 
-export const layDSChoXetDuyetApi = (maKhoaHoc: string) => {
+export const layDSChoXetDuyetApi = (maKhoaHoc: string | undefined) => {
   let data: DanhSachGhiDanh[] | null = null;
   return async (dispatch: DispatchType) => {
     try {
@@ -207,7 +207,7 @@ export const layDSChoXetDuyetApi = (maKhoaHoc: string) => {
   };
 };
 
-export const layDSDaXetDuyetApi = (maKhoaHoc: string) => {
+export const layDSDaXetDuyetApi = (maKhoaHoc: string | undefined) => {
   let data: DanhSachGhiDanh[] | null = null;
   return async (dispatch: DispatchType) => {
     try {
