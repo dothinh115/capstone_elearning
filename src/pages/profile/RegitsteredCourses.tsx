@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
-  setregisteredCoursesScroll,
+  setRegisteredCoursesScroll,
   setRegisteredCoursesViewNumber,
 } from "../../redux/profileReducer/profileReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
@@ -53,7 +53,7 @@ const RegitsteredCourses = (props: Props) => {
                   <Link
                     to={`/course/${course.maKhoaHoc}`}
                     onClick={(): void => {
-                      dispatch(setregisteredCoursesScroll(index * 82));
+                      dispatch(setRegisteredCoursesScroll(index * 82));
                     }}
                   >
                     <img

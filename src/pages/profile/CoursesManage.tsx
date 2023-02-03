@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
@@ -30,7 +30,6 @@ const CoursesManage = (props: Props) => {
     (store: ReduxRootType) => store.courseReducer
   );
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
-  const searchValue = useRef<HTMLInputElement | null>(null);
   const [searchResult, setSearchResult] = useState<
     CourseType[] | null | undefined
   >(null);

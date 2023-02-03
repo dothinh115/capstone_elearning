@@ -1,16 +1,23 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import Modal from "../components/modal/Modal";
 import useModal from "../hooks/useModal";
-import { ReduxRootType } from "../redux/store";
+import { DispatchType, ReduxRootType } from "../redux/store";
 import { removeLocalStorage } from "../util/function";
 import { useEffect } from "react";
-import { profileMenuConfig } from "../util/config";
+import { limitProfileCoursesView, profileMenuConfig } from "../util/config";
+import {
+  setCoursesManageScroll,
+  setCoursesViewNumber,
+  setRegisteredCoursesScroll,
+  setRegisteredCoursesViewNumber,
+} from "../redux/profileReducer/profileReducer";
 
 const UserTemplate = () => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { prevPage } = useSelector((store: ReduxRootType) => store.pageReducer);
   const { show, toggle } = useModal();
+  const dispatch: DispatchType = useDispatch();
   const { pathname } = useLocation();
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
@@ -20,10 +27,16 @@ const UserTemplate = () => {
 
   const showModal = (): void => {
     if (window.innerWidth <= 600) toggle();
+    dispatch(setCoursesManageScroll(0));
+    dispatch(setRegisteredCoursesScroll(0));
+    dispatch(setCoursesViewNumber(limitProfileCoursesView));
+    dispatch(setRegisteredCoursesViewNumber(limitProfileCoursesView));
   };
 
   useEffect(() => {
-    if (pathname !== "/profile" && window.innerWidth <= 600) toggle();
+    if (pathname !== "/profile" && window.innerWidth <= 600) {
+      toggle();
+    }
   }, []);
 
   return (

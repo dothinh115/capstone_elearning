@@ -31,7 +31,7 @@ const profileReducer = createSlice({
     ) => {
       state.coursesViewNumber = action.payload;
     },
-    setregisteredCoursesScroll: (
+    setRegisteredCoursesScroll: (
       state: ProfileReducerType,
       action: PayloadAction<number>
     ) => {
@@ -49,7 +49,7 @@ const profileReducer = createSlice({
 export const {
   setCoursesManageScroll,
   setCoursesViewNumber,
-  setregisteredCoursesScroll,
+  setRegisteredCoursesScroll,
   setRegisteredCoursesViewNumber,
 } = profileReducer.actions;
 
