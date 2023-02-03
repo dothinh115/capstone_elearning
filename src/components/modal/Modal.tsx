@@ -16,9 +16,9 @@ const Modal = ({
   const modalOverlay = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (show) document.querySelector("body")?.classList.add("noscroll");
-    else document.querySelector("body")?.classList.remove("noscroll");
-  });
+    if (show) document.body.classList.add("noscroll");
+    else document.body.classList.remove("noscroll");
+  }, [show]);
   if (show) {
     return (
       <div

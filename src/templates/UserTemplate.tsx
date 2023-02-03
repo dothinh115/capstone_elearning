@@ -25,6 +25,7 @@ const UserTemplate = () => {
   useEffect(() => {
     if (pathname !== "/profile" && window.innerWidth <= 600) toggle();
   }, []);
+
   return (
     <section className="profile">
       <div className="profile_container">
