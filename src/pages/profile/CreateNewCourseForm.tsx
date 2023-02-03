@@ -110,18 +110,19 @@ const CreateNewCourseForm = ({
           </div>
         )}
       </div>
-      {state && (
-        <div className="profile_main_info_item_result">
-          <span
-            className={`btn ${
-              (state.successMess && "btn-success") ||
-              (state.errorMess && "btn-danger")
-            }`}
-          >
-            {state.successMess} {state.errorMess}
-          </span>
-        </div>
-      )}
+      {state?.successMess ||
+        (state?.errorMess && (
+          <div className="profile_main_info_item_result">
+            <span
+              className={`btn ${
+                (state.successMess && "btn-success") ||
+                (state.errorMess && "btn-danger")
+              }`}
+            >
+              {state.successMess} {state.errorMess}
+            </span>
+          </div>
+        ))}
       <div className="profile_main_info_item">
         <div className="profile_main_info_item_button">
           <button type="submit" className="btn btn-primary">

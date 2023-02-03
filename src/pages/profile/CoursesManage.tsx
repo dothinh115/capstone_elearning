@@ -275,7 +275,9 @@ const CoursesManage = (props: Props) => {
                       };
                       reset(obj);
                       toggle();
-                      history.push(pathname + search);
+                      history.push(pathname + search, {
+                        maKhoaHoc: course.maKhoaHoc,
+                      });
                     }}
                   >
                     <i className="fa-solid fa-gear"></i>

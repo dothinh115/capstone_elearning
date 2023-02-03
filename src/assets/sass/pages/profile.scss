@@ -256,3 +256,26 @@
     }
   }
 }
+
+ul.modal_ul {
+  height: unset;
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 30px;
+    list-style-type: none;
+    border-width: 0 0 1px 0;
+    border-style: solid;
+    border-color: #eee;
+    padding-bottom: 5px;
+    button {
+      height: 100%;
+      width: 30px;
+      text-align: center;
+      padding: unset;
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+}

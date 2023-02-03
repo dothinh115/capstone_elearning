@@ -172,12 +172,12 @@ input.isInvalid {
     color: white;
   }
   &-danger {
-    background-color: red;
-    color: white;
+    background-color: red !important;
+    color: white !important;
   }
   &-success {
-    background-color: green;
-    color: white;
+    background-color: green !important;
+    color: white !important;
   }
 }
 
