@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import { courseDeleteApi } from "../../redux/courseReducer/courseReducer";
+import {
+  courseDeleteApi,
+  layDSChoXetDuyetAction,
+  layDSChoXetDuyetApi,
+  layDSDaXetDuyetAction,
+  layDSDaXetDuyetApi,
+  xetDuyetHocVienApi,
+} from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { dangKyApi } from "../../redux/userReducer/userReducer";
-import { API } from "../../util/config";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
 import {
@@ -29,10 +35,9 @@ const CourseEditForm = ({
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
-  const [choXetDuyet, setChoXetDuyet] = useState<DanhSachGhiDanh[] | null>(
-    null
+  const { choXetDuyet, daXetDuyet } = useSelector(
+    (store: ReduxRootType) => store.courseReducer
   );
-  const [daXetDuyet, setDaXetDuyet] = useState<DanhSachGhiDanh[] | null>(null);
   const { state } = useLocation();
   const dispatch: DispatchType = useDispatch();
 
@@ -40,39 +45,6 @@ const CourseEditForm = ({
     event.preventDefault();
     const maKhoaHoc = state?.maKhoaHoc;
     dispatch(courseDeleteApi(maKhoaHoc));
-  };
-
-  const layDSChoXetDuyet = async () => {
-    let data: DanhSachGhiDanh[] | null = null;
-    try {
-      const danhSachChoXetDuyet = await API.post(
-        "/QuanLyNguoiDung/LayDanhSachHocVienChoXetDuyet",
-        {
-          maKhoaHoc: state?.maKhoaHoc,
-        }
-      );
-      if (danhSachChoXetDuyet.data.length !== 0)
-        data = danhSachChoXetDuyet.data;
-      setChoXetDuyet(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const layDSDaXetDuyet = async () => {
-    let data: DanhSachGhiDanh[] | null = null;
-    try {
-      const danhSachDaXetDuyet = await API.post(
-        "/QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc",
-        {
-          maKhoaHoc: state?.maKhoaHoc,
-        }
-      );
-      if (danhSachDaXetDuyet.data.length !== 0) data = danhSachDaXetDuyet.data;
-      setDaXetDuyet(data);
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const registeredUserDeleteHandle = async (
@@ -85,16 +57,37 @@ const CourseEditForm = ({
       taiKhoan,
     };
     await dispatch(dangKyApi(false, data));
-    layDSChoXetDuyet();
-    layDSDaXetDuyet();
+    getCourseUserList();
+  };
+
+  const registeredUserConfirmHandle = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    taiKhoan: string
+  ) => {
+    event.preventDefault();
+    const data: dataGhiDanh = {
+      maKhoaHoc: state?.maKhoaHoc,
+      taiKhoan,
+    };
+    await dispatch(xetDuyetHocVienApi(data));
+    getCourseUserList();
+  };
+
+  const getCourseUserList = () => {
+    dispatch(layDSChoXetDuyetApi(state?.maKhoaHoc));
+    dispatch(layDSDaXetDuyetApi(state?.maKhoaHoc));
   };
 
   useEffect(() => {
-    if (state.maKhoaHoc) {
-      layDSChoXetDuyet();
-      layDSDaXetDuyet();
-    }
+    if (state.maKhoaHoc) getCourseUserList();
   }, [state]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(layDSChoXetDuyetAction(null));
+      dispatch(layDSDaXetDuyetAction(null));
+    };
+  }, []);
 
   if (state.deleteSuccess) return <>{state.deleteSuccess}</>;
 
@@ -203,9 +196,19 @@ const CourseEditForm = ({
           choXetDuyet?.map((item: DanhSachGhiDanh, index: number) => {
             return (
               <li key={index}>
-                <span>{item.hoTen}</span>
                 <span>
-                  <button className="btn btn-success">
+                  {item.hoTen.length > 25
+                    ? item.hoTen.substring(0, 24) + "..."
+                    : item.hoTen}
+                </span>
+                <span>
+                  <button
+                    type="button"
+                    className="btn btn-success"
+                    onClick={(event) =>
+                      registeredUserConfirmHandle(event, item?.taiKhoan)
+                    }
+                  >
                     <i className="fa-solid fa-check"></i>
                   </button>
                   <button
@@ -222,7 +225,7 @@ const CourseEditForm = ({
             );
           })
         ) : (
-          <>Danh sách trống</>
+          <li>Danh sách trống</li>
         )}
       </ul>
 
@@ -232,7 +235,11 @@ const CourseEditForm = ({
           daXetDuyet?.map((item: DanhSachGhiDanh, index: number) => {
             return (
               <li key={index}>
-                <span>{item.hoTen}</span>
+                <span>
+                  {item.hoTen.length > 25
+                    ? item.hoTen.substring(0, 24) + "..."
+                    : item.hoTen}
+                </span>
                 <button
                   type="button"
                   className="btn btn-danger"
@@ -246,23 +253,24 @@ const CourseEditForm = ({
             );
           })
         ) : (
-          <>Danh sách trống</>
+          <li>Danh sách trống</li>
         )}
       </ul>
 
-      {!choXetDuyet && !daXetDuyet && (
-        <div className="profile_main_info_item">
-          <div className="profile_main_info_item_button">
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={deleteHandle}
-            >
-              Xóa
-            </button>
-          </div>
+      <div className="profile_main_info_item">
+        <div className="profile_main_info_item_button">
+          <button
+            disabled={choXetDuyet || daXetDuyet ? true : false}
+            type="button"
+            className="btn btn-danger"
+            onClick={deleteHandle}
+          >
+            {choXetDuyet || daXetDuyet
+              ? `Khóa học có học viên không thể xóa`
+              : `Xóa`}
+          </button>
         </div>
-      )}
+      </div>
     </>
   );
 };

@@ -1,3 +1,5 @@
+import { DanhSachGhiDanh } from "./userReducerInterface";
+
 interface NguoiTao {
   taiKhoan: string;
   hoTen: string;
@@ -44,6 +46,8 @@ export interface CourseStateType {
   randomCoursesArr: CourseType[] | null;
   loading: boolean;
   courseDetail: CourseType | null;
+  choXetDuyet: DanhSachGhiDanh[] | null;
+  daXetDuyet: DanhSachGhiDanh[] | null;
 }
 
 export interface RegisterdCoursesDetailType {

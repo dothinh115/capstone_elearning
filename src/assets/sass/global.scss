@@ -167,6 +167,9 @@ input.isInvalid {
   cursor: pointer;
   transition: all ease 0.3s;
   text-align: center;
+  &:disabled {
+    opacity: 0.5;
+  }
   &-primary {
     background-color: #007bff;
     color: white;

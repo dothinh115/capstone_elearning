@@ -3,7 +3,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
-import { getCourseDetailApi } from "../../redux/courseReducer/courseReducer";
+import {
+  getCourseDetailAction,
+  getCourseDetailApi,
+} from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { numberRelatedCourses } from "../../util/config";
 import { CourseType } from "../../util/interface/courseReducerInterface";
@@ -29,6 +32,12 @@ const Course = (props: Props) => {
       behavior: "smooth",
     });
   }, [courseDetail]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(getCourseDetailAction(null));
+    };
+  }, []);
   return (
     <>
       <section className="course_detail">

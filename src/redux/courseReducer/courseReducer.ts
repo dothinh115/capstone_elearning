@@ -9,12 +9,17 @@ import {
   UpdateCourseType,
 } from "../../util/interface/courseReducerInterface";
 import { history } from "../../App";
-
+import {
+  DanhSachGhiDanh,
+  dataGhiDanh,
+} from "../../util/interface/userReducerInterface";
 const initialState: CourseStateType = {
   coursesArr: [],
   randomCoursesArr: [],
   loading: false,
   courseDetail: null,
+  choXetDuyet: null,
+  daXetDuyet: null,
 };
 
 const courseReducer = createSlice({
@@ -41,9 +46,21 @@ const courseReducer = createSlice({
     },
     getCourseDetailAction: (
       state: CourseStateType,
-      action: PayloadAction<CourseType>
+      action: PayloadAction<CourseType | null>
     ) => {
       state.courseDetail = action.payload;
+    },
+    layDSChoXetDuyetAction: (
+      state: CourseStateType,
+      action: PayloadAction<DanhSachGhiDanh[] | null>
+    ) => {
+      state.choXetDuyet = action.payload;
+    },
+    layDSDaXetDuyetAction: (
+      state: CourseStateType,
+      action: PayloadAction<DanhSachGhiDanh[] | null>
+    ) => {
+      state.daXetDuyet = action.payload;
     },
   },
 });
@@ -53,6 +70,8 @@ export const {
   getRandomCoursesAction,
   setLoadingAction,
   getCourseDetailAction,
+  layDSChoXetDuyetAction,
+  layDSDaXetDuyetAction,
 } = courseReducer.actions;
 
 export default courseReducer.reducer;
@@ -96,7 +115,7 @@ export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
         ...result.data,
         discount: randomDiscount(),
       };
-      const updateCourseDetailAction: PayloadAction<CourseType> =
+      const updateCourseDetailAction: PayloadAction<CourseType | null> =
         getCourseDetailAction(obj);
       dispatch(updateCourseDetailAction);
     } catch (error) {
@@ -155,6 +174,53 @@ export const courseDeleteApi = (maKhoaHoc: string | undefined) => {
       history.push(window.location.pathname + window.location.search, {
         deleteError: error.reponese?.data,
       });
+    }
+  };
+};
+
+export const xetDuyetHocVienApi = (data: dataGhiDanh) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      await API.post("/QuanLyKhoaHoc/GhiDanhKhoaHoc", data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const layDSChoXetDuyetApi = (maKhoaHoc: string) => {
+  let data: DanhSachGhiDanh[] | null = null;
+  return async (dispatch: DispatchType) => {
+    try {
+      const danhSachChoXetDuyet = await API.post(
+        "/QuanLyNguoiDung/LayDanhSachHocVienChoXetDuyet",
+        {
+          maKhoaHoc,
+        }
+      );
+      if (danhSachChoXetDuyet.data.length !== 0)
+        data = danhSachChoXetDuyet.data;
+      dispatch(layDSChoXetDuyetAction(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const layDSDaXetDuyetApi = (maKhoaHoc: string) => {
+  let data: DanhSachGhiDanh[] | null = null;
+  return async (dispatch: DispatchType) => {
+    try {
+      const danhSachDaXetDuyet = await API.post(
+        "/QuanLyNguoiDung/LayDanhSachHocVienKhoaHoc",
+        {
+          maKhoaHoc,
+        }
+      );
+      if (danhSachDaXetDuyet.data.length !== 0) data = danhSachDaXetDuyet.data;
+      dispatch(layDSDaXetDuyetAction(data));
+    } catch (error) {
+      console.log(error);
     }
   };
 };
