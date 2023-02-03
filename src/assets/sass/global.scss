@@ -252,9 +252,13 @@ input.isInvalid {
   max-width: 100vw;
   max-height: 100vh;
   overflow: hidden;
+  animation: modalAnimation 0.5s;
+  @media (max-width: 600px) {
+    animation: modalMobileAnimation 0.5s;
+  }
   .modal {
     background-color: #fff;
-    animation: modalAnimation 0.5s;
+
     border: 1px solid #eee;
     border-radius: 10px;
     max-height: 95%;
@@ -345,5 +349,14 @@ input.isInvalid {
   }
   100% {
     transform: scale(100%);
+  }
+}
+
+@keyframes modalMobileAnimation {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
   }
 }
