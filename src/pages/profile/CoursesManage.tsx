@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { history } from "../../App";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
@@ -38,6 +38,7 @@ const CoursesManage = (props: Props) => {
   const { show, toggle } = useModal();
   const newCourseModal = useModal();
   const { pathname } = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { coursesManageScroll, coursesViewNumber } = useSelector(
     (store: ReduxRootType) => store.profileReducer
   );
@@ -64,23 +65,28 @@ const CoursesManage = (props: Props) => {
     },
   });
 
-  const search = (): void => {
+  const searchMethod = useForm<{ search: string }>({
+    mode: "onSubmit",
+    defaultValues: {
+      search: "",
+    },
+  });
+
+  const search = (value: string | undefined | null): void => {
     let filterArr: CourseType[] | null | undefined = coursesArr;
-    if (searchValue.current?.value !== null) {
+    if (value) {
       filterArr = filterArr?.filter((item: CourseType) =>
-        item.tenKhoaHoc
-          .toLowerCase()
-          .includes(searchValue.current!?.value.toLowerCase())
+        item.tenKhoaHoc.toLowerCase().includes(value.toLowerCase())
       );
     }
+    setSearchParams({
+      ...(value && { keywords: value }),
+    });
     setSearchResult(filterArr);
   };
 
-  const searchSubmitHandle = (
-    event: React.FormEvent<HTMLFormElement>
-  ): void => {
-    event.preventDefault();
-    search();
+  const searchSubmitHandle = (data: { search: string }) => {
+    search(data.search);
   };
 
   const editSubmitHandle = (data: UpdateCourseType): void => {
@@ -112,20 +118,22 @@ const CoursesManage = (props: Props) => {
   };
 
   useEffect(() => {
-    if (searchValue.current?.value !== null) {
-      search();
-    } else {
-      setSearchResult(coursesArr);
-    }
-  }, [coursesArr]);
-
-  useEffect(() => {
     if (coursesManageScroll)
       courseList.current?.scroll({
         top: coursesManageScroll,
         behavior: "smooth",
       });
   }, [searchResult]);
+
+  useEffect(() => {
+    const keywords = searchParams.get("keywords");
+    if (keywords) {
+      search(keywords);
+      searchMethod.reset({
+        search: keywords,
+      });
+    } else setSearchResult(coursesArr);
+  }, [coursesArr, searchParams.get("keywords")]);
 
   return (
     <div className="profile_main_info">
@@ -173,9 +181,13 @@ const CoursesManage = (props: Props) => {
       >
         <form
           className="profile_main_info_search"
-          onSubmit={searchSubmitHandle}
+          onSubmit={searchMethod.handleSubmit(searchSubmitHandle)}
         >
-          <input ref={searchValue} type="text" placeholder="Tìm kiếm" />
+          <input
+            {...searchMethod.register("search")}
+            type="text"
+            placeholder="Tìm kiếm"
+          />
           <button>
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
