@@ -9,6 +9,11 @@ import {
   UpdateCourseType,
 } from "../../util/interface/courseReducerInterface";
 import { history } from "../../App";
+import {
+  DanhSachGhiDanh,
+  dataGhiDanh,
+} from "../../util/interface/userReducerInterface";
+import { ghiDanhApi } from "../userReducer/userReducer";
 
 const initialState: CourseStateType = {
   coursesArr: [],
@@ -135,6 +140,25 @@ export const createNewCourse = (data: UpdateCourseType) => {
       console.log(error);
       history.push(window.location.pathname, {
         errorMess: error.response.data,
+      });
+    }
+  };
+};
+
+export const courseDeleteApi = (maKhoaHoc: string | undefined) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const result = await API.delete(
+        `/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${maKhoaHoc}`
+      );
+      await dispatch(getAllCoursesApi);
+      history.push(window.location.pathname + window.location.search, {
+        deleteSuccess: result.data,
+      });
+    } catch (error: any) {
+      console.log(error);
+      history.push(window.location.pathname + window.location.search, {
+        deleteError: error.reponese?.data,
       });
     }
   };

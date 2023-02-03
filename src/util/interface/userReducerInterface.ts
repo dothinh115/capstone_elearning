@@ -44,3 +44,9 @@ export interface dataGhiDanh {
   maKhoaHoc: string | undefined;
   taiKhoan: string | undefined;
 }
+
+export interface DanhSachGhiDanh {
+  biDanh: string;
+  hoTen: string;
+  taiKhoan: string;
+}

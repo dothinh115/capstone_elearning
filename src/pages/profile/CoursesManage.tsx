@@ -246,7 +246,7 @@ const CoursesManage = (props: Props) => {
                         {course.nguoiTao.hoTen}
                         {window.innerWidth > 600 && (
                           <>
-                            " | " <i className="fa-solid fa-calendar-days"></i>
+                            | <i className="fa-solid fa-calendar-days"></i>
                             {course.ngayTao
                               .substring(0, 10)
                               .split("-")
@@ -275,7 +275,9 @@ const CoursesManage = (props: Props) => {
                       };
                       reset(obj);
                       toggle();
-                      history.push(pathname + search);
+                      history.push(pathname + search, {
+                        maKhoaHoc: course.maKhoaHoc,
+                      });
                     }}
                   >
                     <i className="fa-solid fa-gear"></i>
