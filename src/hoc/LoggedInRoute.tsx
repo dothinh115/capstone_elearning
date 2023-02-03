@@ -5,8 +5,8 @@ type Props = {
 };
 
 const LoggedInRoute = ({ token }: Props) => {
-  const { pathname } = useLocation();
-  if (!token) return <Navigate to={`/login?next=${pathname}`} />;
+  const { pathname, search } = useLocation();
+  if (!token) return <Navigate to={`/login?next=${pathname + search}`} />;
   return <Outlet />;
 };
 
