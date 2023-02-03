@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
@@ -37,6 +37,7 @@ const CourseEditForm = (props: Props) => {
   );
   const { courseID } = useParams();
   const { state, search } = useLocation();
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
   const {
     register,
@@ -95,14 +96,20 @@ const CourseEditForm = (props: Props) => {
     getCourseUserList();
   };
 
-  const getCourseUserList = () => {
-    dispatch(layDSChoXetDuyetApi(courseID));
-    dispatch(layDSDaXetDuyetApi(courseID));
+  const getCourseUserList = async () => {
+    await dispatch(layDSChoXetDuyetApi(courseID));
+    await dispatch(layDSDaXetDuyetApi(courseID));
+  };
+
+  const firstLoad = async () => {
+    setLoading(true);
+    await getCourseUserList();
+    await dispatch(getCourseDetailApi(courseID));
+    setLoading(false);
   };
 
   useEffect(() => {
-    getCourseUserList();
-    dispatch(getCourseDetailApi(courseID));
+    firstLoad();
   }, [courseID]);
 
   useEffect(() => {
@@ -133,14 +140,16 @@ const CourseEditForm = (props: Props) => {
 
   if (state?.deleteSuccess)
     return (
-      <>
+      <div className="btn btn-success">
         <i
-          style={{ color: "green", fontSize: "16px", marginRight: "5px" }}
+          style={{ fontSize: "16px", marginRight: "5px" }}
           className="fa-solid fa-check"
         ></i>{" "}
         {state?.deleteSuccess}
-      </>
+      </div>
     );
+
+  if (loading) return <div className="loader"></div>;
 
   return (
     <>

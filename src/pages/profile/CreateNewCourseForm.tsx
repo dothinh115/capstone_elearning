@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +18,7 @@ const CreateNewCourseForm = (props: Props) => {
   );
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { state } = useLocation();
+  const { search } = useLocation();
   const dispatch: DispatchType = useDispatch();
 
   const {
@@ -78,6 +79,9 @@ const CreateNewCourseForm = (props: Props) => {
       danhGia: 0,
       luotXem: 0,
     });
+    return () => {
+      history.push(`/profile/courses_manage${search}`);
+    };
   }, []);
 
   return (

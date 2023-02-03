@@ -86,6 +86,10 @@ const CoursesManage = (props: Props) => {
     if (courseID) toggle();
   }, [courseID]);
 
+  useEffect(() => {
+    if (pathname === "/profile/courses_manage/create") newCourseModal.toggle();
+  }, [pathname]);
+
   return (
     <div className="profile_main_info">
       <Modal
@@ -101,7 +105,10 @@ const CoursesManage = (props: Props) => {
       </Modal>
 
       <div className="profile_container_main_block">
-        <button onClick={newCourseModal.toggle} className="btn">
+        <button
+          onClick={() => history.push("/profile/courses_manage/create")}
+          className="btn"
+        >
           Thêm khóa học mới
         </button>
       </div>

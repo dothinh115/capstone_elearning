@@ -52,6 +52,7 @@ function App() {
               path="courses_manage/:courseID"
               element={<CoursesManage />}
             />
+            <Route path="courses_manage/create" element={<CoursesManage />} />
           </Route>
         </Route>
         <Route element={<NotLoggedInRoute token={token} />}>
