@@ -2,6 +2,7 @@ import { RegisterdCoursesDetailType } from "./courseReducerInterface";
 
 export interface UserInfoStateType {
   userInfo: UserInfoType | null;
+  loading: boolean;
 }
 
 export interface UserInfoType {

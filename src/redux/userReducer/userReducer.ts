@@ -10,11 +10,11 @@ import {
   UserInfoType,
   UserLoginType,
 } from "../../util/interface/userReducerInterface";
-import { setLoadingAction } from "../courseReducer/courseReducer";
 import { DispatchType } from "../store";
 
 const initialState: UserInfoStateType = {
   userInfo: null,
+  loading: false,
 };
 
 const userReducer = createSlice({
@@ -27,10 +27,16 @@ const userReducer = createSlice({
     ) => {
       state.userInfo = action.payload;
     },
+    setLoadingAction: (
+      state: UserInfoStateType,
+      action: PayloadAction<boolean>
+    ) => {
+      state.loading = action.payload;
+    },
   },
 });
 
-export const { setUserInfoAction } = userReducer.actions;
+export const { setUserInfoAction, setLoadingAction } = userReducer.actions;
 
 export default userReducer.reducer;
 
@@ -93,14 +99,19 @@ export const getUserInfoApi = async (dispatch: DispatchType) => {
 export const ghiDanhApi = (bool: boolean, data: dataGhiDanh) => {
   //false: hủy ghi danh, true: ghi danh
   return async (dispatch: DispatchType) => {
+    const setLoading: PayloadAction<boolean> = setLoadingAction(true);
+    dispatch(setLoading);
     try {
       await API.post(
         `/QuanLyKhoaHoc/${bool ? "DangKyKhoaHoc" : "HuyGhiDanh"}`,
         data
       );
-      dispatch(getUserInfoApi);
+      await dispatch(getUserInfoApi);
     } catch (error) {
       console.log(error);
+    } finally {
+      const setLoading: PayloadAction<boolean> = setLoadingAction(false);
+      dispatch(setLoading);
     }
   };
 };

@@ -1,20 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useParams } from "react-router-dom";
-import { history } from "../../App";
+import { Link, useParams } from "react-router-dom";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
-import useToken from "../../hooks/useToken";
 import { getCourseDetailApi } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { ghiDanhApi } from "../../redux/userReducer/userReducer";
 import { numberRelatedCourses } from "../../util/config";
-import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
-import {
-  CourseType,
-  RegisterdCoursesDetailType,
-} from "../../util/interface/courseReducerInterface";
-import { dataGhiDanh } from "../../util/interface/userReducerInterface";
+import { CourseType } from "../../util/interface/courseReducerInterface";
 import CourseSidebar from "./CourseSidebar";
 
 type Props = {};

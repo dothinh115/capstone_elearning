@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { history } from "../../App";
@@ -18,6 +17,7 @@ const CourseSidebar = (props: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
+  const { loading } = useSelector((store: ReduxRootType) => store.userReducer);
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { pathname } = useLocation();
   const { token } = useToken();
@@ -57,16 +57,24 @@ const CourseSidebar = (props: Props) => {
 
       <div className="sidebar_info">
         <button
+          disabled={loading ? true : false}
           className={`btn btn-${findIfRegisted() ? "danger" : "primary"}`}
           onClick={ghidanhHandle}
         >
-          {findIfRegisted() ? (
-            <>
-              <i className="fa-solid fa-x"></i>Hủy ghi danh
-            </>
+          {loading ? (
+            <div className="smallLoader"></div>
           ) : (
             <>
-              <i className="fa-solid fa-cart-shopping"></i>Ghi danh khóa học này
+              {findIfRegisted() ? (
+                <>
+                  <i className="fa-solid fa-x"></i>Hủy ghi danh
+                </>
+              ) : (
+                <>
+                  <i className="fa-solid fa-cart-shopping"></i>Ghi danh khóa học
+                  này
+                </>
+              )}
             </>
           )}
         </button>
