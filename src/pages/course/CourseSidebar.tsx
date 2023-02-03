@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { history } from "../../App";
 import useToken from "../../hooks/useToken";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { ghiDanhApi } from "../../redux/userReducer/userReducer";
+import { dangKyApi } from "../../redux/userReducer/userReducer";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { RegisterdCoursesDetailType } from "../../util/interface/courseReducerInterface";
 import { dataGhiDanh } from "../../util/interface/userReducerInterface";
@@ -32,7 +32,7 @@ const CourseSidebar = (props: Props) => {
       maKhoaHoc: courseDetail?.maKhoaHoc,
       taiKhoan: userInfo?.taiKhoan,
     };
-    dispatch(ghiDanhApi(!findIfRegisted(), data));
+    dispatch(dangKyApi(!findIfRegisted(), data));
   };
 
   const findIfRegisted = (): boolean => {
@@ -67,11 +67,11 @@ const CourseSidebar = (props: Props) => {
             <>
               {findIfRegisted() ? (
                 <>
-                  <i className="fa-solid fa-x"></i>Hủy ghi danh
+                  <i className="fa-solid fa-x"></i>Hủy đăng ký
                 </>
               ) : (
                 <>
-                  <i className="fa-solid fa-cart-shopping"></i>Ghi danh khóa học
+                  <i className="fa-solid fa-cart-shopping"></i>Đăng ký khóa học
                   này
                 </>
               )}

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { courseDeleteApi } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { ghiDanhApi } from "../../redux/userReducer/userReducer";
+import { dangKyApi } from "../../redux/userReducer/userReducer";
 import { API } from "../../util/config";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
@@ -84,7 +84,7 @@ const CourseEditForm = ({
       maKhoaHoc: state?.maKhoaHoc,
       taiKhoan,
     };
-    await dispatch(ghiDanhApi(false, data));
+    await dispatch(dangKyApi(false, data));
     layDSChoXetDuyet();
     layDSDaXetDuyet();
   };
@@ -94,7 +94,6 @@ const CourseEditForm = ({
       layDSChoXetDuyet();
       layDSDaXetDuyet();
     }
-    console.log(state);
   }, [state]);
 
   if (state.deleteSuccess) return <>{state.deleteSuccess}</>;
@@ -205,15 +204,20 @@ const CourseEditForm = ({
             return (
               <li key={index}>
                 <span>{item.hoTen}</span>
-                <button
-                  type="button"
-                  className="btn btn-danger"
-                  onClick={(event) =>
-                    registeredUserDeleteHandle(event, item?.taiKhoan)
-                  }
-                >
-                  X
-                </button>
+                <span>
+                  <button className="btn btn-success">
+                    <i className="fa-solid fa-check"></i>
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={(event) =>
+                      registeredUserDeleteHandle(event, item?.taiKhoan)
+                    }
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
+                </span>
               </li>
             );
           })
@@ -236,7 +240,7 @@ const CourseEditForm = ({
                     registeredUserDeleteHandle(event, item?.taiKhoan)
                   }
                 >
-                  X
+                  <i className="fa-solid fa-trash"></i>
                 </button>
               </li>
             );

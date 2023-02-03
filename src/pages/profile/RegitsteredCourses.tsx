@@ -6,7 +6,7 @@ import {
   setRegisteredCoursesViewNumber,
 } from "../../redux/profileReducer/profileReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { ghiDanhApi } from "../../redux/userReducer/userReducer";
+import { dangKyApi } from "../../redux/userReducer/userReducer";
 import { limitProfileCoursesViewMore } from "../../util/config";
 import { RegisterdCoursesDetailType } from "../../util/interface/courseReducerInterface";
 import { dataGhiDanh } from "../../util/interface/userReducerInterface";
@@ -26,7 +26,7 @@ const RegitsteredCourses = (props: Props) => {
       maKhoaHoc,
       taiKhoan: userInfo?.taiKhoan,
     };
-    dispatch(ghiDanhApi(false, data));
+    dispatch(dangKyApi(false, data));
   };
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const RegitsteredCourses = (props: Props) => {
         {userInfo?.chiTietKhoaHocGhiDanh?.length === 0 ? (
           <div className="profile_container_main_block">
             {" "}
-            Chưa ghi danh khóa học nào!
+            Chưa đăng ký khóa học nào!
           </div>
         ) : (
           userInfo?.chiTietKhoaHocGhiDanh

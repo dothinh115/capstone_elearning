@@ -9,11 +9,6 @@ import {
   UpdateCourseType,
 } from "../../util/interface/courseReducerInterface";
 import { history } from "../../App";
-import {
-  DanhSachGhiDanh,
-  dataGhiDanh,
-} from "../../util/interface/userReducerInterface";
-import { ghiDanhApi } from "../userReducer/userReducer";
 
 const initialState: CourseStateType = {
   coursesArr: [],

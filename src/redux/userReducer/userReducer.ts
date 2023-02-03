@@ -96,8 +96,8 @@ export const getUserInfoApi = async (dispatch: DispatchType) => {
   }
 };
 
-export const ghiDanhApi = (bool: boolean, data: dataGhiDanh) => {
-  //false: hủy ghi danh, true: ghi danh
+export const dangKyApi = (bool: boolean, data: dataGhiDanh) => {
+  //false: hủy đăng ký, true: đăng ký
   return async (dispatch: DispatchType) => {
     const setLoading: PayloadAction<boolean> = setLoadingAction(true);
     dispatch(setLoading);

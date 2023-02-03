@@ -122,6 +122,10 @@
 }
 
 .profile_main_info {
+  h2 {
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+  }
   &_item {
     margin-bottom: 10px;
     &_title {
@@ -262,23 +266,44 @@
 
 ul.modal_ul {
   height: unset;
+  margin-top: 10px;
+  counter-reset: li;
   li {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 30px;
     list-style-type: none;
-    border-width: 0 0 1px 0;
-    border-style: solid;
-    border-color: #eee;
-    padding-bottom: 5px;
+    border: none;
+    height: unset;
+    &:not(:last-of-type) {
+      border-width: 0 0 1px 0;
+      border-style: solid;
+      border-color: #eee;
+      padding-bottom: 5px;
+    }
+    span {
+      &:first-of-type:before {
+        content: counter(li);
+        counter-increment: li;
+        margin-right: 7px;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        background-color: #f9dd94;
+        font-weight: 600;
+      }
+    }
     button {
+      display: inline-block;
       height: 100%;
-      width: 30px;
+      width: 50px;
       text-align: center;
-      padding: unset;
       font-size: 16px;
       line-height: 16px;
+      margin-left: 5px;
     }
   }
 }

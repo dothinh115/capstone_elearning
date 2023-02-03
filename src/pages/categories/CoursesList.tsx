@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { history } from "../../App";
 import useToken from "../../hooks/useToken";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { ghiDanhApi } from "../../redux/userReducer/userReducer";
+import { dangKyApi } from "../../redux/userReducer/userReducer";
 import {
   CourseType,
   RegisterdCoursesDetailType,
@@ -28,7 +28,7 @@ const CoursesList = ({ item }: Props) => {
       maKhoaHoc: item.maKhoaHoc,
       taiKhoan: userInfo?.taiKhoan,
     };
-    dispatch(ghiDanhApi(!checkIfRegisterd(), data));
+    dispatch(dangKyApi(!checkIfRegisterd(), data));
   };
   const checkIfRegisterd = (): boolean => {
     const find = userInfo?.chiTietKhoaHocGhiDanh?.find(
