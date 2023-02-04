@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { history } from "../../App";
 import {
   courseDeleteApi,
@@ -39,7 +39,6 @@ const CourseEditForm = (props: Props) => {
   const { state } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -135,7 +134,7 @@ const CourseEditForm = (props: Props) => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
-      navigate(-1);
+      history.push("/profile/courses_manage", { replace: true });
     };
   }, []);
 
