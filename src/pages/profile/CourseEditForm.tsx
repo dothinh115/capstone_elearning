@@ -40,7 +40,7 @@ const CourseEditForm = (props: Props) => {
     (store: ReduxRootType) => store.courseReducer
   );
   const pageReducer = useSelector((store: ReduxRootType) => store.pageReducer);
-  const { state, pathname } = useLocation();
+  const { state } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
   const { courseID } = useParams();
@@ -135,16 +135,12 @@ const CourseEditForm = (props: Props) => {
   }, [courseDetail]);
 
   useEffect(() => {
-    console.log(state);
     return () => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
       dispatch(updateSuccessMessageReducer(null));
       dispatch(updateErrorMessageReducer(null));
-      if (pathname.indexOf("/profile/courses_manage/") !== -1 && state?.from)
-        history.back();
-      else history.push("/profile/courses_manage");
     };
   }, []);
 

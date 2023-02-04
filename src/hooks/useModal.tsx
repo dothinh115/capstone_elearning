@@ -10,7 +10,11 @@ const useModal = () => {
     } else setShow(!show);
   };
   const forceToggle = (bool: boolean): void => {
-    setShow(bool);
+    if (window.innerWidth <= 600 && show === true) {
+      setTimeout(() => {
+        setShow(bool);
+      }, 100);
+    } else setShow(bool);
   };
   return { show, toggle, forceToggle };
 };

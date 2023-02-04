@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+import { history } from "../../App";
 
 type Props = {
   title?: string;
@@ -15,10 +17,16 @@ const Modal = ({
 }: Props): JSX.Element | null => {
   const modalOverlay = useRef<HTMLDivElement | null>(null);
   const modal = useRef<HTMLDivElement | null>(null);
+  const { pathname, state } = useLocation();
 
-  const outModalHandle = (): void => {
-    toggle();
-    modal.current!.style.transform = "translateY(100%)";
+  const outModalHandle = async () => {
+    if (pathname.indexOf("/profile/courses_manage/") !== -1 && state?.from) {
+      modal.current!.style.transform = await "translateY(100%)";
+      history.back();
+    } else {
+      toggle();
+      modal.current!.style.transform = "translateY(100%)";
+    }
   };
 
   useEffect(() => {
