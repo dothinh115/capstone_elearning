@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+import { history } from "../../App";
 
 type Props = {
   title?: string;
@@ -15,9 +17,15 @@ const Modal = ({
 }: Props): JSX.Element | null => {
   const modalOverlay = useRef<HTMLDivElement | null>(null);
   const modal = useRef<HTMLDivElement | null>(null);
+  const { state } = useLocation();
 
-  const outModelHandle = (): void => {
-    toggle();
+  const outModalHandle = (): void => {
+    if (state?.insideCall) {
+      history.back();
+    } else {
+      toggle();
+    }
+
     modal.current!.style.transform = "translateY(100%)";
   };
 
@@ -40,7 +48,7 @@ const Modal = ({
         <div ref={modal} className="modal">
           <div className="modal_header">
             <h2>{title && title}</h2>
-            <button onClick={outModelHandle}>X</button>
+            <button onClick={outModalHandle}>X</button>
           </div>
           <div className="modal_body">{children}</div>
         </div>

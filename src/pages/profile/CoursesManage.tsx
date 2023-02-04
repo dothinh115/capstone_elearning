@@ -206,7 +206,6 @@ const CoursesManage = (props: Props) => {
                   <button
                     onClick={() => {
                       history.push(`${pathname}/${course.maKhoaHoc}${search}`, {
-                        replace: true,
                         insideCall: true,
                       });
                     }}
