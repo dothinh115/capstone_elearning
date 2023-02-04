@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams, useSearchParams } from "react-router-dom";
 import { history } from "../../App";
 import {
   courseDeleteApi,
@@ -23,9 +23,11 @@ import {
   dataGhiDanh,
 } from "../../util/interface/userReducerInterface";
 
-type Props = {};
+type Props = {
+  courseID: string | null;
+};
 
-const CourseEditForm = (props: Props) => {
+const CourseEditForm = ({ courseID }: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
@@ -35,10 +37,10 @@ const CourseEditForm = (props: Props) => {
   const { courseDetail } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
-  const { courseID } = useParams();
   const { state } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     register,
     handleSubmit,
@@ -67,7 +69,7 @@ const CourseEditForm = (props: Props) => {
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (!choXetDuyet && !daXetDuyet) dispatch(courseDeleteApi(courseID));
+    if (!choXetDuyet && !daXetDuyet) dispatch(courseDeleteApi(courseID!));
   };
 
   const registeredUserDeleteHandle = async (
@@ -76,7 +78,7 @@ const CourseEditForm = (props: Props) => {
   ) => {
     event.preventDefault();
     const data: dataGhiDanh = {
-      maKhoaHoc: courseID,
+      maKhoaHoc: courseID!,
       taiKhoan,
     };
     await dispatch(dangKyApi(false, data));
@@ -89,7 +91,7 @@ const CourseEditForm = (props: Props) => {
   ) => {
     event.preventDefault();
     const data: dataGhiDanh = {
-      maKhoaHoc: courseID,
+      maKhoaHoc: courseID!,
       taiKhoan,
     };
     await dispatch(xetDuyetHocVienApi(data));
@@ -97,14 +99,14 @@ const CourseEditForm = (props: Props) => {
   };
 
   const getCourseUserList = async () => {
-    await dispatch(layDSChoXetDuyetApi(courseID));
-    await dispatch(layDSDaXetDuyetApi(courseID));
+    await dispatch(layDSChoXetDuyetApi(courseID!));
+    await dispatch(layDSDaXetDuyetApi(courseID!));
   };
 
   const firstLoad = async () => {
     setLoading(true);
     await getCourseUserList();
-    await dispatch(getCourseDetailApi(courseID));
+    await dispatch(getCourseDetailApi(courseID!));
     setLoading(false);
   };
 
@@ -134,7 +136,6 @@ const CourseEditForm = (props: Props) => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
-      history.push("/profile/courses_manage", { replace: true });
     };
   }, []);
 
