@@ -63,7 +63,13 @@ const UserTemplate = () => {
               {profileMenuConfig.path.map((item: string, index: number) => {
                 return (
                   <li key={index}>
-                    <NavLink to={item} onClick={showModal}>
+                    <NavLink
+                      to={item}
+                      onClick={showModal}
+                      state={{
+                        prev: pathname,
+                      }}
+                    >
                       <i
                         className={`fa-solid fa-${profileMenuConfig.icon[index]}`}
                       ></i>
