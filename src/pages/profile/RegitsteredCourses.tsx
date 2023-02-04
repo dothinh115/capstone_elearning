@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   setRegisteredCoursesScroll,
   setRegisteredCoursesViewNumber,
@@ -20,6 +20,7 @@ const RegitsteredCourses = (props: Props) => {
   );
   const dispatch: DispatchType = useDispatch();
   const coursesList = useRef<HTMLUListElement | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const ghiDanhBtnHandle = (maKhoaHoc: string) => {
     const data: dataGhiDanh = {

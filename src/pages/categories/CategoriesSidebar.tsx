@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import {
@@ -59,9 +59,9 @@ const CategoriesSidebar = ({
     event.preventDefault();
     if (checked !== null) {
       let params: string | undefined = checked?.join("+");
-      setSearchParams({
-        categories: params,
-      });
+      searchParams.set("categories", params);
+      if (searchParams.get("modalShow")) searchParams.delete("modalShow");
+      setSearchParams(searchParams);
       window.scrollTo(0, 0);
     } else {
       searchParams.delete("categories");
@@ -71,6 +71,7 @@ const CategoriesSidebar = ({
     dispatch(setLimitCoursesAction(limitCategoriesCourses));
     toggle();
   };
+
   return (
     <>
       <div className="categories_container_sidebar_inner_header">

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams, useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { history } from "../../App";
 import {
   courseDeleteApi,
@@ -25,9 +25,10 @@ import {
 
 type Props = {
   courseID: string | null;
+  setCourseID: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
-const CourseEditForm = ({ courseID }: Props) => {
+const CourseEditForm = ({ courseID, setCourseID }: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
@@ -40,7 +41,7 @@ const CourseEditForm = ({ courseID }: Props) => {
   const { state } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { pathname, search } = useLocation();
   const {
     register,
     handleSubmit,
@@ -136,6 +137,10 @@ const CourseEditForm = ({ courseID }: Props) => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
+      history.push(pathname + search, {
+        replace: true,
+      });
+      setCourseID(null);
     };
   }, []);
 

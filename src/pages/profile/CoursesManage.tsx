@@ -1,13 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Link,
-  useLocation,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
-import { history } from "../../App";
+import { Link, useSearchParams } from "react-router-dom";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
 import {
@@ -32,15 +26,13 @@ const CoursesManage = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const { show, toggle } = useModal();
   const newCourseModal = useModal();
-  const { pathname, search } = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const { coursesManageScroll, coursesViewNumber } = useSelector(
     (store: ReduxRootType) => store.profileReducer
   );
   const courseList = useRef<HTMLUListElement | null>(null);
-  const { courseID } = useParams();
   const modal = useRef<HTMLDivElement | null>(null);
-
+  const [courseID, setCourseID] = useState<string | null>(null);
   const searchMethod = useForm<{ search: string }>({
     mode: "onSubmit",
     defaultValues: {
@@ -75,6 +67,10 @@ const CoursesManage = (props: Props) => {
   }, [searchResult]);
 
   useEffect(() => {
+    if (courseID) toggle();
+  }, [courseID]);
+
+  useEffect(() => {
     const keywords = searchParams.get("keywords");
     if (keywords) {
       searchHandle(keywords);
@@ -83,15 +79,6 @@ const CoursesManage = (props: Props) => {
       });
     } else setSearchResult(coursesArr);
   }, [coursesArr, searchParams]);
-
-  useEffect(() => {
-    if (courseID) toggle();
-    if (!courseID && show === true) toggle();
-  }, [courseID]);
-
-  useEffect(() => {
-    if (pathname === "/profile/courses_manage/create") newCourseModal.toggle();
-  }, [pathname]);
 
   return (
     <div className="profile_main_info" ref={modal}>
@@ -104,7 +91,7 @@ const CoursesManage = (props: Props) => {
       </Modal>
 
       <Modal show={show} toggle={toggle} title="Thay đổi thông tin khóa học">
-        <CourseEditForm />
+        <CourseEditForm courseID={courseID} setCourseID={setCourseID} />
       </Modal>
 
       <div className="profile_container_main_block">
@@ -195,12 +182,12 @@ const CoursesManage = (props: Props) => {
                       </p>
                     </div>
                   </Link>
-                  <Link
-                    to={`${pathname}/${course.maKhoaHoc}${search}`}
+                  <button
+                    onClick={() => setCourseID(course.maKhoaHoc)}
                     className="editButton"
                   >
                     <i className="fa-solid fa-gear"></i>
-                  </Link>
+                  </button>
                 </li>
               );
             })

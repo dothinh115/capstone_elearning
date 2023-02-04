@@ -48,10 +48,6 @@ function App() {
             <Route index element={<EditProfile />} />
             <Route path="registered_courses" element={<RegitsteredCourses />} />
             <Route path="courses_manage" element={<CoursesManage />} />
-            <Route
-              path="courses_manage/:courseID"
-              element={<CoursesManage />}
-            />
             <Route path="courses_manage/create" element={<CoursesManage />} />
           </Route>
         </Route>
