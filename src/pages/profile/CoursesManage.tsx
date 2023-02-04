@@ -1,7 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useParams,
+  useSearchParams,
+} from "react-router-dom";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
 import {
@@ -14,9 +19,11 @@ import { CourseType } from "../../util/interface/courseReducerInterface";
 import CourseEditForm from "./CourseEditForm";
 import CreateNewCourseForm from "./CreateNewCourseForm";
 
-type Props = {};
+type Props = {
+  popup?: boolean | undefined;
+};
 
-const CoursesManage = (props: Props) => {
+const CoursesManage = ({ popup }: Props) => {
   const { coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
@@ -24,7 +31,7 @@ const CoursesManage = (props: Props) => {
     CourseType[] | null | undefined
   >(null);
   const dispatch: DispatchType = useDispatch();
-  const { show, toggle } = useModal();
+  const { show, toggle, forceToggle } = useModal();
   const newCourseModal = useModal();
   const [searchParams, setSearchParams] = useSearchParams();
   const { coursesManageScroll, coursesViewNumber } = useSelector(
@@ -32,7 +39,8 @@ const CoursesManage = (props: Props) => {
   );
   const courseList = useRef<HTMLUListElement | null>(null);
   const modal = useRef<HTMLDivElement | null>(null);
-  const [courseID, setCourseID] = useState<string | null>(null);
+  const { pathname, search } = useLocation();
+  const { courseID } = useParams();
   const searchMethod = useForm<{ search: string }>({
     mode: "onSubmit",
     defaultValues: {
@@ -67,10 +75,6 @@ const CoursesManage = (props: Props) => {
   }, [searchResult]);
 
   useEffect(() => {
-    if (courseID) toggle();
-  }, [courseID]);
-
-  useEffect(() => {
     const keywords = searchParams.get("keywords");
     if (keywords) {
       searchHandle(keywords);
@@ -79,6 +83,11 @@ const CoursesManage = (props: Props) => {
       });
     } else setSearchResult(coursesArr);
   }, [coursesArr, searchParams]);
+
+  useEffect(() => {
+    if (popup) forceToggle(true);
+    else forceToggle(false);
+  }, [popup, courseID]);
 
   return (
     <div className="profile_main_info" ref={modal}>
@@ -91,7 +100,7 @@ const CoursesManage = (props: Props) => {
       </Modal>
 
       <Modal show={show} toggle={toggle} title="Thay đổi thông tin khóa học">
-        <CourseEditForm courseID={courseID} setCourseID={setCourseID} />
+        <CourseEditForm />
       </Modal>
 
       <div className="profile_container_main_block">
@@ -182,12 +191,15 @@ const CoursesManage = (props: Props) => {
                       </p>
                     </div>
                   </Link>
-                  <button
-                    onClick={() => setCourseID(course.maKhoaHoc)}
+                  <Link
+                    to={`/profile/courses_manage/${course.maKhoaHoc}`}
+                    state={{
+                      from: pathname + search,
+                    }}
                     className="editButton"
                   >
                     <i className="fa-solid fa-gear"></i>
-                  </button>
+                  </Link>
                 </li>
               );
             })

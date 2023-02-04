@@ -9,7 +9,10 @@ const useModal = () => {
       }, 100);
     } else setShow(!show);
   };
-  return { show, toggle };
+  const forceToggle = (bool: boolean): void => {
+    setShow(bool);
+  };
+  return { show, toggle, forceToggle };
 };
 
 export default useModal;

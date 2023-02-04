@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { history } from "../../App";
+import { useLocation, useParams } from "react-router-dom";
 import {
   courseDeleteApi,
   courseUpdateApi,
@@ -14,9 +13,12 @@ import {
   layDSDaXetDuyetApi,
   xetDuyetHocVienApi,
 } from "../../redux/courseReducer/courseReducer";
+import {
+  updateErrorMessageReducer,
+  updateSuccessMessageReducer,
+} from "../../redux/pageReducer/pageReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { dangKyApi } from "../../redux/userReducer/userReducer";
-import { ApiResultType } from "../../util/config";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
 import {
@@ -24,12 +26,9 @@ import {
   dataGhiDanh,
 } from "../../util/interface/userReducerInterface";
 
-type Props = {
-  courseID: string | null;
-  setCourseID: React.Dispatch<React.SetStateAction<string | null>>;
-};
+type Props = {};
 
-const CourseEditForm = ({ courseID, setCourseID }: Props) => {
+const CourseEditForm = (props: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
@@ -39,11 +38,11 @@ const CourseEditForm = ({ courseID, setCourseID }: Props) => {
   const { courseDetail } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
+  const pageReducer = useSelector((store: ReduxRootType) => store.pageReducer);
   const { state } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
-  const { pathname, search } = useLocation();
-  const [result, setResult] = useState<ApiResultType | null>(null);
+  const { courseID } = useParams();
   const {
     register,
     handleSubmit,
@@ -67,8 +66,7 @@ const CourseEditForm = ({ courseID, setCourseID }: Props) => {
   });
 
   const editSubmitHandle = (data: UpdateCourseType): void => {
-    const result = dispatch(courseUpdateApi(data));
-    result.then((res: ApiResultType) => setResult(res));
+    dispatch(courseUpdateApi(data));
   };
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -140,7 +138,8 @@ const CourseEditForm = ({ courseID, setCourseID }: Props) => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
-      setCourseID(null);
+      dispatch(updateSuccessMessageReducer(null));
+      dispatch(updateErrorMessageReducer(null));
     };
   }, []);
 
@@ -234,15 +233,15 @@ const CourseEditForm = ({ courseID, setCourseID }: Props) => {
           )}
         </div>
 
-        {result && (
+        {(pageReducer.successMessage || pageReducer.errorMessage) && (
           <div className="profile_main_info_item_result">
             <span
               className={`btn ${
-                (result.successMess && "btn-success") ||
-                (result.errorMess && "btn-danger")
+                (pageReducer.successMessage && "btn-success") ||
+                (pageReducer.errorMessage && "btn-danger")
               }`}
             >
-              {result.successMess} {result.errorMess}
+              {pageReducer.successMessage} {pageReducer.errorMessage}
             </span>
           </div>
         )}

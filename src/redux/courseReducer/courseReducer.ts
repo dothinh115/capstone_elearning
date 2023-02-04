@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { API, numberRandomCourses } from "../../util/config";
+import { API, ApiResultType, numberRandomCourses } from "../../util/config";
 import { DispatchType } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { randomArray, randomDiscount } from "../../util/function";
@@ -13,6 +13,11 @@ import {
   DanhSachGhiDanh,
   dataGhiDanh,
 } from "../../util/interface/userReducerInterface";
+import {
+  PageReducerType,
+  updateErrorMessageReducer,
+  updateSuccessMessageReducer,
+} from "../pageReducer/pageReducer";
 const initialState: CourseStateType = {
   coursesArr: [],
   randomCoursesArr: [],
@@ -129,20 +134,14 @@ export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
 
 export const courseUpdateApi = (data: UpdateCourseType) => {
   return async (dispatch: DispatchType) => {
-    let result = {};
     try {
       await API.put("/QuanLyKhoaHoc/CapNhatKhoaHoc", data);
       dispatch(getAllCoursesApi);
-      result = {
-        successMess: "Cập nhật thành công!",
-      };
+      dispatch(updateSuccessMessageReducer("Update thành công!"));
     } catch (error: any) {
       console.log(error);
-      result = {
-        errorMess: error.response.data,
-      };
+      dispatch(updateErrorMessageReducer(error.response.data));
     }
-    return result;
   };
 };
 

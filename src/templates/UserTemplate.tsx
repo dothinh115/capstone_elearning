@@ -16,7 +16,7 @@ import {
 const UserTemplate = () => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { prevPage } = useSelector((store: ReduxRootType) => store.pageReducer);
-  const { show, toggle } = useModal();
+  const { show, toggle, forceToggle } = useModal(); //x0000 || x0000: true <- /profile <- /profile/courses_manage -> x0000: true
   const dispatch: DispatchType = useDispatch();
   const { pathname } = useLocation();
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -35,19 +35,16 @@ const UserTemplate = () => {
 
   useEffect(() => {
     for (let i in profileMenuConfig.modalPopup) {
-      if (
-        pathname === profileMenuConfig.path[i] &&
-        profileMenuConfig.modalPopup[i]
-      )
-        toggle();
+      if (pathname.indexOf(profileMenuConfig.path[i]) !== -1)
+        forceToggle(profileMenuConfig.modalPopup[i]);
     }
-  }, []);
+  }, [pathname]);
 
   return (
     <section className="profile">
       <div className="profile_container">
         <div className="profile_container_header">
-          <NavLink id="getout" to={prevPage} className="btn btn-primary">
+          <NavLink id="getout" to={prevPage!} className="btn btn-primary">
             <i className="fa-solid fa-arrow-left-long"></i>
           </NavLink>
           <h2>Trang cá nhân</h2>
