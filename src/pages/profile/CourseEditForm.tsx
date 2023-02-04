@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
-import { history } from "../../App";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import {
   courseDeleteApi,
   courseUpdateApi,
@@ -36,9 +35,10 @@ const CourseEditForm = (props: Props) => {
     (store: ReduxRootType) => store.courseReducer
   );
   const { courseID } = useParams();
-  const { state, search } = useLocation();
+  const { state } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -134,7 +134,7 @@ const CourseEditForm = (props: Props) => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
-      history.push(`/profile/courses_manage${search}`);
+      state?.insideCall ? navigate(-1) : navigate("/profile/courses_manage");
     };
   }, []);
 

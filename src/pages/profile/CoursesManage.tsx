@@ -109,7 +109,12 @@ const CoursesManage = (props: Props) => {
 
       <div className="profile_container_main_block">
         <button
-          onClick={() => history.push("/profile/courses_manage/create")}
+          onClick={() =>
+            history.push("/profile/courses_manage/create", {
+              replace: true,
+              insideCall: true,
+            })
+          }
           className="btn"
         >
           Thêm khóa học mới
@@ -200,7 +205,10 @@ const CoursesManage = (props: Props) => {
                   </Link>
                   <button
                     onClick={() => {
-                      history.push(`${pathname}/${course.maKhoaHoc}${search}`);
+                      history.push(`${pathname}/${course.maKhoaHoc}${search}`, {
+                        replace: true,
+                        insideCall: true,
+                      });
                     }}
                   >
                     <i className="fa-solid fa-gear"></i>

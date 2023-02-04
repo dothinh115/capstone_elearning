@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { history } from "../../App";
 import { createNewCourse } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
@@ -20,7 +20,7 @@ const CreateNewCourseForm = (props: Props) => {
   const { state } = useLocation();
   const { search } = useLocation();
   const dispatch: DispatchType = useDispatch();
-
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -80,7 +80,7 @@ const CreateNewCourseForm = (props: Props) => {
       luotXem: 0,
     });
     return () => {
-      history.push(`/profile/courses_manage${search}`);
+      state?.insideCall ? navigate(-1) : navigate("/profile/courses_manage");
     };
   }, []);
 
