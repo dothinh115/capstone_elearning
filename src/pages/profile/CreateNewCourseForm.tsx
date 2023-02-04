@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { history } from "../../App";
 import { createNewCourse } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
@@ -10,17 +10,17 @@ import { toNonAccentVietnamese } from "../../util/function";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
 
-type Props = {};
+type Props = {
+  toggle?: any;
+};
 
-const CreateNewCourseForm = (props: Props) => {
+const CreateNewCourseForm = ({ toggle }: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { state } = useLocation();
-  const { search } = useLocation();
   const dispatch: DispatchType = useDispatch();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -79,9 +79,6 @@ const CreateNewCourseForm = (props: Props) => {
       danhGia: 0,
       luotXem: 0,
     });
-    return () => {
-      state?.insideCall ? navigate(-1) : navigate("/profile/courses_manage");
-    };
   }, []);
 
   return (

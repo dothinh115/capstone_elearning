@@ -1,6 +1,4 @@
 import React, { useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { history } from "../../App";
 
 type Props = {
   title?: string;
@@ -17,14 +15,9 @@ const Modal = ({
 }: Props): JSX.Element | null => {
   const modalOverlay = useRef<HTMLDivElement | null>(null);
   const modal = useRef<HTMLDivElement | null>(null);
-  const { state } = useLocation();
 
   const outModalHandle = (): void => {
-    if (state?.insideCall) {
-      history.back();
-    } else {
-      toggle();
-    }
+    toggle();
 
     modal.current!.style.transform = "translateY(100%)";
   };

@@ -250,6 +250,21 @@
         }
       }
     }
+    .editButton {
+      display: block;
+      width: 75px;
+      height: 70px;
+      border: unset;
+      font-size: 20px;
+      font-weight: 600;
+      cursor: point;
+      text-align: center;
+      color: white;
+      background-color: #007bff;
+      i {
+        line-height: 70px;
+      }
+    }
   }
 }
 

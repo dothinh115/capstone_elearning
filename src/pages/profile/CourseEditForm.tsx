@@ -39,6 +39,7 @@ const CourseEditForm = (props: Props) => {
   const { state } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -134,6 +135,7 @@ const CourseEditForm = (props: Props) => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
+      navigate(-1);
     };
   }, []);
 
