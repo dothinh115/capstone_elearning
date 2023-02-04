@@ -254,7 +254,8 @@ input.isInvalid {
   overflow: hidden;
   animation: modalAnimation 0.5s;
   @media (max-width: 600px) {
-    animation: modalMobileAnimation 0.5s;
+    animation: modalMobileAnimationIn 0.3s;
+    transition: transform 0.3s;
   }
   .modal {
     background-color: #fff;
@@ -352,7 +353,7 @@ input.isInvalid {
   }
 }
 
-@keyframes modalMobileAnimation {
+@keyframes modalMobileAnimationIn {
   0% {
     transform: translateY(100%);
   }

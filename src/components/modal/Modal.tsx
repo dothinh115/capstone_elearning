@@ -15,10 +15,16 @@ const Modal = ({
 }: Props): JSX.Element | null => {
   const modalOverlay = useRef<HTMLDivElement | null>(null);
 
+  const outModelHandle = (): void => {
+    toggle();
+    modalOverlay.current!.style.transform = "translateY(100%)";
+  };
+
   useEffect(() => {
     if (show) document.body.classList.add("noscroll");
     else document.body.classList.remove("noscroll");
   }, [show]);
+
   if (show) {
     return (
       <div
@@ -33,7 +39,7 @@ const Modal = ({
         <div className="modal">
           <div className="modal_header">
             <h2>{title && title}</h2>
-            <button onClick={toggle}>X</button>
+            <button onClick={outModelHandle}>X</button>
           </div>
           <div className="modal_body">{children}</div>
         </div>
