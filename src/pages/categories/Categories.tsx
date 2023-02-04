@@ -182,16 +182,20 @@ const Categories = (props: Props) => {
               </button>
             </form>
 
-            {!result && (
+            {!getCategoriesFromParams() && (
               <h1 className="notfound">
-                <img src="../../img/notfound.png" alt="" />
-                {!checked ? (
-                  <div>Chưa chọn lọc khóa học!</div>
-                ) : (
-                  <div>Không tìm thấy kết quả nào!</div>
-                )}
+                <div>Chưa chọn lọc khóa học!</div>
               </h1>
             )}
+
+            {!result &&
+              searchParams.get("keywords") &&
+              getCategoriesFromParams() && (
+                <h1 className="notfound">
+                  <img src="../../img/notfound.png" alt="" />
+                  <div>Không tìm thấy kết quả nào!</div>
+                </h1>
+              )}
             {result && (
               <>
                 <div className="selectedCategories result">
@@ -203,13 +207,7 @@ const Categories = (props: Props) => {
               </>
             )}
 
-            {result!?.length <= limitCouses ? (
-              <ul>
-                {result?.map((item: CourseType, index: number) => {
-                  return <CoursesList item={item} key={index} />;
-                })}
-              </ul>
-            ) : (
+            {result && (
               <ul>
                 {result
                   ?.slice(0, limitCouses)

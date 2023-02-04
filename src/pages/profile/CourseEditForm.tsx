@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+import { history } from "../../App";
 import {
   courseDeleteApi,
   courseUpdateApi,
@@ -39,7 +40,7 @@ const CourseEditForm = (props: Props) => {
     (store: ReduxRootType) => store.courseReducer
   );
   const pageReducer = useSelector((store: ReduxRootType) => store.pageReducer);
-  const { state } = useLocation();
+  const { state, pathname } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
   const { courseID } = useParams();
@@ -101,14 +102,14 @@ const CourseEditForm = (props: Props) => {
   };
 
   const getCourseUserList = async () => {
-    await dispatch(layDSChoXetDuyetApi(courseID!));
-    await dispatch(layDSDaXetDuyetApi(courseID!));
+    await dispatch(layDSChoXetDuyetApi(courseID));
+    await dispatch(layDSDaXetDuyetApi(courseID));
   };
 
   const firstLoad = async () => {
     setLoading(true);
     await getCourseUserList();
-    await dispatch(getCourseDetailApi(courseID!));
+    await dispatch(getCourseDetailApi(courseID));
     setLoading(false);
   };
 
@@ -134,12 +135,16 @@ const CourseEditForm = (props: Props) => {
   }, [courseDetail]);
 
   useEffect(() => {
+    console.log(state);
     return () => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
       dispatch(updateSuccessMessageReducer(null));
       dispatch(updateErrorMessageReducer(null));
+      if (pathname.indexOf("/profile/courses_manage/") !== -1 && state?.from)
+        history.back();
+      else history.push("/profile/courses_manage");
     };
   }, []);
 
