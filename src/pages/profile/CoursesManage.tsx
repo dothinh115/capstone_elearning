@@ -86,6 +86,7 @@ const CoursesManage = (props: Props) => {
 
   useEffect(() => {
     if (courseID) toggle();
+    if (!courseID && show === true) toggle();
   }, [courseID]);
 
   useEffect(() => {

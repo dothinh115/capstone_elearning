@@ -6,7 +6,7 @@ const useModal = () => {
     if (window.innerWidth <= 600 && show === true) {
       setTimeout(() => {
         setShow(!show);
-      }, 300);
+      }, 100);
     } else setShow(!show);
   };
   return { show, toggle };

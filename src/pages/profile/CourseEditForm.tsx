@@ -109,7 +109,7 @@ const CourseEditForm = (props: Props) => {
   };
 
   useEffect(() => {
-    firstLoad();
+    if (courseID) firstLoad();
   }, [courseID]);
 
   useEffect(() => {
