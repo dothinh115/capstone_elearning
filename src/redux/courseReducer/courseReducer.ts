@@ -129,18 +129,20 @@ export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
 
 export const courseUpdateApi = (data: UpdateCourseType) => {
   return async (dispatch: DispatchType) => {
+    let result = {};
     try {
       await API.put("/QuanLyKhoaHoc/CapNhatKhoaHoc", data);
       dispatch(getAllCoursesApi);
-      history.push(window.location.pathname, {
+      result = {
         successMess: "Cập nhật thành công!",
-      });
+      };
     } catch (error: any) {
       console.log(error);
-      history.push(window.location.pathname, {
+      result = {
         errorMess: error.response.data,
-      });
+      };
     }
+    return result;
   };
 };
 

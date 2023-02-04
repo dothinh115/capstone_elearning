@@ -83,6 +83,12 @@ export const loginInputData: LoginInputType = {
   icon: ["user", "lock"],
 };
 
+export interface ApiResultType {
+  successMess?: string;
+  errorMess?: string;
+  deleteSuccessMess?: string;
+}
+
 export const registerInputData: RegisterConfigType = {
   id: [
     "taiKhoan",

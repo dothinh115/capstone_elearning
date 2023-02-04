@@ -34,8 +34,12 @@ const UserTemplate = () => {
   };
 
   useEffect(() => {
-    if (pathname !== "/profile" && window.innerWidth <= 600) {
-      toggle();
+    for (let i in profileMenuConfig.modalPopup) {
+      if (
+        pathname === profileMenuConfig.path[i] &&
+        profileMenuConfig.modalPopup[i]
+      )
+        toggle();
     }
   }, []);
 

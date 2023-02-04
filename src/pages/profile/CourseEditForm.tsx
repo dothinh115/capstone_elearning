@@ -16,6 +16,7 @@ import {
 } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { dangKyApi } from "../../redux/userReducer/userReducer";
+import { ApiResultType } from "../../util/config";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
 import {
@@ -42,6 +43,7 @@ const CourseEditForm = ({ courseID, setCourseID }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
   const { pathname, search } = useLocation();
+  const [result, setResult] = useState<ApiResultType | null>(null);
   const {
     register,
     handleSubmit,
@@ -65,7 +67,8 @@ const CourseEditForm = ({ courseID, setCourseID }: Props) => {
   });
 
   const editSubmitHandle = (data: UpdateCourseType): void => {
-    dispatch(courseUpdateApi(data));
+    const result = dispatch(courseUpdateApi(data));
+    result.then((res: ApiResultType) => setResult(res));
   };
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -137,9 +140,6 @@ const CourseEditForm = ({ courseID, setCourseID }: Props) => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
-      history.push(pathname + search, {
-        replace: true,
-      });
       setCourseID(null);
     };
   }, []);
@@ -234,15 +234,15 @@ const CourseEditForm = ({ courseID, setCourseID }: Props) => {
           )}
         </div>
 
-        {(state?.successMess || state?.errorMess) && (
+        {result && (
           <div className="profile_main_info_item_result">
             <span
               className={`btn ${
-                (state.successMess && "btn-success") ||
-                (state.errorMess && "btn-danger")
+                (result.successMess && "btn-success") ||
+                (result.errorMess && "btn-danger")
               }`}
             >
-              {state.successMess} {state.errorMess}
+              {result.successMess} {result.errorMess}
             </span>
           </div>
         )}
