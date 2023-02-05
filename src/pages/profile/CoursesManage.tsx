@@ -75,7 +75,11 @@ const CoursesManage = (props: Props) => {
     <div className="profile_main_info" ref={modal}>
       <Outlet />
       <div className="profile_container_main_block">
-        <Link to="/profile/courses_manage/create" className="btn">
+        <Link
+          to="/profile/courses_manage/create"
+          className="btn"
+          state={{ inside: true }}
+        >
           Thêm khóa học mới
         </Link>
       </div>
