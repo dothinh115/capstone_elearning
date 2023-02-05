@@ -25,14 +25,13 @@ const Modal = ({
   };
 
   useEffect(() => {
-    if (show) document.body.classList.add("noscroll");
-    else document.body.classList.remove("noscroll");
-  }, [show]);
-
-  useEffect(() => {
+    document.body.classList.add("noscroll");
     document.addEventListener("click", (event: any) => {
       if (event.target === modalOverlay.current!) outModalHandle();
     });
+    return () => {
+      document.body.classList.remove("noscroll");
+    };
   }, []);
 
   if (show) {
