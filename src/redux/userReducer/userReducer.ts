@@ -10,6 +10,10 @@ import {
   UserInfoType,
   UserLoginType,
 } from "../../util/interface/userReducerInterface";
+import {
+  updateErrorMessageReducer,
+  updateSuccessMessageReducer,
+} from "../pageReducer/pageReducer";
 import { DispatchType } from "../store";
 
 const initialState: UserInfoStateType = {
@@ -121,14 +125,10 @@ export const updateUserInfoApi = (data: UserInfoType) => {
     try {
       await API.put("/QuanLyNguoiDung/CapNhatThongTinNguoiDung", data);
       dispatch(getUserInfoApi);
-      history.push(window.location.pathname, {
-        successMess: "Thay đổi thông tin thành công!",
-      });
+      dispatch(updateSuccessMessageReducer("Thay đổi thông tin thành công!"));
     } catch (error: any) {
       console.log(error);
-      history.push(window.location.pathname, {
-        errorMess: error.response.data,
-      });
+      dispatch(updateErrorMessageReducer(error.response.data));
     }
   };
 };

@@ -4,22 +4,23 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { history } from "../../App";
+import Modal from "../../components/modal/Modal";
+import useModal from "../../hooks/useModal";
 import { createNewCourse } from "../../redux/courseReducer/courseReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { toNonAccentVietnamese } from "../../util/function";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
 
-type Props = {
-  toggle?: any;
-};
+type Props = {};
 
-const CreateNewCourseForm = ({ toggle }: Props) => {
+const CreateNewCourseForm = (props: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { state } = useLocation();
+  const { toggle } = useModal();
   const dispatch: DispatchType = useDispatch();
   const {
     register,
@@ -81,7 +82,7 @@ const CreateNewCourseForm = ({ toggle }: Props) => {
     });
   }, []);
 
-  return (
+  const html = (
     <form onSubmit={handleSubmit(addNewSubmitHandle)}>
       <div className="profile_main_info_item">
         <div className="profile_main_info_item_title">
@@ -182,6 +183,12 @@ const CreateNewCourseForm = ({ toggle }: Props) => {
         </div>
       </div>
     </form>
+  );
+
+  return (
+    <Modal show={true} toggle={toggle} title="Thêm khóa học mới">
+      {html}
+    </Modal>
   );
 };
 

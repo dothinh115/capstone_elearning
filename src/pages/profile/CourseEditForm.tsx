@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
-import { history } from "../../App";
+import Modal from "../../components/modal/Modal";
+import useModal from "../../hooks/useModal";
 import {
   courseDeleteApi,
   courseUpdateApi,
@@ -44,6 +45,7 @@ const CourseEditForm = (props: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
   const { courseID } = useParams();
+  const { toggle } = useModal();
   const {
     register,
     handleSubmit,
@@ -144,20 +146,9 @@ const CourseEditForm = (props: Props) => {
     };
   }, []);
 
-  if (state?.deleteSuccess)
-    return (
-      <div className="btn btn-success">
-        <i
-          style={{ fontSize: "16px", marginRight: "5px" }}
-          className="fa-solid fa-check"
-        ></i>{" "}
-        {state?.deleteSuccess}
-      </div>
-    );
-
-  if (loading) return <div className="loader"></div>;
-
-  return (
+  const html = loading ? (
+    <div className="loader"></div>
+  ) : (
     <>
       <form onSubmit={handleSubmit(editSubmitHandle)}>
         <div className="profile_main_info_item">
@@ -338,6 +329,12 @@ const CourseEditForm = (props: Props) => {
         </div>
       </div>
     </>
+  );
+
+  return (
+    <Modal show={true} toggle={toggle} title="Chỉnh sửa khóa học">
+      {html}
+    </Modal>
   );
 };
 

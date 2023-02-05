@@ -180,7 +180,7 @@ export const courseDeleteApi = (maKhoaHoc: string | undefined) => {
 };
 
 export const xetDuyetHocVienApi = (data: dataGhiDanh) => {
-  return async (dispatch: DispatchType) => {
+  return async () => {
     try {
       await API.post("/QuanLyKhoaHoc/GhiDanhKhoaHoc", data);
     } catch (error) {

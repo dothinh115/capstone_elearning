@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { history } from "../../App";
+import Modal from "../../components/modal/Modal";
+import useModal from "../../hooks/useModal";
 import useToken from "../../hooks/useToken";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { dangKyApi } from "../../redux/userReducer/userReducer";
@@ -22,6 +24,7 @@ const CourseSidebar = (props: Props) => {
   const { pathname } = useLocation();
   const { token } = useToken();
   const dispatch: DispatchType = useDispatch();
+  const { toggle } = useModal();
 
   const ghidanhHandle = (): void => {
     if (!token) {
@@ -43,7 +46,8 @@ const CourseSidebar = (props: Props) => {
     if (find) return true;
     return false;
   };
-  return (
+
+  const html = (
     <>
       <div className="sidebar_img">
         <img
@@ -147,6 +151,13 @@ const CourseSidebar = (props: Props) => {
       </div>
     </>
   );
+  if (window.innerWidth <= 820)
+    return (
+      <Modal toggle={toggle} show={true} title="Chi tiết khóa học">
+        {html}
+      </Modal>
+    );
+  return html;
 };
 
 export default CourseSidebar;

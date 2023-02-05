@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { history } from "../../App";
 
@@ -16,23 +16,24 @@ const Modal = ({
   toggle,
 }: Props): JSX.Element | null => {
   const modalOverlay = useRef<HTMLDivElement | null>(null);
-  const modal = useRef<HTMLDivElement | null>(null);
   const { pathname, state } = useLocation();
 
-  const outModalHandle = async () => {
-    if (pathname.indexOf("/profile/courses_manage/") !== -1 && state?.from) {
-      modal.current!.style.transform = await "translateY(100%)";
-      history.back();
-    } else {
-      toggle();
-      modal.current!.style.transform = "translateY(100%)";
-    }
+  const outModalHandle = () => {
+    let newUrl: string[] | string = pathname.split("/");
+    newUrl.pop();
+    state?.inside ? history.back() : history.push(newUrl.join("/"));
   };
 
   useEffect(() => {
     if (show) document.body.classList.add("noscroll");
     else document.body.classList.remove("noscroll");
   }, [show]);
+
+  useEffect(() => {
+    document.addEventListener("click", (event: any) => {
+      if (event.target === modalOverlay.current!) outModalHandle();
+    });
+  }, []);
 
   if (show) {
     return (
@@ -45,10 +46,12 @@ const Modal = ({
           }
         }}
       >
-        <div ref={modal} className="modal">
+        <div className="modal">
           <div className="modal_header">
+            <button onClick={outModalHandle}>
+              {state?.inside ? <i className="fa-solid fa-arrow-left"></i> : "X"}
+            </button>
             <h2>{title && title}</h2>
-            <button onClick={outModalHandle}>X</button>
           </div>
           <div className="modal_body">{children}</div>
         </div>

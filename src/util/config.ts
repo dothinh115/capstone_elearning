@@ -71,9 +71,13 @@ interface ProfileMenuConfigType {
 }
 
 export const profileMenuConfig: ProfileMenuConfigType = {
-  path: ["/profile", "/profile/registered_courses", "/profile/courses_manage"],
+  path: [
+    "/profile/view_profile",
+    "/profile/registered_courses",
+    "/profile/courses_manage",
+  ],
   title: ["Thông tin tài khoản", "Khóa học đã đăng ký", "Quản lý khóa học"],
-  modalPopup: [false, true, true],
+  modalPopup: [true, true, true],
   icon: ["house", "key", "list-check"],
 };
 

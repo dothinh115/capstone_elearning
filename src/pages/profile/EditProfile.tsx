@@ -10,7 +10,12 @@ import {
   UserInfoType,
 } from "../../util/interface/userReducerInterface";
 import { useEffect, useState } from "react";
-import { history } from "../../App";
+import Modal from "../../components/modal/Modal";
+import useModal from "../../hooks/useModal";
+import {
+  updateErrorMessageReducer,
+  updateSuccessMessageReducer,
+} from "../../redux/pageReducer/pageReducer";
 
 type Props = {};
 
@@ -19,6 +24,10 @@ const EditProfile = (props: Props) => {
   const { state } = useLocation();
   const dispatch: DispatchType = useDispatch();
   const [editing, setEditing] = useState<boolean>(false);
+  const { toggle } = useModal();
+  const { successMessage, errorMessage } = useSelector(
+    (store: ReduxRootType) => store.pageReducer
+  );
 
   const {
     register,
@@ -33,7 +42,8 @@ const EditProfile = (props: Props) => {
   const submitHandle = (data: UserInfoType) => {
     if (!editing) {
       setEditing(true);
-      history.push(window.location.pathname);
+      dispatch(updateErrorMessageReducer(null));
+      dispatch(updateSuccessMessageReducer(null));
     } else {
       dispatch(updateUserInfoApi(data));
     }
@@ -44,7 +54,14 @@ const EditProfile = (props: Props) => {
     if (!state?.errorMess) setEditing(false);
   }, [userInfo]);
 
-  return (
+  useEffect(() => {
+    return () => {
+      dispatch(updateErrorMessageReducer(null));
+      dispatch(updateSuccessMessageReducer(null));
+    };
+  }, []);
+
+  const html = (
     <div className="profile_main_info">
       <form onSubmit={handleSubmit(submitHandle)}>
         <div className="profile_container_main_block">
@@ -127,22 +144,21 @@ const EditProfile = (props: Props) => {
             );
           })}
         </div>
-        {(state?.errorMess || state?.successMess) && (
+        {(errorMessage || successMessage) && (
           <div className="profile_container_main_block">
             <p
               className={`show_result ${
-                (state.errorMess && "errors") ||
-                (state.successMess && "success")
+                (errorMessage && "errors") || (successMessage && "success")
               }`}
             >
               <i
                 className={`fa-solid fa-${
-                  (state.errorMess && "circle-exclamation fa-sharp") ||
-                  (state.successMess && "check")
+                  (errorMessage && "circle-exclamation fa-sharp") ||
+                  (successMessage && "check")
                 }`}
               ></i>
-              {state.errorMess}
-              {state.successMess}
+              {errorMessage}
+              {successMessage}
             </p>
           </div>
         )}
@@ -155,6 +171,14 @@ const EditProfile = (props: Props) => {
       </form>
     </div>
   );
+  if (window.innerWidth <= 600) {
+    return (
+      <Modal show={true} toggle={toggle} title="Chỉnh sửa thông tin cá nhân">
+        {html}
+      </Modal>
+    );
+  }
+  return html;
 };
 
 export default EditProfile;

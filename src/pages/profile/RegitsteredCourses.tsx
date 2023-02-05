@@ -2,6 +2,8 @@ import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import { history } from "../../App";
+import Modal from "../../components/modal/Modal";
+import useModal from "../../hooks/useModal";
 import {
   setRegisteredCoursesScroll,
   setRegisteredCoursesViewNumber,
@@ -22,6 +24,7 @@ const RegitsteredCourses = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const coursesList = useRef<HTMLUListElement | null>(null);
   const { state } = useLocation();
+  const { toggle } = useModal();
 
   const ghiDanhBtnHandle = (maKhoaHoc: string) => {
     const data: dataGhiDanh = {
@@ -41,7 +44,7 @@ const RegitsteredCourses = (props: Props) => {
     }
   }, [userInfo?.chiTietKhoaHocGhiDanh]);
 
-  return (
+  const html = (
     <div className="profile_main_info">
       <ul ref={coursesList}>
         {userInfo?.chiTietKhoaHocGhiDanh?.length === 0 ? (
@@ -130,6 +133,13 @@ const RegitsteredCourses = (props: Props) => {
       </ul>
     </div>
   );
+  if (window.innerWidth <= 600)
+    return (
+      <Modal toggle={toggle} show={true} title="Khóa học đã đăng ký">
+        {html}
+      </Modal>
+    );
+  return html;
 };
 
 export default RegitsteredCourses;

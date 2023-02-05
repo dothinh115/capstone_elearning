@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
-import Modal from "../../components/modal/Modal";
-import useModal from "../../hooks/useModal";
+import { Link, Outlet, useOutlet, useParams } from "react-router-dom";
+
 import {
   getCourseDetailAction,
   getCourseDetailApi,
@@ -20,8 +19,7 @@ const Course = (props: Props) => {
     (store: ReduxRootType) => store.courseReducer
   );
   const dispatch: DispatchType = useDispatch();
-  const { show, toggle } = useModal();
-
+  const outlet = useOutlet();
   useEffect(() => {
     dispatch(getCourseDetailApi(courseID));
   }, [courseID]);
@@ -71,9 +69,13 @@ const Course = (props: Props) => {
                   </span>
                 </span>
                 {window.innerWidth <= 998 && (
-                  <button className="btn btn-primary" onClick={toggle}>
+                  <Link
+                    className="btn btn-primary"
+                    to={`/course/${courseDetail?.maKhoaHoc}/viewinfo`}
+                    state={{ inside: true }}
+                  >
                     Xem chi tiết khóa học
-                  </button>
+                  </Link>
                 )}
               </div>
             </div>
@@ -121,15 +123,8 @@ const Course = (props: Props) => {
             </div>
           </div>
           <div className="sidebar">
-            {window.innerWidth < 998 ? (
-              <Modal show={show} toggle={toggle} title="Chi tiết khóa học">
-                <div className="modal_sidebar">
-                  <CourseSidebar />
-                </div>
-              </Modal>
-            ) : (
-              <CourseSidebar />
-            )}
+            {window.innerWidth > 820 && !outlet && <CourseSidebar />}
+            <Outlet />
           </div>
         </div>
       </section>

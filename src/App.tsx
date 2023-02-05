@@ -25,6 +25,9 @@ import UserTemplate from "./templates/UserTemplate";
 import EditProfile from "./pages/profile/EditProfile";
 import RegitsteredCourses from "./pages/profile/RegitsteredCourses";
 import CoursesManage from "./pages/profile/CoursesManage";
+import CreateNewCourseForm from "./pages/profile/CreateNewCourseForm";
+import CourseEditForm from "./pages/profile/CourseEditForm";
+import CourseSidebar from "./pages/course/CourseSidebar";
 export const history: any = createBrowserHistory();
 
 function App() {
@@ -41,18 +44,18 @@ function App() {
         <Route element={<HomeTemplate />}>
           <Route index element={<Home />} />
           <Route path="categories" element={<Categories />} />
-          <Route path="course/:courseID" element={<Course />} />
+          <Route path="course/:courseID" element={<Course />}>
+            <Route path="viewinfo" element={<CourseSidebar />} />
+          </Route>
         </Route>
         <Route element={<LoggedInRoute token={token} />}>
           <Route path="profile" element={<UserTemplate />}>
-            <Route index element={<EditProfile />} />
+            <Route path="view_profile" element={<EditProfile />} />
             <Route path="registered_courses" element={<RegitsteredCourses />} />
-            <Route path="courses_manage" element={<CoursesManage />} />
-            <Route
-              path="courses_manage/:courseID"
-              element={<CoursesManage popup={true} />}
-            />
-            {/* <Route path="courses_manage/create" element={<CoursesManage />} /> */}
+            <Route path="courses_manage" element={<CoursesManage />}>
+              <Route path="create" element={<CreateNewCourseForm />} />
+              <Route path=":courseID" element={<CourseEditForm />} />
+            </Route>
           </Route>
         </Route>
         <Route element={<NotLoggedInRoute token={token} />}>
