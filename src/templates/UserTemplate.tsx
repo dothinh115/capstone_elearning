@@ -1,9 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Outlet, useOutlet } from "react-router-dom";
-import { ReduxRootType } from "../redux/store";
+import { DispatchType, ReduxRootType } from "../redux/store";
 import { removeLocalStorage } from "../util/function";
-import { profileMenuConfig } from "../util/config";
+import { limitProfileCoursesView, profileMenuConfig } from "../util/config";
 import EditProfile from "../pages/profile/EditProfile";
+import {
+  setCoursesManageScroll,
+  setCoursesViewNumber,
+  setRegisteredCoursesScroll,
+  setRegisteredCoursesViewNumber,
+} from "../redux/profileReducer/profileReducer";
 
 const UserTemplate = () => {
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
@@ -13,7 +19,16 @@ const UserTemplate = () => {
     removeLocalStorage("userInfo");
     window.location.href = "/";
   };
+  const dispatch: DispatchType = useDispatch();
   const outlet = useOutlet();
+
+  const resetScroll = (): void => {
+    dispatch(setCoursesManageScroll(0));
+
+    dispatch(setCoursesViewNumber(limitProfileCoursesView));
+    dispatch(setRegisteredCoursesScroll(0));
+    dispatch(setRegisteredCoursesViewNumber(limitProfileCoursesView));
+  };
 
   if (window.innerWidth <= 600) {
     return (
@@ -39,7 +54,11 @@ const UserTemplate = () => {
                 {profileMenuConfig.path.map((item: string, index: number) => {
                   return (
                     <li key={index}>
-                      <NavLink to={item} state={{ inside: true }}>
+                      <NavLink
+                        to={item}
+                        state={{ inside: true }}
+                        onClick={resetScroll}
+                      >
                         <i
                           className={`fa-solid fa-${profileMenuConfig.icon[index]}`}
                         ></i>
