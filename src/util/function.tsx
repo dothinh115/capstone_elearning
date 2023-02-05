@@ -9,6 +9,7 @@ export const {
   removeLocalStorage,
   showMaNhom,
   toNonAccentVietnamese,
+  xoaTrungLap,
 } = {
   randomArray<T>(arr: T[], limit: number): T[] {
     arr = [...arr];
@@ -55,8 +56,6 @@ export const {
     }
     return html;
   },
-  // This function converts the string to lowercase, then perform the conversion
-
   toNonAccentVietnamese(str: string) {
     str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -77,5 +76,17 @@ export const {
     str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
     str = str.replace(/\s/g, "-");
     return str;
+  },
+  xoaTrungLap(arr: any[]): any[] {
+    //Lấy danh sách các phần tử trùng lặp
+    let mangTrungLap = arr.filter(
+      (item: any, index: number) => arr.indexOf(item) !== index
+    );
+    //tiến hành chạy vòng lặp xóa các phần tử bị trùng trong mảng
+    for (let value of mangTrungLap) {
+      const find = arr.find((item: any, index: number) => item === value); //xóa kết quả đầu tiên tìm dc
+      if (find) arr.splice(arr.indexOf(find), 1);
+    }
+    return arr;
   },
 };

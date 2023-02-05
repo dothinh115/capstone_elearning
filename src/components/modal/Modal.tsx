@@ -20,7 +20,7 @@ const Modal = ({
 
   const outModalHandle = () => {
     const urlSplit: string[] = pathname.split("/");
-    document.body.classList.remove("noscroll");
+
     if (state?.inside) {
       history.back();
     } else if (search) {
@@ -34,7 +34,11 @@ const Modal = ({
   };
 
   useEffect(() => {
-    document.body.classList.add("noscroll");
+    if (show) document.body.classList.add("noscroll");
+    else document.body.classList.remove("noscroll");
+  }, [show]);
+
+  useEffect(() => {
     document.addEventListener("click", (event: any) => {
       if (event.target === modalOverlay.current!) outModalHandle();
     });

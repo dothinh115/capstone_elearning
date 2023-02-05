@@ -113,6 +113,20 @@ const Categories = (props: Props) => {
     }
   }, [searchParams]);
 
+  useEffect(() => {
+    const arr = [1, 2, 3, 4, 1];
+    const trungLap = arr.filter(
+      (item: number, index: number) => arr.indexOf(item) !== index
+    );
+    for (let value of trungLap) {
+      arr.splice(
+        arr.findIndex((item: number) => item === value),
+        1
+      );
+    }
+    console.log(arr);
+  });
+
   return (
     <section className="categories" ref={parentDiv}>
       <div className="categories_container">

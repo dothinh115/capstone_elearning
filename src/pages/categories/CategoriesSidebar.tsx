@@ -7,6 +7,7 @@ import {
 } from "../../redux/categoriesReducer/categoriesReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { limitCategoriesCourses } from "../../util/config";
+import { xoaTrungLap } from "../../util/function";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 
 type Props = {
@@ -27,6 +28,7 @@ const CategoriesSidebar = ({
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
+
   const checkboxHandle = (e: { target: HTMLInputElement }) => {
     let arr: string[] | null = [];
     if (checked !== null) arr = [...checked];
@@ -39,6 +41,7 @@ const CategoriesSidebar = ({
       if (index !== -1) arr.splice(index, 1);
     }
     if (arr.length === 0) arr = null;
+    else arr = xoaTrungLap(arr);
     setChecked(arr);
   };
 
