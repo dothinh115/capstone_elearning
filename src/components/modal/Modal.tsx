@@ -16,12 +16,21 @@ const Modal = ({
   toggle,
 }: Props): JSX.Element | null => {
   const modalOverlay = useRef<HTMLDivElement | null>(null);
-  const { pathname, state } = useLocation();
+  const { pathname, state, search } = useLocation();
 
   const outModalHandle = () => {
-    let newUrl: string[] | string = pathname.split("/");
-    newUrl.pop();
-    state?.inside ? history.back() : history.push(newUrl.join("/"));
+    const urlSplit: string[] = pathname.split("/");
+    document.body.classList.remove("noscroll");
+    if (state?.inside) {
+      history.back();
+    } else if (search) {
+      toggle();
+    } else {
+      urlSplit.pop();
+      const urlJoin: string | undefined = urlSplit?.join("/");
+      if (urlJoin === "") toggle();
+      else history.push(urlSplit.join("/"));
+    }
   };
 
   useEffect(() => {
