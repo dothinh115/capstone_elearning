@@ -38,14 +38,18 @@ const CoursesManage = (props: Props) => {
 
   const searchHandle = (value: string | undefined | null): void => {
     let filterArr: CourseType[] | null | undefined = coursesArr;
+    const keywordsFromParams: string | null | undefined =
+      searchParams.get("keywords");
     if (value) {
       filterArr = filterArr?.filter((item: CourseType) =>
         item.tenKhoaHoc.toLowerCase().includes(value.toLowerCase())
       );
     }
-    setSearchParams({
-      ...(value && { keywords: value }),
-    });
+    if (value !== keywordsFromParams)
+      setSearchParams({
+        ...(value && { keywords: value }),
+      });
+
     setSearchResult(filterArr);
   };
 
