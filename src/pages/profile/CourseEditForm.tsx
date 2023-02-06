@@ -152,6 +152,13 @@ const CourseEditForm = (props: Props) => {
     <>
       <form onSubmit={handleSubmit(editSubmitHandle)}>
         <div className="profile_main_info_item">
+          <img
+            src={courseDetail?.hinhAnh}
+            onError={({ currentTarget }) => {
+              currentTarget.src = "../../img/Nodejs.png";
+            }}
+            alt=""
+          />
           <div className="profile_main_info_item_title">
             {" "}
             <i className="fa-solid fa-sliders"></i>Mã khóa học
