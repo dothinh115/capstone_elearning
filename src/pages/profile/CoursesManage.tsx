@@ -45,7 +45,7 @@ const CoursesManage = (props: Props) => {
         item.tenKhoaHoc.toLowerCase().includes(value.toLowerCase())
       );
     }
-    if (value !== keywordsFromParams)
+    if (value !== keywordsFromParams && value)
       setSearchParams({
         ...(value && { keywords: value }),
       });
