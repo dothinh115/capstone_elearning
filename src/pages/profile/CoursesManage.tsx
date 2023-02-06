@@ -54,11 +54,9 @@ const CoursesManage = (props: Props) => {
   };
 
   useEffect(() => {
-    if (coursesManageScroll)
+    if (window.innerWidth <= 820 && coursesManageScroll)
       document.querySelector(".modal_body")?.scrollTo(0, coursesManageScroll);
-    if (window.innerWidth <= 820) {
-      courseList.current?.scrollTo(0, coursesManageScroll!);
-    }
+    else courseList.current?.scrollTo(0, coursesManageScroll!);
   }, [searchResult]);
 
   useEffect(() => {
