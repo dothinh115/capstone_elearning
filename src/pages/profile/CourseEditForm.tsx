@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
 import {
@@ -41,7 +41,6 @@ const CourseEditForm = (props: Props) => {
     (store: ReduxRootType) => store.courseReducer
   );
   const pageReducer = useSelector((store: ReduxRootType) => store.pageReducer);
-  const { state } = useLocation();
   const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
   const { courseID } = useParams();
@@ -53,19 +52,6 @@ const CourseEditForm = (props: Props) => {
     formState: { errors },
   } = useForm<UpdateCourseType>({
     mode: "onChange",
-    defaultValues: {
-      maKhoaHoc: "",
-      biDanh: "",
-      tenKhoaHoc: "",
-      moTa: "",
-      luotXem: 0,
-      danhGia: 0,
-      hinhAnh: "",
-      maNhom: "",
-      ngayTAO: "",
-      maDanhMucKhoaHoc: "",
-      taiKhoanNguoiTAO: "",
-    },
   });
 
   const editSubmitHandle = (data: UpdateCourseType): void => {
@@ -121,17 +107,8 @@ const CourseEditForm = (props: Props) => {
 
   useEffect(() => {
     const obj = {
-      maKhoaHoc: courseDetail?.maKhoaHoc,
-      biDanh: courseDetail?.biDanh,
-      tenKhoaHoc: courseDetail?.tenKhoaHoc,
-      moTa: courseDetail?.moTa,
-      luotXem: courseDetail?.luotXem,
+      ...courseDetail,
       danhGia: 5,
-      hinhAnh: courseDetail?.hinhAnh,
-      maNhom: courseDetail?.maNhom,
-      ngayTAO: courseDetail?.ngayTao,
-      maDanhMucKhoaHoc: courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc,
-      taiKhoanNguoiTAO: courseDetail?.nguoiTao.taiKhoan,
     };
     reset(obj);
   }, [courseDetail]);

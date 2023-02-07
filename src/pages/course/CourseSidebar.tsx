@@ -82,6 +82,13 @@ const CourseSidebar = (props: Props) => {
             </>
           )}
         </button>
+        <Link
+          state={{ inside: true }}
+          to={`/profile/courses_manage/${courseDetail?.maKhoaHoc}`}
+          className="btn btn-info"
+        >
+          Chỉnh sửa khóa học này
+        </Link>
         <p>
           <span>
             <i className="fa-solid fa-sliders"></i>

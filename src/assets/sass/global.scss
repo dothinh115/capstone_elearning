@@ -189,6 +189,16 @@ input.isInvalid {
     background-color: green !important;
     color: white !important;
   }
+  &-info {
+    background-color: #17a2b8 !important;
+    color: white !important;
+  }
+}
+
+a.btn {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
 }
 
 .hr_span_footer {
