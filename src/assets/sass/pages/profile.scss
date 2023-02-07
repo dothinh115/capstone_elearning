@@ -204,11 +204,12 @@
     li {
       list-style-type: none;
       display: flex;
-      justify-content: space-between;
       background-color: white;
       border: 1px solid #eee;
       margin-bottom: 10px;
       align-items: center;
+      width: 100%;
+      justify-content: space-between;
       a {
         display: flex;
         width: 100%;
@@ -216,6 +217,9 @@
         color: #333;
         position: relative;
         align-items: center;
+        &:first-of-type {
+          width: calc(100% - 75px);
+        }
         img {
           width: 75px;
           height: 70px;
@@ -223,6 +227,8 @@
           object-fit: cover;
         }
         .course_info {
+          max-width: calc(100% - 75px);
+          overflow: hidden;
           p {
             font-size: 13px;
             margin-top: 5px;
@@ -261,12 +267,11 @@
     }
     .editButton {
       display: block;
-      width: 75px;
+      width: 70px;
       height: 70px;
       border: unset;
       font-size: 20px;
       font-weight: 600;
-      cursor: point;
       text-align: center;
       color: white;
       background-color: #007bff;
