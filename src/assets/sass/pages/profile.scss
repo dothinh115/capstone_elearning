@@ -34,15 +34,16 @@
         margin: auto;
         color: white;
       }
-      a#getout,
-      .btn {
-        display: inline-block;
+      a#getout {
+        display: flex;
         height: 100%;
         border-radius: unset;
         min-width: 50px;
         font-size: 20px;
         font-weight: 600;
         border: unset;
+        align-items: center;
+        justify-content: center;
       }
     }
     &_sidebar {

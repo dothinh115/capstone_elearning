@@ -7,6 +7,7 @@ export interface PageReducerType {
   addResult?: string | null;
   deleteResult?: string | null;
   toggleModalClick?: boolean;
+  globalMessage?: string | null;
 }
 
 const initialState: PageReducerType = {
@@ -16,6 +17,7 @@ const initialState: PageReducerType = {
   addResult: null,
   deleteResult: null,
   toggleModalClick: false,
+  globalMessage: null,
 };
 
 const pageReducer = createSlice({
@@ -58,6 +60,12 @@ const pageReducer = createSlice({
     ) => {
       state.toggleModalClick = action.payload;
     },
+    updateGlobalMessageReducer: (
+      state: PageReducerType,
+      action: PayloadAction<string | null>
+    ) => {
+      state.globalMessage = action.payload;
+    },
   },
 });
 
@@ -68,6 +76,7 @@ export const {
   updateAddResultReducer,
   updateDeleteResultReducer,
   updateToggleModalReducer,
+  updateGlobalMessageReducer,
 } = pageReducer.actions;
 
 export default pageReducer.reducer;

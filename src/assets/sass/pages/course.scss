@@ -58,11 +58,13 @@
           margin-bottom: 10px;
           display: flex;
           align-items: center;
+          a {
+            margin-top: 5px;
+          }
           @media (max-width: 600px) {
             //0 - 600
             flex-wrap: wrap;
             a {
-              margin-top: 10px;
               display: block;
               width: 100%;
             }

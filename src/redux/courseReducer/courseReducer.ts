@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { API, ApiResultType, numberRandomCourses } from "../../util/config";
+import { API, numberRandomCourses } from "../../util/config";
 import { DispatchType } from "../store";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { randomArray, randomDiscount } from "../../util/function";
@@ -8,14 +8,14 @@ import {
   CourseType,
   UpdateCourseType,
 } from "../../util/interface/courseReducerInterface";
-import { history } from "../../App";
 import {
   DanhSachGhiDanh,
   dataGhiDanh,
 } from "../../util/interface/userReducerInterface";
 import {
-  PageReducerType,
+  updateDeleteResultReducer,
   updateErrorMessageReducer,
+  updateGlobalMessageReducer,
   updateSuccessMessageReducer,
 } from "../pageReducer/pageReducer";
 const initialState: CourseStateType = {
@@ -150,12 +150,10 @@ export const createNewCourse = (data: UpdateCourseType) => {
     try {
       await API.post("/QuanLyKhoaHoc/ThemKhoaHoc", data);
       dispatch(getAllCoursesApi);
-      history.push(`/course/${data.maKhoaHoc}`);
+      dispatch(updateSuccessMessageReducer("Tạo khóa học thành công!"));
     } catch (error: any) {
       console.log(error);
-      history.push(window.location.pathname, {
-        errorMess: error.response.data,
-      });
+      dispatch(updateErrorMessageReducer(error.response.data));
     }
   };
 };
@@ -167,14 +165,10 @@ export const courseDeleteApi = (maKhoaHoc: string | undefined) => {
         `/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${maKhoaHoc}`
       );
       await dispatch(getAllCoursesApi);
-      history.push(window.location.pathname + window.location.search, {
-        deleteSuccess: result.data,
-      });
+      dispatch(updateDeleteResultReducer(result.data));
     } catch (error: any) {
       console.log(error);
-      history.push(window.location.pathname + window.location.search, {
-        deleteError: error.reponese?.data,
-      });
+      dispatch(updateGlobalMessageReducer(error.reponese?.data));
     }
   };
 };

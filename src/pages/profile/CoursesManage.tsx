@@ -18,6 +18,7 @@ const CoursesManage = (props: Props) => {
   const { coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
+  const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const [searchResult, setSearchResult] = useState<
     CourseType[] | null | undefined
   >(null);
@@ -45,10 +46,14 @@ const CoursesManage = (props: Props) => {
         item.tenKhoaHoc.toLowerCase().includes(value.toLowerCase())
       );
     }
-    if (value !== keywordsFromParams && value)
+    if (!value) {
+      searchParams.delete("keywords");
+      setSearchParams(searchParams);
+    } else if (value !== keywordsFromParams && value) {
       setSearchParams({
         ...(value && { keywords: value }),
       });
+    }
 
     setSearchResult(filterArr);
   };
@@ -77,13 +82,19 @@ const CoursesManage = (props: Props) => {
     <div className="profile_main_info" ref={modal}>
       <Outlet />
       <div className="profile_container_main_block">
-        <Link
-          to="/profile/courses_manage/create"
-          className="btn"
-          state={{ inside: true }}
-        >
-          Thêm khóa học mới
-        </Link>
+        {userInfo?.maLoaiNguoiDung === "GV" ? (
+          <Link
+            to="/profile/courses_manage/create"
+            className="btn"
+            state={{ inside: true }}
+          >
+            Thêm khóa học mới
+          </Link>
+        ) : (
+          <span style={{ display: "block", width: "100%" }} className="btn">
+            Chỉ có tài khoản GV mới được tạo khóa học!
+          </span>
+        )}
       </div>
       <div
         className="profile_container_main_block"

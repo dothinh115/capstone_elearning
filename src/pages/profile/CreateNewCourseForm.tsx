@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +7,10 @@ import { history } from "../../App";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
 import { createNewCourse } from "../../redux/courseReducer/courseReducer";
+import {
+  updateErrorMessageReducer,
+  updateSuccessMessageReducer,
+} from "../../redux/pageReducer/pageReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
 import { toNonAccentVietnamese } from "../../util/function";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
@@ -19,7 +23,11 @@ const CreateNewCourseForm = (props: Props) => {
     (store: ReduxRootType) => store.categoriesReducer
   );
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
-  const { state } = useLocation();
+  const { successMessage, errorMessage } = useSelector(
+    (store: ReduxRootType) => store.pageReducer
+  );
+  const mKHoc = useRef<string | null>(null);
+
   const { toggle } = useModal();
   const dispatch: DispatchType = useDispatch();
   const {
@@ -45,12 +53,6 @@ const CreateNewCourseForm = (props: Props) => {
   });
 
   const addNewSubmitHandle = (data: UpdateCourseType): void => {
-    if (userInfo?.maLoaiNguoiDung !== "GV") {
-      history.push(window.location.pathname, {
-        errorMess: "Tài khoản người tạo phải là tài khoản GV!",
-      });
-      return;
-    }
     const biDanh = toNonAccentVietnamese(data.tenKhoaHoc);
     const date = new Date();
     const newDate = `${date.getDay()}/${
@@ -63,8 +65,9 @@ const CreateNewCourseForm = (props: Props) => {
       luotXem: 0,
       danhGia: 0,
       maNhom: "GP01",
-      taiKhoanNguoiTAO: userInfo.taiKhoan,
+      taiKhoanNguoiTAO: userInfo!.taiKhoan,
     };
+    console.log(data);
     dispatch(createNewCourse(data));
   };
 
@@ -72,6 +75,7 @@ const CreateNewCourseForm = (props: Props) => {
     reset({
       maKhoaHoc: toNonAccentVietnamese(event.target.value),
     });
+    mKHoc.current = toNonAccentVietnamese(event.target.value);
   };
 
   useEffect(() => {
@@ -80,6 +84,10 @@ const CreateNewCourseForm = (props: Props) => {
       danhGia: 0,
       luotXem: 0,
     });
+    return () => {
+      dispatch(updateSuccessMessageReducer(null));
+      dispatch(updateErrorMessageReducer(null));
+    };
   }, []);
 
   const html = (
@@ -162,19 +170,11 @@ const CreateNewCourseForm = (props: Props) => {
           </div>
         )}
       </div>
-      {state?.successMess ||
-        (state?.errorMess && (
-          <div className="profile_main_info_item_result">
-            <span
-              className={`btn ${
-                (state.successMess && "btn-success") ||
-                (state.errorMess && "btn-danger")
-              }`}
-            >
-              {state.successMess} {state.errorMess}
-            </span>
-          </div>
-        ))}
+      {errorMessage && (
+        <div className="profile_main_info_item_result">
+          <span className="btn btn-danger">{errorMessage}</span>
+        </div>
+      )}
       <div className="profile_main_info_item">
         <div className="profile_main_info_item_button">
           <button type="submit" className="btn btn-primary">
@@ -184,6 +184,24 @@ const CreateNewCourseForm = (props: Props) => {
       </div>
     </form>
   );
+
+  if (successMessage)
+    return (
+      <Modal show={true} toggle={toggle} title="Thêm khóa học mới thành công">
+        <span>
+          <p className="btn btn-info">Tạo khóa học mới thành công</p>
+          <button
+            style={{ display: "block", width: "100%", marginTop: "10px" }}
+            className="btn btn-success"
+            onClick={() => {
+              history.push(`/course/${mKHoc.current}`);
+            }}
+          >
+            Xem khóa học
+          </button>
+        </span>
+      </Modal>
+    );
 
   return (
     <Modal show={true} toggle={toggle} title="Thêm khóa học mới">

@@ -39,7 +39,7 @@ const Modal = ({
   }, [show]);
 
   useEffect(() => {
-    document.addEventListener("click", (event: any) => {
+    document.addEventListener("mousedown", (event: any) => {
       if (event.target === modalOverlay.current!) outModalHandle();
     });
     return () => {
@@ -49,15 +49,7 @@ const Modal = ({
 
   if (show) {
     return (
-      <div
-        ref={modalOverlay}
-        className="modal_overlay"
-        onMouseDown={(event: React.MouseEvent<HTMLDivElement>): void => {
-          if (event.target === modalOverlay.current) {
-            toggle();
-          }
-        }}
-      >
+      <div ref={modalOverlay} className="modal_overlay">
         <div className="modal">
           <div className="modal_header">
             <button onClick={outModalHandle}>

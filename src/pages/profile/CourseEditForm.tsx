@@ -16,6 +16,7 @@ import {
   xetDuyetHocVienApi,
 } from "../../redux/courseReducer/courseReducer";
 import {
+  updateDeleteResultReducer,
   updateErrorMessageReducer,
   updateSuccessMessageReducer,
 } from "../../redux/pageReducer/pageReducer";
@@ -34,6 +35,7 @@ const CourseEditForm = (props: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
+  const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { choXetDuyet, daXetDuyet } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
@@ -120,6 +122,7 @@ const CourseEditForm = (props: Props) => {
       dispatch(getCourseDetailAction(null));
       dispatch(updateSuccessMessageReducer(null));
       dispatch(updateErrorMessageReducer(null));
+      dispatch(updateDeleteResultReducer(null));
     };
   }, []);
 
@@ -314,6 +317,21 @@ const CourseEditForm = (props: Props) => {
       </div>
     </>
   );
+  if (userInfo?.maLoaiNguoiDung !== "GV")
+    return (
+      <Modal show={true} toggle={toggle} title="Thông báo">
+        <p className="btn btn-info">
+          Chỉ có tài khoản GV mới được chỉnh sửa khóa học!
+        </p>
+      </Modal>
+    );
+
+  if (pageReducer.deleteResult)
+    return (
+      <Modal show={true} toggle={toggle} title="Xóa thành công">
+        <p className="btn btn-danger">Xóa khóa học thành công</p>
+      </Modal>
+    );
 
   return (
     <Modal show={true} toggle={toggle} title="Chỉnh sửa khóa học">

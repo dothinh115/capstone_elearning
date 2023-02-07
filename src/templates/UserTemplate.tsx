@@ -35,7 +35,7 @@ const UserTemplate = () => {
       <section className="profile">
         <div className="profile_container">
           <div className="profile_container_header">
-            <NavLink id="getout" to={prevPage!} className="btn btn-primary">
+            <NavLink id="getout" to={prevPage!} className="btn-primary">
               <i className="fa-solid fa-arrow-left-long"></i>
             </NavLink>
             <h2>Trang cá nhân</h2>
@@ -85,7 +85,7 @@ const UserTemplate = () => {
     <section className="profile">
       <div className="profile_container">
         <div className="profile_container_header">
-          <NavLink id="getout" to={prevPage!} className="btn btn-primary">
+          <NavLink id="getout" to={prevPage!} className="btn-primary">
             <i className="fa-solid fa-arrow-left-long"></i>
           </NavLink>
           <h2>Trang cá nhân</h2>
