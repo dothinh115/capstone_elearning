@@ -126,9 +126,7 @@ const CourseEditForm = (props: Props) => {
     };
   }, []);
 
-  const html = loading ? (
-    <div className="loader"></div>
-  ) : (
+  const html = (
     <>
       <form onSubmit={handleSubmit(editSubmitHandle)}>
         <div className="profile_main_info_item">
@@ -317,6 +315,14 @@ const CourseEditForm = (props: Props) => {
       </div>
     </>
   );
+
+  if (loading)
+    return (
+      <Modal show={true} toggle={toggle} title="Thông báo">
+        <div className="loader"></div>
+      </Modal>
+    );
+
   if (userInfo?.maLoaiNguoiDung !== "GV")
     return (
       <Modal show={true} toggle={toggle} title="Thông báo">
