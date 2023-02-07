@@ -58,21 +58,22 @@
           margin-bottom: 10px;
           display: flex;
           align-items: center;
-          a {
-            margin-top: 5px;
-          }
           @media (max-width: 600px) {
             //0 - 600
             flex-wrap: wrap;
             a {
               display: block;
-              width: 100%;
+              width: 100% !important;
+              margin-top: 5px !important;
             }
           }
 
           @media (min-width: 768px) {
             // 600 - 998
             justify-content: space-between;
+            a {
+              margin-left: 5px;
+            }
           }
           i {
             color: #f6ba35;
@@ -89,6 +90,10 @@
           .viewed {
             margin: 0 10px;
             font-size: 14px;
+          }
+          a {
+            display: inline-block;
+            width: unset;
           }
         }
       }
@@ -202,6 +207,7 @@
         button {
           display: block;
           width: 100%;
+          margin-bottom: 5px;
           i {
             margin-right: 5px;
           }

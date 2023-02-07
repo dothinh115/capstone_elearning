@@ -69,7 +69,7 @@ const Course = (props: Props) => {
                   </span>
                 </span>
                 {window.innerWidth <= 998 && (
-                  <>
+                  <span>
                     <Link
                       className="btn btn-primary"
                       to={`/course/${courseDetail?.maKhoaHoc}/viewinfo`}
@@ -84,7 +84,7 @@ const Course = (props: Props) => {
                     >
                       Chỉnh sửa khóa học này
                     </Link>
-                  </>
+                  </span>
                 )}
               </div>
             </div>
