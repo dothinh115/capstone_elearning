@@ -41,9 +41,9 @@ API.interceptors.response.use(
       window.location.reload();
     }
 
-    if (error.response?.status === 400) {
-      window.location.href = "/";
-    }
+    // if (error.response?.status === 400) {
+    //   window.location.href = "/";
+    // }
     return Promise.reject(error);
   }
 );

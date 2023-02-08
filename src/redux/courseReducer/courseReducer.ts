@@ -132,10 +132,12 @@ export const getCourseDetailApi = (maKhoaHoc: string | undefined) => {
   };
 };
 
-export const courseUpdateApi = (data: UpdateCourseType) => {
+export const courseUpdateApi = (data: any, withImg: boolean) => {
   return async (dispatch: DispatchType) => {
     try {
-      await API.put("/QuanLyKhoaHoc/CapNhatKhoaHoc", data);
+      withImg
+        ? await API.post("/QuanLyKhoaHoc/CapNhatKhoaHocUpload", data)
+        : await API.put("/QuanLyKhoaHoc/CapNhatKhoaHoc", data);
       dispatch(getAllCoursesApi);
       dispatch(updateSuccessMessageReducer("Update thành công!"));
     } catch (error: any) {
@@ -145,10 +147,10 @@ export const courseUpdateApi = (data: UpdateCourseType) => {
   };
 };
 
-export const createNewCourse = (data: UpdateCourseType) => {
+export const createNewCourse = (data: any) => {
   return async (dispatch: DispatchType) => {
     try {
-      await API.post("/QuanLyKhoaHoc/ThemKhoaHoc", data);
+      await API.post("QuanLyKhoaHoc/ThemKhoaHocUploadHinh", data);
       dispatch(getAllCoursesApi);
       dispatch(updateSuccessMessageReducer("Tạo khóa học thành công!"));
     } catch (error: any) {

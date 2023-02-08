@@ -1,8 +1,7 @@
-import { useEffect, useRef } from "react";
+import { ChangeEvent, ChangeEventHandler, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
 import { history } from "../../App";
 import Modal from "../../components/modal/Modal";
 import useModal from "../../hooks/useModal";
@@ -12,7 +11,6 @@ import {
   updateSuccessMessageReducer,
 } from "../../redux/pageReducer/pageReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
-import { API } from "../../util/config";
 import { toNonAccentVietnamese } from "../../util/function";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
@@ -35,31 +33,23 @@ const CreateNewCourseForm = (props: Props) => {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<UpdateCourseType>({
     mode: "onChange",
-    defaultValues: {
-      maKhoaHoc: "",
-      biDanh: "",
-      tenKhoaHoc: "",
-      moTa: "",
-      luotXem: 0,
-      danhGia: 0,
-      hinhAnh: "",
-      maNhom: "",
-      ngayTAO: "",
-      maDanhMucKhoaHoc: "BackEnd",
-      taiKhoanNguoiTAO: "",
-    },
   });
 
-  const addNewSubmitHandle = async (data: UpdateCourseType) => {
+  const addNewSubmitHandle = async (data: any) => {
     const biDanh = toNonAccentVietnamese(data.tenKhoaHoc);
     const date = new Date();
-    const newDate = `${date.getDay()}/${
-      date.getMonth() + 1
+    const newDate = `${
+      date.getDay() + 1 < 10 ? "0" + (date.getDay() + 1) : date.getDay()
+    }/${
+      date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1
     }/${date.getFullYear()}`;
-    data = {
+    const payload = {
       ...data,
       biDanh,
       ngayTAO: newDate,
@@ -67,14 +57,17 @@ const CreateNewCourseForm = (props: Props) => {
       danhGia: 0,
       maNhom: "GP01",
       taiKhoanNguoiTAO: userInfo!.taiKhoan,
+      hinhAnh: data.hinhAnh[0],
     };
-    dispatch(createNewCourse(data));
+    const formData = new FormData();
+    for (let key in payload) {
+      formData.append(key, payload[key]);
+    }
+    dispatch(createNewCourse(formData));
   };
 
   const nameToCode = (event: { target: HTMLInputElement }): void => {
-    reset({
-      maKhoaHoc: toNonAccentVietnamese(event.target.value),
-    });
+    setValue("maKhoaHoc", toNonAccentVietnamese(event.target.value));
     mKHoc.current = toNonAccentVietnamese(event.target.value);
   };
 

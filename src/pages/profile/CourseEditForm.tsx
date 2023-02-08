@@ -56,8 +56,24 @@ const CourseEditForm = (props: Props) => {
     mode: "onChange",
   });
 
-  const editSubmitHandle = (data: UpdateCourseType): void => {
-    dispatch(courseUpdateApi(data));
+  const editSubmitHandle = async (data: any) => {
+    console.log(data.hinhAnh.length);
+    data = {
+      ...data,
+      ...(data.hinhAnh !== undefined && { hinhAnh: data.hinhAnh[0] }),
+    };
+    console.log(data);
+    const formData = new FormData();
+    for (let key in data) {
+      formData.append(key, data[key]);
+    }
+    await dispatch(
+      courseUpdateApi(
+        typeof data.hinhAnh === "string" ? data : formData,
+        typeof data.hinhAnh === "string" ? false : true
+      )
+    );
+    firstLoad();
   };
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -109,8 +125,16 @@ const CourseEditForm = (props: Props) => {
 
   useEffect(() => {
     const obj = {
-      ...courseDetail,
-      danhGia: 5,
+      maKhoaHoc: courseDetail?.maKhoaHoc,
+      tenKhoaHoc: courseDetail?.tenKhoaHoc,
+      moTa: courseDetail?.moTa,
+      luotXem: 0,
+      danhGia: 0,
+      maNhom: courseDetail?.maNhom,
+      ngayTao: courseDetail?.ngayTao,
+      maDanhMucKhoaHoc: courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc,
+      taiKhoanNguoiTao: courseDetail?.nguoiTao.taiKhoan,
+      hinhAnh: courseDetail?.hinhAnh,
     };
     reset(obj);
   }, [courseDetail]);
@@ -137,19 +161,6 @@ const CourseEditForm = (props: Props) => {
             }}
             alt=""
           />
-          <div className="profile_main_info_item_title">
-            {" "}
-            <i className="fa-solid fa-sliders"></i>Mã khóa học
-          </div>
-          <div className="profile_main_info_item_input">
-            <input
-              disabled
-              type="text"
-              {...register("maKhoaHoc", {
-                required: "Không được để trống!",
-              })}
-            />
-          </div>
         </div>
 
         <div className="profile_main_info_item">
@@ -191,6 +202,25 @@ const CourseEditForm = (props: Props) => {
               })}
             </select>
           </div>
+        </div>
+
+        <div className="profile_main_info_item">
+          <div className="profile_main_info_item_title">
+            <i className="fa-solid fa-image"></i>Hình ảnh
+          </div>
+          <div className="profile_main_info_item_input">
+            <input
+              type="file"
+              {...register("hinhAnh")}
+              placeholder="Link hình ảnh"
+            />
+          </div>
+          {errors.hinhAnh?.message && (
+            <div className="profile_main_info_item_error">
+              <i className="fa-solid fa-circle-exclamation"></i>
+              {errors.hinhAnh?.message}
+            </div>
+          )}
         </div>
 
         <div className="profile_main_info_item">

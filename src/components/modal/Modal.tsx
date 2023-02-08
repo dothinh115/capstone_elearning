@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { history } from "../../App";
+import { ReduxRootType } from "../../redux/store";
 
 type Props = {
   title?: string;
@@ -20,17 +22,18 @@ const Modal = ({
   const modal = useRef<HTMLDivElement | null>(null);
   const modalHeader = useRef<HTMLDivElement | null>(null);
   const { pathname, state, search } = useLocation();
+  const pageReducer = useSelector((store: ReduxRootType) => store.pageReducer);
 
   const outModalHandle = () => {
     const urlSplit: string[] = pathname.split("/");
-
+    urlSplit.pop();
+    const urlJoin: string | undefined = urlSplit?.join("/");
     if (state?.inside) {
-      history.back();
+      if (pageReducer.deleteResult) history.push(urlSplit.join("/"));
+      else history.back();
     } else if (search) {
       toggle();
     } else {
-      urlSplit.pop();
-      const urlJoin: string | undefined = urlSplit?.join("/");
       if (urlJoin === "") toggle();
       else history.push(urlSplit.join("/"));
     }
