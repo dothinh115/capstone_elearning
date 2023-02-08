@@ -48,20 +48,11 @@ const Categories = (props: Props) => {
   };
 
   const onScroll = (): void => {
-    const topDivAnimate: number =
-      absoluteSidebar.current!.getBoundingClientRect().top;
-    if (topDivAnimate < window.scrollY) {
+    if (window.scrollY > 84) {
       absoluteSidebar.current!.classList.add("absolute");
-      absoluteSidebar.current!.style.top = `${window.scrollY - 55}px`;
+      absoluteSidebar.current!.style.top = `${window.scrollY - 74}px`;
     } else {
       absoluteSidebar.current!.classList.remove("absolute");
-    }
-    if (window.scrollY > parentDiv.current!.clientHeight - 207) {
-      absoluteSidebar.current!.style.top = "unset";
-      absoluteSidebar.current!.style.bottom = "0px";
-    } else {
-      absoluteSidebar.current!.style.bottom = "unset";
-      absoluteSidebar.current!.style.top = `${window.scrollY - 55}px`;
     }
   };
 
@@ -124,7 +115,6 @@ const Categories = (props: Props) => {
         1
       );
     }
-    console.log(arr);
   });
 
   return (
@@ -147,17 +137,15 @@ const Categories = (props: Props) => {
               />
             </Modal>
           ) : (
-            <>
-              <div ref={absoluteSidebar}>
-                <div className="categories_container_sidebar_inner">
-                  <CategoriesSidebar
-                    checked={checked}
-                    setChecked={setChecked}
-                    getCategoriesFromParams={getCategoriesFromParams}
-                  />
-                </div>
+            <div ref={absoluteSidebar}>
+              <div className="categories_container_sidebar_inner">
+                <CategoriesSidebar
+                  checked={checked}
+                  setChecked={setChecked}
+                  getCategoriesFromParams={getCategoriesFromParams}
+                />
               </div>
-            </>
+            </div>
           )}
         </div>
         <div className="categories_container_main">
