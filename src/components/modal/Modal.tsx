@@ -37,12 +37,12 @@ const Modal = ({
   };
 
   const absoluteHeader = (): void => {
-    modalHeader.current?.classList.add("absolute");
     modalHeader.current!.style.top = `${Math.floor(
       modal.current?.scrollTop!
     )}px`;
-    if (modal.current?.scrollTop! < 30)
-      modalHeader.current?.classList.remove("absolute");
+    if (modal.current?.scrollTop! < 30) {
+      modalHeader.current!.style.top = "unset";
+    }
   };
 
   useEffect(() => {
