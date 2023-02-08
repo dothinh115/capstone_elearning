@@ -59,9 +59,9 @@ const Modal = ({
     modal.current?.addEventListener("scroll", absoluteHeader);
     return () => {
       document.body.classList.remove("noscroll");
-      modal.current?.removeEventListener("scroll", absoluteHeader);
+      // modal.current?.removeEventListener("scroll", absoluteHeader);
     };
-  }, []);
+  });
 
   if (show) {
     return (
