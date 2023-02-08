@@ -138,7 +138,7 @@ export const courseUpdateApi = (data: any, withImg: boolean) => {
       withImg
         ? await API.post("/QuanLyKhoaHoc/CapNhatKhoaHocUpload", data)
         : await API.put("/QuanLyKhoaHoc/CapNhatKhoaHoc", data);
-      dispatch(getAllCoursesApi);
+      await dispatch(getAllCoursesApi);
       dispatch(updateSuccessMessageReducer("Update thành công!"));
     } catch (error: any) {
       console.log(error);

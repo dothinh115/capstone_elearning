@@ -24,7 +24,6 @@ const UserTemplate = () => {
 
   const resetScroll = (): void => {
     dispatch(setCoursesManageScroll(0));
-
     dispatch(setCoursesViewNumber(limitProfileCoursesView));
     dispatch(setRegisteredCoursesScroll(0));
     dispatch(setRegisteredCoursesViewNumber(limitProfileCoursesView));

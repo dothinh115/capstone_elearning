@@ -51,29 +51,38 @@ const CourseEditForm = (props: Props) => {
     register,
     handleSubmit,
     reset,
+    setError,
     formState: { errors },
   } = useForm<UpdateCourseType>({
     mode: "onChange",
   });
 
   const editSubmitHandle = async (data: any) => {
-    console.log(data.hinhAnh.length);
+    beforeGetOut();
+    if (typeof data.hinhAnh !== "string") {
+      const size = data.hinhAnh[0].size;
+      if (size > 1000000) {
+        setError("hinhAnh", { message: "Dung lượng vượt quá 1Mb" });
+        return;
+      }
+    }
     data = {
       ...data,
-      ...(data.hinhAnh !== undefined && { hinhAnh: data.hinhAnh[0] }),
+      hinhAnh: data.hinhAnh[0],
     };
-    console.log(data);
     const formData = new FormData();
     for (let key in data) {
       formData.append(key, data[key]);
     }
+
     await dispatch(
       courseUpdateApi(
         typeof data.hinhAnh === "string" ? data : formData,
         typeof data.hinhAnh === "string" ? false : true
       )
     );
-    firstLoad();
+    await firstLoad();
+    resetForm();
   };
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -119,11 +128,13 @@ const CourseEditForm = (props: Props) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    if (courseID) firstLoad();
-  }, [courseID]);
+  const beforeGetOut = () => {
+    dispatch(updateSuccessMessageReducer(null));
+    dispatch(updateErrorMessageReducer(null));
+    dispatch(updateDeleteResultReducer(null));
+  };
 
-  useEffect(() => {
+  const resetForm = () => {
     const obj = {
       maKhoaHoc: courseDetail?.maKhoaHoc,
       tenKhoaHoc: courseDetail?.tenKhoaHoc,
@@ -137,6 +148,14 @@ const CourseEditForm = (props: Props) => {
       hinhAnh: courseDetail?.hinhAnh,
     };
     reset(obj);
+  };
+
+  useEffect(() => {
+    if (courseID) firstLoad();
+  }, [courseID]);
+
+  useEffect(() => {
+    resetForm();
   }, [courseDetail]);
 
   useEffect(() => {
@@ -144,9 +163,7 @@ const CourseEditForm = (props: Props) => {
       dispatch(layDSChoXetDuyetAction(null));
       dispatch(layDSDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
-      dispatch(updateSuccessMessageReducer(null));
-      dispatch(updateErrorMessageReducer(null));
-      dispatch(updateDeleteResultReducer(null));
+      beforeGetOut();
     };
   }, []);
 
