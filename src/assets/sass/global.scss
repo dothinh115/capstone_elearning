@@ -361,7 +361,8 @@ span.btn {
 }
 
 .fixed {
-  position: fixed;
+  position: fixed !important;
+  top: 0;
 }
 
 @keyframes spin {

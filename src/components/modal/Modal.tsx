@@ -37,11 +37,15 @@ const Modal = ({
   };
 
   const absoluteHeader = (): void => {
-    modalHeader.current!.style.top = `${Math.floor(
-      modal.current?.scrollTop!
-    )}px`;
-    if (modal.current?.scrollTop! < 30) {
-      modalHeader.current!.style.top = "unset";
+    if (window.innerWidth <= 600) {
+      modalHeader.current!.classList.add("fixed");
+    } else {
+      modalHeader.current!.style.top = `${Math.floor(
+        modal.current?.scrollTop!
+      )}px`;
+      if (modal.current?.scrollTop! < 30) {
+        modalHeader.current!.style.top = "unset";
+      }
     }
   };
 
