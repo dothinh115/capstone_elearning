@@ -278,7 +278,7 @@ span.btn {
     border-radius: 10px;
     position: relative;
     overflow: scroll;
-    max-height: 95%;
+    max-height: 80%;
     @media (max-width: 600px) {
       width: 100%;
       height: 100%;
@@ -353,6 +353,10 @@ span.btn {
   height: 50px;
   animation: spin 2s linear infinite;
   margin: auto;
+}
+
+.fixed {
+  position: fixed;
 }
 
 @keyframes spin {

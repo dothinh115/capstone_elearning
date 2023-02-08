@@ -37,14 +37,12 @@ const Modal = ({
   };
 
   const absoluteHeader = (): void => {
-    if (modal.current?.scrollTop! > 60) {
-      modalHeader.current?.classList.add("absolute");
-      modalHeader.current!.style.top = `${Math.floor(
-        modal.current?.scrollTop!
-      )}px`;
-    } else {
+    modalHeader.current?.classList.add("absolute");
+    modalHeader.current!.style.top = `${Math.floor(
+      modal.current?.scrollTop!
+    )}px`;
+    if (modal.current?.scrollTop! < 30)
       modalHeader.current?.classList.remove("absolute");
-    }
   };
 
   useEffect(() => {
@@ -59,9 +57,9 @@ const Modal = ({
     modal.current?.addEventListener("scroll", absoluteHeader);
     return () => {
       document.body.classList.remove("noscroll");
-      // modal.current?.removeEventListener("scroll", absoluteHeader);
+      modal.current?.removeEventListener("scroll", absoluteHeader);
     };
-  });
+  }, []);
 
   if (show) {
     return (
