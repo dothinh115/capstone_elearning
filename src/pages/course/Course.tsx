@@ -69,22 +69,13 @@ const Course = (props: Props) => {
                   </span>
                 </span>
                 {window.innerWidth <= 998 && (
-                  <span>
-                    <Link
-                      className="btn btn-primary"
-                      to={`/course/${courseDetail?.maKhoaHoc}/viewinfo`}
-                      state={{ inside: true }}
-                    >
-                      Xem chi tiết khóa học
-                    </Link>
-                    <Link
-                      state={{ inside: true }}
-                      to={`/profile/courses_manage/${courseDetail?.maKhoaHoc}`}
-                      className="btn btn-info"
-                    >
-                      Chỉnh sửa khóa học này
-                    </Link>
-                  </span>
+                  <Link
+                    className="btn btn-primary"
+                    to={`/course/${courseDetail?.maKhoaHoc}/viewinfo`}
+                    state={{ inside: true }}
+                  >
+                    Xem chi tiết khóa học
+                  </Link>
                 )}
               </div>
             </div>
