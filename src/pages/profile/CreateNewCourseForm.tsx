@@ -12,6 +12,7 @@ import {
   updateSuccessMessageReducer,
 } from "../../redux/pageReducer/pageReducer";
 import { DispatchType, ReduxRootType } from "../../redux/store";
+import { API } from "../../util/config";
 import { toNonAccentVietnamese } from "../../util/function";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
@@ -52,7 +53,7 @@ const CreateNewCourseForm = (props: Props) => {
     },
   });
 
-  const addNewSubmitHandle = (data: UpdateCourseType): void => {
+  const addNewSubmitHandle = async (data: UpdateCourseType) => {
     const biDanh = toNonAccentVietnamese(data.tenKhoaHoc);
     const date = new Date();
     const newDate = `${date.getDay()}/${
@@ -67,7 +68,6 @@ const CreateNewCourseForm = (props: Props) => {
       maNhom: "GP01",
       taiKhoanNguoiTAO: userInfo!.taiKhoan,
     };
-    console.log(data);
     dispatch(createNewCourse(data));
   };
 
@@ -139,7 +139,7 @@ const CreateNewCourseForm = (props: Props) => {
         </div>
         <div className="profile_main_info_item_input">
           <input
-            type="text"
+            type="file"
             {...register("hinhAnh", {
               required: "Không được để trống!",
             })}
