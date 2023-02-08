@@ -16,6 +16,9 @@ const Modal = ({
   toggle,
 }: Props): JSX.Element | null => {
   const modalOverlay = useRef<HTMLDivElement | null>(null);
+
+  const modal = useRef<HTMLDivElement | null>(null);
+  const modalHeader = useRef<HTMLDivElement | null>(null);
   const { pathname, state, search } = useLocation();
 
   const outModalHandle = () => {
@@ -33,6 +36,17 @@ const Modal = ({
     }
   };
 
+  const absoluteHeader = (): void => {
+    if (modal.current?.scrollTop! > 60) {
+      modalHeader.current?.classList.add("absolute");
+      modalHeader.current!.style.top = `${Math.floor(
+        modal.current?.scrollTop!
+      )}px`;
+    } else {
+      modalHeader.current?.classList.remove("absolute");
+    }
+  };
+
   useEffect(() => {
     if (show) document.body.classList.add("noscroll");
     else document.body.classList.remove("noscroll");
@@ -42,16 +56,18 @@ const Modal = ({
     document.addEventListener("mousedown", (event: any) => {
       if (event.target === modalOverlay.current!) outModalHandle();
     });
+    modal.current?.addEventListener("scroll", absoluteHeader);
     return () => {
       document.body.classList.remove("noscroll");
+      modal.current?.removeEventListener("scroll", absoluteHeader);
     };
   }, []);
 
   if (show) {
     return (
       <div ref={modalOverlay} className="modal_overlay">
-        <div className="modal">
-          <div className="modal_header">
+        <div ref={modal} className="modal">
+          <div ref={modalHeader} className="modal_header">
             <button onClick={outModalHandle}>
               {state?.inside ? <i className="fa-solid fa-arrow-left"></i> : "X"}
             </button>

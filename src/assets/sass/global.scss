@@ -277,8 +277,7 @@ span.btn {
     border: 1px solid #eee;
     border-radius: 10px;
     position: relative;
-    overflow: hidden;
-    height: 100%;
+    overflow: scroll;
     max-height: 95%;
     @media (max-width: 600px) {
       width: 100%;
@@ -297,6 +296,7 @@ span.btn {
       align-items: center;
       border-bottom: 1px solid #eee;
       padding: 10px;
+      background-color: white;
       h2 {
         width: 80%;
         font-size: 18px;
@@ -324,7 +324,6 @@ span.btn {
     &_body {
       padding: 10px;
       height: calc(100% - 60px);
-      overflow: auto;
       .modal_sidebar {
         ul {
           height: unset;
