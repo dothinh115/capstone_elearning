@@ -266,6 +266,9 @@ span.btn {
   max-width: 100vw;
   max-height: 100vh;
   overflow: hidden;
+  @media (max-width: 600px) {
+    background-color: unset;
+  }
   .modal {
     animation: modalAnimation 0.5s;
     @media (max-width: 600px) {
