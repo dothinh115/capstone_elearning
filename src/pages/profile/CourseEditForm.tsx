@@ -63,7 +63,6 @@ const CourseEditForm = (props: Props) => {
       ...data,
       ...(typeof data.hinhAnh !== "string" && { hinhAnh: data.hinhAnh[0] }),
     };
-
     const formData = new FormData();
     for (let key in data) {
       formData.append(key, data[key]);
@@ -74,8 +73,7 @@ const CourseEditForm = (props: Props) => {
         typeof data.hinhAnh === "string" ? false : true
       )
     );
-    await firstLoad();
-    resetForm();
+    firstLoad();
   };
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -141,6 +139,7 @@ const CourseEditForm = (props: Props) => {
       hinhAnh: courseDetail?.hinhAnh,
     };
     reset(obj);
+    console.log(obj);
   };
 
   useEffect(() => {
