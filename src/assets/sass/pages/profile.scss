@@ -156,12 +156,16 @@
   h1 {
     margin-bottom: 30px;
     font-size: 25px;
+    @media (max-width: 600px) {
+      display: none;
+    }
   }
   h2:not(:last-of-type) {
     padding: 10px 0;
     border-bottom: 1px solid #eee;
   }
   &_item {
+    padding: 5px 0;
     & > img {
       width: 100%;
       border-radius: 5px;
