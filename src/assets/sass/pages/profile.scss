@@ -1,5 +1,5 @@
 .profile {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   align-items: center;
   margin: auto;
@@ -13,11 +13,20 @@
     position: relative;
     overflow: hidden;
     margin: auto;
+    height: 60%;
     @media (max-width: 600px) {
-      width: 98%;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: unset;
+      display: block;
     }
-    @media (min-width: 600px) {
+    @media (min-width: 600px) and (max-width: 820px) {
       width: 98%;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: unset;
     }
     @media (min-width: 998px) {
       max-width: 768px !important;
@@ -30,6 +39,7 @@
       background-color: rgba(#007bff, 0.65);
       display: flex;
       align-items: center;
+      position: relative;
       h2 {
         margin: auto;
         color: white;
@@ -44,12 +54,18 @@
         border: unset;
         align-items: center;
         justify-content: center;
+        position: absolute;
+        left: 0;
+        top: 0;
       }
     }
     &_sidebar {
       width: 30%;
       @media (max-width: 600px) {
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 50px;
       }
       &_header {
         text-align: center;
@@ -59,7 +75,14 @@
             max-width: 130px;
             max-height: 130px;
             border-radius: 50%;
+            @media (max-width: 600px) {
+              max-width: 200px;
+              max-height: 200px;
+            }
           }
+        }
+        @media (max-width: 600px) {
+          margin-top: 50px;
         }
       }
       &_info {
@@ -106,6 +129,10 @@
       padding: 15px;
       max-height: 100%;
       border-left: 1px solid #eee;
+      height: 100%;
+      @media (min-width: 600px) and (max-width: 768px) {
+        height: 100%;
+      }
       &_block {
         background-color: white;
         padding: 10px;
@@ -123,12 +150,18 @@
 }
 
 .profile_main_info {
+  height: calc(100% - 30px);
+  max-height: 100%;
+  overflow: scroll;
+  h1 {
+    margin-bottom: 30px;
+    font-size: 25px;
+  }
   h2:not(:last-of-type) {
     padding: 10px 0;
     border-bottom: 1px solid #eee;
   }
   &_item {
-    margin-bottom: 10px;
     & > img {
       width: 100%;
       border-radius: 5px;
@@ -196,8 +229,7 @@
     }
   }
   ul {
-    height: 500px;
-    overflow: auto;
+    height: 100%;
     @media (max-width: 600px) {
       height: unset;
     }

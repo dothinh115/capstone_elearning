@@ -63,17 +63,14 @@ const EditProfile = (props: Props) => {
 
   const html = (
     <div className="profile_main_info">
+      <h1>CHỈNH SỬA THÔNG TIN CÁ NHÂN</h1>
       <form onSubmit={handleSubmit(submitHandle)}>
-        <div className="profile_container_main_block">
-          {registerInputData.id.map((item: string | any, index: number) => {
-            if (item === "matKhau") return false;
-            const reg = new RegExp(registerInputData.regex[index]);
-            return (
-              <div
-                style={{ marginBottom: !editing ? "30px" : "" }}
-                className="profile_main_info_item"
-                key={index}
-              >
+        {registerInputData.id.map((item: string | any, index: number) => {
+          if (item === "matKhau") return false;
+          const reg = new RegExp(registerInputData.regex[index]);
+          return (
+            <div className="profile_container_main_block">
+              <div className="profile_main_info_item" key={index}>
                 <div
                   className="profile_main_info_item_title"
                   style={{
@@ -141,9 +138,10 @@ const EditProfile = (props: Props) => {
                   </div>
                 )}
               </div>
-            );
-          })}
-        </div>
+            </div>
+          );
+        })}
+
         {(errorMessage || successMessage) && (
           <div className="profile_container_main_block">
             <p
