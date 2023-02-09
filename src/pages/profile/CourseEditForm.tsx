@@ -59,22 +59,15 @@ const CourseEditForm = (props: Props) => {
 
   const editSubmitHandle = async (data: any) => {
     beforeGetOut();
-    if (typeof data.hinhAnh !== "string") {
-      const size = data.hinhAnh[0].size;
-      if (size > 1000000) {
-        setError("hinhAnh", { message: "Dung lượng vượt quá 1Mb" });
-        return;
-      }
-    }
     data = {
       ...data,
-      hinhAnh: data.hinhAnh[0],
+      ...(typeof data.hinhAnh !== "string" && { hinhAnh: data.hinhAnh[0] }),
     };
+
     const formData = new FormData();
     for (let key in data) {
       formData.append(key, data[key]);
     }
-
     await dispatch(
       courseUpdateApi(
         typeof data.hinhAnh === "string" ? data : formData,
@@ -230,6 +223,11 @@ const CourseEditForm = (props: Props) => {
               type="file"
               {...register("hinhAnh")}
               placeholder="Link hình ảnh"
+              onChange={({ currentTarget }) => {
+                const file = currentTarget.files![0];
+                if (file && file.size > 1000000)
+                  setError("hinhAnh", { message: "Dung lượng vượt quá 1Mb" });
+              }}
             />
           </div>
           {errors.hinhAnh?.message && (
