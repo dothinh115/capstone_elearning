@@ -34,6 +34,8 @@ const CreateNewCourseForm = (props: Props) => {
     handleSubmit,
     reset,
     setValue,
+    setError,
+    clearErrors,
     formState: { errors },
   } = useForm<UpdateCourseType>({
     mode: "onChange",
@@ -137,6 +139,12 @@ const CreateNewCourseForm = (props: Props) => {
               required: "Không được để trống!",
             })}
             placeholder="Link hình ảnh"
+            onChange={({ currentTarget }) => {
+              const file = currentTarget.files![0];
+              if (file && file.size > 1000000)
+                setError("hinhAnh", { message: "Dung lượng vượt quá 1Mb" });
+              else clearErrors("hinhAnh");
+            }}
           />
         </div>
         {errors.hinhAnh?.message && (

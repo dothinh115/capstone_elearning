@@ -52,6 +52,7 @@ const CourseEditForm = (props: Props) => {
     handleSubmit,
     reset,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm<UpdateCourseType>({
     mode: "onChange",
@@ -137,9 +138,9 @@ const CourseEditForm = (props: Props) => {
       maDanhMucKhoaHoc: courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc,
       taiKhoanNguoiTao: courseDetail?.nguoiTao.taiKhoan,
       hinhAnh: courseDetail?.hinhAnh,
+      biDanh: courseDetail?.biDanh,
     };
     reset(obj);
-    console.log(obj);
   };
 
   useEffect(() => {
@@ -226,6 +227,7 @@ const CourseEditForm = (props: Props) => {
                 const file = currentTarget.files![0];
                 if (file && file.size > 1000000)
                   setError("hinhAnh", { message: "Dung lượng vượt quá 1Mb" });
+                else clearErrors("hinhAnh");
               }}
             />
           </div>
