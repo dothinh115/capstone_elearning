@@ -11,7 +11,7 @@ type Props = {};
 const Login = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const { state } = useLocation();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const {
     register,
     handleSubmit,
