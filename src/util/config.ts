@@ -66,7 +66,6 @@ interface RegisterConfigType {
 interface ProfileMenuConfigType {
   path: string[];
   title: string[];
-  modalPopup: boolean[];
   icon: string[];
 }
 
@@ -75,10 +74,15 @@ export const profileMenuConfig: ProfileMenuConfigType = {
     "/profile/view_profile",
     "/profile/registered_courses",
     "/profile/courses_manage",
+    "/profile/users_manage",
   ],
-  title: ["Thông tin tài khoản", "Khóa học đã đăng ký", "Quản lý khóa học"],
-  modalPopup: [true, true, true],
-  icon: ["house", "key", "list-check"],
+  title: [
+    "Thông tin tài khoản",
+    "Khóa học đã đăng ký",
+    "Quản lý khóa học",
+    "Quản lý học viên",
+  ],
+  icon: ["house", "key", "list-check", "users"],
 };
 
 export const loginInputData: LoginInputType = {

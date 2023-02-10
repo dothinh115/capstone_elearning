@@ -8,6 +8,7 @@ import {
   RegisterInputType,
   UserInfoStateType,
   UserInfoType,
+  UserListType,
   UserLoginType,
 } from "../../util/interface/userReducerInterface";
 import {
@@ -19,6 +20,7 @@ import { DispatchType } from "../store";
 const initialState: UserInfoStateType = {
   userInfo: null,
   loading: false,
+  userList: null,
 };
 
 const userReducer = createSlice({
@@ -37,10 +39,17 @@ const userReducer = createSlice({
     ) => {
       state.loading = action.payload;
     },
+    getUserListReducer: (
+      state: UserInfoStateType,
+      action: PayloadAction<UserListType[] | null>
+    ) => {
+      state.userList = action.payload;
+    },
   },
 });
 
-export const { setUserInfoAction, setLoadingAction } = userReducer.actions;
+export const { setUserInfoAction, setLoadingAction, getUserListReducer } =
+  userReducer.actions;
 
 export default userReducer.reducer;
 
@@ -131,4 +140,15 @@ export const updateUserInfoApi = (data: UserInfoType) => {
       dispatch(updateErrorMessageReducer(error.response.data));
     }
   };
+};
+
+export const getAllUserListApi = async (dispatch: DispatchType) => {
+  try {
+    const result = await API.get("/QuanLyNguoiDung/LayDanhSachNguoiDung");
+    const resultAction: PayloadAction<UserListType[] | null> =
+      getUserListReducer(result.data);
+    dispatch(resultAction);
+  } catch (error) {
+    console.log(error);
+  }
 };

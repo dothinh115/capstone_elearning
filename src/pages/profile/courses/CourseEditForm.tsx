@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import Modal from "../../components/modal/Modal";
-import useModal from "../../hooks/useModal";
+import Modal from "../../../components/modal/Modal";
+import useModal from "../../../hooks/useModal";
 import {
   courseDeleteApi,
   courseUpdateApi,
@@ -14,20 +14,20 @@ import {
   layDSDaXetDuyetAction,
   layDSDaXetDuyetApi,
   xetDuyetHocVienApi,
-} from "../../redux/courseReducer/courseReducer";
+} from "../../../redux/courseReducer/courseReducer";
 import {
   updateDeleteResultReducer,
   updateErrorMessageReducer,
   updateSuccessMessageReducer,
-} from "../../redux/pageReducer/pageReducer";
-import { DispatchType, ReduxRootType } from "../../redux/store";
-import { dangKyApi } from "../../redux/userReducer/userReducer";
-import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
-import { UpdateCourseType } from "../../util/interface/courseReducerInterface";
+} from "../../../redux/pageReducer/pageReducer";
+import { DispatchType, ReduxRootType } from "../../../redux/store";
+import { dangKyApi } from "../../../redux/userReducer/userReducer";
+import { CategoriesType } from "../../../util/interface/categoriesReducerInterface";
+import { UpdateCourseType } from "../../../util/interface/courseReducerInterface";
 import {
   DanhSachGhiDanh,
   dataGhiDanh,
-} from "../../util/interface/userReducerInterface";
+} from "../../../util/interface/userReducerInterface";
 
 type Props = {};
 

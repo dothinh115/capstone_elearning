@@ -23,11 +23,12 @@ import { getAllCategoriesApi } from "./redux/categoriesReducer/categoriesReducer
 import { getUserInfoApi } from "./redux/userReducer/userReducer";
 import UserTemplate from "./templates/UserTemplate";
 import EditProfile from "./pages/profile/EditProfile";
-import RegitsteredCourses from "./pages/profile/RegitsteredCourses";
-import CoursesManage from "./pages/profile/CoursesManage";
-import CreateNewCourseForm from "./pages/profile/CreateNewCourseForm";
-import CourseEditForm from "./pages/profile/CourseEditForm";
 import CourseSidebar from "./pages/course/CourseSidebar";
+import RegitsteredCourses from "./pages/profile/courses/RegitsteredCourses";
+import CoursesManage from "./pages/profile/courses/CoursesManage";
+import CreateNewCourseForm from "./pages/profile/courses/CreateNewCourseForm";
+import CourseEditForm from "./pages/profile/courses/CourseEditForm";
+import UsersManage from "./pages/profile/users/UsersManage";
 export const history: any = createBrowserHistory();
 
 function App() {
@@ -55,6 +56,10 @@ function App() {
             <Route path="courses_manage" element={<CoursesManage />}>
               <Route path="create" element={<CreateNewCourseForm />} />
               <Route path=":courseID" element={<CourseEditForm />} />
+            </Route>
+            <Route path="users_manage" element={<UsersManage />}>
+              <Route path="create" element={<CreateNewCourseForm />} />
+              <Route path=":userID" element={<CourseEditForm />} />
             </Route>
           </Route>
         </Route>

@@ -2,15 +2,16 @@ import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, useSearchParams } from "react-router-dom";
-import Modal from "../../components/modal/Modal";
-import useModal from "../../hooks/useModal";
+import Modal from "../../../components/modal/Modal";
+import useModal from "../../../hooks/useModal";
 import {
   setCoursesManageScroll,
   setCoursesViewNumber,
-} from "../../redux/profileReducer/profileReducer";
-import { DispatchType, ReduxRootType } from "../../redux/store";
-import { limitProfileCoursesViewMore } from "../../util/config";
-import { CourseType } from "../../util/interface/courseReducerInterface";
+} from "../../../redux/profileReducer/profileReducer";
+
+import { DispatchType, ReduxRootType } from "../../../redux/store";
+import { limitProfileCoursesViewMore } from "../../../util/config";
+import { CourseType } from "../../../util/interface/courseReducerInterface";
 
 type Props = {};
 

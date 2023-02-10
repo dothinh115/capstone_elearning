@@ -3,6 +3,15 @@ import { RegisterdCoursesDetailType } from "./courseReducerInterface";
 export interface UserInfoStateType {
   userInfo: UserInfoType | null;
   loading: boolean;
+  userList: UserListType[] | null;
+}
+
+export interface UserListType {
+  taiKhoan: string;
+  hoTen: string;
+  email: string;
+  soDt: string;
+  maLoaiNguoiDung: string;
 }
 
 export interface UserInfoType {

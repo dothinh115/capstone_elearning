@@ -1,18 +1,17 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import { history } from "../../App";
-import Modal from "../../components/modal/Modal";
-import useModal from "../../hooks/useModal";
+import Modal from "../../../components/modal/Modal";
+import useModal from "../../../hooks/useModal";
 import {
   setRegisteredCoursesScroll,
   setRegisteredCoursesViewNumber,
-} from "../../redux/profileReducer/profileReducer";
-import { DispatchType, ReduxRootType } from "../../redux/store";
-import { dangKyApi } from "../../redux/userReducer/userReducer";
-import { limitProfileCoursesViewMore } from "../../util/config";
-import { RegisterdCoursesDetailType } from "../../util/interface/courseReducerInterface";
-import { dataGhiDanh } from "../../util/interface/userReducerInterface";
+} from "../../../redux/profileReducer/profileReducer";
+import { DispatchType, ReduxRootType } from "../../../redux/store";
+import { dangKyApi } from "../../../redux/userReducer/userReducer";
+import { limitProfileCoursesViewMore } from "../../../util/config";
+import { RegisterdCoursesDetailType } from "../../../util/interface/courseReducerInterface";
+import { dataGhiDanh } from "../../../util/interface/userReducerInterface";
 
 type Props = {};
 
