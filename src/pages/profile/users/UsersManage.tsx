@@ -1,16 +1,57 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useSearchParams } from "react-router-dom";
 import Modal from "../../../components/modal/Modal";
 import useModal from "../../../hooks/useModal";
-import { DispatchType } from "../../../redux/store";
+import { DispatchType, ReduxRootType } from "../../../redux/store";
 import { getAllUserListApi } from "../../../redux/userReducer/userReducer";
+import { UserListType } from "../../../util/interface/userReducerInterface";
 
 type Props = {};
 
 const UsersManage = (props: Props) => {
   const { toggle } = useModal();
+  const modal = useRef<HTMLDivElement | null>(null);
   const dispatch: DispatchType = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchResult, setSearchResult] = useState<
+    UserListType[] | null | undefined
+  >(null);
+  const { userList } = useSelector((store: ReduxRootType) => store.userReducer);
+  console.log(userList);
+
+  const searchMethod = useForm<{ search: string }>({
+    mode: "onSubmit",
+    defaultValues: {
+      search: "",
+    },
+  });
+
+  const searchHandle = (value: string | undefined | null): void => {
+    let filterArr: UserListType[] | null | undefined = userList;
+    const keywordsFromParams: string | null | undefined =
+      searchParams.get("keywords");
+    if (value) {
+      filterArr = filterArr?.filter((item: UserListType) =>
+        item.hoTen.toLowerCase().includes(value.toLowerCase())
+      );
+    }
+    if (!value) {
+      searchParams.delete("keywords");
+      setSearchParams(searchParams);
+    } else if (value !== keywordsFromParams && value) {
+      setSearchParams({
+        ...(value && { keywords: value }),
+      });
+    }
+
+    setSearchResult(filterArr);
+  };
+
+  const searchSubmitHandle = (data: { search: string }) => {
+    searchHandle(data.search);
+  };
 
   useEffect(() => {
     dispatch(getAllUserListApi);
@@ -23,7 +64,7 @@ const UsersManage = (props: Props) => {
           Thêm học viên mới
         </Link>
       </div>
-      <div className="profile_container_main_block">
+      <div className="profile_container_`ma`in_block">
         <form className="profile_main_info_search">
           <input type="text" placeholder="Tìm kiếm" />
           <button>

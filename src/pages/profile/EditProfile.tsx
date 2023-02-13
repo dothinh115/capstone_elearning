@@ -104,7 +104,9 @@ const EditProfile = (props: Props) => {
                               })}
                             {item === "maLoaiNguoiDung" && (
                               <>
-                                <option value="GV">GV</option>
+                                <option value="GV" key={1}>
+                                  GV
+                                </option>
                                 <option value="HV">HV</option>
                               </>
                             )}
