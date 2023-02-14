@@ -17,6 +17,7 @@ import {
 } from "../../../redux/pageReducer/pageReducer";
 import { DispatchType, ReduxRootType } from "../../../redux/store";
 import {
+  dangKyApi,
   deleteUserApi,
   updateUserInfoApi,
 } from "../../../redux/userReducer/userReducer";
@@ -185,7 +186,7 @@ const UsersEditForm = (props: Props) => {
                       type="button"
                       className="btn btn-success"
                       onClick={(event) => {
-                        registeredUserConfirmHandle(event, item.maKhoaHoc);
+                        registeredUserConfirmHandle(event, item?.maKhoaHoc);
                       }}
                     >
                       <i className="fa-solid fa-check"></i>
