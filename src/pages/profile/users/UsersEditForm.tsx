@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Modal from "../../../components/modal/Modal";
 import useModal from "../../../hooks/useModal";
 import {
@@ -9,6 +9,7 @@ import {
   layDsKhoaHocDaGhiDanh,
   layKhoaHocChoXetDuyetAction,
   layKhoaHocDaXetDuyetAction,
+  xetDuyetHocVienApi,
 } from "../../../redux/courseReducer/courseReducer";
 import {
   updateDeleteResultReducer,
@@ -21,7 +22,10 @@ import {
 } from "../../../redux/userReducer/userReducer";
 import { EditingUserConfig } from "../../../util/config";
 import { KhoaHocXetDuyetInterface } from "../../../util/interface/courseReducerInterface";
-import { UserListType } from "../../../util/interface/userReducerInterface";
+import {
+  dataGhiDanh,
+  UserListType,
+} from "../../../util/interface/userReducerInterface";
 
 type Props = {};
 
@@ -58,6 +62,24 @@ const UsersEditForm = (props: Props) => {
     // dispatch(updateUserInfoApi(data));
   };
 
+  const registeredUserConfirmHandle = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    maKhoaHoc: string
+  ) => {
+    event.preventDefault();
+    const data: dataGhiDanh = {
+      maKhoaHoc,
+      taiKhoan: userID,
+    };
+    await dispatch(xetDuyetHocVienApi(data));
+    firstLoad();
+  };
+
+  const firstLoad = () => {
+    dispatch(layDsKhoaHocChoGhiDanh(userID));
+    dispatch(layDsKhoaHocDaGhiDanh(userID));
+  };
+
   useEffect(() => {
     const userInfo = userList?.find(
       (item: UserListType) => item.taiKhoan === userID
@@ -69,8 +91,7 @@ const UsersEditForm = (props: Props) => {
   }, [userList]);
 
   useEffect(() => {
-    dispatch(layDsKhoaHocChoGhiDanh(userID));
-    dispatch(layDsKhoaHocDaGhiDanh(userID));
+    firstLoad();
   }, [userID]);
 
   useEffect(() => {
@@ -153,13 +174,20 @@ const UsersEditForm = (props: Props) => {
             (item: KhoaHocXetDuyetInterface, index: number) => {
               return (
                 <li key={index}>
-                  <span>
+                  <Link to={`/course/${item.maKhoaHoc}`}>
                     {item.tenKhoaHoc.length > 25
                       ? item.tenKhoaHoc.substring(0, 24) + "..."
                       : item.tenKhoaHoc}
-                  </span>
+                  </Link>
+
                   <span>
-                    <button type="button" className="btn btn-success">
+                    <button
+                      type="button"
+                      className="btn btn-success"
+                      onClick={(event) => {
+                        registeredUserConfirmHandle(event, item.maKhoaHoc);
+                      }}
+                    >
                       <i className="fa-solid fa-check"></i>
                     </button>
                     <button type="button" className="btn btn-danger">
@@ -175,18 +203,19 @@ const UsersEditForm = (props: Props) => {
         )}
       </ul>
 
-      <h2>Danh sách đang xét duyệt</h2>
+      <h2>Danh sách đã xét duyệt</h2>
       <ul className="modal_ul">
         {khoaHocDaXetDuyet ? (
           khoaHocDaXetDuyet?.map(
             (item: KhoaHocXetDuyetInterface, index: number) => {
               return (
                 <li key={index}>
-                  <span>
+                  <Link to={`/course/${item.maKhoaHoc}`}>
                     {item.tenKhoaHoc.length > 25
                       ? item.tenKhoaHoc.substring(0, 24) + "..."
                       : item.tenKhoaHoc}
-                  </span>
+                  </Link>
+
                   <span>
                     <button type="button" className="btn btn-danger">
                       <i className="fa-solid fa-trash"></i>

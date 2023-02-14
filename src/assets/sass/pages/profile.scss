@@ -398,6 +398,9 @@ ul.modal_ul {
       padding-bottom: 5px;
     }
     span {
+      display: flex;
+    }
+    a {
       &:first-of-type:before {
         content: counter(li);
         counter-increment: li;
