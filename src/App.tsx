@@ -30,6 +30,8 @@ import CreateNewCourseForm from "./pages/profile/courses/CreateNewCourseForm";
 import CourseEditForm from "./pages/profile/courses/CourseEditForm";
 import UsersManage from "./pages/profile/users/UsersManage";
 import UsersEditForm from "./pages/profile/users/UsersEditForm";
+import AdminRoute from "./hoc/AdminRoute";
+import CreateUser from "./pages/profile/users/CreateUser";
 export const history: any = createBrowserHistory();
 
 function App() {
@@ -55,12 +57,16 @@ function App() {
             <Route path="view_profile" element={<EditProfile />} />
             <Route path="registered_courses" element={<RegitsteredCourses />} />
             <Route path="courses_manage" element={<CoursesManage />}>
-              <Route path="create" element={<CreateNewCourseForm />} />
-              <Route path=":courseID" element={<CourseEditForm />} />
+              <Route element={<AdminRoute />}>
+                <Route path="create" element={<CreateNewCourseForm />} />
+                <Route path=":courseID" element={<CourseEditForm />} />
+              </Route>
             </Route>
             <Route path="users_manage" element={<UsersManage />}>
-              <Route path="create" element={<CreateNewCourseForm />} />
-              <Route path=":userID" element={<UsersEditForm />} />
+              <Route element={<AdminRoute />}>
+                <Route path="create" element={<CreateUser />} />
+                <Route path=":userID" element={<UsersEditForm />} />
+              </Route>
             </Route>
           </Route>
         </Route>

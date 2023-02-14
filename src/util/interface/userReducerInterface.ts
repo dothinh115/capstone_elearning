@@ -1,9 +1,20 @@
 import { RegisterdCoursesDetailType } from "./courseReducerInterface";
 
+export interface FindedUserInterface {
+  taiKhoan: string;
+  hoTen: string;
+  email: string;
+  soDt: string;
+  matKhau: string;
+  maLoaiNguoiDung: string;
+  tenLoaiNguoiDung: string;
+}
+
 export interface UserInfoStateType {
   userInfo: UserInfoType | null;
   loading: boolean;
   userList: UserListType[] | null;
+  findedUser: FindedUserInterface | null;
 }
 
 export interface UserListType {

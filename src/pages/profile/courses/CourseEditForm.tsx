@@ -181,6 +181,7 @@ const CourseEditForm = (props: Props) => {
           <div className="profile_main_info_item_input">
             <input
               type="text"
+              className={errors.tenKhoaHoc?.message ? "isInvalid" : ""}
               {...register("tenKhoaHoc", {
                 required: "Không được để trống!",
               })}
@@ -221,6 +222,7 @@ const CourseEditForm = (props: Props) => {
           </div>
           <div className="profile_main_info_item_input">
             <input
+              className={errors.hinhAnh?.message ? "isInvalid" : ""}
               type="file"
               {...register("hinhAnh")}
               placeholder="Link hình ảnh"
@@ -244,6 +246,7 @@ const CourseEditForm = (props: Props) => {
           <div className="profile_main_info_item_title">Mô tả</div>
           <div className="profile_main_info_item_input">
             <textarea
+              className={errors.moTa?.message ? "isInvalid" : ""}
               {...register("moTa", {
                 required: "Không được để trống!",
               })}
@@ -367,15 +370,6 @@ const CourseEditForm = (props: Props) => {
     return (
       <Modal show={true} toggle={toggle} title="Thông báo">
         <div className="loader"></div>
-      </Modal>
-    );
-
-  if (userInfo?.maLoaiNguoiDung !== "GV")
-    return (
-      <Modal show={true} toggle={toggle} title="Thông báo">
-        <p className="btn btn-info">
-          Chỉ có tài khoản GV mới được chỉnh sửa khóa học!
-        </p>
       </Modal>
     );
 

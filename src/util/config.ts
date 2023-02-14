@@ -41,9 +41,9 @@ API.interceptors.response.use(
       window.location.reload();
     }
 
-    // if (error.response?.status === 400) {
-    //   window.location.href = "/";
-    // }
+    if (error.response?.status === 400) {
+      window.location.href = "/";
+    }
     return Promise.reject(error);
   }
 );
@@ -104,15 +104,25 @@ export interface EditingUserInterface {
 }
 
 export const EditingUserConfig: EditingUserInterface = {
-  key: ["taiKhoan", "hoTen", "email", "soDt", "maLoaiNguoiDung"],
+  key: [
+    "taiKhoan",
+    "hoTen",
+    "email",
+    "soDt",
+    "matKhau",
+    "maLoaiNguoiDung",
+    "tenLoaiNguoiDung",
+  ],
   title: [
     "Tài khoản",
     "Họ tên",
     "Email",
     "Số điện thoại",
+    "Mật khẩu",
     "Mã loại người dùng",
+    "Tên loại người dùng",
   ],
-  icon: ["user", "file-signature", "at", "phone", "user-group"],
+  icon: ["user", "file-signature", "at", "phone", "lock", "user-group", ""],
 };
 
 export const registerInputData: RegisterConfigType = {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import Modal from "../../../components/modal/Modal";
 import useModal from "../../../hooks/useModal";
 import {
@@ -13,18 +13,24 @@ import {
 } from "../../../redux/courseReducer/courseReducer";
 import {
   updateDeleteResultReducer,
+  updateErrorMessageReducer,
   updateGlobalMessageReducer,
+  updateSuccessMessageReducer,
 } from "../../../redux/pageReducer/pageReducer";
 import { DispatchType, ReduxRootType } from "../../../redux/store";
 import {
   dangKyApi,
   deleteUserApi,
+  findUserApi,
+  getFindedUserReducer,
   updateUserInfoApi,
 } from "../../../redux/userReducer/userReducer";
-import { EditingUserConfig } from "../../../util/config";
+import { EditingUserConfig, registerInputData } from "../../../util/config";
 import { KhoaHocXetDuyetInterface } from "../../../util/interface/courseReducerInterface";
 import {
   dataGhiDanh,
+  FindedUserInterface,
+  UserInfoType,
   UserListType,
 } from "../../../util/interface/userReducerInterface";
 
@@ -33,25 +39,26 @@ type Props = {};
 const UsersEditForm = (props: Props) => {
   const { toggle } = useModal();
   const { userID } = useParams();
-  const { userList } = useSelector((store: ReduxRootType) => store.userReducer);
+  const location = useLocation();
+  console.log(location);
+  const { findedUser } = useSelector(
+    (store: ReduxRootType) => store.userReducer
+  );
   const { khoaHocChoXetDuyet, khoaHocDaXetDuyet } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
 
-  const { deleteResult, globalMessage } = useSelector(
-    (store: ReduxRootType) => store.pageReducer
-  );
+  const { deleteResult, globalMessage, successMessage, errorMessage } =
+    useSelector((store: ReduxRootType) => store.pageReducer);
 
-  const [editingUserInfo, setEditingUserInfo] = useState<UserListType | null>(
-    null
-  );
+  const [loading, setLoading] = useState<boolean>(false);
   const dispatch: DispatchType = useDispatch();
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<UserListType>({
+  } = useForm<FindedUserInterface>({
     mode: "onChange",
   });
 
@@ -59,8 +66,30 @@ const UsersEditForm = (props: Props) => {
     dispatch(deleteUserApi(userID));
   };
 
-  const submitHandle = (data: any) => {
-    // dispatch(updateUserInfoApi(data));
+  const submitHandle = (data: FindedUserInterface) => {
+    const payload: UserInfoType = {
+      taiKhoan: data.taiKhoan,
+      matKhau: data.matKhau,
+      hoTen: data.hoTen,
+      soDT: data.soDt,
+      maNhom: "GP01",
+      maLoaiNguoiDung: data.maLoaiNguoiDung,
+      email: data.email,
+    };
+    dispatch(updateUserInfoApi(payload));
+  };
+
+  const registeredUserDeleteHandle = async (
+    event: React.MouseEvent<HTMLButtonElement>,
+    maKhoaHoc: string
+  ) => {
+    event.preventDefault();
+    const data: dataGhiDanh = {
+      maKhoaHoc,
+      taiKhoan: userID,
+    };
+    await dispatch(dangKyApi(false, data));
+    reloadDanhSach();
   };
 
   const registeredUserConfirmHandle = async (
@@ -73,27 +102,29 @@ const UsersEditForm = (props: Props) => {
       taiKhoan: userID,
     };
     await dispatch(xetDuyetHocVienApi(data));
-    firstLoad();
+    reloadDanhSach();
   };
 
-  const firstLoad = () => {
+  const firstLoad = async () => {
+    setLoading(true);
+    await dispatch(findUserApi(userID));
+    await dispatch(layDsKhoaHocChoGhiDanh(userID));
+    await dispatch(layDsKhoaHocDaGhiDanh(userID));
+    setLoading(false);
+  };
+
+  const reloadDanhSach = () => {
     dispatch(layDsKhoaHocChoGhiDanh(userID));
     dispatch(layDsKhoaHocDaGhiDanh(userID));
   };
 
   useEffect(() => {
-    const userInfo = userList?.find(
-      (item: UserListType) => item.taiKhoan === userID
-    );
-    if (userInfo) {
-      setEditingUserInfo(userInfo);
-      reset(userInfo);
-    }
-  }, [userList]);
-
-  useEffect(() => {
     firstLoad();
   }, [userID]);
+
+  useEffect(() => {
+    reset(findedUser!);
+  }, [findedUser]);
 
   useEffect(() => {
     return () => {
@@ -101,43 +132,108 @@ const UsersEditForm = (props: Props) => {
       dispatch(updateGlobalMessageReducer(null));
       dispatch(layKhoaHocDaXetDuyetAction(null));
       dispatch(layKhoaHocChoXetDuyetAction(null));
+      dispatch(getFindedUserReducer(null));
+      dispatch(updateSuccessMessageReducer(null));
+      dispatch(updateErrorMessageReducer(null));
     };
   }, []);
 
   const html = (
     <>
       <form onSubmit={handleSubmit(submitHandle)}>
-        {editingUserInfo &&
-          Object.keys(editingUserInfo).map((item: any): JSX.Element => {
+        {location.state?.createSuccess && (
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_button">
+              <span className="btn btn-success">
+                Thêm người dùng thành công!
+              </span>
+            </div>
+          </div>
+        )}
+        {findedUser &&
+          Object.keys(findedUser).map((item: any) => {
+            if (item === "matKhau" || item === "tenLoaiNguoiDung") return;
             return (
-              <div className="profile_main_info_item" key={item}>
-                <div className="profile_main_info_item_title">
-                  <i
-                    className={`fa fa-${
-                      EditingUserConfig.icon[
+              <div className="profile_container_main_block" key={item}>
+                <div className="profile_main_info_item">
+                  <div className="profile_main_info_item_title">
+                    <i
+                      className={`fa fa-${
+                        EditingUserConfig.icon[
+                          EditingUserConfig.key.indexOf(
+                            item as keyof UserListType
+                          )
+                        ]
+                      }`}
+                    ></i>
+                    {
+                      EditingUserConfig.title[
                         EditingUserConfig.key.indexOf(
                           item as keyof UserListType
                         )
                       ]
-                    }`}
-                  ></i>
-                  {
-                    EditingUserConfig.title[
-                      EditingUserConfig.key.indexOf(item as keyof UserListType)
-                    ]
-                  }
+                    }
+                  </div>
+                  <div className="profile_main_info_item_input">
+                    {item === "maLoaiNguoiDung" ? (
+                      <select {...register(item)}>
+                        <option value="GV">Giáo vụ</option>
+                        <option value="HV">Học viên</option>
+                      </select>
+                    ) : (
+                      <input
+                        id={item}
+                        type={`${item === "soDt" ? "number" : "text"}`}
+                        className={
+                          errors[item as keyof FindedUserInterface]?.message
+                            ? "isInvalid"
+                            : ""
+                        }
+                        {...register(item, {
+                          required: "Không được để trống!",
+                          pattern: {
+                            value: new RegExp(
+                              registerInputData.regex[
+                                registerInputData.id.indexOf(item)
+                              ]
+                            ),
+                            message:
+                              registerInputData.errors[
+                                registerInputData.id.indexOf(item)
+                              ],
+                          },
+                        })}
+                      />
+                    )}
+                  </div>
                 </div>
-                <div className="profile_main_info_item_input">
-                  <input
-                    type="text"
-                    {...register(item, {
-                      required: "Không được để trống!",
-                    })}
-                  />
-                </div>
+                {errors[item as keyof FindedUserInterface]?.message && (
+                  <div className="profile_main_info_error">
+                    <p>
+                      <i className="fa-solid fa-circle-exclamation"></i>
+                      {errors[item as keyof FindedUserInterface]?.message}
+                    </p>
+                  </div>
+                )}
               </div>
             );
           })}
+
+        {(successMessage || errorMessage) && (
+          <div className="profile_main_info_item">
+            <div className="profile_main_info_item_button">
+              <span
+                className={`btn btn-${
+                  (successMessage && "success") || (errorMessage && "danger")
+                }`}
+              >
+                {(successMessage && successMessage) ||
+                  (errorMessage && errorMessage)}
+              </span>
+            </div>
+          </div>
+        )}
+
         <div className="profile_main_info_item">
           <div className="profile_main_info_item_button">
             <button type="submit" className="btn btn-primary">
@@ -151,7 +247,7 @@ const UsersEditForm = (props: Props) => {
             <button
               type="button"
               className="btn btn-danger"
-              onClick={() => deleteUser(editingUserInfo?.taiKhoan)}
+              onClick={() => deleteUser(findedUser?.taiKhoan)}
               disabled={
                 khoaHocChoXetDuyet || khoaHocDaXetDuyet || globalMessage
                   ? true
@@ -194,7 +290,13 @@ const UsersEditForm = (props: Props) => {
                     >
                       <i className="fa-solid fa-check"></i>
                     </button>
-                    <button type="button" className="btn btn-danger">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={(event) =>
+                        registeredUserDeleteHandle(event, item.maKhoaHoc)
+                      }
+                    >
                       <i className="fa-solid fa-trash"></i>
                     </button>
                   </span>
@@ -221,7 +323,13 @@ const UsersEditForm = (props: Props) => {
                   </Link>
 
                   <span>
-                    <button type="button" className="btn btn-danger">
+                    <button
+                      type="button"
+                      className="btn btn-danger"
+                      onClick={(event) =>
+                        registeredUserDeleteHandle(event, item.maKhoaHoc)
+                      }
+                    >
                       <i className="fa-solid fa-trash"></i>
                     </button>
                   </span>
@@ -238,10 +346,10 @@ const UsersEditForm = (props: Props) => {
 
   return (
     <Modal toggle={toggle} show={true} title="Chỉnh sửa thông tin học viên">
-      {deleteResult ? (
-        <span className="btn btn-danger">{deleteResult}</span>
+      {loading ? (
+        <div className="loader"></div>
       ) : (
-        html
+        <>{deleteResult ? <span className="btn">{deleteResult}</span> : html}</>
       )}
     </Modal>
   );

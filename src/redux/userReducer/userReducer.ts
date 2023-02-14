@@ -4,6 +4,7 @@ import { API, registerSuccessMess } from "../../util/config";
 import { getLocalStorage, saveLocalStorage } from "../../util/function";
 import {
   dataGhiDanh,
+  FindedUserInterface,
   LoginType,
   RegisterInputType,
   UserInfoStateType,
@@ -23,6 +24,7 @@ const initialState: UserInfoStateType = {
   userInfo: null,
   loading: false,
   userList: null,
+  findedUser: null,
 };
 
 const userReducer = createSlice({
@@ -47,11 +49,21 @@ const userReducer = createSlice({
     ) => {
       state.userList = action.payload;
     },
+    getFindedUserReducer: (
+      state: UserInfoStateType,
+      action: PayloadAction<FindedUserInterface | null>
+    ) => {
+      state.findedUser = action.payload;
+    },
   },
 });
 
-export const { setUserInfoAction, setLoadingAction, getUserListReducer } =
-  userReducer.actions;
+export const {
+  setUserInfoAction,
+  setLoadingAction,
+  getUserListReducer,
+  getFindedUserReducer,
+} = userReducer.actions;
 
 export default userReducer.reducer;
 
@@ -166,6 +178,35 @@ export const deleteUserApi = (userID: string | undefined) => {
     } catch (error: any) {
       console.log(error);
       dispatch(updateGlobalMessageReducer(error.response.data));
+    }
+  };
+};
+
+export const findUserApi = (userID: string | undefined) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const result = await API.get(
+        `/QuanLyNguoiDung/TimKiemNguoiDung?tuKhoa=${userID}`
+      );
+      const action: PayloadAction<FindedUserInterface | null> =
+        getFindedUserReducer(result.data[0]);
+      dispatch(action);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const createNewUserApi = (data: UserInfoType) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const result = await API.post("/QuanLyNguoiDung/ThemNguoiDung", data);
+      history.push(`/profile/users_manage/${result.data.taiKhoan}`, {
+        createSuccess: true,
+      });
+    } catch (error: any) {
+      console.log(error);
+      dispatch(updateErrorMessageReducer(error.response.data));
     }
   };
 };
