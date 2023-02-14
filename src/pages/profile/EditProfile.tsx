@@ -71,25 +71,14 @@ const EditProfile = (props: Props) => {
           return (
             <div className="profile_container_main_block">
               <div className="profile_main_info_item" key={index}>
-                <div
-                  className="profile_main_info_item_title"
-                  style={{
-                    display: !editing ? "flex" : "block",
-                    justifyContent: !editing ? "space-between" : "",
-                  }}
-                >
+                <div className="profile_main_info_item_title">
                   <>
-                    <span>
+                    <div>
                       <i
                         className={`fa fa-${registerInputData.icon[index]}`}
                       ></i>
                       {registerInputData.title[index]}:
-                    </span>
-                    <span>
-                      {!editing && userInfo !== null
-                        ? userInfo[item as keyof UserInfoType]
-                        : ""}
-                    </span>
+                    </div>
                   </>
                 </div>
                 <div className="rofile_main_info_item_input">
@@ -129,10 +118,13 @@ const EditProfile = (props: Props) => {
                         )}
                       </>
                     )}
+                    {!editing && userInfo !== null
+                      ? userInfo[item as keyof UserInfoType]
+                      : ""}
                   </>
                 </div>
                 {errors[item as keyof RegisterInputType]?.message && (
-                  <div className="rofile_main_info_error">
+                  <div className="profile_main_info_error">
                     <p>
                       <i className="fa-solid fa-circle-exclamation"></i>
                       {errors[item as keyof RegisterInputType]?.message}
