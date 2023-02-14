@@ -158,6 +158,7 @@ input:disabled {
 input:focus {
   border-color: rgba(128, 189, 255, 0.65) !important;
   box-shadow: 0 0 0 0.15rem rgba(128, 189, 255, 0.45);
+  font-size: unset !important;
 }
 input.isInvalid {
   border-color: rgba(255, 0, 0, 0.65) !important;
@@ -282,6 +283,7 @@ span.btn {
     position: relative;
     overflow: scroll;
     max-height: 80%;
+    width: 400px;
     @media (max-width: 600px) {
       width: 100%;
       height: 100%;

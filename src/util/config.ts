@@ -97,6 +97,24 @@ export interface ApiResultType {
   deleteSuccessMess?: string;
 }
 
+export interface EditingUserInterface {
+  key: string[];
+  title: string[];
+  icon: string[];
+}
+
+export const EditingUserConfig: EditingUserInterface = {
+  key: ["taiKhoan", "hoTen", "email", "soDt", "maLoaiNguoiDung"],
+  title: [
+    "Tài khoản",
+    "Họ tên",
+    "Email",
+    "Số điện thoại",
+    "Mã loại người dùng",
+  ],
+  icon: ["user", "file-signature", "at", "phone", "user-group"],
+};
+
 export const registerInputData: RegisterConfigType = {
   id: [
     "taiKhoan",

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet, useSearchParams } from "react-router-dom";
 import Modal from "../../../components/modal/Modal";
 import useModal from "../../../hooks/useModal";
+import { getAllCoursesApi } from "../../../redux/courseReducer/courseReducer";
 import {
   setCoursesManageScroll,
   setCoursesViewNumber,
@@ -79,6 +80,10 @@ const CoursesManage = (props: Props) => {
     } else setSearchResult(coursesArr);
   }, [coursesArr, searchParams]);
 
+  useEffect(() => {
+    dispatch(getAllCoursesApi);
+  }, []);
+
   const html = (
     <div className="profile_main_info" ref={modal}>
       <Outlet />
@@ -129,7 +134,7 @@ const CoursesManage = (props: Props) => {
             ?.slice(0, coursesViewNumber)
             .map((course: CourseType, index: number) => {
               return (
-                <li key={index} id={course.maKhoaHoc}>
+                <li key={course.maKhoaHoc}>
                   <Link
                     to={`/course/${course.maKhoaHoc}`}
                     onClick={() => {

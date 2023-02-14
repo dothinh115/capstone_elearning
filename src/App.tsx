@@ -29,6 +29,7 @@ import CoursesManage from "./pages/profile/courses/CoursesManage";
 import CreateNewCourseForm from "./pages/profile/courses/CreateNewCourseForm";
 import CourseEditForm from "./pages/profile/courses/CourseEditForm";
 import UsersManage from "./pages/profile/users/UsersManage";
+import UsersEditForm from "./pages/profile/users/UsersEditForm";
 export const history: any = createBrowserHistory();
 
 function App() {
@@ -59,7 +60,7 @@ function App() {
             </Route>
             <Route path="users_manage" element={<UsersManage />}>
               <Route path="create" element={<CreateNewCourseForm />} />
-              <Route path=":userID" element={<CourseEditForm />} />
+              <Route path=":userID" element={<UsersEditForm />} />
             </Route>
           </Route>
         </Route>

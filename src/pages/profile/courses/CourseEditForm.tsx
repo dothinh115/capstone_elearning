@@ -9,10 +9,10 @@ import {
   courseUpdateApi,
   getCourseDetailAction,
   getCourseDetailApi,
-  layDSChoXetDuyetAction,
   layDSChoXetDuyetApi,
-  layDSDaXetDuyetAction,
   layDSDaXetDuyetApi,
+  layHocVienChoXetDuyetAction,
+  layHocVienDaXetDuyetAction,
   xetDuyetHocVienApi,
 } from "../../../redux/courseReducer/courseReducer";
 import {
@@ -36,7 +36,7 @@ const CourseEditForm = (props: Props) => {
     (store: ReduxRootType) => store.categoriesReducer
   );
   const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
-  const { choXetDuyet, daXetDuyet } = useSelector(
+  const { hocVienChoXetDuyet, hocVienDaXetDuyet } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
   const { courseDetail } = useSelector(
@@ -79,7 +79,8 @@ const CourseEditForm = (props: Props) => {
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (!choXetDuyet && !daXetDuyet) dispatch(courseDeleteApi(courseID!));
+    if (!hocVienChoXetDuyet && !hocVienDaXetDuyet)
+      dispatch(courseDeleteApi(courseID!));
   };
 
   const registeredUserDeleteHandle = async (
@@ -153,8 +154,8 @@ const CourseEditForm = (props: Props) => {
 
   useEffect(() => {
     return () => {
-      dispatch(layDSChoXetDuyetAction(null));
-      dispatch(layDSDaXetDuyetAction(null));
+      dispatch(layHocVienChoXetDuyetAction(null));
+      dispatch(layHocVienDaXetDuyetAction(null));
       dispatch(getCourseDetailAction(null));
       beforeGetOut();
     };
@@ -280,8 +281,8 @@ const CourseEditForm = (props: Props) => {
 
       <h2>Danh sách đang xét duyệt</h2>
       <ul className="modal_ul">
-        {choXetDuyet ? (
-          choXetDuyet?.map((item: DanhSachGhiDanh, index: number) => {
+        {hocVienChoXetDuyet ? (
+          hocVienChoXetDuyet?.map((item: DanhSachGhiDanh, index: number) => {
             return (
               <li key={index}>
                 <span>
@@ -319,8 +320,8 @@ const CourseEditForm = (props: Props) => {
 
       <h2>Danh sách đã xét duyệt</h2>
       <ul className="modal_ul">
-        {daXetDuyet ? (
-          daXetDuyet?.map((item: DanhSachGhiDanh, index: number) => {
+        {hocVienDaXetDuyet ? (
+          hocVienDaXetDuyet?.map((item: DanhSachGhiDanh, index: number) => {
             return (
               <li key={index}>
                 <span>
@@ -348,12 +349,12 @@ const CourseEditForm = (props: Props) => {
       <div className="profile_main_info_item">
         <div className="profile_main_info_item_button">
           <button
-            disabled={choXetDuyet || daXetDuyet ? true : false}
+            disabled={hocVienChoXetDuyet || hocVienDaXetDuyet ? true : false}
             type="button"
             className="btn btn-danger"
             onClick={deleteHandle}
           >
-            {choXetDuyet || daXetDuyet
+            {hocVienChoXetDuyet || hocVienDaXetDuyet
               ? `Khóa học có học viên không thể xóa`
               : `Xóa`}
           </button>

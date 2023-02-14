@@ -69,8 +69,8 @@ const EditProfile = (props: Props) => {
           if (item === "matKhau") return false;
           const reg = new RegExp(registerInputData.regex[index]);
           return (
-            <div className="profile_container_main_block">
-              <div className="profile_main_info_item" key={index}>
+            <div className="profile_container_main_block" key={index}>
+              <div className="profile_main_info_item edit_profile">
                 <div className="profile_main_info_item_title">
                   <>
                     <div>
@@ -81,7 +81,7 @@ const EditProfile = (props: Props) => {
                     </div>
                   </>
                 </div>
-                <div className="rofile_main_info_item_input">
+                <div className="profile_main_info_item_input">
                   <>
                     {editing && (
                       <>

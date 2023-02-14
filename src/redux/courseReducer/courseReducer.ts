@@ -6,6 +6,7 @@ import { randomArray, randomDiscount } from "../../util/function";
 import {
   CourseStateType,
   CourseType,
+  KhoaHocXetDuyetInterface,
   UpdateCourseType,
 } from "../../util/interface/courseReducerInterface";
 import {
@@ -23,8 +24,10 @@ const initialState: CourseStateType = {
   randomCoursesArr: [],
   loading: false,
   courseDetail: null,
-  choXetDuyet: null,
-  daXetDuyet: null,
+  hocVienChoXetDuyet: null,
+  hocVienDaXetDuyet: null,
+  khoaHocChoXetDuyet: null,
+  khoaHocDaXetDuyet: null,
 };
 
 const courseReducer = createSlice({
@@ -55,17 +58,29 @@ const courseReducer = createSlice({
     ) => {
       state.courseDetail = action.payload;
     },
-    layDSChoXetDuyetAction: (
+    layHocVienChoXetDuyetAction: (
       state: CourseStateType,
       action: PayloadAction<DanhSachGhiDanh[] | null>
     ) => {
-      state.choXetDuyet = action.payload;
+      state.hocVienChoXetDuyet = action.payload;
     },
-    layDSDaXetDuyetAction: (
+    layHocVienDaXetDuyetAction: (
       state: CourseStateType,
       action: PayloadAction<DanhSachGhiDanh[] | null>
     ) => {
-      state.daXetDuyet = action.payload;
+      state.hocVienDaXetDuyet = action.payload;
+    },
+    layKhoaHocChoXetDuyetAction: (
+      state: CourseStateType,
+      action: PayloadAction<KhoaHocXetDuyetInterface[] | null>
+    ) => {
+      state.khoaHocChoXetDuyet = action.payload;
+    },
+    layKhoaHocDaXetDuyetAction: (
+      state: CourseStateType,
+      action: PayloadAction<KhoaHocXetDuyetInterface[] | null>
+    ) => {
+      state.khoaHocDaXetDuyet = action.payload;
     },
   },
 });
@@ -75,8 +90,10 @@ export const {
   getRandomCoursesAction,
   setLoadingAction,
   getCourseDetailAction,
-  layDSChoXetDuyetAction,
-  layDSDaXetDuyetAction,
+  layHocVienChoXetDuyetAction,
+  layHocVienDaXetDuyetAction,
+  layKhoaHocChoXetDuyetAction,
+  layKhoaHocDaXetDuyetAction,
 } = courseReducer.actions;
 
 export default courseReducer.reducer;
@@ -197,7 +214,7 @@ export const layDSChoXetDuyetApi = (maKhoaHoc: string | undefined) => {
       );
       if (danhSachChoXetDuyet.data.length !== 0)
         data = danhSachChoXetDuyet.data;
-      dispatch(layDSChoXetDuyetAction(data));
+      dispatch(layHocVienChoXetDuyetAction(data));
     } catch (error) {
       console.log(error);
     }
@@ -215,7 +232,49 @@ export const layDSDaXetDuyetApi = (maKhoaHoc: string | undefined) => {
         }
       );
       if (danhSachDaXetDuyet.data.length !== 0) data = danhSachDaXetDuyet.data;
-      dispatch(layDSDaXetDuyetAction(data));
+      dispatch(layHocVienDaXetDuyetAction(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const layDsKhoaHocChoGhiDanh = (userID: string | undefined) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const result = await API.post(
+        "/QuanLyNguoiDung/LayDanhSachKhoaHocChoXetDuyet",
+        {
+          taiKhoan: userID,
+        }
+      );
+      let action: PayloadAction<KhoaHocXetDuyetInterface[] | null> =
+        layKhoaHocChoXetDuyetAction(
+          result.data.length === 0 ? null : result.data
+        );
+
+      dispatch(action);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
+
+export const layDsKhoaHocDaGhiDanh = (userID: string | undefined) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const result = await API.post(
+        "/QuanLyNguoiDung/LayDanhSachKhoaHocDaXetDuyet",
+        {
+          taiKhoan: userID,
+        }
+      );
+      let action: PayloadAction<KhoaHocXetDuyetInterface[] | null> =
+        layKhoaHocDaXetDuyetAction(
+          result.data.length === 0 ? null : result.data
+        );
+
+      dispatch(action);
     } catch (error) {
       console.log(error);
     }

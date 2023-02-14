@@ -12,7 +12,9 @@ import {
   UserLoginType,
 } from "../../util/interface/userReducerInterface";
 import {
+  updateDeleteResultReducer,
   updateErrorMessageReducer,
+  updateGlobalMessageReducer,
   updateSuccessMessageReducer,
 } from "../pageReducer/pageReducer";
 import { DispatchType } from "../store";
@@ -151,4 +153,19 @@ export const getAllUserListApi = async (dispatch: DispatchType) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const deleteUserApi = (userID: string | undefined) => {
+  return async (dispatch: DispatchType) => {
+    try {
+      const result = await API.delete(
+        `/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${userID}`
+      );
+      await dispatch(getAllUserListApi);
+      dispatch(updateDeleteResultReducer(result.data));
+    } catch (error: any) {
+      console.log(error);
+      dispatch(updateGlobalMessageReducer(error.response.data));
+    }
+  };
 };

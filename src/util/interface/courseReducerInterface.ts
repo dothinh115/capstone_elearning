@@ -41,13 +41,20 @@ export interface UpdateCourseType {
   taiKhoanNguoiTAO: string;
 }
 
+export interface KhoaHocXetDuyetInterface {
+  maKhoaHoc: string;
+  tenKhoaHoc: string;
+}
+
 export interface CourseStateType {
   coursesArr: CourseType[] | null;
   randomCoursesArr: CourseType[] | null;
   loading: boolean;
   courseDetail: CourseType | null;
-  choXetDuyet: DanhSachGhiDanh[] | null;
-  daXetDuyet: DanhSachGhiDanh[] | null;
+  hocVienChoXetDuyet: DanhSachGhiDanh[] | null;
+  hocVienDaXetDuyet: DanhSachGhiDanh[] | null;
+  khoaHocChoXetDuyet: KhoaHocXetDuyetInterface[] | null;
+  khoaHocDaXetDuyet: KhoaHocXetDuyetInterface[] | null;
 }
 
 export interface RegisterdCoursesDetailType {
