@@ -103,11 +103,9 @@ const UsersManage = (props: Props) => {
               .map((item: UserListType) => {
                 return (
                   <li key={item.taiKhoan}>
-                    <a
-                      href="#"
-                      onClick={(event: React.MouseEvent<HTMLAnchorElement>) =>
-                        event.preventDefault()
-                      }
+                    <Link
+                      to={`/profile/users_manage/${item.taiKhoan}`}
+                      state={{ inside: true }}
                     >
                       <div
                         className="user_type"
@@ -130,7 +128,7 @@ const UsersManage = (props: Props) => {
                           {item.soDt}
                         </p>
                       </div>
-                    </a>
+                    </Link>
                     <Link
                       to={`/profile/users_manage/${item.taiKhoan}`}
                       className="editButton"

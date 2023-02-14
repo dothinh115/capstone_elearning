@@ -110,34 +110,30 @@ const UsersEditForm = (props: Props) => {
         {editingUserInfo &&
           Object.keys(editingUserInfo).map((item: any): JSX.Element => {
             return (
-              <div className="profile_container_main_block" key={item}>
-                <div className="profile_main_info_item">
-                  <div className="profile_main_info_item_title">
-                    <i
-                      className={`fa fa-${
-                        EditingUserConfig.icon[
-                          EditingUserConfig.key.indexOf(
-                            item as keyof UserListType
-                          )
-                        ]
-                      }`}
-                    ></i>
-                    {
-                      EditingUserConfig.title[
+              <div className="profile_main_info_item" key={item}>
+                <div className="profile_main_info_item_title">
+                  <i
+                    className={`fa fa-${
+                      EditingUserConfig.icon[
                         EditingUserConfig.key.indexOf(
                           item as keyof UserListType
                         )
                       ]
-                    }
-                  </div>
-                  <div className="profile_main_info_item_input">
-                    <input
-                      type="text"
-                      {...register(item, {
-                        required: "Không được để trống!",
-                      })}
-                    />
-                  </div>
+                    }`}
+                  ></i>
+                  {
+                    EditingUserConfig.title[
+                      EditingUserConfig.key.indexOf(item as keyof UserListType)
+                    ]
+                  }
+                </div>
+                <div className="profile_main_info_item_input">
+                  <input
+                    type="text"
+                    {...register(item, {
+                      required: "Không được để trống!",
+                    })}
+                  />
                 </div>
               </div>
             );
@@ -149,21 +145,28 @@ const UsersEditForm = (props: Props) => {
             </button>
           </div>
         </div>
-        {globalMessage && (
-          <div className="profile_main_info_item">
-            <div className="profile_main_info_item_button">
-              <span className="btn">{globalMessage}</span>
-            </div>
-          </div>
-        )}
+
         <div className="profile_main_info_item">
           <div className="profile_main_info_item_button">
             <button
               type="button"
               className="btn btn-danger"
               onClick={() => deleteUser(editingUserInfo?.taiKhoan)}
+              disabled={
+                khoaHocChoXetDuyet || khoaHocDaXetDuyet || globalMessage
+                  ? true
+                  : false
+              }
             >
-              Xóa
+              {globalMessage ? (
+                globalMessage
+              ) : (
+                <>
+                  {khoaHocChoXetDuyet || khoaHocDaXetDuyet
+                    ? `Học viên đã đăng ký khóa học không thể xóa`
+                    : `Xóa`}
+                </>
+              )}
             </button>
           </div>
         </div>
@@ -235,7 +238,11 @@ const UsersEditForm = (props: Props) => {
 
   return (
     <Modal toggle={toggle} show={true} title="Chỉnh sửa thông tin học viên">
-      {deleteResult ? <span className="btn">{deleteResult}</span> : html}
+      {deleteResult ? (
+        <span className="btn btn-danger">{deleteResult}</span>
+      ) : (
+        html
+      )}
     </Modal>
   );
 };

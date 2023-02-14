@@ -279,6 +279,21 @@ const CourseEditForm = (props: Props) => {
         </div>
       </form>
 
+      <div className="profile_main_info_item">
+        <div className="profile_main_info_item_button">
+          <button
+            disabled={hocVienChoXetDuyet || hocVienDaXetDuyet ? true : false}
+            type="button"
+            className="btn btn-danger"
+            onClick={deleteHandle}
+          >
+            {hocVienChoXetDuyet || hocVienDaXetDuyet
+              ? `Khóa học có học viên không thể xóa`
+              : `Xóa`}
+          </button>
+        </div>
+      </div>
+
       <h2>Danh sách đang xét duyệt</h2>
       <ul className="modal_ul">
         {hocVienChoXetDuyet ? (
@@ -345,21 +360,6 @@ const CourseEditForm = (props: Props) => {
           <li>Danh sách trống</li>
         )}
       </ul>
-
-      <div className="profile_main_info_item">
-        <div className="profile_main_info_item_button">
-          <button
-            disabled={hocVienChoXetDuyet || hocVienDaXetDuyet ? true : false}
-            type="button"
-            className="btn btn-danger"
-            onClick={deleteHandle}
-          >
-            {hocVienChoXetDuyet || hocVienDaXetDuyet
-              ? `Khóa học có học viên không thể xóa`
-              : `Xóa`}
-          </button>
-        </div>
-      </div>
     </>
   );
 
