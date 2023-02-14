@@ -11,7 +11,7 @@ const Header = (props: Props) => {
   const { token } = useToken();
   const dropdownMenu = useRef<HTMLDivElement | null>(null);
   const dropdownButton = useRef<HTMLButtonElement | null>(null);
-  const { pathname } = useLocation(); //window.location.pathname || null = "/"
+  const { pathname, search } = useLocation(); //window.location.pathname || null = "/"
   const dispatch: DispatchType = useDispatch();
   const logout = (event: React.MouseEvent<HTMLButtonElement>): void => {
     event.preventDefault();
@@ -85,7 +85,7 @@ const Header = (props: Props) => {
                   ) : (
                     <>
                       <li>
-                        <NavLink to={`/login?next=${pathname}`}>
+                        <NavLink to={`/login?next=${pathname + search}`}>
                           <i className="fa-solid fa-right-to-bracket"></i>
                           Đăng nhập
                         </NavLink>

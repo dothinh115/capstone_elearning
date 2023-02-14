@@ -34,7 +34,7 @@ const Login = (props: Props) => {
           <Link
             to={
               searchParams.get("next")
-                ? searchParams.get("next")!.replace("+", "%2B")
+                ? searchParams.get("next")!.replaceAll("+", "%2B")
                 : "/"
             }
             className="badge"

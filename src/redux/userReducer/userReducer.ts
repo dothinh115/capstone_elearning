@@ -76,7 +76,7 @@ export const loginApi = (dataLogin: LoginType, next: string) => {
     try {
       const result = await API.post("/QuanLyNguoiDung/DangNhap", dataLogin);
       saveLocalStorage<UserLoginType>("userInfo", result.data);
-      window.location.href = next;
+      window.location.href = next.replaceAll("+", "%2B");
     } catch (error: any) {
       console.log(error);
       history.push(window.location.pathname + window.location.search, {

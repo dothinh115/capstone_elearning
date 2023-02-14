@@ -75,7 +75,11 @@ const UsersManage = (props: Props) => {
     <div className="profile_main_info">
       <Outlet />
       <div className="profile_container_main_block">
-        <Link to="/profile/users_manage/create" className="btn">
+        <Link
+          to="/profile/users_manage/create"
+          className="btn"
+          state={{ inside: true }}
+        >
           Thêm học viên mới
         </Link>
       </div>
