@@ -119,9 +119,9 @@ const CreateNewCourseForm = (props: Props) => {
 
   const html = (
     <form onSubmit={handleSubmit(addNewSubmitHandle)}>
-      {Object.keys(newCourse).map((item: any) => {
+      {Object.keys(newCourse).map((item: string): JSX.Element | null => {
         for (let value of keysExcepted) {
-          if (item === value) return;
+          if (item === value) return null;
         }
         return (
           <div className="profile_main_info_item" key={item}>
@@ -184,7 +184,7 @@ const CreateNewCourseForm = (props: Props) => {
               ) : (
                 <input
                   type="text"
-                  {...register(item, {
+                  {...register(item as keyof UpdateCourseType, {
                     ...(item !== "maKhoaHoc" && {
                       required: "Không được để trống!",
                     }),

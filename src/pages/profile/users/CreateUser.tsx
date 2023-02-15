@@ -47,8 +47,8 @@ const CreateUser = (props: Props) => {
   }, []);
   const html = (
     <form onSubmit={handleSubmit(submitHandle)}>
-      {Object.keys(newUser).map((item: any) => {
-        if (item === "maNhom") return;
+      {Object.keys(newUser).map((item: string): JSX.Element | null => {
+        if (item === "maNhom") return null;
         return (
           <div className="profile_main_info_item" key={item}>
             <div className="profile_main_info_item_title">
@@ -85,7 +85,7 @@ const CreateUser = (props: Props) => {
                       ? "isInvalid"
                       : ""
                   }
-                  {...register(item, {
+                  {...register(item as keyof UserInfoType, {
                     required: "Không được để trống!",
                     pattern: {
                       value: new RegExp(

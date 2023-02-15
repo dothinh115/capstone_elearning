@@ -162,8 +162,8 @@ const UsersEditForm = (props: Props) => {
           </div>
         )}
         {findedUser &&
-          Object.keys(findedUser).map((item: any) => {
-            if (item === "matKhau" || item === "tenLoaiNguoiDung") return;
+          Object.keys(findedUser).map((item: string): JSX.Element | null => {
+            if (item === "matKhau" || item === "tenLoaiNguoiDung") return null;
             return (
               <div className="profile_main_info_item" key={item}>
                 <div className="profile_main_info_item_title">
@@ -197,7 +197,7 @@ const UsersEditForm = (props: Props) => {
                           ? "isInvalid"
                           : ""
                       }
-                      {...register(item, {
+                      {...register(item as keyof FindedUserInterface, {
                         required: "Không được để trống!",
                         pattern: {
                           value: new RegExp(
@@ -360,7 +360,12 @@ const UsersEditForm = (props: Props) => {
           .map((item: CourseType) => {
             return (
               <li key={item.maKhoaHoc}>
-                <Link to={`/course/${item.maKhoaHoc}`}>{item.tenKhoaHoc}</Link>
+                <Link
+                  to={`/profile/courses_manage/${item.maKhoaHoc}`}
+                  state={{ inside: true }}
+                >
+                  {item.tenKhoaHoc}
+                </Link>
                 <span>
                   <button
                     type="button"
@@ -382,7 +387,13 @@ const UsersEditForm = (props: Props) => {
       {loading ? (
         <div className="loader"></div>
       ) : (
-        <>{deleteResult ? <span className="btn">{deleteResult}</span> : html}</>
+        <>
+          {deleteResult ? (
+            <span className="btn btn-danger">{deleteResult}</span>
+          ) : (
+            html
+          )}
+        </>
       )}
     </Modal>
   );
