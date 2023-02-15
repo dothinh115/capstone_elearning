@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -108,6 +108,7 @@ const CreateNewCourseForm = (props: Props) => {
           </div>
         )}
       </div>
+
       <div className="profile_main_info_item">
         <div className="profile_main_info_item_title">
           <i className="fa-solid fa-bars"></i>Danh mục

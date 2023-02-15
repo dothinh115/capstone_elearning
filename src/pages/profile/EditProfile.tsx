@@ -106,6 +106,11 @@ const EditProfile = (props: Props) => {
                               (item === "soDT" && "number") ||
                               (item === "email" && "email")
                             }`}
+                            className={`${
+                              errors[item as keyof RegisterInputType]?.message
+                                ? "isInvalid"
+                                : ""
+                            }`}
                             {...register(item, {
                               required: `${registerInputData.title[index]} không được để trống!`,
                               pattern: {

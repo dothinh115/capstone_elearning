@@ -183,11 +183,19 @@
     border-bottom: 1px solid #eee;
   }
   &_item {
-    margin-bottom: 10px;
+    padding: 5px 0;
     .profile_main_info_item_input {
       input:focus,
       input {
         font-size: 13px !important;
+      }
+    }
+    .profile_main_info_error {
+      width: 100%;
+      margin-top: 5px;
+      color: red;
+      i {
+        margin-right: 5px;
       }
     }
     &.edit_profile {

@@ -11,21 +11,23 @@ import { UserInfoType } from "../../../util/interface/userReducerInterface";
 
 type Props = {};
 
+const newUser: UserInfoType = {
+  taiKhoan: "",
+  matKhau: "",
+  hoTen: "",
+  soDT: "",
+  maLoaiNguoiDung: "GV",
+  maNhom: "GP01",
+  email: "",
+};
+
 const CreateUser = (props: Props) => {
   const { toggle } = useModal();
   const { errorMessage } = useSelector(
     (store: ReduxRootType) => store.pageReducer
   );
   const dispatch: DispatchType = useDispatch();
-  const newUser: UserInfoType = {
-    taiKhoan: "",
-    matKhau: "",
-    hoTen: "",
-    soDT: "",
-    maLoaiNguoiDung: "GV",
-    maNhom: "GP01",
-    email: "",
-  };
+
   const {
     register,
     handleSubmit,

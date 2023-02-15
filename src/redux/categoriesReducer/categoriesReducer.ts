@@ -91,10 +91,6 @@ export const getCoursesByCategoriesApi = (
         CourseType[] | null | undefined
       > = getCoursesByCategoriesAction(resultCoursesArr!);
       dispatch(coursesByCategoriesAction);
-      const setLimitCourses: PayloadAction<number> = setLimitCoursesAction(
-        limitCategoriesCourses
-      );
-      dispatch(setLimitCourses);
     } catch (error) {
       console.log(error);
     } finally {
