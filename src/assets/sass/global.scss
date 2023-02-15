@@ -161,7 +161,8 @@ input:focus {
   box-shadow: 0 0 0 0.15rem rgba(128, 189, 255, 0.45);
   font-size: unset !important;
 }
-input.isInvalid {
+input.isInvalid,
+textarea.isInvalid {
   border-color: rgba(255, 0, 0, 0.65) !important;
   box-shadow: 0 0 0 0.15rem rgba(255, 0, 0, 0.25);
 }

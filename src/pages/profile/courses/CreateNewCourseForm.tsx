@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -90,13 +90,8 @@ const CreateNewCourseForm = (props: Props) => {
     });
   };
 
-  const nameToCode = (
-    event: { target: HTMLInputElement },
-    item: string
-  ): void => {
-    if (item !== "tenKhoaHoc") return;
-    setValue("maKhoaHoc", toNonAccentVietnamese(event.target.value.trim()));
-  };
+  const nameToCode = (value: string): void =>
+    setValue("maKhoaHoc", toNonAccentVietnamese(value.trim()));
 
   useEffect(() => {
     reset({
@@ -170,6 +165,11 @@ const CreateNewCourseForm = (props: Props) => {
                 </select>
               ) : item === "moTa" ? (
                 <textarea
+                  className={`${
+                    errors[item as keyof UpdateCourseType]?.message
+                      ? "isInvalid"
+                      : ""
+                  }`}
                   {...register(item, {
                     required: "Không được để trống!",
                   })}
@@ -180,6 +180,8 @@ const CreateNewCourseForm = (props: Props) => {
                   {...register(item as keyof UpdateCourseType, {
                     ...(item !== "maKhoaHoc" && {
                       required: "Không được để trống!",
+                      onChange: (event: React.ChangeEvent<HTMLInputElement>) =>
+                        nameToCode(event.target.value),
                     }),
                   })}
                   className={`${
@@ -188,7 +190,6 @@ const CreateNewCourseForm = (props: Props) => {
                       : ""
                   }`}
                   disabled={item === "maKhoaHoc" ? true : false}
-                  onChange={(event) => nameToCode(event, item)}
                   placeholder={
                     item === "maKhoaHoc"
                       ? "Được lấy tự động!"
