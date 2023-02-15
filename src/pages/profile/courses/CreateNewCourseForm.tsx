@@ -82,7 +82,7 @@ const CreateNewCourseForm = (props: Props) => {
     const payload = {
       ...data,
       biDanh,
-      maKhoaHoc: toNonAccentVietnamese(data.tenKhoaHoc),
+      maKhoaHoc: toNonAccentVietnamese(data.tenKhoaHoc.trim()),
       ngayTAO: newDate,
       taiKhoanNguoiTAO: userInfo!.taiKhoan,
       hinhAnh: data.hinhAnh[0],
@@ -102,7 +102,7 @@ const CreateNewCourseForm = (props: Props) => {
     item: string
   ): void => {
     if (item !== "tenKhoaHoc") return;
-    setValue("maKhoaHoc", toNonAccentVietnamese(event.target.value));
+    setValue("maKhoaHoc", toNonAccentVietnamese(event.target.value.trim()));
   };
 
   useEffect(() => {
@@ -197,11 +197,13 @@ const CreateNewCourseForm = (props: Props) => {
                   disabled={item === "maKhoaHoc" ? true : false}
                   onChange={(event) => nameToCode(event, item)}
                   placeholder={
-                    createNewCourseConfig.title[
-                      createNewCourseConfig.keys.indexOf(
-                        item as keyof CreateNewCourseType
-                      )
-                    ]
+                    item === "maKhoaHoc"
+                      ? "Được lấy tự động!"
+                      : createNewCourseConfig.title[
+                          createNewCourseConfig.keys.indexOf(
+                            item as keyof CreateNewCourseType
+                          )
+                        ]
                   }
                 />
               )}
