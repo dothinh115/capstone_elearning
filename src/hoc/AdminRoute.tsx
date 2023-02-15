@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
-import { history } from "../App";
 import Modal from "../components/modal/Modal";
 import useModal from "../hooks/useModal";
 import { ReduxRootType } from "../redux/store";

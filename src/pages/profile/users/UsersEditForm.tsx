@@ -40,7 +40,6 @@ const UsersEditForm = (props: Props) => {
   const { toggle } = useModal();
   const { userID } = useParams();
   const location = useLocation();
-  console.log(location);
   const { findedUser } = useSelector(
     (store: ReduxRootType) => store.userReducer
   );
@@ -154,59 +153,56 @@ const UsersEditForm = (props: Props) => {
           Object.keys(findedUser).map((item: any) => {
             if (item === "matKhau" || item === "tenLoaiNguoiDung") return;
             return (
-              <div className="profile_container_main_block" key={item}>
-                <div className="profile_main_info_item">
-                  <div className="profile_main_info_item_title">
-                    <i
-                      className={`fa fa-${
-                        EditingUserConfig.icon[
-                          EditingUserConfig.key.indexOf(
-                            item as keyof UserListType
-                          )
-                        ]
-                      }`}
-                    ></i>
-                    {
-                      EditingUserConfig.title[
+              <div className="profile_main_info_item" key={item}>
+                <div className="profile_main_info_item_title">
+                  <i
+                    className={`fa fa-${
+                      EditingUserConfig.icon[
                         EditingUserConfig.key.indexOf(
                           item as keyof UserListType
                         )
                       ]
-                    }
-                  </div>
-                  <div className="profile_main_info_item_input">
-                    {item === "maLoaiNguoiDung" ? (
-                      <select {...register(item)}>
-                        <option value="GV">Giáo vụ</option>
-                        <option value="HV">Học viên</option>
-                      </select>
-                    ) : (
-                      <input
-                        id={item}
-                        type={`${item === "soDt" ? "number" : "text"}`}
-                        className={
-                          errors[item as keyof FindedUserInterface]?.message
-                            ? "isInvalid"
-                            : ""
-                        }
-                        {...register(item, {
-                          required: "Không được để trống!",
-                          pattern: {
-                            value: new RegExp(
-                              registerInputData.regex[
-                                registerInputData.id.indexOf(item)
-                              ]
-                            ),
-                            message:
-                              registerInputData.errors[
-                                registerInputData.id.indexOf(item)
-                              ],
-                          },
-                        })}
-                      />
-                    )}
-                  </div>
+                    }`}
+                  ></i>
+                  {
+                    EditingUserConfig.title[
+                      EditingUserConfig.key.indexOf(item as keyof UserListType)
+                    ]
+                  }
                 </div>
+                <div className="profile_main_info_item_input">
+                  {item === "maLoaiNguoiDung" ? (
+                    <select {...register(item)}>
+                      <option value="GV">Giáo vụ</option>
+                      <option value="HV">Học viên</option>
+                    </select>
+                  ) : (
+                    <input
+                      id={item}
+                      type={`${item === "soDt" ? "number" : "text"}`}
+                      className={
+                        errors[item as keyof FindedUserInterface]?.message
+                          ? "isInvalid"
+                          : ""
+                      }
+                      {...register(item, {
+                        required: "Không được để trống!",
+                        pattern: {
+                          value: new RegExp(
+                            registerInputData.regex[
+                              registerInputData.id.indexOf(item)
+                            ]
+                          ),
+                          message:
+                            registerInputData.errors[
+                              registerInputData.id.indexOf(item)
+                            ],
+                        },
+                      })}
+                    />
+                  )}
+                </div>
+
                 {errors[item as keyof FindedUserInterface]?.message && (
                   <div className="profile_main_info_error">
                     <p>

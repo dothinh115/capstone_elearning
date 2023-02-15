@@ -63,7 +63,6 @@ const CategoriesSidebar = ({
     if (checked !== null) {
       let params: string | undefined = checked?.join("+");
       searchParams.set("categories", params);
-      if (searchParams.get("modalShow")) searchParams.delete("modalShow");
       setSearchParams(searchParams);
       window.scrollTo(0, 0);
     } else {

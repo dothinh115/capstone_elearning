@@ -3,10 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from "../../../components/modal/Modal";
 import useModal from "../../../hooks/useModal";
-import {
-  updateErrorMessageReducer,
-  updateSuccessMessageReducer,
-} from "../../../redux/pageReducer/pageReducer";
+import { updateErrorMessageReducer } from "../../../redux/pageReducer/pageReducer";
 import { DispatchType, ReduxRootType } from "../../../redux/store";
 import { createNewUserApi } from "../../../redux/userReducer/userReducer";
 import { EditingUserConfig, registerInputData } from "../../../util/config";
