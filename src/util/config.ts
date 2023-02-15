@@ -1,5 +1,6 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
 import { getLocalStorage, removeLocalStorage } from "./function";
+import { CreateNewCourseType } from "./interface/courseReducerInterface";
 
 export const CYBERSOFT_TOKEN: string =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCAzNUUiLCJIZXRIYW5TdHJpbmciOiIwNy8wNi8yMDIzIiwiSGV0SGFuVGltZSI6IjE2ODYwOTYwMDAwMDAiLCJuYmYiOjE2NTczODYwMDAsImV4cCI6MTY4NjI0MzYwMH0.XsCcIZvawxcwye8KVYB2vJK4d3Gbr1XROtNyAL8nypA";
@@ -172,4 +173,34 @@ export const registerInputData: RegisterConfigType = {
     "",
     "yourname@example.com",
   ],
+};
+
+export const createNewCourseConfig: CreateNewCourseType = {
+  keys: [
+    "maKhoaHoc",
+    "biDanh",
+    "tenKhoaHoc",
+    "moTa",
+    "luotXem",
+    "danhGia",
+    "hinhAnh",
+    "maNhom",
+    "ngayTAO",
+    "maDanhMucKhoaHoc",
+    "taiKhoanNguoiTao",
+  ],
+  title: [
+    "Mã khóa học",
+    "Bí danh",
+    "Tên khóa học",
+    "Mô tả",
+    "Lượt xem",
+    "Đánh giá",
+    "Hình ảnh",
+    "Mã nhóm",
+    "Ngày Tạo",
+    "Danh mục",
+    "",
+  ],
+  icon: ["code", "tag", "book", "comment", "", "", "image", "", "", "bars", ""],
 };

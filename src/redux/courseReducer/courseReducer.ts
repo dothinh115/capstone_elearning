@@ -7,7 +7,6 @@ import {
   CourseStateType,
   CourseType,
   KhoaHocXetDuyetInterface,
-  UpdateCourseType,
 } from "../../util/interface/courseReducerInterface";
 import {
   DanhSachGhiDanh,
@@ -165,11 +164,17 @@ export const courseUpdateApi = (data: any, withImg: boolean) => {
 };
 
 export const createNewCourse = (data: any) => {
+  let preview = {};
   return async (dispatch: DispatchType) => {
     try {
-      await API.post("QuanLyKhoaHoc/ThemKhoaHocUploadHinh", data);
+      const result = await API.post(
+        "QuanLyKhoaHoc/ThemKhoaHocUploadHinh",
+        data
+      );
       dispatch(getAllCoursesApi);
       dispatch(updateSuccessMessageReducer("Tạo khóa học thành công!"));
+      preview = result.data;
+      return preview;
     } catch (error: any) {
       console.log(error);
       dispatch(updateErrorMessageReducer(error.response.data));
@@ -184,7 +189,7 @@ export const courseDeleteApi = (maKhoaHoc: string | undefined) => {
         `/QuanLyKhoaHoc/XoaKhoaHoc?MaKhoaHoc=${maKhoaHoc}`
       );
       await dispatch(getAllCoursesApi);
-      dispatch(updateDeleteResultReducer(result.data));
+      return result.data;
     } catch (error: any) {
       console.log(error);
       dispatch(updateGlobalMessageReducer(error.reponese?.data));

@@ -154,6 +154,7 @@ textarea {
 }
 input:disabled {
   cursor: not-allowed;
+  background-color: #eee;
 }
 input:focus {
   border-color: rgba(128, 189, 255, 0.65) !important;

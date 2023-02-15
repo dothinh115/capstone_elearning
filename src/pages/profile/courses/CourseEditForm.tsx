@@ -35,7 +35,6 @@ const CourseEditForm = (props: Props) => {
   const { categories } = useSelector(
     (store: ReduxRootType) => store.categoriesReducer
   );
-  const { userInfo } = useSelector((store: ReduxRootType) => store.userReducer);
   const { hocVienChoXetDuyet, hocVienDaXetDuyet } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
@@ -47,6 +46,7 @@ const CourseEditForm = (props: Props) => {
   const dispatch: DispatchType = useDispatch();
   const { courseID } = useParams();
   const { toggle } = useModal();
+  const [deleteResult, SetDeleteResult] = useState<any>(null);
   const {
     register,
     handleSubmit,
@@ -79,8 +79,12 @@ const CourseEditForm = (props: Props) => {
 
   const deleteHandle = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    if (!hocVienChoXetDuyet && !hocVienDaXetDuyet)
-      dispatch(courseDeleteApi(courseID!));
+    if (!hocVienChoXetDuyet && !hocVienDaXetDuyet) {
+      const result = dispatch(courseDeleteApi(courseID!));
+      result.then((res: any) => {
+        SetDeleteResult(res);
+      });
+    }
   };
 
   const registeredUserDeleteHandle = async (
@@ -373,10 +377,10 @@ const CourseEditForm = (props: Props) => {
       </Modal>
     );
 
-  if (pageReducer.deleteResult)
+  if (deleteResult)
     return (
       <Modal show={true} toggle={toggle} title="Xóa thành công">
-        <p className="btn btn-danger">Xóa khóa học thành công</p>
+        <p className="btn btn-danger">{deleteResult}</p>
       </Modal>
     );
 

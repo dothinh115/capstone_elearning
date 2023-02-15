@@ -67,3 +67,9 @@ export interface RegisterdCoursesDetailType {
   ngayTao: string;
   danhGia: number;
 }
+
+export interface CreateNewCourseType {
+  keys: string[];
+  title: string[];
+  icon: string[];
+}

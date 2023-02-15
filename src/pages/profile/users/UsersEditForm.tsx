@@ -5,6 +5,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import Modal from "../../../components/modal/Modal";
 import useModal from "../../../hooks/useModal";
 import {
+  courseDeleteApi,
   layDsKhoaHocChoGhiDanh,
   layDsKhoaHocDaGhiDanh,
   layKhoaHocChoXetDuyetAction,
@@ -26,7 +27,10 @@ import {
   updateUserInfoApi,
 } from "../../../redux/userReducer/userReducer";
 import { EditingUserConfig, registerInputData } from "../../../util/config";
-import { KhoaHocXetDuyetInterface } from "../../../util/interface/courseReducerInterface";
+import {
+  CourseType,
+  KhoaHocXetDuyetInterface,
+} from "../../../util/interface/courseReducerInterface";
 import {
   dataGhiDanh,
   FindedUserInterface,
@@ -43,7 +47,7 @@ const UsersEditForm = (props: Props) => {
   const { findedUser } = useSelector(
     (store: ReduxRootType) => store.userReducer
   );
-  const { khoaHocChoXetDuyet, khoaHocDaXetDuyet } = useSelector(
+  const { khoaHocChoXetDuyet, khoaHocDaXetDuyet, coursesArr } = useSelector(
     (store: ReduxRootType) => store.courseReducer
   );
 
@@ -89,6 +93,14 @@ const UsersEditForm = (props: Props) => {
     };
     await dispatch(dangKyApi(false, data));
     reloadDanhSach();
+  };
+
+  const courseDelete = (
+    event: React.MouseEvent<HTMLButtonElement>,
+    courseID: string
+  ) => {
+    event.preventDefault();
+    dispatch(courseDeleteApi(courseID));
   };
 
   const registeredUserConfirmHandle = async (
@@ -336,6 +348,31 @@ const UsersEditForm = (props: Props) => {
         ) : (
           <li>Danh sách trống</li>
         )}
+      </ul>
+
+      <h2>Khóa học đã tạo</h2>
+      <ul className="modal_ul">
+        {coursesArr?.filter(
+          (item: CourseType) => item.nguoiTao.taiKhoan == userID
+        ).length === 0 && <li>Danh sách rỗng</li>}
+        {coursesArr
+          ?.filter((item: CourseType) => item.nguoiTao.taiKhoan == userID)
+          .map((item: CourseType) => {
+            return (
+              <li key={item.maKhoaHoc}>
+                <Link to={`/course/${item.maKhoaHoc}`}>{item.tenKhoaHoc}</Link>
+                <span>
+                  <button
+                    type="button"
+                    className="btn btn-danger"
+                    onClick={(event) => courseDelete(event, item.maKhoaHoc)}
+                  >
+                    <i className="fa-solid fa-trash"></i>
+                  </button>
+                </span>
+              </li>
+            );
+          })}
       </ul>
     </>
   );
