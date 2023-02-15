@@ -103,6 +103,7 @@ const CreateNewCourseForm = (props: Props) => {
       dispatch(updateSuccessMessageReducer(null));
       dispatch(updateErrorMessageReducer(null));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const html = (

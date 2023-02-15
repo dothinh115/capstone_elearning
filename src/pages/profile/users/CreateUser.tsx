@@ -44,6 +44,7 @@ const CreateUser = (props: Props) => {
     return () => {
       dispatch(updateErrorMessageReducer(null));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const html = (
     <form onSubmit={handleSubmit(submitHandle)}>

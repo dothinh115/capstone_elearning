@@ -131,10 +131,12 @@ const UsersEditForm = (props: Props) => {
 
   useEffect(() => {
     firstLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userID]);
 
   useEffect(() => {
     reset(findedUser!);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [findedUser]);
 
   useEffect(() => {
@@ -147,6 +149,7 @@ const UsersEditForm = (props: Props) => {
       dispatch(updateSuccessMessageReducer(null));
       dispatch(updateErrorMessageReducer(null));
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const html = (
@@ -353,10 +356,10 @@ const UsersEditForm = (props: Props) => {
       <h2>Khóa học đã tạo</h2>
       <ul className="modal_ul">
         {coursesArr?.filter(
-          (item: CourseType) => item.nguoiTao.taiKhoan == userID
+          (item: CourseType) => item.nguoiTao.taiKhoan === userID
         ).length === 0 && <li>Danh sách rỗng</li>}
         {coursesArr
-          ?.filter((item: CourseType) => item.nguoiTao.taiKhoan == userID)
+          ?.filter((item: CourseType) => item.nguoiTao.taiKhoan === userID)
           .map((item: CourseType) => {
             return (
               <li key={item.maKhoaHoc}>
