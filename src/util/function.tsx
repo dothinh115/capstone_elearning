@@ -10,6 +10,7 @@ export const {
   showMaNhom,
   toNonAccentVietnamese,
   xoaTrungLap,
+  getDate,
 } = {
   randomArray<T>(arr: T[], limit: number): T[] {
     arr = [...arr];
@@ -88,5 +89,16 @@ export const {
       if (find) arr.splice(arr.indexOf(find), 1);
     }
     return arr;
+  },
+  getDate() {
+    const date = new Date();
+    const newDate = `${
+      date.getDate() < 10 ? "0" + (date.getDate() + 1) : date.getDate()
+    }/${
+      date.getMonth() + 1 < 10
+        ? "0" + (date.getMonth() + 1)
+        : date.getMonth() + 1
+    }/${date.getFullYear()}`;
+    return newDate;
   },
 };

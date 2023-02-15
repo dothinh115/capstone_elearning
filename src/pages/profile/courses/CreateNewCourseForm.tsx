@@ -12,7 +12,7 @@ import {
 } from "../../../redux/pageReducer/pageReducer";
 import { DispatchType, ReduxRootType } from "../../../redux/store";
 import { createNewCourseConfig } from "../../../util/config";
-import { toNonAccentVietnamese } from "../../../util/function";
+import { getDate, toNonAccentVietnamese } from "../../../util/function";
 import { CategoriesType } from "../../../util/interface/categoriesReducerInterface";
 import {
   CreateNewCourseType,
@@ -71,19 +71,12 @@ const CreateNewCourseForm = (props: Props) => {
 
   const addNewSubmitHandle = async (data: any) => {
     const biDanh = toNonAccentVietnamese(data.tenKhoaHoc);
-    const date = new Date();
-    const newDate = `${
-      date.getDay() + 1 < 10 ? "0" + (date.getDay() + 1) : date.getDay()
-    }/${
-      date.getMonth() + 1 < 10
-        ? "0" + (date.getMonth() + 1)
-        : date.getMonth() + 1
-    }/${date.getFullYear()}`;
+
     const payload = {
       ...data,
       biDanh,
       maKhoaHoc: toNonAccentVietnamese(data.tenKhoaHoc.trim()),
-      ngayTAO: newDate,
+      ngayTAO: getDate(),
       taiKhoanNguoiTAO: userInfo!.taiKhoan,
       hinhAnh: data.hinhAnh[0],
     };
