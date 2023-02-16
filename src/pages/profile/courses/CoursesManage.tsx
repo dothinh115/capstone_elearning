@@ -68,6 +68,7 @@ const CoursesManage = (props: Props) => {
     if (window.innerWidth <= 820 && coursesManageScroll)
       document.querySelector(".modal")?.scrollTo(0, coursesManageScroll);
     else courseList.current?.scrollTo(0, coursesManageScroll!);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchResult]);
 
   useEffect(() => {
@@ -78,10 +79,12 @@ const CoursesManage = (props: Props) => {
         search: keywords,
       });
     } else setSearchResult(coursesArr);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [coursesArr, searchParams]);
 
   useEffect(() => {
     dispatch(getAllCoursesApi);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const html = (
