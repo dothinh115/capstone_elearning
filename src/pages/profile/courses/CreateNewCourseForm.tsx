@@ -69,20 +69,18 @@ const CreateNewCourseForm = (props: Props) => {
     defaultValues: newCourse,
   });
 
-  const addNewSubmitHandle = async (data: any) => {
-    const biDanh = toNonAccentVietnamese(data.tenKhoaHoc);
-
-    const payload = {
+  const addNewSubmitHandle = async (data: UpdateCourseType) => {
+    const payload: UpdateCourseType = {
       ...data,
-      biDanh,
+      biDanh: toNonAccentVietnamese(data.tenKhoaHoc.trim()),
       maKhoaHoc: toNonAccentVietnamese(data.tenKhoaHoc.trim()),
       ngayTAO: getDate(),
       taiKhoanNguoiTAO: userInfo!.taiKhoan,
       hinhAnh: data.hinhAnh[0],
     };
-    const formData = new FormData();
+    const formData: FormData = new FormData();
     for (let key in payload) {
-      formData.append(key, payload[key]);
+      formData.append(key, payload[key as keyof UpdateCourseType]);
     }
     const result = dispatch(createNewCourse(formData));
     result.then((res: any) => {
@@ -205,8 +203,10 @@ const CreateNewCourseForm = (props: Props) => {
             </div>
             {errors[item as keyof UpdateCourseType]?.message && (
               <div className="profile_main_info_item_error">
-                <i className="fa-solid fa-circle-exclamation"></i>
-                {errors[item as keyof UpdateCourseType]?.message}
+                <>
+                  <i className="fa-solid fa-circle-exclamation"></i>
+                  {errors[item as keyof UpdateCourseType]?.message}
+                </>
               </div>
             )}
           </div>

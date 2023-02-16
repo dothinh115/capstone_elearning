@@ -58,15 +58,15 @@ const CourseEditForm = (props: Props) => {
     mode: "onChange",
   });
 
-  const editSubmitHandle = async (data: any) => {
+  const editSubmitHandle = async (data: UpdateCourseType) => {
     beforeGetOut();
     data = {
       ...data,
       ...(typeof data.hinhAnh !== "string" && { hinhAnh: data.hinhAnh[0] }),
     };
-    const formData = new FormData();
+    const formData: FormData = new FormData();
     for (let key in data) {
-      formData.append(key, data[key]);
+      formData.append(key, data[key as keyof UpdateCourseType]);
     }
     await dispatch(
       courseUpdateApi(
@@ -132,18 +132,18 @@ const CourseEditForm = (props: Props) => {
   };
 
   const resetForm = () => {
-    const obj = {
-      maKhoaHoc: courseDetail?.maKhoaHoc,
-      tenKhoaHoc: courseDetail?.tenKhoaHoc,
-      moTa: courseDetail?.moTa,
+    const obj: UpdateCourseType = {
+      maKhoaHoc: courseDetail!?.maKhoaHoc,
+      tenKhoaHoc: courseDetail!?.tenKhoaHoc,
+      moTa: courseDetail!?.moTa,
       luotXem: 0,
       danhGia: 0,
-      maNhom: courseDetail?.maNhom,
-      ngayTao: courseDetail?.ngayTao,
-      maDanhMucKhoaHoc: courseDetail?.danhMucKhoaHoc.maDanhMucKhoahoc,
-      taiKhoanNguoiTao: courseDetail?.nguoiTao.taiKhoan,
+      maNhom: courseDetail!?.maNhom,
+      ngayTAO: courseDetail!?.ngayTao,
+      maDanhMucKhoaHoc: courseDetail!?.danhMucKhoaHoc.maDanhMucKhoahoc,
+      taiKhoanNguoiTAO: courseDetail!?.nguoiTao.taiKhoan,
       hinhAnh: courseDetail?.hinhAnh,
-      biDanh: courseDetail?.biDanh,
+      biDanh: courseDetail!?.biDanh,
     };
     reset(obj);
   };
@@ -240,8 +240,10 @@ const CourseEditForm = (props: Props) => {
           </div>
           {errors.hinhAnh?.message && (
             <div className="profile_main_info_item_error">
-              <i className="fa-solid fa-circle-exclamation"></i>
-              {errors.hinhAnh?.message}
+              <>
+                <i className="fa-solid fa-circle-exclamation"></i>
+                {errors.hinhAnh?.message}
+              </>
             </div>
           )}
         </div>

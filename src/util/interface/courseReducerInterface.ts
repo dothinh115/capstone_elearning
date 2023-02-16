@@ -34,7 +34,7 @@ export interface UpdateCourseType {
   moTa: string;
   luotXem: number;
   danhGia: number;
-  hinhAnh: string | File;
+  hinhAnh: any;
   maNhom: string;
   ngayTAO: string;
   maDanhMucKhoaHoc: string;
