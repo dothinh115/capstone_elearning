@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../../App";
@@ -52,7 +52,7 @@ const CreateNewCourseForm = (props: Props) => {
     (store: ReduxRootType) => store.pageReducer
   );
   const mKHoc = useRef<string | null>(null);
-
+  const [showImg, setShowImg] = useState<string | null>(null);
   const { toggle } = useModal();
   const dispatch: DispatchType = useDispatch();
   const {
@@ -90,7 +90,7 @@ const CreateNewCourseForm = (props: Props) => {
   const nameToCode = (value: string): void =>
     setValue("maKhoaHoc", toNonAccentVietnamese(value.trim()));
 
-  const sizeCheck = (event: React.SyntheticEvent) => {
+  const fileChangeHandle = (event: React.SyntheticEvent) => {
     const target = event.currentTarget as HTMLInputElement;
     if (target.files) {
       const file: File = target.files[0];
@@ -100,7 +100,15 @@ const CreateNewCourseForm = (props: Props) => {
           message: "Dung lượng vượt quá 1Mb",
         });
       else clearErrors("hinhAnh");
-    }
+
+      //hiện hình
+      const fileReader: FileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        const img = fileReader?.result as string;
+        setShowImg(img);
+      };
+    } else setShowImg(null);
   };
 
   useEffect(() => {
@@ -118,6 +126,39 @@ const CreateNewCourseForm = (props: Props) => {
 
   const html = (
     <form onSubmit={handleSubmit(addNewSubmitHandle)}>
+      {showImg && (
+        <div
+          className="profile_main_info_item"
+          style={{ position: "relative" }}
+        >
+          <button
+            className="btn btn-danger"
+            style={{
+              position: "absolute",
+              height: "35px",
+              width: "50px",
+              margin: "unset",
+              padding: "unset",
+              top: "15px",
+              right: "15px",
+            }}
+            onClick={() => {
+              setShowImg(null);
+              setValue("hinhAnh", "");
+            }}
+          >
+            Xóa
+          </button>
+          <img
+            src={showImg}
+            onError={({ currentTarget }) => {
+              currentTarget.src = "../../img/Nodejs.png";
+            }}
+            alt=""
+          />
+        </div>
+      )}
+
       {Object.keys(newCourse).map((item: string): JSX.Element | null => {
         for (let value of keysExcepted) {
           if (item === value) return null;
@@ -150,7 +191,7 @@ const CreateNewCourseForm = (props: Props) => {
                   {...register(item, {
                     required: "Không được để trống!",
                   })}
-                  onChange={(event) => sizeCheck(event)}
+                  onChange={(event) => fileChangeHandle(event)}
                 />
               ) : item === "maDanhMucKhoaHoc" ? (
                 <select

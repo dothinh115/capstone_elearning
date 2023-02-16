@@ -13,7 +13,6 @@ import {
   dataGhiDanh,
 } from "../../util/interface/userReducerInterface";
 import {
-  updateDeleteResultReducer,
   updateErrorMessageReducer,
   updateGlobalMessageReducer,
   updateSuccessMessageReducer,

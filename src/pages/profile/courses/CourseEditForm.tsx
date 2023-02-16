@@ -22,6 +22,7 @@ import {
 } from "../../../redux/pageReducer/pageReducer";
 import { DispatchType, ReduxRootType } from "../../../redux/store";
 import { dangKyApi } from "../../../redux/userReducer/userReducer";
+import { createNewCourseConfig } from "../../../util/config";
 import { CategoriesType } from "../../../util/interface/categoriesReducerInterface";
 import { UpdateCourseType } from "../../../util/interface/courseReducerInterface";
 import {
@@ -30,6 +31,30 @@ import {
 } from "../../../util/interface/userReducerInterface";
 
 type Props = {};
+
+const newCourse: UpdateCourseType = {
+  maKhoaHoc: "",
+  biDanh: "",
+  tenKhoaHoc: "",
+  luotXem: 0,
+  danhGia: 0,
+  maDanhMucKhoaHoc: "",
+  hinhAnh: "",
+  maNhom: "",
+  ngayTAO: "",
+  taiKhoanNguoiTAO: "",
+  moTa: "",
+};
+
+const keysExcepted: string[] = [
+  "maKhoaHoc",
+  "biDanh",
+  "luotXem",
+  "danhGia",
+  "maNhom",
+  "ngayTAO",
+  "taiKhoanNguoiTAO",
+];
 
 const CourseEditForm = (props: Props) => {
   const { categories } = useSelector(
@@ -56,6 +81,7 @@ const CourseEditForm = (props: Props) => {
     formState: { errors },
   } = useForm<UpdateCourseType>({
     mode: "onChange",
+    defaultValues: newCourse,
   });
 
   const editSubmitHandle = async (data: UpdateCourseType) => {
@@ -133,17 +159,11 @@ const CourseEditForm = (props: Props) => {
 
   const resetForm = () => {
     const obj: UpdateCourseType = {
-      maKhoaHoc: courseDetail!?.maKhoaHoc,
-      tenKhoaHoc: courseDetail!?.tenKhoaHoc,
-      moTa: courseDetail!?.moTa,
-      luotXem: 0,
+      ...courseDetail!,
       danhGia: 0,
-      maNhom: courseDetail!?.maNhom,
       ngayTAO: courseDetail!?.ngayTao,
       maDanhMucKhoaHoc: courseDetail!?.danhMucKhoaHoc.maDanhMucKhoahoc,
       taiKhoanNguoiTAO: courseDetail!?.nguoiTao.taiKhoan,
-      hinhAnh: courseDetail?.hinhAnh,
-      biDanh: courseDetail!?.biDanh,
     };
     reset(obj);
   };
@@ -181,93 +201,94 @@ const CourseEditForm = (props: Props) => {
           />
         </div>
 
-        <div className="profile_main_info_item">
-          <div className="profile_main_info_item_title">
-            <i className="fa-solid fa-tag"></i>Tên khóa học
-          </div>
-          <div className="profile_main_info_item_input">
-            <input
-              type="text"
-              className={errors.tenKhoaHoc?.message ? "isInvalid" : ""}
-              {...register("tenKhoaHoc", {
-                required: "Không được để trống!",
-              })}
-            />
-          </div>
-          {errors.tenKhoaHoc?.message && (
-            <div className="profile_main_info_item_error">
-              <i className="fa-solid fa-circle-exclamation"></i>
-              {errors.tenKhoaHoc?.message}
+        {Object.keys(newCourse).map((item: string): JSX.Element | null => {
+          for (let value of keysExcepted) {
+            if (item === value) return null;
+          }
+          return (
+            <div className="profile_main_info_item">
+              <div className="profile_main_info_item_title">
+                <i
+                  className={`fa-solid fa-${
+                    createNewCourseConfig.icon[
+                      createNewCourseConfig.keys.indexOf(
+                        item as keyof UpdateCourseType
+                      )
+                    ]
+                  }`}
+                ></i>
+                {
+                  createNewCourseConfig.title[
+                    createNewCourseConfig.keys.indexOf(item)
+                  ]
+                }
+              </div>
+              <div className="profile_main_info_item_input">
+                {item === "moTa" ? (
+                  <textarea
+                    className={
+                      errors[item as keyof UpdateCourseType]?.message
+                        ? "isInvalid"
+                        : ""
+                    }
+                    {...register(item, {
+                      required: "Không được để trống!",
+                    })}
+                  />
+                ) : item === "maDanhMucKhoaHoc" ? (
+                  <select
+                    {...register("maDanhMucKhoaHoc", {
+                      required: "Không được để trống!",
+                    })}
+                  >
+                    {categories?.map((item: CategoriesType, index: number) => {
+                      return (
+                        <option key={index} value={item.maDanhMuc}>
+                          {item.tenDanhMuc}
+                        </option>
+                      );
+                    })}
+                  </select>
+                ) : item === "hinhAnh" ? (
+                  <input
+                    className={errors.hinhAnh?.message ? "isInvalid" : ""}
+                    type="file"
+                    {...register("hinhAnh")}
+                    placeholder="Link hình ảnh"
+                    onChange={({ currentTarget }) => {
+                      const file = currentTarget.files![0];
+                      if (file && file.size > 1000000)
+                        setError("hinhAnh", {
+                          message: "Dung lượng vượt quá 1Mb",
+                        });
+                      else clearErrors("hinhAnh");
+                    }}
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    className={
+                      errors[item as keyof UpdateCourseType]?.message
+                        ? "isInvalid"
+                        : ""
+                    }
+                    {...register(item as keyof UpdateCourseType, {
+                      required: "Không được để trống!",
+                    })}
+                  />
+                )}
+              </div>
+              {errors[item as keyof UpdateCourseType]?.message && (
+                <div className="profile_main_info_item_error">
+                  <>
+                    <i className="fa-solid fa-circle-exclamation"></i>
+                    {errors[item as keyof UpdateCourseType]?.message}
+                  </>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-
-        <div className="profile_main_info_item">
-          <div className="profile_main_info_item_title">
-            <i className="fa-solid fa-bars"></i>Danh mục
-          </div>
-          <div className="profile_main_info_item_input">
-            <select
-              {...register("maDanhMucKhoaHoc", {
-                required: "Không được để trống!",
-              })}
-            >
-              {categories?.map((item: CategoriesType, index: number) => {
-                return (
-                  <option key={index} value={item.maDanhMuc}>
-                    {item.tenDanhMuc}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </div>
-
-        <div className="profile_main_info_item">
-          <div className="profile_main_info_item_title">
-            <i className="fa-solid fa-image"></i>Hình ảnh
-          </div>
-          <div className="profile_main_info_item_input">
-            <input
-              className={errors.hinhAnh?.message ? "isInvalid" : ""}
-              type="file"
-              {...register("hinhAnh")}
-              placeholder="Link hình ảnh"
-              onChange={({ currentTarget }) => {
-                const file = currentTarget.files![0];
-                if (file && file.size > 1000000)
-                  setError("hinhAnh", { message: "Dung lượng vượt quá 1Mb" });
-                else clearErrors("hinhAnh");
-              }}
-            />
-          </div>
-          {errors.hinhAnh?.message && (
-            <div className="profile_main_info_item_error">
-              <>
-                <i className="fa-solid fa-circle-exclamation"></i>
-                {errors.hinhAnh?.message}
-              </>
-            </div>
-          )}
-        </div>
-
-        <div className="profile_main_info_item">
-          <div className="profile_main_info_item_title">Mô tả</div>
-          <div className="profile_main_info_item_input">
-            <textarea
-              className={errors.moTa?.message ? "isInvalid" : ""}
-              {...register("moTa", {
-                required: "Không được để trống!",
-              })}
-            />
-          </div>
-          {errors.moTa?.message && (
-            <div className="profile_main_info_item_error">
-              <i className="fa-solid fa-circle-exclamation"></i>
-              {errors.moTa?.message}
-            </div>
-          )}
-        </div>
+          );
+        })}
 
         {(pageReducer.successMessage || pageReducer.errorMessage) && (
           <div className="profile_main_info_item_result">

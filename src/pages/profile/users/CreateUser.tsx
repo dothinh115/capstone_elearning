@@ -101,6 +101,19 @@ const CreateUser = (props: Props) => {
                         ],
                     },
                   })}
+                  placeholder={
+                    item === "matKhau"
+                      ? "Ít nhất 1 ký tự hoa, thường, số và ký tự đặc biệt!"
+                      : item === "soDT"
+                      ? EditingUserConfig.title[
+                          EditingUserConfig.key.indexOf("soDt")
+                        ]
+                      : EditingUserConfig.title[
+                          EditingUserConfig.key.indexOf(
+                            item as keyof UserInfoType
+                          )
+                        ]
+                  }
                 />
               )}
             </div>
