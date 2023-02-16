@@ -101,7 +101,6 @@ const CreateNewCourseForm = (props: Props) => {
         });
       else clearErrors("hinhAnh");
     }
-    console.log(errors);
   };
 
   useEffect(() => {
