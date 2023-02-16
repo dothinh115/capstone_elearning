@@ -150,10 +150,12 @@ const CourseEditForm = (props: Props) => {
 
   useEffect(() => {
     if (courseID) firstLoad();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [courseID]);
 
   useEffect(() => {
     resetForm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [courseDetail]);
 
   useEffect(() => {
@@ -163,6 +165,7 @@ const CourseEditForm = (props: Props) => {
       dispatch(getCourseDetailAction(null));
       beforeGetOut();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const html = (
