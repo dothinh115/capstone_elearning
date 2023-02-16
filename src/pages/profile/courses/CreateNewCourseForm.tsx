@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-
 import { useDispatch, useSelector } from "react-redux";
 import { history } from "../../../App";
 import Modal from "../../../components/modal/Modal";
@@ -91,6 +90,20 @@ const CreateNewCourseForm = (props: Props) => {
   const nameToCode = (value: string): void =>
     setValue("maKhoaHoc", toNonAccentVietnamese(value.trim()));
 
+  const sizeCheck = (event: React.SyntheticEvent) => {
+    const target = event.currentTarget as HTMLInputElement;
+    if (target.files) {
+      const file = target.files[0];
+      if (file && file.size > 1000000)
+        setError("hinhAnh", {
+          type: "custom",
+          message: "Dung lượng vượt quá 1Mb",
+        });
+      else clearErrors("hinhAnh");
+    }
+    console.log(errors);
+  };
+
   useEffect(() => {
     reset({
       taiKhoanNguoiTAO: userInfo?.taiKhoan,
@@ -138,15 +151,7 @@ const CreateNewCourseForm = (props: Props) => {
                   {...register(item, {
                     required: "Không được để trống!",
                   })}
-                  placeholder="Link hình ảnh"
-                  onChange={({ currentTarget }) => {
-                    const file = currentTarget.files![0];
-                    if (file && file.size > 1000000)
-                      setError("hinhAnh", {
-                        message: "Dung lượng vượt quá 1Mb",
-                      });
-                    else clearErrors("hinhAnh");
-                  }}
+                  onChange={(event) => sizeCheck(event)}
                 />
               ) : item === "maDanhMucKhoaHoc" ? (
                 <select
