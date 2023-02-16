@@ -163,6 +163,15 @@ const EditProfile = (props: Props) => {
         <div className="profile_container_main_block">
           <div className="profile_container_main_block_button">
             <button className="btn btn-primary">Update</button>
+            {editing && (
+              <button
+                style={{ marginLeft: "5px" }}
+                className="btn"
+                onClick={() => setEditing(false)}
+              >
+                Hủy
+              </button>
+            )}
           </div>
         </div>
       </form>
