@@ -93,7 +93,7 @@ const CreateNewCourseForm = (props: Props) => {
   const sizeCheck = (event: React.SyntheticEvent) => {
     const target = event.currentTarget as HTMLInputElement;
     if (target.files) {
-      const file = target.files[0];
+      const file: File = target.files[0];
       if (file && file.size > 1000000)
         setError("hinhAnh", {
           type: "custom",
