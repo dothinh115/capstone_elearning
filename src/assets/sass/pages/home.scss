@@ -266,6 +266,8 @@
             height: 250px;
             object-fit: cover;
             border-radius: 4px;
+            background-color: rgba(#8bc639, 0.15);
+            border: 1px solid #f8f8f8;
           }
           &::before {
             position: absolute;
@@ -313,6 +315,8 @@
               height: 120px;
               object-fit: cover;
               border-radius: 4px;
+              background-color: rgba(#8bc639, 0.15);
+              border: 1px solid #f8f8f8;
             }
           }
           &_right {

@@ -38,6 +38,9 @@ const Course = (props: Props) => {
   }, []);
   return (
     <>
+      <div className="header_title">
+        <h1>CHI TIẾT KHÓA HỌC</h1>
+      </div>
       <section className="course_detail">
         <div className="course_detail_container">
           <div className="main_container">

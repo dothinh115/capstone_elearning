@@ -205,6 +205,8 @@ const Home = (props: Props) => {
                   {randomCoursesArr &&
                     (randomCoursesArr[0].moTa.length > 200
                       ? randomCoursesArr[0].moTa.substring(0, 199) + "..."
+                      : randomCoursesArr[0].moTa.length < 200
+                      ? "Chuyên ngành công nghệ phần mềm là gì (Công nghệ thông tin phần mềm là gì)? Công nghệ thông tin (Ứng dụng phần mềm) còn được biết đến với tên gọi là kỹ thuật phần mềm. Công nghệ thông tin (Ứng dụng p..."
                       : randomCoursesArr[0].moTa)}
                 </p>
               </div>
@@ -238,6 +240,8 @@ const Home = (props: Props) => {
                       <p>
                         {item.moTa.length > 200
                           ? item.moTa.substring(0, 199) + "..."
+                          : item.moTa.length < 200
+                          ? "Chuyên ngành công nghệ phần mềm là gì (Công nghệ thông tin phần mềm là gì)? Công nghệ thông tin (Ứng dụng phần mềm) còn được biết đến với tên gọi là kỹ thuật phần mềm. Công nghệ thông tin (Ứng dụng p..."
                           : item.moTa}
                       </p>
                     </div>

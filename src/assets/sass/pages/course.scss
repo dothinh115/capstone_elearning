@@ -1,5 +1,5 @@
 .course_detail {
-  margin-top: 20px;
+  margin-top: 50px;
   position: relative;
   .course_detail_container {
     width: 80%;
@@ -94,6 +94,13 @@
             display: inline-block;
             width: unset;
           }
+        }
+      }
+      &_info {
+        p {
+          margin: 30px 0;
+          font-size: 16px;
+          line-height: 30px;
         }
       }
       &_related {
