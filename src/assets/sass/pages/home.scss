@@ -44,34 +44,38 @@
     position: relative;
     z-index: 1;
     text-align: right;
-    h1 {
-      color: #28aae2;
-      font-size: 30px;
-      font-weight: bold;
-      text-transform: capitalize;
-      padding: 10px 0;
+    .feature_info {
+      display: block;
+      position: absolute;
       width: 60%;
-      margin-left: 40%;
-      text-align: left;
+      left: 40%;
+      bottom: calc(50%);
+      h1 {
+        color: #28aae2;
+        font-size: 30px;
+        font-weight: bold;
+        text-transform: capitalize;
+        padding: 10px 0;
+        text-align: left;
+      }
+      p {
+        color: white;
+        padding: 10px 0;
+        text-align: left;
+      }
+      button {
+        background-color: #28aae2;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        font-weight: 600;
+        text-align: center;
+        cursor: pointer;
+      }
     }
-    p {
-      color: white;
-      padding: 10px 0;
-      width: 60%;
-      margin-left: 40%;
-      text-align: left;
-    }
-    button {
-      background-color: #28aae2;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px;
-      font-weight: 600;
-      text-align: center;
-      cursor: pointer;
-    }
+
     .introduce {
       position: absolute;
       width: 100%;
@@ -266,8 +270,8 @@
             height: 250px;
             object-fit: cover;
             border-radius: 4px;
-            background-color: rgba(#8bc639, 0.15);
-            border: 1px solid #f8f8f8;
+            background-color: rgba(#8bc639, 0.35);
+            border: 1px solid #eee;
           }
           &::before {
             position: absolute;
@@ -315,8 +319,8 @@
               height: 120px;
               object-fit: cover;
               border-radius: 4px;
-              background-color: rgba(#8bc639, 0.15);
-              border: 1px solid #f8f8f8;
+              background-color: rgba(#8bc639, 0.35);
+              border: 1px solid #eee;
             }
           }
           &_right {
