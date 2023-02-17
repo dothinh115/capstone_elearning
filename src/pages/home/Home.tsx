@@ -117,15 +117,32 @@ const Home = (props: Props) => {
           </div>
         </div>
       </section>
+      <section className="partner">
+        <div className="partner_container">
+          <div className="partner_container_item">
+            <img src="../img/health-clinic.png" alt="" />
+            <h1>7 Trung tâm</h1>
+          </div>
+          <div className="partner_container_item">
+            <img src="../img/graduated.png" alt="" />
+            <h1>9000+ Học viên</h1>
+          </div>
+          <div className="partner_container_item">
+            <img src="../img/deal.png" alt="" />
+            <h1>200+ Đối tác</h1>
+          </div>
+        </div>
+      </section>
       <section className="hot_courses">
         <div className="hot_courses_container">
-          <h1>khóa học tiêu biểu</h1>
+          <h1>Khóa học tiêu biểu</h1>
           <div className="hot_courses_container_menu">
             <button
               className="prev"
               onClick={() => {
                 const result = startCategories - perClick;
-                if (result < 0) return;
+                if (result < 0)
+                  return setStartCategories(startCategories + perClick);
                 setStartCategories(startCategories - perClick);
               }}
             >
@@ -148,14 +165,87 @@ const Home = (props: Props) => {
               className="next"
               onClick={() => {
                 const result = startCategories + perClick;
-                if (result >= categories!?.length) return;
+                if (result >= categories!?.length)
+                  return setStartCategories(startCategories - perClick);
                 setStartCategories(result);
               }}
             >
               next
             </button>
           </div>
-          <div className="hot_courses_container_main"></div>
+          <div className="hot_courses_container_main">
+            <div className="hot_courses_container_main_left">
+              <div className="hot_courses_container_main_left_img">
+                <img
+                  src={randomCoursesArr && randomCoursesArr[0].hinhAnh}
+                  onError={({ currentTarget }) => {
+                    currentTarget.src = "../../img/Nodejs.png";
+                  }}
+                  alt=""
+                />
+              </div>
+              <div className="hot_courses_container_main_left_info">
+                <h3>
+                  <Link
+                    to={`/course/${
+                      randomCoursesArr ? randomCoursesArr[0].maKhoaHoc : ""
+                    }`}
+                  >
+                    {randomCoursesArr && randomCoursesArr[0].tenKhoaHoc}
+                  </Link>
+                </h3>
+                <div className="hot_courses_container_main_left_info_author">
+                  By{" "}
+                  {randomCoursesArr && (
+                    <span>{randomCoursesArr[0].nguoiTao.hoTen}</span>
+                  )}
+                  {randomCoursesArr && ", " + randomCoursesArr[0].ngayTao}
+                </div>
+                <p>
+                  {randomCoursesArr &&
+                    (randomCoursesArr[0].moTa.length > 200
+                      ? randomCoursesArr[0].moTa.substring(0, 199) + "..."
+                      : randomCoursesArr[0].moTa)}
+                </p>
+              </div>
+            </div>
+            <div className="hot_courses_container_main_right">
+              {randomCoursesArr?.slice(1, 4).map((item: CourseType) => {
+                return (
+                  <div
+                    key={item.maKhoaHoc}
+                    className="hot_courses_container_main_right_item"
+                  >
+                    <div className="hot_courses_container_main_right_item_left">
+                      <img
+                        src={item.hinhAnh}
+                        onError={({ currentTarget }) => {
+                          currentTarget.src = "../../img/Nodejs.png";
+                        }}
+                        alt=""
+                      />
+                    </div>
+                    <div className="hot_courses_container_main_right_item_right">
+                      <h3>
+                        <Link to={`/course/${item.maKhoaHoc}`}>
+                          {item.tenKhoaHoc}
+                        </Link>
+                      </h3>
+                      <div className="hot_courses_container_main_right_item_right_author">
+                        By {<span>{item.nguoiTao.hoTen}</span>}
+                        {", " + item.ngayTao}
+                      </div>
+                      <p>
+                        {item.moTa.length > 200
+                          ? item.moTa.substring(0, 199) + "..."
+                          : item.moTa}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </section>
     </>

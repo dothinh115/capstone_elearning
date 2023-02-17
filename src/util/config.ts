@@ -7,7 +7,7 @@ export const CYBERSOFT_TOKEN: string =
 
 export const token = getLocalStorage("userInfo")?.accessToken;
 
-export const numberRandomCourses: number = 6;
+export const numberRandomCourses: number = 4;
 export const numberRelatedCourses: number = 8;
 export const limitCategoriesCourses: number = 9; // thu gọn khóa học ở /categories
 export const limitCategoriesCoursesViewMore: number = 6; // bấm xem thêm sẽ hiện thêm

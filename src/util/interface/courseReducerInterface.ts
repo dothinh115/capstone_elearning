@@ -48,7 +48,7 @@ export interface KhoaHocXetDuyetInterface {
 
 export interface CourseStateType {
   coursesArr: CourseType[] | null;
-  randomCoursesArr: CourseType[] | null;
+  randomCoursesArr: CourseType[] | undefined;
   loading: boolean;
   courseDetail: CourseType | null;
   hocVienChoXetDuyet: DanhSachGhiDanh[] | null;

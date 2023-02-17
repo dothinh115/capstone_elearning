@@ -18,8 +18,8 @@ import {
   updateSuccessMessageReducer,
 } from "../pageReducer/pageReducer";
 const initialState: CourseStateType = {
-  coursesArr: [],
-  randomCoursesArr: [],
+  coursesArr: null,
+  randomCoursesArr: undefined,
   loading: false,
   courseDetail: null,
   hocVienChoXetDuyet: null,
