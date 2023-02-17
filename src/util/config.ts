@@ -13,7 +13,9 @@ export const limitCategoriesCourses: number = 9; // thu gọn khóa học ở /c
 export const limitCategoriesCoursesViewMore: number = 6; // bấm xem thêm sẽ hiện thêm
 export const limitProfileCoursesView: number = 15;
 export const limitProfileCoursesViewMore: number = 5;
-export const registerSuccessMess = "Đăng ký tài khoản thành công";
+export const registerSuccessMess: string = "Đăng ký tài khoản thành công";
+export const indexCategoriesShow: number = 3;
+export const perClick: number = 3;
 export const randomBadgeArr: string[] = [
   "danger",
   "info",
