@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import CardItem from "../../components/cardItem/CardItem";
 import { ReduxRootType } from "../../redux/store";
-import { indexCategoriesShow, perClick } from "../../util/config";
+import { perClick } from "../../util/config";
 import { CategoriesType } from "../../util/interface/categoriesReducerInterface";
 import { CourseType } from "../../util/interface/courseReducerInterface";
-
+import CountUp from "react-countup";
 type Props = {};
 
 const Home = (props: Props) => {
@@ -121,15 +120,49 @@ const Home = (props: Props) => {
         <div className="partner_container">
           <div className="partner_container_item">
             <img src="../img/health-clinic.png" alt="" />
-            <h1>7 Trung tâm</h1>
+            <h1>
+              {
+                <CountUp
+                  start={0}
+                  end={7}
+                  duration={2}
+                  delay={0}
+                  enableScrollSpy={true}
+                />
+              }{" "}
+              - Trung tâm
+            </h1>
           </div>
           <div className="partner_container_item">
             <img src="../img/graduated.png" alt="" />
-            <h1>9000+ Học viên</h1>
+
+            <h1>
+              {
+                <CountUp
+                  start={0}
+                  end={9000}
+                  duration={2}
+                  delay={0}
+                  enableScrollSpy={true}
+                />
+              }{" "}
+              + Học viên
+            </h1>
           </div>
           <div className="partner_container_item">
             <img src="../img/deal.png" alt="" />
-            <h1>200+ Đối tác</h1>
+            <h1>
+              {
+                <CountUp
+                  start={0}
+                  end={200}
+                  duration={2}
+                  delay={0}
+                  enableScrollSpy={true}
+                />
+              }{" "}
+              + Đối tác
+            </h1>
           </div>
         </div>
       </section>
