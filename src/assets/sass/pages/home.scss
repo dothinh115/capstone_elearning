@@ -205,6 +205,9 @@
     width: 80%;
     max-width: 1400px;
     margin: auto;
+    @media (max-width: 600px) {
+      width: 100%;
+    }
     h1 {
       color: #28aae2;
       font-size: 30px;
@@ -319,6 +322,12 @@
             font-size: 15px;
             font-weight: bold;
             line-height: 18px;
+            @media (max-width: 600px) {
+              right: 10px;
+              left: unset;
+              bottom: unset;
+              top: 10px;
+            }
           }
         }
         &_info {
