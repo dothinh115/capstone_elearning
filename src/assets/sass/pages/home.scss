@@ -375,6 +375,9 @@
               border-radius: 4px;
               background-color: rgba(#8bc639, 0.35);
               border: 1px solid #eee;
+              @media (max-width: 600px) {
+                height: 250px;
+              }
             }
           }
           &_right {
