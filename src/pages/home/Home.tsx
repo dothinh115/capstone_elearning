@@ -174,9 +174,8 @@ const Home = (props: Props) => {
               className="prev"
               onClick={() => {
                 const result = startCategories - perClick;
-                if (result < 0)
-                  return setStartCategories(startCategories + perClick);
-                setStartCategories(startCategories - perClick);
+                if (result < 0) setStartCategories(startCategories + perClick);
+                else setStartCategories(startCategories - perClick);
               }}
             >
               prev
@@ -199,8 +198,8 @@ const Home = (props: Props) => {
               onClick={() => {
                 const result = startCategories + perClick;
                 if (result >= categories!?.length)
-                  return setStartCategories(startCategories - perClick);
-                setStartCategories(result);
+                  setStartCategories(startCategories - perClick);
+                else setStartCategories(result);
               }}
             >
               next
