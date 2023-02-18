@@ -208,13 +208,19 @@ const Home = (props: Props) => {
           <div className="hot_courses_container_main">
             <div className="hot_courses_container_main_left">
               <div className="hot_courses_container_main_left_img">
-                <img
-                  src={randomCoursesArr && randomCoursesArr[0].hinhAnh}
-                  onError={({ currentTarget }) => {
-                    currentTarget.src = "../../img/Nodejs.png";
-                  }}
-                  alt=""
-                />
+                <Link
+                  to={`/course/${
+                    randomCoursesArr && randomCoursesArr[0].maKhoaHoc
+                  }`}
+                >
+                  <img
+                    src={randomCoursesArr && randomCoursesArr[0].hinhAnh}
+                    onError={({ currentTarget }) => {
+                      currentTarget.src = "../../img/Nodejs.png";
+                    }}
+                    alt=""
+                  />
+                </Link>
               </div>
               <div className="hot_courses_container_main_left_info">
                 <h3>
@@ -251,13 +257,15 @@ const Home = (props: Props) => {
                     className="hot_courses_container_main_right_item"
                   >
                     <div className="hot_courses_container_main_right_item_left">
-                      <img
-                        src={item.hinhAnh}
-                        onError={({ currentTarget }) => {
-                          currentTarget.src = "../../img/Nodejs.png";
-                        }}
-                        alt=""
-                      />
+                      <Link to={`/course/${item.maKhoaHoc}`}>
+                        <img
+                          src={item.hinhAnh}
+                          onError={({ currentTarget }) => {
+                            currentTarget.src = "../../img/Nodejs.png";
+                          }}
+                          alt=""
+                        />
+                      </Link>
                     </div>
                     <div className="hot_courses_container_main_right_item_right">
                       <h3>

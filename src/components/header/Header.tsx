@@ -48,7 +48,9 @@ const Header = (props: Props) => {
       <nav>
         <div className="header_container">
           <div className="logo">
-            <img src="../img/logo1.png" alt="" />
+            <Link to="/">
+              <img src="../img/logo1.png" alt="" />
+            </Link>
           </div>
           <div className="menu">
             <ul>

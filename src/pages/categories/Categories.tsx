@@ -48,15 +48,13 @@ const Categories = (props: Props) => {
   };
 
   const onScroll = (): void => {
-    const sidebar = 406;
-    const footer = 308;
+    const categoriesHeight =
+      document.querySelector(".categories")?.clientHeight;
+
     if (window.scrollY > 253) {
       absoluteSidebar.current!.classList.add("absolute");
       absoluteSidebar.current!.style.top = `${window.scrollY - 253 + 10}px`;
-      if (
-        window.scrollY + window.innerHeight >
-        document.body.clientHeight - (window.scrollY - 308 - 10 - 30)
-      ) {
+      if (window.scrollY > categoriesHeight! - 253) {
         absoluteSidebar.current!.style.top = `unset`;
         absoluteSidebar.current!.style.bottom = `0px`;
       }
@@ -112,19 +110,6 @@ const Categories = (props: Props) => {
       });
     }
   }, [searchParams]);
-
-  useEffect(() => {
-    const arr = [1, 2, 3, 4, 1];
-    const trungLap = arr.filter(
-      (item: number, index: number) => arr.indexOf(item) !== index
-    );
-    for (let value of trungLap) {
-      arr.splice(
-        arr.findIndex((item: number) => item === value),
-        1
-      );
-    }
-  });
 
   return (
     <>
@@ -246,6 +231,9 @@ const Categories = (props: Props) => {
                           limitCouses + limitCategoriesCoursesViewMore
                         )
                       );
+                      absoluteSidebar.current!.style.top = `${
+                        window.scrollY - 253 + 10
+                      }px`;
                     }}
                   >
                     Xem thêm
