@@ -48,9 +48,18 @@ const Categories = (props: Props) => {
   };
 
   const onScroll = (): void => {
-    if (window.scrollY > 84) {
+    const sidebar = 406;
+    const footer = 308;
+    if (window.scrollY > 253) {
       absoluteSidebar.current!.classList.add("absolute");
-      absoluteSidebar.current!.style.top = `${window.scrollY - 74}px`;
+      absoluteSidebar.current!.style.top = `${window.scrollY - 253 + 10}px`;
+      if (
+        window.scrollY + window.innerHeight >
+        document.body.clientHeight - (window.scrollY - 308 - 10 - 30)
+      ) {
+        absoluteSidebar.current!.style.top = `unset`;
+        absoluteSidebar.current!.style.bottom = `0px`;
+      }
     } else {
       absoluteSidebar.current!.classList.remove("absolute");
     }
@@ -118,127 +127,136 @@ const Categories = (props: Props) => {
   });
 
   return (
-    <section className="categories" ref={parentDiv}>
-      <div className="categories_container">
-        {window.innerWidth <= 820 && (
-          <button className="btn btn-primary" onClick={toggle}>
-            Lọc danh mục
-          </button>
-        )}
+    <>
+      <div className="header_title">
+        <h1>DANH MỤC KHÓA HỌC</h1>
+      </div>
+      <section className="categories" ref={parentDiv}>
+        <div className="categories_container">
+          {window.innerWidth <= 820 && (
+            <button className="btn btn-primary" onClick={toggle}>
+              Lọc danh mục
+            </button>
+          )}
 
-        <div className="categories_container_sidebar">
-          {window.innerWidth <= 820 ? (
-            <Modal show={show} toggle={toggle} title="Lọc danh mục">
-              <CategoriesSidebar
-                checked={checked}
-                setChecked={setChecked}
-                getCategoriesFromParams={getCategoriesFromParams}
-                toggle={toggle}
-              />
-            </Modal>
-          ) : (
-            <div ref={absoluteSidebar}>
-              <div className="categories_container_sidebar_inner">
+          <div className="categories_container_sidebar">
+            {window.innerWidth <= 820 ? (
+              <Modal show={show} toggle={toggle} title="Lọc danh mục">
                 <CategoriesSidebar
                   checked={checked}
                   setChecked={setChecked}
                   getCategoriesFromParams={getCategoriesFromParams}
+                  toggle={toggle}
                 />
-              </div>
-            </div>
-          )}
-        </div>
-        <div className="categories_container_main">
-          <div className="categories_container_main_body">
-            <div className="selectedCategories">
-              <i className="fa-solid fa-arrow-right"></i>
-              Danh mục đã chọn:{" "}
-              {getCategoriesFromParams()?.map((item: string, index: number) => {
-                const find = categories?.find(
-                  (val: CategoriesType) => val.maDanhMuc === item
-                );
-                return (
-                  find !== undefined && (
-                    <span
-                      className={`badge badge-${randomBadgeArr[index]}`}
-                      key={index}
-                    >
-                      {find.tenDanhMuc}
-                    </span>
-                  )
-                );
-              })}
-            </div>
-
-            <form
-              className="searchInResult"
-              onSubmit={handleSubmit(searchSubmitHandle)}
-            >
-              <input
-                type="text"
-                placeholder="Tìm kiếm..."
-                {...register("search")}
-              />
-              <button className="btn btn-primary">
-                <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
-              </button>
-            </form>
-
-            {!getCategoriesFromParams() && (
-              <h1 className="notfound">
-                <div>Chưa chọn lọc khóa học!</div>
-              </h1>
-            )}
-
-            {!result &&
-              searchParams.get("keywords") &&
-              getCategoriesFromParams() && (
-                <h1 className="notfound">
-                  <img src="../../img/notfound.png" alt="" />
-                  <div>Không tìm thấy kết quả nào!</div>
-                </h1>
-              )}
-            {result && (
-              <>
-                <div className="selectedCategories result">
-                  <i className="fa-solid fa-arrow-right"></i>
-                  Đã tìm thấy:{" "}
-                  <span className="badge badge-info">{result?.length}</span> kết
-                  quả.
+              </Modal>
+            ) : (
+              <div ref={absoluteSidebar}>
+                <div className="categories_container_sidebar_inner">
+                  <CategoriesSidebar
+                    checked={checked}
+                    setChecked={setChecked}
+                    getCategoriesFromParams={getCategoriesFromParams}
+                  />
                 </div>
-              </>
-            )}
-
-            {result && (
-              <ul>
-                {result
-                  ?.slice(0, limitCouses)
-                  .map((item: CourseType, index: number) => {
-                    return <CoursesList item={item} key={index} />;
-                  })}
-              </ul>
-            )}
-
-            {result!?.length > limitCouses && (
-              <div className="categories_container_main_body_btn">
-                <button
-                  className="btn"
-                  onClick={() => {
-                    dispatch(
-                      setLimitCoursesAction(
-                        limitCouses + limitCategoriesCoursesViewMore
-                      )
-                    );
-                  }}
-                >
-                  Xem thêm
-                </button>
               </div>
             )}
           </div>
+          <div className="categories_container_main">
+            <div className="categories_container_main_body">
+              <div className="selectedCategories">
+                <i className="fa-solid fa-arrow-right"></i>
+                Danh mục đã chọn:{" "}
+                {getCategoriesFromParams()?.map(
+                  (item: string, index: number) => {
+                    const find = categories?.find(
+                      (val: CategoriesType) => val.maDanhMuc === item
+                    );
+                    return (
+                      find !== undefined && (
+                        <span
+                          className={`badge badge-${randomBadgeArr[index]}`}
+                          key={index}
+                        >
+                          {find.tenDanhMuc}
+                        </span>
+                      )
+                    );
+                  }
+                )}
+              </div>
+
+              <form
+                className="searchInResult"
+                onSubmit={handleSubmit(searchSubmitHandle)}
+              >
+                <input
+                  type="text"
+                  placeholder="Tìm kiếm..."
+                  {...register("search")}
+                />
+                <button className="btn btn-primary">
+                  <i className="fa-sharp fa-solid fa-magnifying-glass"></i>
+                </button>
+              </form>
+
+              {!getCategoriesFromParams() && (
+                <h1 className="notfound">
+                  <div>Chưa chọn lọc khóa học!</div>
+                </h1>
+              )}
+
+              {!result &&
+                searchParams.get("keywords") &&
+                getCategoriesFromParams() && (
+                  <h1 className="notfound">
+                    <img src="../../img/notfound.png" alt="" />
+                    <div>Không tìm thấy kết quả nào!</div>
+                  </h1>
+                )}
+              {result && (
+                <>
+                  <div className="selectedCategories result">
+                    <i className="fa-solid fa-arrow-right"></i>
+                    Đã tìm thấy:{" "}
+                    <span className="badge badge-info">
+                      {result?.length}
+                    </span>{" "}
+                    kết quả.
+                  </div>
+                </>
+              )}
+
+              {result && (
+                <ul>
+                  {result
+                    ?.slice(0, limitCouses)
+                    .map((item: CourseType, index: number) => {
+                      return <CoursesList item={item} key={index} />;
+                    })}
+                </ul>
+              )}
+
+              {result!?.length > limitCouses && (
+                <div className="categories_container_main_body_btn">
+                  <button
+                    className="btn"
+                    onClick={() => {
+                      dispatch(
+                        setLimitCoursesAction(
+                          limitCouses + limitCategoriesCoursesViewMore
+                        )
+                      );
+                    }}
+                  >
+                    Xem thêm
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 };
 
