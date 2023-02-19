@@ -128,6 +128,7 @@ const Home = (props: Props) => {
                   duration={2}
                   delay={0}
                   enableScrollSpy={true}
+                  scrollSpyOnce={true}
                 />
               }{" "}
               - Trung tâm
@@ -144,6 +145,7 @@ const Home = (props: Props) => {
                   duration={2}
                   delay={0}
                   enableScrollSpy={true}
+                  scrollSpyOnce={true}
                 />
               }{" "}
               + Học viên
@@ -159,6 +161,7 @@ const Home = (props: Props) => {
                   duration={2}
                   delay={0}
                   enableScrollSpy={true}
+                  scrollSpyOnce={true}
                 />
               }{" "}
               + Đối tác
