@@ -25,10 +25,11 @@ const Course = (props: Props) => {
   }, [courseID]);
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    if (courseDetail)
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
   }, [courseDetail]);
 
   useEffect(() => {
