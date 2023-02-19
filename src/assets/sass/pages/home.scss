@@ -39,8 +39,12 @@
     z-index: 1;
     text-align: right;
     @media (max-width: 600px) {
-      width: 100%;
+      width: 95%;
       text-align: left;
+    }
+    @media (min-width: 601px) and (max-width: 1024px) {
+      //ipad mini + ipad air
+      width: 95%;
     }
     .feature_info {
       display: block;
@@ -96,12 +100,28 @@
         top: calc(100% + 20px);
         gap: 10px;
       }
+      @media (min-width: 601px) and (max-width: 768px) {
+        //ipad mini
+        flex-direction: column;
+        bottom: unset;
+        top: calc(100% + 20px);
+        gap: 10px;
+      }
+      @media (min-width: 769px) and (max-width: 1024px) {
+        //ipad air
+        height: 230px;
+      }
       .feature_item {
         height: 100%;
         padding: 0 10px;
         width: calc(100% / 3);
         @media (max-width: 600px) {
           width: 100%;
+        }
+        @media (min-width: 601px) and (max-width: 768px) {
+          //ipad mini
+          width: 80%;
+          margin: auto;
         }
         &_inner {
           display: flex;
@@ -111,6 +131,10 @@
           color: #666;
           padding: 10px 5px;
           @media (max-width: 600px) {
+            background-color: rgba(#28aae2, 0.45);
+          }
+          @media (min-width: 601px) and (max-width: 768px) {
+            //ipad mini
             background-color: rgba(#28aae2, 0.45);
           }
           &_left {
@@ -142,6 +166,10 @@
   @media (max-width: 600px) {
     margin-top: calc(412px + 50px);
   }
+  @media (min-width: 601px) and (max-width: 768px) {
+    //ipad mini
+    margin-top: calc(412px + 50px);
+  }
   &_container {
     width: 55%;
     margin: auto;
@@ -150,6 +178,10 @@
     @media (max-width: 600px) {
       flex-direction: column;
       width: 100%;
+    }
+    @media (min-width: 601px) and (max-width: 820px) {
+      //ipad mini + ipad air
+      width: 95%;
     }
     &_left {
       position: relative;
@@ -207,6 +239,10 @@
     margin: auto;
     @media (max-width: 600px) {
       width: 100%;
+    }
+    @media (min-width: 601px) and (max-width: 820px) {
+      //ipad mini + ipad air
+      width: 95%;
     }
     h1 {
       color: #28aae2;
@@ -295,7 +331,7 @@
         width: 40%;
         @media (max-width: 600px) {
           width: 100%;
-          border-bottom: 1px solid #eee;
+          border-bottom: 1px solid #28aae2;
         }
         padding: 10px 15px;
         &_img {
@@ -359,7 +395,7 @@
           @media (max-width: 600px) {
             flex-direction: column;
             &:not(:last-of-type) {
-              border-bottom: 1px solid #eee;
+              border-bottom: 1px solid #28aae2;
               padding-bottom: 10px;
             }
           }
@@ -411,8 +447,8 @@
 .partner {
   margin: 50px 0;
   background-color: rgba(#28aae2, 0.05);
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+  border-top: 1px solid #28aae2;
+  border-bottom: 1px solid #28aae2;
   padding: 50px 0;
   &_container {
     width: 80%;
@@ -424,6 +460,10 @@
       flex-direction: column;
       gap: 20px;
       align-content: center;
+    }
+    @media (min-width: 601px) and (max-width: 820px) {
+      //ipad mini + ipad air
+      width: 95%;
     }
     &_item {
       width: calc(100% / 3);

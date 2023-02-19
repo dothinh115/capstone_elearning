@@ -55,19 +55,29 @@ const Header = (props: Props) => {
           <div className="menu">
             <ul>
               <li>
-                <Link to="/">Trang chủ</Link>
+                <Link to="/">
+                  <i className="fa-solid fa-house"></i>Trang chủ
+                </Link>
               </li>
               <li>
-                <Link to="/">Tin tức</Link>
+                <Link to="/">
+                  <i className="fa-solid fa-file-lines"></i>Tin tức
+                </Link>
               </li>
               <li>
-                <Link to="/">Khóa học</Link>
+                <Link to="/categories">
+                  <i className="fa-solid fa-school"></i>Khóa học
+                </Link>
               </li>
               <li>
-                <Link to="/">Hỗ trợ</Link>
+                <Link to="/">
+                  <i className="fa-solid fa-question"></i>Hỗ trợ
+                </Link>
               </li>
               <li>
-                <Link to="/">Phòng trưng bày</Link>
+                <Link to="/">
+                  <i className="fa-solid fa-image"></i>Phòng trưng bày
+                </Link>
               </li>
             </ul>
           </div>

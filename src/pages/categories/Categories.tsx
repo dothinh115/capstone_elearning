@@ -53,11 +53,12 @@ const Categories = (props: Props) => {
 
     if (window.scrollY > 253) {
       absoluteSidebar.current!.classList.add("absolute");
-      absoluteSidebar.current!.style.top = `${window.scrollY - 253 + 10}px`;
+
       if (window.scrollY > categoriesHeight! - 253) {
         absoluteSidebar.current!.style.top = `unset`;
         absoluteSidebar.current!.style.bottom = `0px`;
-      }
+      } else
+        absoluteSidebar.current!.style.top = `${window.scrollY - 253 + 10}px`;
     } else {
       absoluteSidebar.current!.classList.remove("absolute");
     }

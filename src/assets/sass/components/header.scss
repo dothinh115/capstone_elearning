@@ -12,6 +12,10 @@
     @media (max-width: 600px) {
       height: unset;
     }
+    @media (min-width: 601px) and (max-width: 820px) {
+      //ipad mini + ipad air
+      height: unset;
+    }
     button {
       margin-left: 20px;
       padding: 5px 20px;
@@ -32,9 +36,7 @@
     height: 90px;
     display: flex;
     align-items: center;
-    @media (max-width: 600px) {
-      padding: 10px;
-    }
+    padding: 10px;
     .header_container {
       display: flex;
       align-items: center;
@@ -43,9 +45,18 @@
       @media (max-width: 600px) {
         width: 100%;
       }
+      @media (min-width: 601px) and (max-width: 1180px) {
+        //ipad mini + ipad air
+        width: 100%;
+        justify-content: space-between;
+      }
       .logo {
         width: 30%;
         @media (max-width: 600px) {
+          width: 70%;
+        }
+        @media (min-width: 601px) and (max-width: 1024px) {
+          //ipad mini + ipad air
           width: 70%;
         }
         img {
@@ -56,26 +67,116 @@
         }
       }
       .menu {
-        width: 55%;
+        width: 60%;
         @media (max-width: 600px) {
-          display: none;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background-color: #8bc639;
+          a {
+            color: white;
+          }
+          z-index: 10;
+          height: 50px;
+          border-top: 1px solid #8bc639;
+        }
+        @media (min-width: 601px) and (max-width: 1024px) {
+          //ipad mini + ipad air
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          background-color: #8bc639;
+          a {
+            color: white;
+          }
+          z-index: 10;
+          height: 50px;
+          border-top: 1px solid #8bc639;
         }
         ul {
+          @media (max-width: 600px) {
+            display: flex;
+            align-items: center;
+            height: 100%;
+          }
+          @media (min-width: 601px) and (max-width: 1024px) {
+            //ipad mini + ipad air
+            display: flex;
+            align-items: center;
+            height: 100%;
+          }
           li {
             list-style-type: none;
             display: inline-block;
-            padding: 0 12px;
+            &:not(:last-of-type) {
+              margin-right: 12px;
+            }
+            line-height: 30px;
             a {
               color: #666666;
               font-size: 15px;
               font-weight: 600;
+              i {
+                margin-right: 2px;
+                color: #28aae2;
+                font-size: 15px;
+              }
+              &::after {
+                margin-left: 12px;
+                content: "|";
+                @media (min-width: 601px) and (max-width: 1024px) {
+                  content: unset;
+                }
+              }
+              @media (max-width: 600px) {
+                font-size: 0px;
+                i {
+                  font-size: 30px;
+                  color: white !important;
+                }
+              }
+              @media (min-width: 601px) and (max-width: 1024px) {
+                //ipad mini + ipad air
+                color: white !important;
+                i {
+                  font-size: 25px;
+                  color: white !important;
+                  margin-right: 5px;
+                }
+              }
+            }
+            &:last-of-type {
+              a {
+                &::after {
+                  content: unset;
+                }
+              }
+            }
+            @media (max-width: 600px) {
+              width: 20%;
+              display: block;
+              margin-right: unset !important;
+              text-align: center;
+            }
+            @media (min-width: 601px) and (max-width: 1024px) {
+              //ipad mini + ipad air
+              width: 20%;
+              display: block;
+              margin-right: unset !important;
+              text-align: center;
             }
           }
         }
       }
       .header_icon {
-        width: 15%;
+        width: 10%;
         @media (max-width: 600px) {
+          width: 30%;
+        }
+        @media (min-width: 601px) and (max-width: 820px) {
+          //ipad mini + ipad air
           width: 30%;
         }
         position: relative;
