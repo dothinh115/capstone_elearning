@@ -1,6 +1,8 @@
-import { Link, Outlet, Route, Routes } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
+import Btt from "./Btt";
+
 type Props = {};
 
 const HomeTemplate = (props: Props) => {
@@ -9,6 +11,7 @@ const HomeTemplate = (props: Props) => {
       <Header />
       <Outlet />
       <Footer />
+      <Btt />
     </>
   );
 };
