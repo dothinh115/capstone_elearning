@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from "axios";
+import { history } from "../App";
 import { getLocalStorage, removeLocalStorage } from "./function";
 import { CreateNewCourseType } from "./interface/courseReducerInterface";
 
@@ -46,6 +47,10 @@ API.interceptors.response.use(
 
     if (error.response?.status === 400) {
       window.location.href = "/";
+    }
+
+    if (error?.message == "Network Error") {
+      history.push(window.location.href, { error: true }); // = window.location.href
     }
     return Promise.reject(error);
   }

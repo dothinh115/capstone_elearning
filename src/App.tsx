@@ -32,6 +32,7 @@ import UsersManage from "./pages/profile/users/UsersManage";
 import UsersEditForm from "./pages/profile/users/UsersEditForm";
 import AdminRoute from "./hoc/AdminRoute";
 import CreateUser from "./pages/profile/users/CreateUser";
+import Error500Message from "./hoc/Error500Message";
 export const history: any = createBrowserHistory();
 
 function App() {
@@ -46,33 +47,42 @@ function App() {
     <HistoryRouter history={history}>
       <Routes>
         <Route element={<HomeTemplate />}>
-          <Route index element={<Home />} />
-          <Route path="categories" element={<Categories />} />
-          <Route path="course/:courseID" element={<Course />}>
-            <Route path="viewinfo" element={<CourseSidebar />} />
+          <Route element={<Error500Message />}>
+            <Route index element={<Home />} />
+            <Route path="categories" element={<Categories />} />
+            <Route path="course/:courseID" element={<Course />}>
+              <Route path="viewinfo" element={<CourseSidebar />} />
+            </Route>
           </Route>
         </Route>
         <Route element={<LoggedInRoute token={token} />}>
           <Route path="profile" element={<UserTemplate />}>
-            <Route path="view_profile" element={<EditProfile />} />
-            <Route path="registered_courses" element={<RegitsteredCourses />} />
-            <Route path="courses_manage" element={<CoursesManage />}>
-              <Route element={<AdminRoute />}>
-                <Route path="create" element={<CreateNewCourseForm />} />
-                <Route path=":courseID" element={<CourseEditForm />} />
+            <Route element={<Error500Message />}>
+              <Route path="view_profile" element={<EditProfile />} />
+              <Route
+                path="registered_courses"
+                element={<RegitsteredCourses />}
+              />
+              <Route path="courses_manage" element={<CoursesManage />}>
+                <Route element={<AdminRoute />}>
+                  <Route path="create" element={<CreateNewCourseForm />} />
+                  <Route path=":courseID" element={<CourseEditForm />} />
+                </Route>
               </Route>
-            </Route>
-            <Route path="users_manage" element={<UsersManage />}>
-              <Route element={<AdminRoute />}>
-                <Route path="create" element={<CreateUser />} />
-                <Route path=":userID" element={<UsersEditForm />} />
+              <Route path="users_manage" element={<UsersManage />}>
+                <Route element={<AdminRoute />}>
+                  <Route path="create" element={<CreateUser />} />
+                  <Route path=":userID" element={<UsersEditForm />} />
+                </Route>
               </Route>
             </Route>
           </Route>
         </Route>
         <Route element={<NotLoggedInRoute token={token} />}>
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<Register />} />
+          <Route element={<Error500Message />}>
+            <Route path="login" element={<Login />} />
+            <Route path="register" element={<Register />} />
+          </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
