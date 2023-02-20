@@ -6,6 +6,13 @@
   height: calc(100vh - 125px);
   width: 100%;
   position: relative;
+  @media (min-width: 599px) {
+    height: 100vh;
+  }
+  @media (max-width: 600px) {
+    height: 400px;
+  }
+
   &::before {
     display: block;
     position: absolute;
@@ -52,14 +59,28 @@
       width: 60%;
       left: 40%;
       bottom: calc(50%);
+      @media (min-width: 601px) and (max-width: 768px) {
+        width: 60%;
+        left: 40%;
+        bottom: unset !important;
+        top: unset !important;
+      }
+      @media (min-width: 601px) and (max-width: 1024px) {
+        //ipad mini + ipad air
+        bottom: 25%;
+      }
+      @media (max-width: 1800px) {
+        bottom: 45%;
+      }
       @media (max-width: 600px) {
         width: 100%;
         left: 0;
         padding: 10px;
-        top: 50%;
+        top: 55%;
         transform: translateY(-50%);
         bottom: unset;
       }
+
       h1 {
         color: #28aae2;
         font-size: 30px;
