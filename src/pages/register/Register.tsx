@@ -34,7 +34,7 @@ const Register = (props: Props) => {
 
   return (
     <section className="login" style={{ height: "100%" }}>
-      <div className="login_inner">
+      <div className="login_inner" style={{ margin: "30px" }}>
         <div className="login_inner_header">
           <h1>Đăng ký tài khoản</h1>
           <Link to="/" className="badge">
