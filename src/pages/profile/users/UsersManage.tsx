@@ -91,7 +91,11 @@ const UsersManage = (props: Props) => {
           className="profile_main_info_search"
           onSubmit={handleSubmit(submitHandle)}
         >
-          <input type="text" placeholder="Tìm kiếm" {...register("search")} />
+          <input
+            type="text"
+            placeholder="Tìm kiếm(Theo họ tên)"
+            {...register("search")}
+          />
           <button>
             <i className="fa-solid fa-magnifying-glass"></i>
           </button>
