@@ -10,7 +10,7 @@
     height: 100vh;
   }
   @media (max-width: 600px) {
-    height: 400px;
+    height: calc(100vh - 195px);
   }
 
   &::before {

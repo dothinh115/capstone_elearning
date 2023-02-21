@@ -49,8 +49,8 @@ API.interceptors.response.use(
       window.location.href = "/";
     }
 
-    if (error?.message == "Network Error") {
-      history.push(window.location.href, { error: true }); // = window.location.href
+    if (error?.message === "Network Error") {
+      history.push(window.location.href, { error: true });
     }
     return Promise.reject(error);
   }
