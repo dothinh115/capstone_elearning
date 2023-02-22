@@ -11,8 +11,9 @@ const Footer = (props: Props) => {
             CyberSoft <mark>E-learning</mark>
           </h1>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisc ing elit. Nunc
-            maximus, nulla utlaoki comm odo sagittis.
+            CyberSoft E-learning sẽ gởi các khóa học trực tuyến & các chương
+            trình CyberLive hoàn toàn MIỄN PHÍ và các chương trình KHUYẾN MÃI
+            hấp dẫn đến các bạn.
           </p>
           <p>
             © 2022 CyberSoft Capstone Dự án của nhóm 5 với đầy ắp tình yêu lập
