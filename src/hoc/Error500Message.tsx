@@ -1,4 +1,3 @@
-import React from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Modal from "../components/modal/Modal";
 import useModal from "../hooks/useModal";
