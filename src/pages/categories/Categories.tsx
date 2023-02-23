@@ -85,11 +85,6 @@ const Categories = (props: Props) => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    const checkedList: string[] | null = getCategoriesFromParams();
-    if (checkedList) {
-      dispatch(getCoursesByCategoriesApi(checkedList));
-      setChecked(checkedList);
-    }
     if (absoluteSidebar.current) window.addEventListener("scroll", onScroll);
 
     return () => {
@@ -97,6 +92,14 @@ const Categories = (props: Props) => {
       window.removeEventListener("scroll", onScroll);
     };
   }, []);
+
+  useEffect(() => {
+    const checkedList: string[] | null = getCategoriesFromParams();
+    if (checkedList) {
+      dispatch(getCoursesByCategoriesApi(checkedList));
+      setChecked(checkedList);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     const keywords = searchParams.get("keywords");
@@ -131,7 +134,6 @@ const Categories = (props: Props) => {
                 <CategoriesSidebar
                   checked={checked}
                   setChecked={setChecked}
-                  getCategoriesFromParams={getCategoriesFromParams}
                   toggle={toggle}
                 />
               </Modal>
@@ -141,7 +143,6 @@ const Categories = (props: Props) => {
                   <CategoriesSidebar
                     checked={checked}
                     setChecked={setChecked}
-                    getCategoriesFromParams={getCategoriesFromParams}
                   />
                 </div>
               </div>
